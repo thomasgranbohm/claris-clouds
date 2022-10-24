@@ -1,0 +1,36 @@
+@use "styles/colors";
+@use "styles/utils";
+
+.container {
+	margin: utils.gutter(0.5) 0;
+
+	&.color {
+		&--accent {
+			color: colors.get("accent");
+		}
+		&--background {
+			color: colors.get("background");
+		}
+		&--foreground {
+			color: colors.get("foreground");
+		}
+	}
+
+	&.weight {
+		&--normal {
+			font-weight: 400;
+		}
+
+		&--medium {
+			font-weight: 500;
+		}
+
+		&--semi-bold {
+			font-weight: 600;
+		}
+
+		&--bold {
+			font-weight: 700;
+		}
+	}
+}

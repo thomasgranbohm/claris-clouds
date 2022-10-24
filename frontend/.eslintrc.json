@@ -1,0 +1,27 @@
+{
+	"extends": ["plugin:storybook/recommended", "next/core-web-vitals"],
+	"plugins": ["simple-import-sort"],
+	"overrides": [
+		{
+			"files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+			"rules": {
+				"simple-import-sort/imports": [
+					"error",
+					{
+						"groups": [
+							["^react", "^@?\\w"],
+							["^(@|components)(/.*|$)"],
+							["^(@|pages)(/.*|$)"],
+							["^(@|styles)(/.*|$)"],
+							["^(@|types)(/.*|$)"],
+							["^\\u0000"],
+							["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+							["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+							["^.+\\.?(scss|css)$"]
+						]
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,22 @@
+@use "styles/mixins";
+@use "styles/variables";
+
+.container {
+	grid-column: span 12;
+
+	@each $name, $size in variables.$breakpoints {
+		@for $i from 1 through 12 {
+			@include mixins.breakpoint($size) {
+				&.size--#{$name}-#{$i} {
+					grid-column: span $i;
+
+					@for $start from 1 through 12 {
+						&-#{$start} {
+							grid-column: ($start + 1) / span $i;
+						}
+					}
+				}
+			}
+		}
+	}
+}

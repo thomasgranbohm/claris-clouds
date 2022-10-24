@@ -1,0 +1,9 @@
+$colors: (
+	"foreground": #000,
+	"background": #fff,
+	"accent": #228822,
+);
+
+@function get($color) {
+	@return map-get($colors, $color);
+}

@@ -1,0 +1,5 @@
+@use "./variables";
+
+@function gutter($amount: 1) {
+	@return variables.$gutter * $amount;
+}

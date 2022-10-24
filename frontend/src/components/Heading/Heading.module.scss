@@ -1,0 +1,43 @@
+@use "styles/utils";
+
+.container {
+	&.look {
+		margin: 0.5em 0;
+		line-height: 1.5;
+
+		&--h1 {
+			@extend .look;
+			font-size: 72px;
+		}
+
+		&--h2 {
+			@extend .look;
+			font-size: 48px;
+		}
+
+		&--h3 {
+			@extend .look;
+			font-size: 36px;
+		}
+
+		&--h4 {
+			@extend .look;
+			font-size: 28px;
+		}
+
+		&--h5 {
+			@extend .look;
+			font-size: 24px;
+		}
+
+		&--h6 {
+			@extend .look;
+			font-size: 20px;
+		}
+
+		&--b {
+			@extend .look;
+			font-size: initial;
+		}
+	}
+}
