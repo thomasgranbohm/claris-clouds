@@ -1,5 +1,7 @@
 import { FC } from "react";
-{{#if className}}import clsx from "clsx";{{/if}}
+{{#if className}}
+import clsx from "clsx";
+{{/if}}
 
 {{#ifOr children className}}
 import { {{#if children}}WithChildren{{/if}}{{#if className}}{{#if children}}, {{/if}}WithClassname{{/if}} } from "types/components";
@@ -13,7 +15,8 @@ interface {{ properCase name }}Props {{#ifOr children className}}extends {{#if c
 
 const {{ properCase name }}: FC<{{ properCase name }}Props> = ({{#ifOr children className}}{ {{#if children}}children{{/if}}{{#if className}}{{#if children}}, {{/if}}className{{/if}} }{{/ifOr}}) => {
     return <div className={
-        {{~#if className}}clsx({{/if}}classes["container"]{{#if className}}, className{{/if}})}>{{#if children}}{children}{{/if}}</div>;
+        {{~#if className}}clsx({{/if}}classes["container"]{{#if className}}, className){{/if~}}
+        }>{{#if children}}{children}{{/if}}</div>;
 };
 
 export default {{ properCase name }};
