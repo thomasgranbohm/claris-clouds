@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"storybook": "start-storybook -p 6006",
-		"build-storybook": "build-storybook"
+		"build-storybook": "build-storybook",
+		"plop": "plop"
 	},
 	"dependencies": {
 		"clsx": "^1.2.1",
@@ -36,6 +37,7 @@
 		"eslint-config-next": "12.3.1",
 		"eslint-plugin-simple-import-sort": "^8.0.0",
 		"eslint-plugin-storybook": "^0.6.6",
+		"plop": "^3.1.1",
 		"storybook-addon-next": "^1.6.9",
 		"typescript": "4.8.4"
 	}
