@@ -1,12 +1,15 @@
+@use "sass:map";
 @import "./variables";
 
 @mixin breakpoint($breakpoint, $max: false) {
+	$width: map.get($breakpoints, $breakpoint);
+
 	@if $max {
-		@media screen and (max-width: map.get($breakpoints, $breakpoint)) {
+		@media screen and (max-width: $width) {
 			@content;
 		}
 	} @else {
-		@media screen and (min-width: map.get($breakpoints, $breakpoint)) {
+		@media screen and (min-width: $width) {
 			@content;
 		}
 	}

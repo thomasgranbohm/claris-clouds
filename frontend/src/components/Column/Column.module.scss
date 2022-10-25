@@ -6,7 +6,7 @@
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {
-			@include mixins.breakpoint($size) {
+			@include mixins.breakpoint($name) {
 				&.size--#{$name}-#{$i} {
 					grid-column: span $i;
 

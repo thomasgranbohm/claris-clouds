@@ -1,0 +1,8 @@
+.container {
+	&.layout {
+		&--fill,
+		&--responsive {
+			position: relative;
+		}
+	}
+}

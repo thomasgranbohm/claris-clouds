@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	images: {
+		remotePatterns: [ 
+			{
+                protocol: "https",
+				hostname: "placekitten.com",
+			},
+            {
+                hostname: "backend"
+            }
+		],
+	},
 	reactStrictMode: true,
 	swcMinify: true,
 	webpack(config) {
