@@ -53,6 +53,34 @@ function plopFunction(
 			},
 		],
 	});
+	plop.setGenerator("page", {
+		description: "Creates a page",
+		prompts: [
+			{
+				type: "input",
+				name: "name",
+				message: "Page name:",
+			},
+			{
+				type: "input",
+				message: "Path",
+				name: "path",
+			},
+			{
+				type: "confirm",
+				default: true,
+				message: "With serverside props",
+				name: "ssr",
+			},
+		],
+		actions: [
+			{
+				type: "add",
+				templateFile: "templates/page.hbs",
+				path: "src/pages/{{ path }}",
+			},
+		],
+	});
 }
 
 module.exports = plopFunction;
