@@ -4,12 +4,6 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Heading from "./Heading";
 
 export default {
-	title: "Heading",
-	component: Heading,
-	args: {
-		children: "Hello, World!",
-		type: "h1",
-	},
 	argTypes: {
 		look: {
 			control: "select",
@@ -20,6 +14,12 @@ export default {
 			options: ["h1", "h2", "h3", "h4", "h5", "h6", "b"],
 		},
 	},
+	args: {
+		children: "Hello, World!",
+		type: "h1",
+	},
+	component: Heading,
+	title: "Heading",
 } as ComponentMeta<typeof Heading>;
 
 export const Primary: ComponentStory<typeof Heading> = (props) => (

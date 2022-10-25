@@ -10,7 +10,7 @@ interface HeadingProps extends WithChildren, WithClassname {
 	type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "b";
 }
 
-const Heading: FC<HeadingProps> = ({ children, type, className, look }) => {
+const Heading: FC<HeadingProps> = ({ children, className, look, type }) => {
 	return createElement(
 		type,
 		{

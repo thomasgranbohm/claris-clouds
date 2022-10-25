@@ -7,8 +7,8 @@ import Row from "../Row";
 import Image from "./Image";
 
 export default {
-	title: "Image",
 	component: Image,
+	title: "Image",
 } as ComponentMeta<typeof Image>;
 
 export const Primary: ComponentStory<typeof Image> = () => (

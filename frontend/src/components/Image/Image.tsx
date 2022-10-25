@@ -6,13 +6,13 @@ import classes from "./Image.module.scss";
 
 interface ImageProps {
 	alt: string;
-	layout?: "fill" | "intrinsic" | "responsive";
 	height?: number;
+	layout?: "fill" | "intrinsic" | "responsive";
 	src: string;
 	width?: number;
 }
 
-const Image: FC<ImageProps> = ({ alt, src, height, layout, width }) => {
+const Image: FC<ImageProps> = ({ alt, height, layout, src, width }) => {
 	return (
 		<div
 			className={clsx(

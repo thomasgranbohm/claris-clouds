@@ -4,12 +4,6 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Typography from "./Typography";
 
 export default {
-	title: "Typography",
-	component: Typography,
-	args: {
-		children:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ab nulla deleniti officiis ut et inventore, provident assumenda vel ea magni esse vitae doloribus, ratione pariatur, dolore eum beatae enim?",
-	},
 	argTypes: {
 		color: {
 			control: "select",
@@ -24,6 +18,12 @@ export default {
 			options: ["normal", "medium", "semi-bold", "bold"],
 		},
 	},
+	args: {
+		children:
+			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ab nulla deleniti officiis ut et inventore, provident assumenda vel ea magni esse vitae doloribus, ratione pariatur, dolore eum beatae enim?",
+	},
+	component: Typography,
+	title: "Typography",
 } as ComponentMeta<typeof Typography>;
 
 export const Primary: ComponentStory<typeof Typography> = (props) => (

@@ -6,8 +6,8 @@ import Heading from "components/Heading";
 import Layout from "./Layout";
 
 export default {
-	title: "Layout",
 	component: Layout,
+	title: "Layout",
 } as ComponentMeta<typeof Layout>;
 
 export const Primary: ComponentStory<typeof Layout> = (props) => (

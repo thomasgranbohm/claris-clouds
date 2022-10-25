@@ -6,8 +6,8 @@ import Column from "../Column";
 import Row from "./Row";
 
 export default {
-	title: "Grid",
 	component: Row,
+	title: "Grid",
 } as ComponentMeta<typeof Row>;
 
 export const Primary: ComponentStory<typeof Row> = () => (

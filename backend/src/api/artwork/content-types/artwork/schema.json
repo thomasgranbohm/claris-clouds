@@ -4,7 +4,8 @@
   "info": {
     "singularName": "artwork",
     "pluralName": "artworks",
-    "displayName": "Artwork"
+    "displayName": "Artwork",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,12 +20,12 @@
       "type": "text"
     },
     "image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "redbubble_link": {
       "type": "string",
@@ -33,6 +34,10 @@
     "original_sold": {
       "type": "boolean",
       "default": false
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }
