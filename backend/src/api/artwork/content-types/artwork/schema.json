@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "artworks",
+  "info": {
+    "singularName": "artwork",
+    "pluralName": "artworks",
+    "displayName": "Artwork"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "redbubble_link": {
+      "type": "string",
+      "regex": "^https:\\/\\/www\\.redbubble\\.com\\/.+"
+    },
+    "original_sold": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
