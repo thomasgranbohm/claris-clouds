@@ -1,6 +1,17 @@
+@use "styles/colors" as *;
 @use "styles/utils";
 
 .container {
+	font-family: "Poppins", Arial, Helvetica, sans-serif;
+
+	&.color {
+		@each $name, $value in $colors {
+			&--#{$name} {
+				color: $value;
+			}
+		}
+	}
+
 	&.look {
 		margin: 0.5em 0;
 		line-height: 1.5;
@@ -8,11 +19,13 @@
 		&--h1 {
 			@extend .look;
 			font-size: 72px;
+			margin: 0.25em 0;
 		}
 
 		&--h2 {
 			@extend .look;
 			font-size: 48px;
+			margin: 0.25em 0;
 		}
 
 		&--h3 {

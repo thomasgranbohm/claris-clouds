@@ -1,18 +1,33 @@
-@use "styles/colors";
+@use "styles/colors" as *;
 @use "styles/utils";
 
 .container {
 	margin: utils.gutter(0.5) 0;
 
 	&.color {
-		&--accent {
-			color: colors.get("accent");
+		@each $name, $value in $colors {
+			&--#{$name} {
+				color: $value;
+				fill: $name;
+			}
 		}
-		&--background {
-			color: colors.get("background");
+	}
+
+	&.size {
+		&--normal {
+			font-size: 1em;
 		}
-		&--foreground {
-			color: colors.get("foreground");
+
+		&--large {
+			font-size: 1.2em;
+		}
+
+		&--larger {
+			font-size: 1.4em;
+		}
+
+		&--small {
+			font-size: 0.8em;
 		}
 	}
 

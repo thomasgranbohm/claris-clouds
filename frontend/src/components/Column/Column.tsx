@@ -15,10 +15,19 @@ type BreakpointMappings = {
 
 interface ColumnProps extends WithChildren, WithClassname, BreakpointMappings {
 	align?: ALIGNMENTS;
-	justifify?: ALIGNMENTS;
+	justify?: ALIGNMENTS;
 }
 
-const Column: FC<ColumnProps> = ({ children, className, lg, md, sm, xl }) => {
+const Column: FC<ColumnProps> = ({
+	align,
+	children,
+	className,
+	justify,
+	lg,
+	md,
+	sm,
+	xl,
+}) => {
 	const getClass = (label: BREAKPOINTS, s?: SIZE_PROPERTY) => {
 		if (!s) {
 			return null;
@@ -41,6 +50,8 @@ const Column: FC<ColumnProps> = ({ children, className, lg, md, sm, xl }) => {
 				getClass("md", md),
 				getClass("lg", lg),
 				getClass("xl", xl),
+				align && classes[`align--${align}`],
+				justify && classes[`justify--${justify}`],
 				className
 			)}
 		>
