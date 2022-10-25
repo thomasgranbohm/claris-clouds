@@ -1,0 +1,32 @@
+@use "styles/functions";
+@use "styles/mixins";
+@use "styles/variables";
+
+.container {
+	display: grid;
+	min-height: 100vh;
+	grid-template:
+		"header" minmax(auto, 4rem) "content" 1fr "footer" minmax(auto, 4rem)
+		/ 1fr;
+
+	.content {
+		grid-area: content;
+		width: 100%;
+		margin: 0 auto;
+		padding: 0 functions.gutter(1);
+
+		@each $name, $size in variables.$breakpoints {
+			@include mixins.breakpoint($name) {
+				max-width: $size;
+			}
+		}
+	}
+
+	.footer {
+		grid-area: footer;
+	}
+
+	.header {
+		grid-area: header;
+	}
+}
