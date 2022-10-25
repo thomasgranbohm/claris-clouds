@@ -3,6 +3,7 @@
 
 .container {
 	grid-column: span 12;
+	width: 100%;
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {
@@ -17,6 +18,34 @@
 					}
 				}
 			}
+		}
+	}
+
+	&.align {
+		&--center {
+			align-self: center;
+		}
+
+		&--end {
+			align-self: flex-end;
+		}
+
+		&--start {
+			align-self: flex-start;
+		}
+	}
+
+	&.justify {
+		&--center {
+			justify-self: center;
+		}
+
+		&--end {
+			justify-self: flex-end;
+		}
+
+		&--start {
+			justify-self: flex-start;
 		}
 	}
 }

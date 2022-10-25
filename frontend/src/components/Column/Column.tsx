@@ -5,15 +5,18 @@ import { WithChildren, WithClassname } from "types/components";
 
 import classes from "./Column.module.scss";
 
+type ALIGNMENTS = "center" | "end" | "start";
 type BREAKPOINTS = "sm" | "md" | "lg" | "xl";
-
 type SIZE_PROPERTY = number | [number, number];
 
-type ColumnProps = WithChildren &
-	WithClassname &
-	{
-		[breakpoint in BREAKPOINTS]?: SIZE_PROPERTY;
-	};
+type BreakpointMappings = {
+	[breakpoint in BREAKPOINTS]?: SIZE_PROPERTY;
+};
+
+interface ColumnProps extends WithChildren, WithClassname, BreakpointMappings {
+	align?: ALIGNMENTS;
+	justifify?: ALIGNMENTS;
+}
 
 const Column: FC<ColumnProps> = ({ children, className, lg, md, sm, xl }) => {
 	const getClass = (label: BREAKPOINTS, s?: SIZE_PROPERTY) => {
