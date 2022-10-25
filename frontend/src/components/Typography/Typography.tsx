@@ -7,7 +7,7 @@ import classes from "./Typography.module.scss";
 
 interface TypographyProps extends WithChildren, WithClassname {
 	color?: "foreground" | "background" | "gray" | "accent";
-	size?: "normal" | "large" | "larger" | "small";
+	size?: "normal" | "large" | "larger" | "small" | "smaller";
 	type?: Extract<keyof ReactHTML, "span" | "p">;
 	weight?: "normal" | "medium" | "semi-bold" | "bold";
 }

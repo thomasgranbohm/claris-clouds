@@ -18,34 +18,36 @@
 
 		&--h1 {
 			@extend .look;
-			font-size: 72px;
+			font-size: 4.5em;
 			margin: 0.25em 0;
+			letter-spacing: 1px;
 		}
 
 		&--h2 {
 			@extend .look;
-			font-size: 48px;
+			font-size: 3em;
 			margin: 0.25em 0;
+			letter-spacing: 1px;
 		}
 
 		&--h3 {
 			@extend .look;
-			font-size: 36px;
+			font-size: 2.25em;
 		}
 
 		&--h4 {
 			@extend .look;
-			font-size: 28px;
+			font-size: 1.75em;
 		}
 
 		&--h5 {
 			@extend .look;
-			font-size: 24px;
+			font-size: 1.5em;
 		}
 
 		&--h6 {
 			@extend .look;
-			font-size: 20px;
+			font-size: 1.25em;
 		}
 
 		&--b {
