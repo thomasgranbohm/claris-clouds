@@ -1,3 +1,5 @@
+@use "styles/colors";
+
 html,
 body {
 	padding: 0;
@@ -6,6 +8,8 @@ body {
 		Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
 		Helvetica Neue, sans-serif;
 	font-size: 18px;
+
+	background: colors.get(background);
 }
 
 * {

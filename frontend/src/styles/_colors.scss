@@ -1,8 +1,8 @@
 $colors: (
-	"foreground": #000,
-	"background": #fff,
+	"foreground": rgba(0, 0, 0, 0.8),
+	"background": rgb(176, 129, 252),
 	"gray": #888,
-	"accent": #228822,
+	"accent": hsla(0, 0%, 100%, 0.9),
 );
 
 @function get($color) {
