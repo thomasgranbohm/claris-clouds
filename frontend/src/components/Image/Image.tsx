@@ -24,8 +24,12 @@ const Image: FC<ImageProps> = ({ alt, height, layout, src, width }) => {
 				alt={alt}
 				height={height}
 				layout="intrinsic"
-				src={src}
+				src={`/api/image?src=${src}`}
 				width={width}
+				placeholder="blur"
+				blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+				objectPosition="center"
+				objectFit="cover"
 			/>
 		</div>
 	);

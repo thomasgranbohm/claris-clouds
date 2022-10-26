@@ -17,6 +17,7 @@
 		"strictNullChecks": true,
 		"incremental": true,
 		"paths": {
+			"api/*": ["api/*"],
 			"components/*": ["components/*"],
 			"hooks/*": ["hooks/*"],
 			"pages/*": ["pages/*"],

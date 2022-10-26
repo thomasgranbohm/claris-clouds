@@ -36,15 +36,20 @@
 	}
 
 	&.justify {
+		width: unset;
+
 		&--center {
+			@extend .justify;
 			justify-self: center;
 		}
 
 		&--end {
+			@extend .justify;
 			justify-self: flex-end;
 		}
 
 		&--start {
+			@extend .justify;
 			justify-self: flex-start;
 		}
 	}

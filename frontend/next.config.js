@@ -1,18 +1,40 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		remotePatterns: [ 
+		remotePatterns: [
 			{
-                protocol: "https",
+				protocol: "https",
 				hostname: "placekitten.com",
 			},
-            {
-                hostname: "backend"
-            }
+			{
+				hostname: "backend",
+			},
+			{
+				hostname: "localhost",
+			},
 		],
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/api/image",
+				has: [
+					{
+						type: "query",
+						key: "src",
+						value: "(?<name>[a-zA-Z0-9\\_\\-\\.]+)",
+					},
+				],
+				destination:
+					this.serverRuntimeConfig.API_URL + "/uploads/:name",
+			},
+		];
 	},
 	reactStrictMode: true,
 	swcMinify: true,
+	serverRuntimeConfig: {
+		API_URL: process.env.API_URL,
+	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find(
 			(rule) => rule.test && rule.test.test(".svg")
