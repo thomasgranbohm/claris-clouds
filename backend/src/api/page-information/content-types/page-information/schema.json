@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "page_informations",
+  "info": {
+    "singularName": "page-information",
+    "pluralName": "page-informations",
+    "displayName": "Page Information",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.link"
+    }
+  }
+}
