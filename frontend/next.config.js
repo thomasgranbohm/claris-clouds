@@ -17,18 +17,14 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: "/api/image",
-				has: [
-					{
-						type: "query",
-						key: "src",
-						value: "(?<name>[a-zA-Z0-9\\_\\-\\.]+)",
-					},
-				],
+				source: "/api/image/:name([a-zA-Z0-9\\_\\-\\.]+)",
 				destination:
 					this.serverRuntimeConfig.API_URL + "/uploads/:name",
 			},
 		];
+	},
+	publicRuntimeConfig: {
+		PAGE_URL: process.env.PAGE_URL,
 	},
 	reactStrictMode: true,
 	swcMinify: true,

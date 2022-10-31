@@ -13,21 +13,16 @@
 	}
 
 	&.look {
-		margin: 0.5em 0;
 		line-height: 1.2;
 
 		&--h1 {
 			@extend .look;
 			font-size: 4.5em;
-			margin: 0.25em 0;
-			letter-spacing: 1px;
 		}
 
 		&--h2 {
 			@extend .look;
 			font-size: 3em;
-			margin: 0.25em 0;
-			letter-spacing: 1px;
 		}
 
 		&--h3 {

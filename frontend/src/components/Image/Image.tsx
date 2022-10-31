@@ -12,7 +12,15 @@ interface ImageProps {
 	width?: number;
 }
 
-const Image: FC<ImageProps> = ({ alt, height, layout, src, width }) => {
+const Image: FC<ImageProps> = ({
+	alt,
+	height,
+	layout = "intrinsic",
+	src,
+	width,
+}) => {
+	const url = `/api/image/${src}`;
+
 	return (
 		<div
 			className={clsx(
@@ -23,13 +31,9 @@ const Image: FC<ImageProps> = ({ alt, height, layout, src, width }) => {
 			<NextImage
 				alt={alt}
 				height={height}
-				layout="intrinsic"
-				src={`/api/image?src=${src}`}
+				layout={layout}
+				src={url}
 				width={width}
-				placeholder="blur"
-				blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
-				objectPosition="center"
-				objectFit="cover"
 			/>
 		</div>
 	);

@@ -5,17 +5,35 @@
 	grid-template-columns: repeat(12, 1fr);
 	grid-auto-flow: dense;
 
-	&.gap {
+	& + & {
+		margin-top: utils.gutter();
+	}
+
+	&.column-gap {
 		&--none {
-			gap: 0;
+			column-gap: 0;
 		}
 
 		&--single {
-			gap: utils.gutter();
+			column-gap: utils.gutter();
 		}
 
 		&--double {
-			gap: utils.gutter(2);
+			column-gap: utils.gutter(2);
+		}
+	}
+
+	&.row-gap {
+		&--none {
+			row-gap: 0;
+		}
+
+		&--single {
+			row-gap: utils.gutter();
+		}
+
+		&--double {
+			row-gap: utils.gutter(2);
 		}
 	}
 }
