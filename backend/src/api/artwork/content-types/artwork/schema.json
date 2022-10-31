@@ -29,7 +29,8 @@
     },
     "redbubble_link": {
       "type": "string",
-      "regex": "^https:\\/\\/www\\.redbubble\\.com\\/.+"
+      "regex": "^https:\\/\\/www\\.redbubble\\.com\\/.+",
+      "required": true
     },
     "original_sold": {
       "type": "boolean",
@@ -37,7 +38,8 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "name"
+      "targetField": "name",
+      "required": true
     }
   }
 }
