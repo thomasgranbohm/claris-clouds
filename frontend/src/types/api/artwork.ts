@@ -5,7 +5,7 @@ interface Artwork {
 	image: Response<Image>;
 	name: string;
 	original_sold: boolean;
-	redbubble_link?: string;
+	redbubble_link: string;
 	slug: string;
 }
 
