@@ -3,6 +3,7 @@
 
 .container {
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
+	margin: utils.gutter() 0;
 
 	&.color {
 		@each $name, $value in $colors {

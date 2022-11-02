@@ -3,6 +3,8 @@ $colors: (
 	"background": rgb(176, 129, 252),
 	"gray": #888,
 	"accent": hsla(0, 0%, 100%, 0.9),
+	"white": white,
+	"black": black,
 );
 
 @function get($color) {
