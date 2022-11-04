@@ -1,0 +1,27 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: backend/.env
+    volumes:
+      - ./backend/config:/opt/app/config
+      - ./backend/database:/opt/app/database
+      - ./backend/public:/opt/app/public
+      - ./backend/src:/opt/app/src
+      - ./backend/package.json:/opt/package.json
+      - ./backend/package-lock.json:/opt/package-lock.json
+      - ./backend/tsconfig.json:/opt/tsconfig.json
+      - ./backend/.env:/opt/app/.env
+    ports:
+      - "1337:1337"
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/.env:/app/.env
+      - ./frontend/.env.local:/app/.env.local
+    restart: unless-stopped
+    ports:
+      - 3000:3000
