@@ -1,8 +1,8 @@
-import { Image, Response } from "./strapi";
+import { ImageSchema, Response } from "./strapi";
 
 interface Artwork {
 	description?: string;
-	image: Response<Image>;
+	image: Response<ImageSchema>;
 	name: string;
 	original_sold: boolean;
 	redbubble_link: string;

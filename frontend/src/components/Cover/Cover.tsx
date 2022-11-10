@@ -3,7 +3,7 @@ import { FC } from "react";
 import Heading from "components/Heading";
 import Image from "components/Image";
 
-import { Image as TImage } from "types/api/strapi";
+import { ImageSchema as TImage } from "types/api/strapi";
 import { WithChildren } from "types/components";
 
 import classes from "./Cover.module.scss";

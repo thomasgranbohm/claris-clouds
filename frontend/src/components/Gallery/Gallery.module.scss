@@ -1,0 +1,22 @@
+@use "styles/mixins";
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+
+	& + .row {
+		margin-top: 1rem;
+	}
+
+	.item {
+		background-color: black;
+	}
+
+	@include mixins.breakpoint("md", true) {
+		.item {
+			width: 100%;
+		}
+	}
+}

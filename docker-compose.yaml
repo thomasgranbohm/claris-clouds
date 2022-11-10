@@ -2,7 +2,6 @@ version: "3"
 services:
   backend:
     build: ./backend
-    restart: unless-stopped
     env_file: backend/.env
     volumes:
       - ./backend/config:/opt/app/config
@@ -16,12 +15,13 @@ services:
     ports:
       - "1337:1337"
   frontend:
-    build: ./frontend
-    volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/public:/app/public
-      - ./frontend/.env:/app/.env
-      - ./frontend/.env.local:/app/.env.local
-    restart: unless-stopped
+    image: node:16-alpine
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+    command: sh -c "npm run dev || npm ci"
     ports:
-      - 3000:3000
+      - "3000:3000"
+    user: node
+    volumes:
+      - ./frontend:/home/node/app
+    working_dir: /home/node/app

@@ -24,12 +24,13 @@ const nextConfig = {
 		];
 	},
 	publicRuntimeConfig: {
+		API_URL: process.env.EXTERNAL_API_URL,
 		PAGE_URL: process.env.PAGE_URL,
 	},
 	reactStrictMode: true,
 	swcMinify: true,
 	serverRuntimeConfig: {
-		API_URL: process.env.API_URL,
+		API_URL: process.env.INTERNAL_API_URL,
 	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find(

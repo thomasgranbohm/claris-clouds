@@ -9,14 +9,11 @@ export type Response<T> = {
 				id: number;
 		  };
 	error?: ResponseError;
-	meta?: {
-		pagination?: {
-			page: number;
-			pageCount: number;
-			pageSize: number;
-			total: number;
-		};
-	};
+	meta: T extends Array<any>
+		? {
+				pagination: T extends Array<any> ? PaginationSchema : undefined;
+		  }
+		: undefined;
 };
 
 export type ResponseError = {
@@ -24,6 +21,13 @@ export type ResponseError = {
 	message: string;
 	name: string;
 	status: 404;
+};
+
+export type PaginationSchema = {
+	page: number;
+	pageCount: number;
+	pageSize: number;
+	total: number;
 };
 
 export type ImageFormat = {
@@ -40,14 +44,15 @@ export type ImageFormat = {
 
 export type ImageFormatNames = "thumbnail" | "small" | "medium" | "large";
 
-export type Image = {
+export type ImageFormats = {
+	[formatName in ImageFormatNames]: ImageFormat;
+};
+
+export interface ImageSchema extends Dates {
 	alternativeText: string;
 	caption: string;
-	createdAt: Date;
 	ext: string;
-	formats: {
-		[formatName in ImageFormatNames]: ImageFormat;
-	};
+	formats: ImageFormats;
 	hash: string;
 	height: number;
 	mime: string;
@@ -56,7 +61,12 @@ export type Image = {
 	provider: string;
 	provider_metadata?: any;
 	size: number;
-	updatedAt: Date;
 	url: string;
 	width: number;
-};
+}
+
+export interface Dates {
+	createdAt: Date;
+	publishedAt?: Date;
+	updatedAt: Date;
+}

@@ -7,5 +7,5 @@ export const getArtwork = (slug: string) => {
 };
 
 export const getArtworks = async () => {
-	return request<Array<Artwork>>("GET", `artworks/`);
+	return request<Array<Artwork>>("GET", `artworks/?sort[0]=id:desc`);
 };

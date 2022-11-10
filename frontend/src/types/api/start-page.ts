@@ -1,6 +1,6 @@
-import { Image, Response } from "types/api/strapi";
+import { ImageSchema, Response } from "types/api/strapi";
 
 export interface StartPage {
-	background: Response<Image>;
+	background: Response<ImageSchema>;
 	title: string;
 }
