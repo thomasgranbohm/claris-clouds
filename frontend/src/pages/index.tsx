@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import type { GetStaticProps, NextPage } from "next";
-import stripWrapper from "utils/stripWrapper";
 
 import { getStartPage } from "api/start-page";
 
@@ -11,6 +10,8 @@ import Row from "components/Row";
 import Typography from "components/Typography";
 
 import { StartPage } from "types/api/start-page";
+
+import stripWrapper from "utils/stripWrapper";
 
 export const getStaticProps: GetStaticProps<StartPageProps> = async () => {
 	const { error, ...response } = await getStartPage();

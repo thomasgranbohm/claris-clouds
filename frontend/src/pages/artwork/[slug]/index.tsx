@@ -1,6 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import stripWrapper from "utils/stripWrapper";
 
 import { getArtwork } from "api/artwork";
 
@@ -15,6 +14,8 @@ import Row from "components/Row";
 import Typography from "components/Typography";
 
 import Artwork from "types/api/artwork";
+
+import stripWrapper from "utils/stripWrapper";
 
 export const getServerSideProps: GetServerSideProps<
 	ArtworkPageProps | Promise<ArtworkPageProps>
