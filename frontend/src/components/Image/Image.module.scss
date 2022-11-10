@@ -1,5 +1,8 @@
 .container {
 	overflow: hidden;
+	letter-spacing: 0;
+	word-spacing: 0;
+	font-size: 0;
 
 	&.layout {
 		&--fill,

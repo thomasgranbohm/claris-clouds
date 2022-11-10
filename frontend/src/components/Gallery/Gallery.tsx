@@ -1,16 +1,15 @@
-import { FC, Fragment, ReactNode, useMemo, useState } from "react";
-import { assert } from "console";
-import useBreakpoint from "hooks/useBreakpoint";
-import stripWrapper from "utils/stripWrapper";
+import { FC, useMemo, useRef } from "react";
 
-import Column from "components/Column";
 import Image from "components/Image";
 import Link from "components/Link";
-import Row from "components/Row";
+
+import useBreakpoint from "hooks/useBreakpoint";
 
 import Artwork from "types/api/artwork";
 import { ImageSchema } from "types/api/strapi";
 import { BREAKPOINTS } from "types/generics";
+
+import stripWrapper from "utils/stripWrapper";
 
 import classes from "./Gallery.module.scss";
 
@@ -18,75 +17,69 @@ interface GalleryProps {
 	artworks: Artwork[];
 }
 
-interface GalleryItemProps {
-	alternativeText: string;
-	ext: string;
-	hash: string;
-	height: number;
+interface GalleryItemProps extends Artwork {
 	layout?: "responsive";
-	slug: string;
-	width: number;
 }
 
-const GalleryItem: FC<GalleryItemProps> = ({
-	alternativeText,
-	ext,
-	hash,
-	height,
-	layout,
-	slug,
-	width,
-}) => (
-	<Link href={`/artwork/${slug}`} className={classes["item"]}>
-		<Image
-			src={hash + ext}
-			alt={alternativeText}
-			layout={layout}
-			height={height}
-			width={width}
-		/>
-	</Link>
-);
+const GalleryItem: FC<GalleryItemProps> = ({ image, layout, slug }) => {
+	const { alternativeText, ext, hash, height, width } = stripWrapper(image);
+
+	return (
+		<Link href={`/artwork/${slug}`} className={classes["item"]}>
+			<Image
+				src={hash + ext}
+				alt={alternativeText}
+				layout={layout}
+				height={height}
+				width={width}
+			/>
+		</Link>
+	);
+};
+
+const GAP = 18;
 
 const Gallery: FC<GalleryProps> = ({ artworks }) => {
 	const breakpoint = useBreakpoint();
 
+	const ref = useRef<HTMLDivElement>(null);
+
 	const parsedArtworks = useMemo(() => {
-		const parsed = [];
+		const parsed: Array<GalleryItemProps> = [];
+
+		if (!ref.current) {
+			return null;
+		}
+
+		const getAspectRatio = (img: ImageSchema) => img.width / img.height;
+
+		const getAbsoluteRatio = (ratio: number) =>
+			ratio < 1 ? Math.pow(ratio, -1) : ratio;
 
 		if (breakpoint !== null && breakpoint !== BREAKPOINTS.sm) {
-			for (
-				let actualIndex = 0;
-				parsed.length < artworks.length;
-				actualIndex++
-			) {
-				let amountOnRow = null;
-
-				switch (breakpoint) {
-					case BREAKPOINTS.md:
-						amountOnRow = 2;
-						break;
-					case BREAKPOINTS.lg:
-					case BREAKPOINTS.xl:
-						amountOnRow = actualIndex % 2 == 0 ? 3 : 2;
-						break;
-					default:
-						amountOnRow = 1;
-				}
-
+			for (let index = 0; parsed.length < artworks.length; index++) {
+				const toPick = breakpoint === BREAKPOINTS.md ? 2 : 3;
 				const sliced = artworks.slice(
 					parsed.length,
-					parsed.length + amountOnRow
+					parsed.length + toPick
 				);
-				const actualAmount = sliced.length;
-				const images = sliced.map(({ image }) => stripWrapper(image));
+
+				const picked = [];
+				for (const artwork of sliced) {
+					const image = stripWrapper(artwork.image);
+
+					picked.push(artwork);
+
+					if (getAbsoluteRatio(getAspectRatio(image)) > 2) {
+						break;
+					}
+				}
+
+				const images = picked.map(({ image }) => stripWrapper(image));
 
 				const biggestHeight = Math.max(
 					...images.map(({ height }) => height)
 				);
-
-				const getAspectRatio = (img: ImageSchema) =>
-					img.width / img.height;
 
 				const scaled = images.map(({ height, width, ...rest }) => {
 					const m = biggestHeight / height;
@@ -101,63 +94,47 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 					};
 				});
 
-				const WIDTH = breakpoint - 18 * 2 - 18 * (actualAmount - 1);
+				const WIDTH = ref.current.clientWidth - GAP * picked.length;
 
 				const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
 				const multiplier = combinedWidths / WIDTH;
 
 				parsed.push(
-					...sliced.map(({ image, slug }, index) => {
-						const { alternativeText, ext, hash } =
-							stripWrapper(image);
+					...picked.map(({ image, ...artwork }, index) => {
 						const { height, width } = scaled[index];
 
-						return (
-							<GalleryItem
-								key={parsed.length + index}
-								slug={slug}
-								hash={hash}
-								ext={ext}
-								alternativeText={alternativeText}
-								width={width / multiplier}
-								height={height / multiplier}
-							/>
-						);
+						image.data.attributes.height = height / multiplier;
+						image.data.attributes.width = width / multiplier;
+
+						return {
+							...artwork,
+							image,
+						};
 					})
 				);
 			}
 		} else {
 			parsed.push(
-				artworks.map(({ image, slug }, index) => {
-					const { alternativeText, ext, hash, height, width } =
-						stripWrapper(image);
-
-					return (
-						<GalleryItem
-							key={index}
-							slug={slug}
-							hash={hash}
-							ext={ext}
-							layout="responsive"
-							alternativeText={alternativeText}
-							width={width}
-							height={height}
-						/>
-					);
-				})
+				...artworks.map<GalleryItemProps>((artwork) => ({
+					...artwork,
+					layout: "responsive",
+				}))
 			);
 		}
 
-		console.log(parsed.length);
-
-		return parsed;
-	}, [artworks, breakpoint]);
+		return parsed.map((props) => (
+			<GalleryItem {...props} key={props.slug} />
+		));
+	}, [artworks, breakpoint, ref]);
 
 	return (
-		<>
-			{breakpoint}
-			<div className={classes["container"]}>{parsedArtworks}</div>
-		</>
+		<div
+			ref={ref}
+			className={classes["container"]}
+			style={{ gap: GAP + "px" }}
+		>
+			{parsedArtworks}
+		</div>
 	);
 };
 
