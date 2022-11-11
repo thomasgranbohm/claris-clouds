@@ -4,6 +4,7 @@ import { getArtworks } from "api/artwork";
 
 import Gallery from "components/Gallery";
 import Layout from "components/Layout";
+import MetaData from "components/MetaData";
 
 import Artwork from "types/api/artwork";
 import { PaginationSchema } from "types/api/strapi";
@@ -39,6 +40,8 @@ interface GalleryPageProps {
 const GalleryPage: NextPage<GalleryPageProps> = ({ artworks }) => {
 	return (
 		<Layout>
+			<MetaData title="Gallery" path="/gallery" />
+
 			<Gallery artworks={artworks} />
 		</Layout>
 	);

@@ -8,7 +8,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
 		<>
 			<DefaultSeo
 				defaultTitle="Clari's Clouds"
-				titleTemplate="%s | Clari's Clouds"
+				titleTemplate="%s – Clari's Clouds"
 			/>
 			<Component {...pageProps} />
 		</>

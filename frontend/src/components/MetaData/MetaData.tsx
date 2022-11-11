@@ -6,7 +6,7 @@ import classes from "./MetaData.module.scss";
 
 interface MetaDataProps {
 	description?: string;
-	images: Array<{
+	images?: Array<{
 		alt: string;
 		height: number;
 		url: string;
@@ -26,10 +26,12 @@ const MetaData: FC<MetaDataProps> = ({ description, images, path, title }) => {
 			canonical={publicRuntimeConfig.PAGE_URL + path}
 			openGraph={{
 				description,
-				images: images.map(({ url, ...rest }) => ({
-					...rest,
-					url: `${publicRuntimeConfig.PAGE_URL}/api/image?src=${url}`,
-				})),
+				images:
+					images &&
+					images.map(({ url, ...rest }) => ({
+						...rest,
+						url: `${publicRuntimeConfig.PAGE_URL}/api/image?src=${url}`,
+					})),
 				title,
 				type: "website",
 			}}

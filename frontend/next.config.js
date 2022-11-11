@@ -23,6 +23,20 @@ const nextConfig = {
 			},
 		];
 	},
+	async redirects() {
+		return [
+			{
+				destination: "/gallery",
+				source: "/artworks",
+				permanent: true,
+			},
+			{
+				destination: "/gallery",
+				source: "/artwork",
+				permanent: true,
+			},
+		];
+	},
 	publicRuntimeConfig: {
 		API_URL: process.env.EXTERNAL_API_URL,
 		PAGE_URL: process.env.PAGE_URL,

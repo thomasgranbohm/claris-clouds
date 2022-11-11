@@ -13,6 +13,11 @@ import stripWrapper from "utils/stripWrapper";
 
 import classes from "./Gallery.module.scss";
 
+/**
+ * TODO: This component isn't very cleanly coded and should be reworked
+ * Especially the GAP part.
+ */
+
 interface GalleryProps {
 	artworks: Artwork[];
 }
@@ -51,7 +56,8 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 			return null;
 		}
 
-		const getAspectRatio = (img: ImageSchema) => img.width / img.height;
+		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
+			img.width / img.height;
 
 		const getAbsoluteRatio = (ratio: number) =>
 			ratio < 1 ? Math.pow(ratio, -1) : ratio;
@@ -70,7 +76,7 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 
 					picked.push(artwork);
 
-					if (getAbsoluteRatio(getAspectRatio(image)) > 2) {
+					if (getAspectRatio(image) > 2) {
 						break;
 					}
 				}
@@ -94,7 +100,8 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 					};
 				});
 
-				const WIDTH = ref.current.clientWidth - GAP * picked.length;
+				const WIDTH =
+					ref.current.clientWidth - GAP * (picked.length - 1);
 
 				const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
 				const multiplier = combinedWidths / WIDTH;
