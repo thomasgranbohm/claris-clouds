@@ -12,6 +12,22 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "favicon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
     "links": {
       "type": "component",
       "repeatable": true,

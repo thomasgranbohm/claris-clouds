@@ -1,7 +1,7 @@
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSideProps, GetStaticPaths, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { getArtwork } from "api/artwork";
+import { getArtwork, getArtworks } from "api/artwork";
 
 import Button from "components/Button";
 import Column from "components/Column";
@@ -14,34 +14,49 @@ import Row from "components/Row";
 import Typography from "components/Typography";
 
 import Artwork from "types/api/artwork";
+import { LayoutPage } from "types/components";
 
+import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getServerSideProps: GetServerSideProps<
-	ArtworkPageProps | Promise<ArtworkPageProps>
-> = async ({ query }) => {
-	const { slug } = query;
+export const getStaticProps = getLayoutData<ArtworkPageProps>(
+	async ({ params }) => {
+		const slug = params?.["slug"];
 
-	if (!slug) {
-		return {
-			notFound: true,
-		};
-	}
-
-	const { data, error } = await getArtwork(slug.toString());
-
-	if (error) {
-		if (error.status === 404) {
+		if (!slug) {
 			return {
 				notFound: true,
 			};
-		} else {
-			throw error;
 		}
+
+		const { data, error } = await getArtwork(slug.toString());
+
+		if (error) {
+			if (error.status === 404) {
+				return {
+					notFound: true,
+				};
+			} else {
+				throw error;
+			}
+		}
+
+		return {
+			props: { artwork: data.attributes },
+		};
 	}
+);
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const artworks = await getArtworks({
+		fields: ["slug"],
+	});
 
 	return {
-		props: { artwork: data.attributes },
+		fallback: true,
+		paths: (artworks.data || []).map((a) => ({
+			params: { slug: a.attributes.slug },
+		})),
 	};
 };
 
@@ -49,7 +64,7 @@ interface ArtworkPageProps {
 	artwork: Artwork;
 }
 
-const ArtworkPage: NextPage<ArtworkPageProps> = ({ artwork }) => {
+const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 	const { asPath } = useRouter();
 	const {
 		description,
@@ -62,7 +77,7 @@ const ArtworkPage: NextPage<ArtworkPageProps> = ({ artwork }) => {
 	const image = stripWrapper(rawImage);
 
 	return (
-		<Layout>
+		<Layout {...layout}>
 			<MetaData
 				title={name}
 				description={description}
@@ -88,9 +103,6 @@ const ArtworkPage: NextPage<ArtworkPageProps> = ({ artwork }) => {
 				</Column>
 				<Column lg={6} align="end">
 					<Heading type="h2">{name}</Heading>
-					{description && (
-						<Typography size="large">{description}</Typography>
-					)}
 					<Row row-gap="none">
 						<Column md={6} align="center">
 							<Link href={redbubble_link} asWrapper>
@@ -110,6 +122,13 @@ const ArtworkPage: NextPage<ArtworkPageProps> = ({ artwork }) => {
 							)}
 						</Column>
 					</Row>
+				</Column>
+			</Row>
+			<Row>
+				<Column sm={[8, 2]}>
+					{description && (
+						<Typography size="large">{description}</Typography>
+					)}
 				</Column>
 			</Row>
 		</Layout>

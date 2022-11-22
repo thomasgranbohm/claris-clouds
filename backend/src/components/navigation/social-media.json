@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_navigation_social_medias",
+  "info": {
+    "displayName": "social-media",
+    "icon": "external-link-alt"
+  },
+  "options": {},
+  "attributes": {
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "instagram",
+        "redbubble"
+      ],
+      "required": true
+    }
+  }
+}

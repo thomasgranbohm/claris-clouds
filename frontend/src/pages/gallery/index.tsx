@@ -8,11 +8,14 @@ import MetaData from "components/MetaData";
 
 import Artwork from "types/api/artwork";
 import { PaginationSchema } from "types/api/strapi";
+import { LayoutPage } from "types/components";
 
-export const getServerSideProps: GetServerSideProps<
-	GalleryPageProps | Promise<GalleryPageProps>
-> = async () => {
-	const { data, error, meta } = await getArtworks();
+import getLayoutData from "utils/getLayoutData";
+
+export const getStaticProps = getLayoutData<GalleryPageProps>(async () => {
+	const { data, error, meta } = await getArtworks({
+		slug: ["id:desc"],
+	});
 
 	if (error) {
 		if (error.status === 404) {
@@ -30,16 +33,16 @@ export const getServerSideProps: GetServerSideProps<
 			pagination: meta.pagination,
 		},
 	};
-};
+});
 
 interface GalleryPageProps {
 	artworks: Artwork[];
 	pagination: PaginationSchema;
 }
 
-const GalleryPage: NextPage<GalleryPageProps> = ({ artworks }) => {
+const GalleryPage: LayoutPage<GalleryPageProps> = ({ artworks, layout }) => {
 	return (
-		<Layout>
+		<Layout {...layout}>
 			<MetaData title="Gallery" path="/gallery" />
 
 			<Gallery artworks={artworks} />

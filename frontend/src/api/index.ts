@@ -7,20 +7,22 @@ const { serverRuntimeConfig } = getConfig();
 
 const API = axios.create({
 	baseURL: serverRuntimeConfig.API_URL + "/api",
-    params: {
-        "populate": "*"
-    }
+	params: {
+		populate: "*",
+	},
 });
 
 const request = async <T, U = {}>(
-	method: "GET",
+	method: "GET" | "POST",
 	url: string,
 	data?: U
 ): Promise<Response<T>> => {
 	try {
+		console.log(data);
 		const resp = await API<Response<T>>({
-			data,
+			data: method === "POST" ? data : {},
 			method,
+			params: method === "GET" ? data : {},
 			url: url.startsWith("/") ? url : `/${url}`,
 		});
 

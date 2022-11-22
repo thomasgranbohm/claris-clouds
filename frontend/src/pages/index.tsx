@@ -10,10 +10,12 @@ import Row from "components/Row";
 import Typography from "components/Typography";
 
 import { StartPage } from "types/api/start-page";
+import { LayoutPage } from "types/components";
 
+import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps: GetStaticProps<StartPageProps> = async () => {
+export const getStaticProps = getLayoutData(async () => {
 	const { error, ...response } = await getStartPage();
 
 	if (error) {
@@ -30,19 +32,19 @@ export const getStaticProps: GetStaticProps<StartPageProps> = async () => {
 		props: { startPage: stripWrapper<StartPage>(response) },
 		revalidate: 3600,
 	};
-};
+});
 
 interface StartPageProps {
 	startPage: StartPage;
 }
 
-const StartPage: NextPage<StartPageProps> = ({ startPage }) => {
+const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
 	const { background, title } = startPage;
 
 	return (
 		<Fragment>
 			<Cover background={stripWrapper(background)}>{title}</Cover>
-			<Layout>
+			<Layout {...layout}>
 				<Row>
 					<Column>
 						<Typography>
