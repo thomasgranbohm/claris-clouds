@@ -1,19 +1,23 @@
 version: "3"
 services:
   backend:
-    build: ./backend
+    build: backend/
+    command: npm run develop
     env_file: backend/.env
     volumes:
-      - ./backend/config:/opt/app/config
-      - ./backend/database:/opt/app/database
-      - ./backend/public:/opt/app/public
-      - ./backend/src:/opt/app/src
-      - ./backend/package.json:/opt/package.json
-      - ./backend/package-lock.json:/opt/package-lock.json
-      - ./backend/tsconfig.json:/opt/tsconfig.json
-      - ./backend/.env:/opt/app/.env
+      - ./backend/.tmp:/home/node/app/.tmp
+      - ./backend/config:/home/node/app/config
+      - ./backend/database:/home/node/app/database
+      - ./backend/public:/home/node/app/public
+      - ./backend/src:/home/node/app/src
+      - ./backend/package.json:/home/node/app/package.json
+      - ./backend/package-lock.json:/home/node/app/package-lock.json
+      - ./backend/tsconfig.json:/home/node/app/tsconfig.json
+      - ./backend/.env:/home/node/app/.env
     ports:
       - "1337:1337"
+    user: node
+    working_dir: /home/node/app
   frontend:
     image: node:16-alpine
     environment:
