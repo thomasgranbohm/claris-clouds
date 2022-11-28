@@ -1,31 +1,29 @@
 version: "3"
 services:
   backend:
-    build: backend/
-    command: npm run develop
+    build:
+      context: backend/
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
     env_file: backend/.env
+    volumes:
+      - ./backend/config:/opt/app/config
+      - ./backend/src:/opt/app/src
+      - ./backend/package.json:/opt/package.json
+      - ./backend/package-lock.json:/opt/package-lock.json
+      - ./backend/.env:/opt/app/.env
+      - ./backend/public/uploads:/opt/app/public/uploads
     expose:
       - 1337
-    volumes:
-      - ./backend/.tmp:/home/node/app/.tmp
-      - ./backend/config:/home/node/app/config
-      - ./backend/database:/home/node/app/database
-      - ./backend/public:/home/node/app/public
-      - ./backend/src:/home/node/app/src
-      - ./backend/package.json:/home/node/app/package.json
-      - ./backend/package-lock.json:/home/node/app/package-lock.json
-      - ./backend/tsconfig.json:/home/node/app/tsconfig.json
-      - ./backend/.env:/home/node/app/.env
-    user: node
-    working_dir: /home/node/app
   frontend:
-    image: node:16-alpine
+    build:
+      context: frontend/
+      dockerfile: Dockerfile.prod
     environment:
       - NEXT_TELEMETRY_DISABLED=1
     command: sh -c "npm run dev || npm ci"
     expose:
       - 3000
-    user: node
     volumes:
       - ./frontend:/home/node/app
     working_dir: /home/node/app

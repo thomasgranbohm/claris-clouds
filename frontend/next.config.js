@@ -14,6 +14,7 @@ const nextConfig = {
 			},
 		],
 	},
+	output: process.env.NODE_ENV === "production" && "standalone",
 	async rewrites() {
 		return [
 			{
