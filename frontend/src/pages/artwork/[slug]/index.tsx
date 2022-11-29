@@ -19,7 +19,7 @@ import { LayoutPage } from "types/components";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData<ArtworkPageProps>(
+export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 	async ({ params }) => {
 		const slug = params?.["slug"];
 
@@ -46,19 +46,6 @@ export const getStaticProps = getLayoutData<ArtworkPageProps>(
 		};
 	}
 );
-
-export const getStaticPaths: GetStaticPaths = async () => {
-	const artworks = await getArtworks({
-		fields: ["slug"],
-	});
-
-	return {
-		fallback: true,
-		paths: (artworks.data || []).map((a) => ({
-			params: { slug: a.attributes.slug },
-		})),
-	};
-};
 
 interface ArtworkPageProps {
 	artwork: Artwork;

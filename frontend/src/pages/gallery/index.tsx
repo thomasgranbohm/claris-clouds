@@ -12,7 +12,7 @@ import { LayoutPage } from "types/components";
 
 import getLayoutData from "utils/getLayoutData";
 
-export const getStaticProps = getLayoutData<GalleryPageProps>(async () => {
+export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
 	const { data, error, meta } = await getArtworks({
 		slug: ["id:desc"],
 	});

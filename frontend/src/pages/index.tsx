@@ -15,7 +15,7 @@ import { LayoutPage } from "types/components";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData(async () => {
+export const getServerSideProps = getLayoutData(async () => {
 	const { error, ...response } = await getStartPage();
 
 	if (error) {
@@ -30,7 +30,6 @@ export const getStaticProps = getLayoutData(async () => {
 
 	return {
 		props: { startPage: stripWrapper<StartPage>(response) },
-		revalidate: 3600,
 	};
 });
 
