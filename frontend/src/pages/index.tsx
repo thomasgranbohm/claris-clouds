@@ -1,9 +1,11 @@
 import { Fragment } from "react";
+import { ApolloError, ServerError } from "@apollo/client";
 import type { GetStaticProps, NextPage } from "next";
 
 import { getStartPage } from "api/start-page";
 
 import Column from "components/Column";
+import ComponentRenderer from "components/ComponentRenderer";
 import Cover from "components/Cover";
 import Layout from "components/Layout";
 import Row from "components/Row";
@@ -16,21 +18,28 @@ import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
 export const getServerSideProps = getLayoutData(async () => {
-	const { error, ...response } = await getStartPage();
+	try {
+		const { data, error } = await getStartPage();
 
-	if (error) {
-		if (error.status === 404) {
-			return {
-				notFound: true,
-			};
-		} else {
+		// TODO: Needs better error handling
+
+		if (error) {
 			throw error;
 		}
-	}
 
-	return {
-		props: { startPage: stripWrapper<StartPage>(response) },
-	};
+		return {
+			props: {
+				startPage: stripWrapper<StartPage>(data.startPage),
+			},
+		};
+	} catch (err) {
+		if (err instanceof ApolloError) {
+			if (err.networkError) {
+				console.log((err.networkError as ServerError).result);
+			}
+		}
+		throw err;
+	}
 });
 
 interface StartPageProps {
@@ -38,7 +47,7 @@ interface StartPageProps {
 }
 
 const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
-	const { background, title } = startPage;
+	const { background, sections, title } = startPage;
 
 	return (
 		<Fragment>
@@ -55,6 +64,7 @@ const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
 						</Typography>
 					</Column>
 				</Row>
+				<ComponentRenderer components={sections} />
 			</Layout>
 		</Fragment>
 	);

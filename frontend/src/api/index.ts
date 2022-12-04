@@ -1,9 +1,34 @@
+import {
+	ApolloClient,
+	ApolloClientOptions,
+	InMemoryCache,
+	NormalizedCacheObject,
+} from "@apollo/client";
 import axios, { AxiosError } from "axios";
 import getConfig from "next/config";
 
 import { Response } from "types/api/strapi";
 
 const { serverRuntimeConfig } = getConfig();
+
+const defaults = {
+	cache: new InMemoryCache(),
+	defaultOptions: {
+		query: {
+			errorPolicy: "all",
+			fetchPolicy: "no-cache",
+		},
+		watchQuery: {
+			errorPolicy: "ignore",
+			fetchPolicy: "no-cache",
+		},
+	},
+} as ApolloClientOptions<NormalizedCacheObject>;
+
+export const internalAPI = new ApolloClient({
+	...defaults,
+	uri: serverRuntimeConfig.API_URL + "/graphql",
+});
 
 const API = axios.create({
 	baseURL: serverRuntimeConfig.API_URL + "/api",

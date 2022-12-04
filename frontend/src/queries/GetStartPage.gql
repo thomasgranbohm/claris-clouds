@@ -1,0 +1,39 @@
+#import "./fragments/UploadFile.fragment.gql"
+
+query Startpage {
+	startPage {
+		data {
+			attributes {
+				title
+				background {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+				sections {
+					__typename
+					... on ComponentSectionsArtworkDisplay {
+						title
+						artworks {
+							data {
+								attributes {
+									name
+									slug
+									image {
+										data {
+											attributes {
+												...UploadFile
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

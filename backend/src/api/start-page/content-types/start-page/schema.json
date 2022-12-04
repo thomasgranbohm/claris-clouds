@@ -24,6 +24,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.artwork-display"
+      ]
     }
   }
 }

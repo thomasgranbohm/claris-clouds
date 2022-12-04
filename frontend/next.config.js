@@ -14,7 +14,8 @@ const nextConfig = {
 			},
 		],
 	},
-	output: process.env.NODE_ENV === "production" && "standalone",
+	output:
+		(process.env.NODE_ENV === "production" && "standalone") || undefined,
 	async rewrites() {
 		return [
 			{
@@ -68,6 +69,11 @@ const nextConfig = {
 				resourceQuery: { not: [/url/] },
 				test: /\.svg$/i, // exclude react component if *.svg?url
 				use: ["@svgr/webpack"],
+			},
+			{
+				test: /\.(graphql|gql)$/,
+				exclude: /node_modules/,
+				use: [{ loader: "graphql-tag/loader" }],
 			},
 		];
 

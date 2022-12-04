@@ -16,6 +16,10 @@
 
 	.background {
 		z-index: 1;
+
+		.image {
+			height: 100%;
+		}
 	}
 
 	.foreground {

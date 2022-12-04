@@ -1,0 +1,10 @@
+fragment UploadFile on UploadFile {
+	name
+	alternativeText
+	caption
+	width
+	height
+	hash
+	ext
+	formats
+}

@@ -1,10 +1,12 @@
 import { FC } from "react";
 import clsx from "clsx";
-import NextImage from "next/image";
+import NextImage, { ImageProps as NextImageProps } from "next/image";
+
+import { WithClassname } from "types/components";
 
 import classes from "./Image.module.scss";
 
-interface ImageProps {
+interface ImageProps extends WithClassname, NextImageProps {
 	alt: string;
 	height?: number;
 	layout?: "fill" | "intrinsic" | "responsive";
@@ -14,10 +16,12 @@ interface ImageProps {
 
 const Image: FC<ImageProps> = ({
 	alt,
+	className,
 	height,
 	layout = "intrinsic",
 	src,
 	width,
+	...props
 }) => {
 	const url = `/api/image/${src}`;
 
@@ -25,10 +29,12 @@ const Image: FC<ImageProps> = ({
 		<div
 			className={clsx(
 				classes["container"],
-				layout && classes[`layout--${layout}`]
+				layout && classes[`layout--${layout}`],
+				className
 			)}
 		>
 			<NextImage
+				{...props}
 				alt={alt}
 				height={height}
 				layout={layout}

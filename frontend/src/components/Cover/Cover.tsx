@@ -18,6 +18,7 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 			<div className={classes["background"]}>
 				<Image
 					alt={background.alternativeText}
+					className={classes["image"]}
 					height={background.height}
 					layout="fill"
 					src={background.hash + background.ext}
