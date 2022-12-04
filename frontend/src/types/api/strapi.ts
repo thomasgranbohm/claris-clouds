@@ -1,27 +1,37 @@
-export type Response<T> = {
-	data: T extends Array<any>
-		? Array<{
-				attributes: T[0];
-				id: number;
-		  }>
-		: {
-				attributes: T;
-				id: number;
-		  };
-	error?: ResponseError;
-	meta: T extends Array<any>
-		? {
-				pagination: T extends Array<any> ? PaginationSchema : undefined;
-		  }
-		: undefined;
-};
+export namespace GraphQL {
+	export type Data<ResponseData> = {
+		data: ResponseData extends Array<any>
+			? Array<{
+					attributes: ResponseData[0];
+					id: number;
+			  }>
+			: {
+					attributes: ResponseData;
+					id: number;
+			  };
 
-export type ResponseError = {
-	details: object;
-	message: string;
-	name: string;
-	status: 404;
-};
+		meta?: ResponseData extends Array<any>
+			? {
+					pagination: ResponseData extends Array<any>
+						? PaginationSchema
+						: undefined;
+			  }
+			: undefined;
+	};
+
+	export type Response<DataName extends string, ResponseData> = {
+		[Key in DataName]: Data<ResponseData>;
+	};
+
+	export type Wrapper<DataName extends string, ResponseData> = {
+		data: Response<DataName, ResponseData>;
+		error?: {
+			message: string;
+			name: string;
+			statusCode: number;
+		};
+	};
+}
 
 export type PaginationSchema = {
 	page: number;

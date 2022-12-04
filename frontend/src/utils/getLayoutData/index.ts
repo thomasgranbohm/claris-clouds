@@ -8,6 +8,8 @@ import { getPageInformation } from "api/page-information";
 
 import { LayoutSchema } from "types/components";
 
+import stripWrapper from "utils/stripWrapper";
+
 function getLayoutData<T extends { [key: string]: any }>(
 	f: GetServerSideProps<T>
 ): GetServerSideProps<T & LayoutSchema> {
@@ -15,7 +17,7 @@ function getLayoutData<T extends { [key: string]: any }>(
 		const { data, error } = await getPageInformation();
 
 		if (error) {
-			if (error.status === 404) {
+			if (error.statusCode === 404) {
 				return {
 					notFound: true,
 				};
@@ -33,7 +35,7 @@ function getLayoutData<T extends { [key: string]: any }>(
 		return {
 			props: {
 				...res.props,
-				layout: data.attributes,
+				layout: stripWrapper(data.pageInformation),
 			} as T & LayoutSchema,
 		};
 	};

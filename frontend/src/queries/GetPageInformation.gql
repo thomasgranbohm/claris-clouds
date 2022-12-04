@@ -1,0 +1,28 @@
+#import "./fragments/UploadFile.fragment.gql"
+
+query PageInformation {
+	pageInformation {
+		data {
+			attributes {
+				logo {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+				favicon {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+				links {
+					label
+					path
+				}
+			}
+		}
+	}
+}

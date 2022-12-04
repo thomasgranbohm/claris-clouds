@@ -1,0 +1,22 @@
+#import "./fragments/UploadFile.fragment.gql"
+
+query ArtworkBySlug($slug: String!) {
+	artwork(slug: $slug) {
+		data {
+			attributes {
+				name
+				description
+				image {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+				redbubble_link
+				original_sold
+				slug
+			}
+		}
+	}
+}

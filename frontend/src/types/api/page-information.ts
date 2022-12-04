@@ -1,12 +1,12 @@
-import { ImageSchema, Response } from "types/api/strapi";
+import { GraphQL, ImageSchema } from "types/api/strapi";
 
 type PageInformationSchema = {
-	favicon: Response<ImageSchema>;
+	favicon: GraphQL.Data<ImageSchema>;
 	links: Array<{
 		label: string;
 		path: string;
 	}>;
-	logo: Response<ImageSchema>;
+	logo: GraphQL.Data<ImageSchema>;
 };
 
 export default PageInformationSchema;

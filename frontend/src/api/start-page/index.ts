@@ -1,9 +1,9 @@
-import { internalAPI } from "api/index";
+import request from "api/index";
 
 import GetStartpage from "queries/GetStartPage.gql";
 
-import { StartPageRequest } from "types/requests";
+import { StartPage } from "types/api/start-page";
 
 export const getStartPage = async () => {
-	return internalAPI.query<StartPageRequest>({ query: GetStartpage });
+	return request<"startPage", StartPage>({ query: GetStartpage });
 };

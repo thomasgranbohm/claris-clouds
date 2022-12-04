@@ -32,7 +32,7 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 		const { data, error } = await getArtwork(slug.toString());
 
 		if (error) {
-			if (error.status === 404) {
+			if (error.statusCode === 404) {
 				return {
 					notFound: true,
 				};
@@ -42,7 +42,7 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 		}
 
 		return {
-			props: { artwork: data.attributes },
+			props: { artwork: stripWrapper(data.artwork) },
 		};
 	}
 );

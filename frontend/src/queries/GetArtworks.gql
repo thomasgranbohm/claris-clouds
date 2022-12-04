@@ -1,0 +1,17 @@
+query Artworks {
+	artworks {
+		data {
+			attributes {
+				name
+			}
+		}
+		meta {
+			pagination {
+				total
+				page
+				pageSize
+				pageCount
+			}
+		}
+	}
+}

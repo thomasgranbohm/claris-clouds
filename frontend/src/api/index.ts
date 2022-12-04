@@ -1,13 +1,15 @@
 import {
 	ApolloClient,
 	ApolloClientOptions,
+	ApolloError,
 	InMemoryCache,
 	NormalizedCacheObject,
+	QueryOptions,
+	ServerError,
 } from "@apollo/client";
-import axios, { AxiosError } from "axios";
 import getConfig from "next/config";
 
-import { Response } from "types/api/strapi";
+import { GraphQL } from "types/api/strapi";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -30,34 +32,49 @@ export const internalAPI = new ApolloClient({
 	uri: serverRuntimeConfig.API_URL + "/graphql",
 });
 
-const API = axios.create({
-	baseURL: serverRuntimeConfig.API_URL + "/api",
-	params: {
-		populate: "*",
-	},
-});
+const request = async <
+	DataName extends string,
+	ReturnType,
+	TVariables = Record<string, any>
+>(
+	options: QueryOptions<TVariables, ReturnType>
+): Promise<GraphQL.Wrapper<DataName, ReturnType>> => {
+	const resolver = serverRuntimeConfig.API_URL ? internalAPI : undefined;
 
-const request = async <T, U = {}>(
-	method: "GET" | "POST",
-	url: string,
-	data?: U
-): Promise<Response<T>> => {
+	if (!resolver) {
+		throw new Error("Not implemented.");
+	}
+
 	try {
-		console.log(data);
-		const resp = await API<Response<T>>({
-			data: method === "POST" ? data : {},
-			method,
-			params: method === "GET" ? data : {},
-			url: url.startsWith("/") ? url : `/${url}`,
-		});
+		const { data, error } = await resolver.query<
+			GraphQL.Response<DataName, ReturnType>,
+			TVariables
+		>(options);
 
-		return resp.data;
+		if (error) {
+			throw error;
+		}
+
+		if (!data) {
+			throw new Error("Data is undefined.");
+		}
+
+		return { data };
 	} catch (error) {
-		if (error instanceof AxiosError) {
-			if (error.response) {
-				return error.response.data;
+		if (error) {
+			if (error instanceof ApolloError) {
+				if (
+					error.networkError &&
+					(error.networkError as ServerError).statusCode
+				) {
+					return {
+						data: null as any,
+						error: error.networkError as ServerError,
+					};
+				}
 			}
 		}
+
 		throw error;
 	}
 };

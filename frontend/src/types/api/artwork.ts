@@ -1,8 +1,8 @@
-import { ImageSchema, Response } from "./strapi";
+import { GraphQL, ImageSchema } from "./strapi";
 
 interface Artwork {
 	description?: string;
-	image: Response<ImageSchema>;
+	image: GraphQL.Data<ImageSchema>;
 	name: string;
 	original_sold: boolean;
 	redbubble_link: string;

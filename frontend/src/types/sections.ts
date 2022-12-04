@@ -1,9 +1,9 @@
 import Artwork from "types/api/artwork";
-import { Response } from "types/api/strapi";
+import { GraphQL } from "types/api/strapi";
 
 export interface ArtworkDisplaySchema {
 	__typename: "ComponentSectionsArtworkDisplay";
-	artworks: Response<Array<Artwork>>;
+	artworks: GraphQL.Data<Artwork[]>;
 	title?: string;
 }
 

@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ApolloError, ServerError } from "@apollo/client";
-import type { GetStaticProps, NextPage } from "next";
 
+import { getArtwork, getArtworks } from "api/artwork";
 import { getStartPage } from "api/start-page";
 
 import Column from "components/Column";
@@ -18,28 +18,23 @@ import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
 export const getServerSideProps = getLayoutData(async () => {
-	try {
-		const { data, error } = await getStartPage();
+	const { data, error } = await getStartPage();
 
-		// TODO: Needs better error handling
-
-		if (error) {
-			throw error;
+	if (error) {
+		if (error.statusCode === 404) {
+			return {
+				notFound: true,
+			};
 		}
 
-		return {
-			props: {
-				startPage: stripWrapper<StartPage>(data.startPage),
-			},
-		};
-	} catch (err) {
-		if (err instanceof ApolloError) {
-			if (err.networkError) {
-				console.log((err.networkError as ServerError).result);
-			}
-		}
-		throw err;
+		throw error;
 	}
+
+	return {
+		props: {
+			startPage: stripWrapper<StartPage>(data.startPage),
+		},
+	};
 });
 
 interface StartPageProps {
