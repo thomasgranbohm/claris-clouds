@@ -1,11 +1,9 @@
 import {
 	ApolloClient,
 	ApolloClientOptions,
-	ApolloError,
 	InMemoryCache,
 	NormalizedCacheObject,
 	QueryOptions,
-	ServerError,
 } from "@apollo/client";
 import getConfig from "next/config";
 
@@ -46,13 +44,23 @@ const request = async <
 	}
 
 	try {
-		const { data, error } = await resolver.query<
+		const { data, error, errors } = await resolver.query<
 			GraphQL.Response<DataName, ReturnType>,
 			TVariables
 		>(options);
 
+		// Apollo Errors
 		if (error) {
 			throw error;
+		}
+
+		// GraphQL Errors
+		if (errors && errors.length > 0) {
+			const graphQLError = errors.slice().pop() as unknown;
+			return {
+				data: null as any,
+				error: graphQLError as GraphQL.Error,
+			};
 		}
 
 		if (!data) {
@@ -61,20 +69,9 @@ const request = async <
 
 		return { data };
 	} catch (error) {
-		if (error) {
-			if (error instanceof ApolloError) {
-				if (
-					error.networkError &&
-					(error.networkError as ServerError).statusCode
-				) {
-					return {
-						data: null as any,
-						error: error.networkError as ServerError,
-					};
-				}
-			}
-		}
+		// TODO: better error handling
 
+		console.error("Throwing...");
 		throw error;
 	}
 };

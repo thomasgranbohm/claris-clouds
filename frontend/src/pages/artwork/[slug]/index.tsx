@@ -32,7 +32,7 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 		const { data, error } = await getArtwork(slug.toString());
 
 		if (error) {
-			if (error.statusCode === 404) {
+			if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
 				return {
 					notFound: true,
 				};

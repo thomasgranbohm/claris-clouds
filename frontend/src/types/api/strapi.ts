@@ -19,17 +19,25 @@ export namespace GraphQL {
 			: undefined;
 	};
 
+	export interface Error {
+		extensions: {
+			code: "STRAPI_NOT_FOUND_ERROR";
+			error: {
+				details: object;
+				message: string;
+				name: string;
+			};
+		};
+		message: string;
+	}
+
 	export type Response<DataName extends string, ResponseData> = {
 		[Key in DataName]: Data<ResponseData>;
 	};
 
 	export type Wrapper<DataName extends string, ResponseData> = {
 		data: Response<DataName, ResponseData>;
-		error?: {
-			message: string;
-			name: string;
-			statusCode: number;
-		};
+		error?: Error;
 	};
 }
 
