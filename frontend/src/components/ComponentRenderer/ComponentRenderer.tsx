@@ -1,6 +1,10 @@
 import { FC, Fragment } from "react";
 
-import { ArtworkDisplay } from "components/ComponentRenderer/components";
+import {
+	ArtworkDisplay,
+	CallToAction,
+	RichText,
+} from "components/ComponentRenderer/components";
 
 import Sections from "types/sections";
 
@@ -15,6 +19,12 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 		switch (section.__typename) {
 			case "ComponentSectionsArtworkDisplay":
 				Element = ArtworkDisplay;
+				break;
+			case "ComponentSectionsCallToAction":
+				Element = CallToAction;
+				break;
+			case "ComponentSectionsRichText":
+				Element = RichText;
 				break;
 			default:
 				return null;

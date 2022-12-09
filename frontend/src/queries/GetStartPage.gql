@@ -32,6 +32,24 @@ query Startpage {
 							}
 						}
 					}
+					... on ComponentSectionsRichText {
+						text
+					}
+					... on ComponentSectionsCallToAction {
+						title
+						text
+						link {
+							label
+							path
+						}
+						image {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
 				}
 			}
 		}
