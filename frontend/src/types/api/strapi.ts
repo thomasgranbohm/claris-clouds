@@ -1,6 +1,6 @@
 export namespace GraphQL {
 	export type Data<ResponseData> = {
-		data: ResponseData extends Array<any>
+		data: ResponseData extends Array<unknown>
 			? Array<{
 					attributes: ResponseData[0];
 					id: number;
@@ -10,9 +10,9 @@ export namespace GraphQL {
 					id: number;
 			  };
 
-		meta?: ResponseData extends Array<any>
+		meta: ResponseData extends Array<unknown>
 			? {
-					pagination: ResponseData extends Array<any>
+					pagination: ResponseData extends Array<unknown>
 						? PaginationSchema
 						: undefined;
 			  }

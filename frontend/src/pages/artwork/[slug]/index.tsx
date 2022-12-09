@@ -1,7 +1,6 @@
-import { GetServerSideProps, GetStaticPaths, NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { getArtwork, getArtworks } from "api/artwork";
+import { getArtwork } from "api/artwork";
 
 import Button from "components/Button";
 import Column from "components/Column";

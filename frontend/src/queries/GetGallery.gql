@@ -1,0 +1,36 @@
+query Artworks {
+	artworks(sort: "id:desc") {
+		data {
+			attributes {
+				name
+				image {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+				slug
+			}
+		}
+		meta {
+			pagination {
+				total
+				page
+				pageSize
+				pageCount
+			}
+		}
+	}
+}
+
+fragment UploadFile on UploadFile {
+	name
+	alternativeText
+	caption
+	width
+	height
+	hash
+	ext
+	formats
+}

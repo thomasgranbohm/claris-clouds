@@ -1,6 +1,4 @@
-import { GetServerSideProps, NextPage } from "next";
-
-import { getArtworks } from "api/artwork";
+import { getGallery } from "api/artwork";
 
 import Gallery from "components/Gallery";
 import Layout from "components/Layout";
@@ -11,14 +9,13 @@ import { PaginationSchema } from "types/api/strapi";
 import { LayoutPage } from "types/components";
 
 import getLayoutData from "utils/getLayoutData";
+import stripWrapper from "utils/stripWrapper";
 
 export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
-	const { data, error, meta } = await getArtworks({
-		slug: ["id:desc"],
-	});
+	const { data, error } = await getGallery();
 
 	if (error) {
-		if (error.status === 404) {
+		if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
 			return {
 				notFound: true,
 			};
@@ -29,8 +26,8 @@ export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
 
 	return {
 		props: {
-			artworks: data.map(({ attributes, id }) => ({ ...attributes, id })),
-			pagination: meta.pagination,
+			artworks: stripWrapper(data.artworks),
+			pagination: data.artworks.meta.pagination,
 		},
 	};
 });

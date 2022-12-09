@@ -59,9 +59,6 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
-		const getAbsoluteRatio = (ratio: number) =>
-			ratio < 1 ? Math.pow(ratio, -1) : ratio;
-
 		if (breakpoint !== null && breakpoint !== BREAKPOINTS.sm) {
 			for (let index = 0; parsed.length < artworks.length; index++) {
 				const toPick = breakpoint === BREAKPOINTS.md ? 2 : 3;
