@@ -4,6 +4,10 @@
 .container {
 	margin: utils.gutter(0.5) 0;
 
+	&.inline {
+		display: inline-block;
+	}
+
 	&.color {
 		@each $name, $value in $colors {
 			&--#{$name} {

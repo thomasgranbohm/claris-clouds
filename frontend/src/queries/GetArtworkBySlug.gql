@@ -16,6 +16,10 @@ query ArtworkBySlug($slug: String!) {
 				redbubble_link
 				original_sold
 				slug
+				year_of_creation
+				width
+				height
+				medium
 			}
 		}
 	}

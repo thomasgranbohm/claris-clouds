@@ -36,6 +36,7 @@
 		"@storybook/preset-scss": "^1.0.3",
 		"@storybook/react": "^6.5.12",
 		"@storybook/testing-library": "^0.0.13",
+		"@svgr/webpack": "^6.5.1",
 		"@types/node": "18.11.3",
 		"@types/react": "18.0.21",
 		"@types/react-dom": "18.0.6",

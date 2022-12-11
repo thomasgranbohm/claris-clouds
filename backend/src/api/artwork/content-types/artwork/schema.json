@@ -40,6 +40,19 @@
       "type": "uid",
       "required": true,
       "targetField": "name"
+    },
+    "year_of_creation": {
+      "type": "integer"
+    },
+    "width": {
+      "type": "decimal"
+    },
+    "height": {
+      "type": "decimal"
+    },
+    "medium": {
+      "type": "string",
+      "required": false
     }
   }
 }

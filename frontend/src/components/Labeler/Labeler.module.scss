@@ -1,0 +1,30 @@
+@use "styles/functions";
+
+.container {
+	display: inline-flex;
+	align-items: center;
+
+	& > * {
+		flex-grow: 0;
+	}
+
+	.label {
+		text-transform: capitalize;
+
+		margin-right: functions.gutter(0.5);
+
+		&.needs-colon::after {
+			content: ":";
+			display: inline-block;
+		}
+	}
+
+	.label,
+	.content {
+		display: inline-block;
+		&,
+		> * {
+			line-height: 1;
+		}
+	}
+}

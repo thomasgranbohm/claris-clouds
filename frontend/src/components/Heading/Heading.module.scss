@@ -2,7 +2,7 @@
 @use "styles/utils";
 
 .container {
-	display: inline-block;
+	display: block;
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
 	margin: utils.gutter() 0;
 

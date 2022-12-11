@@ -8,6 +8,7 @@ import classes from "./Typography.module.scss";
 
 interface TypographyProps extends WithChildren, WithClassname {
 	color?: COLORS;
+	inline?: true;
 	size?: "normal" | "large" | "larger" | "small" | "smaller";
 	type?: Extract<keyof ReactHTML, "span" | "p">;
 	weight?: "normal" | "medium" | "semi-bold" | "bold";
@@ -17,6 +18,7 @@ const Typography: FC<TypographyProps> = ({
 	children,
 	className,
 	color = "foreground",
+	inline,
 	size = "normal",
 	type = "p",
 	weight = "normal",
@@ -29,6 +31,7 @@ const Typography: FC<TypographyProps> = ({
 				classes[`color--${color}`],
 				classes[`size--${size}`],
 				classes[`weight--${weight}`],
+				inline && classes["inline"],
 				className
 			),
 		},

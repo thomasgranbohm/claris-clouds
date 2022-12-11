@@ -1,0 +1,15 @@
+@use "styles/mixins";
+
+.image {
+	aspect-ratio: 4 / 3;
+}
+
+.specifications {
+	display: flex;
+	flex-direction: column;
+
+	@include mixins.breakpoint(md) {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}

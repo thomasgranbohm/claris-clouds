@@ -60,15 +60,14 @@ const nextConfig = {
 		config.module.rules = [
 			...config.module.rules,
 			{
+				test: /\.svg$/i,
+				issuer: /\.[jt]sx?$/,
+				use: ["@svgr/webpack"],
+			},
+			{
 				resourceQuery: /url/,
 				test: /\.svg$/i,
 				type: "asset", // *.svg?url
-			},
-			{
-				issuer: /\.[jt]sx?$/,
-				resourceQuery: { not: [/url/] },
-				test: /\.svg$/i, // exclude react component if *.svg?url
-				use: ["@svgr/webpack"],
 			},
 			{
 				test: /\.(graphql|gql)$/,
