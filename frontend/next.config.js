@@ -44,7 +44,7 @@ const nextConfig = {
 		API_URL: process.env.EXTERNAL_API_URL,
 		PAGE_URL: process.env.PAGE_URL,
 	},
-	reactStrictMode: true,
+	reactStrictMode: false,
 	swcMinify: true,
 	serverRuntimeConfig: {
 		API_URL: process.env.INTERNAL_API_URL,

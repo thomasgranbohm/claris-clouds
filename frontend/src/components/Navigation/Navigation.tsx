@@ -51,7 +51,7 @@ const Navigation: FC<NavigationProps> = ({ className, links, socials }) => {
 	const router = useRouter();
 
 	return (
-		<div className={clsx(classes["container"], className)}>
+		<nav className={clsx(classes["container"], className)}>
 			{links && (
 				<ul className={classes["links"]}>
 					{links.map((props, i) => (
@@ -70,7 +70,7 @@ const Navigation: FC<NavigationProps> = ({ className, links, socials }) => {
 					))}
 				</ul>
 			)}
-		</div>
+		</nav>
 	);
 };
 

@@ -15,7 +15,7 @@
 	}
 }
 
-@mixin keep-within-width() {
+@mixin keep-within-width {
 	@each $name, $size in variables.$breakpoints {
 		@include breakpoint($name) {
 			max-width: $size;

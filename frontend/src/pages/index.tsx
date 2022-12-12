@@ -21,7 +21,7 @@ export const getServerSideProps = getLayoutData(async () => {
 	const { data, error } = await getStartPage();
 
 	if (error) {
-		if (error.statusCode === 404) {
+		if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
 			return {
 				notFound: true,
 			};

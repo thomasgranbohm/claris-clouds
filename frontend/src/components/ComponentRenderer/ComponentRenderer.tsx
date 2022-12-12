@@ -27,7 +27,7 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 				Element = RichText;
 				break;
 			default:
-				return null;
+				throw new Error("Not implemented");
 		}
 
 		Element = Element as unknown as FunctionComponent;

@@ -43,11 +43,7 @@ const ArtworkDisplay: FC<ArtworkDisplaySchema> = ({ artworks, title }) => {
 								}
 								width={image.data.attributes.width}
 							/>
-							<Heading
-								type="b"
-								look="h6"
-								className={classes["title"]}
-							>
+							<Heading type="b" className={classes["title"]}>
 								{name}
 							</Heading>
 						</Link>

@@ -6,7 +6,7 @@
 	display: grid;
 	min-height: 100vh;
 	grid-template:
-		"header" 6rem "content" 1fr "footer" 4rem
+		"header" auto "content" 1fr "footer" auto
 		/ 1fr;
 
 	.content {
