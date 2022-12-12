@@ -1,10 +1,8 @@
-import { createRef, FC, forwardRef, ReactNode, useRef } from "react";
+import { FC, useRef } from "react";
 import { AriaButtonProps, useButton } from "react-aria";
 import clsx from "clsx";
 
-import Heading from "components/Heading";
-
-import { WithChildren, WithClassname } from "types/components";
+import { WithClassname } from "types/components";
 
 import classes from "./Button.module.scss";
 

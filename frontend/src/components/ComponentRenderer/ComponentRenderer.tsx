@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, FunctionComponent } from "react";
 
 import {
 	ArtworkDisplay,
@@ -30,7 +30,9 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 				return null;
 		}
 
-		return <Element key={index} {...section} />;
+		Element = Element as unknown as FunctionComponent;
+
+		return <Element {...section} key={index} />;
 	};
 
 	return <Fragment>{components.map(renderSection)}</Fragment>;
