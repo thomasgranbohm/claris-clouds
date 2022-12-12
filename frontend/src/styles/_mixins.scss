@@ -1,8 +1,8 @@
 @use "sass:map";
-@import "./variables";
+@use "styles/variables";
 
 @mixin breakpoint($breakpoint, $max: false) {
-	$width: map.get($breakpoints, $breakpoint);
+	$width: map.get(variables.$breakpoints, $breakpoint);
 
 	@if $max {
 		@media screen and (max-width: $width) {
@@ -11,6 +11,14 @@
 	} @else {
 		@media screen and (min-width: $width) {
 			@content;
+		}
+	}
+}
+
+@mixin keep-within-width() {
+	@each $name, $size in variables.$breakpoints {
+		@include breakpoint($name) {
+			max-width: $size;
 		}
 	}
 }

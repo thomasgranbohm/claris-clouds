@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import Header from "components/Header";
 import Link from "components/Link";
 
 import PageInformationSchema from "types/api/page-information";
@@ -11,16 +12,10 @@ export interface LayoutProps extends WithChildren, PageInformationSchema {
 	// Remove me
 }
 
-const Layout: FC<LayoutProps> = ({ children, favicon, links, logo }) => {
+const Layout: FC<LayoutProps> = ({ children, ...headerProps }) => {
 	return (
 		<main className={classes["container"]}>
-			<header className={classes["header"]}>
-				{links.map(({ label, path }, i) => (
-					<Link key={i} href={path}>
-						{label}
-					</Link>
-				))}
-			</header>
+			<Header {...headerProps} className={classes["header"]} />
 			<article className={classes["content"]}>{children}</article>
 			<footer className={classes["footer"]}></footer>
 		</main>

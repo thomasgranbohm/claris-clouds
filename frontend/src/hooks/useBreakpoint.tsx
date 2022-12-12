@@ -7,8 +7,6 @@ const useBreakpoint = (): BREAKPOINTS | null => {
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			const w = window.innerWidth;
-
 			if (window.innerWidth >= BREAKPOINTS.xl) {
 				setBreakpoint(BREAKPOINTS.xl);
 			} else if (window.innerWidth >= BREAKPOINTS.lg) {

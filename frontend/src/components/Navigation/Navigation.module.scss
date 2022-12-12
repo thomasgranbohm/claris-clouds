@@ -1,0 +1,56 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	list-style-type: none;
+
+	.link {
+		display: block;
+		text-decoration: none;
+
+		.item {
+			display: inline-block;
+			padding: functions.gutter(1) 0;
+			position: relative;
+			color: black;
+
+			@include mixins.breakpoint(sm) {
+				padding: functions.gutter(1);
+			}
+
+			&::after {
+				position: absolute;
+				height: 2px;
+				border-radius: 2px;
+				top: 75%;
+				width: 100%;
+				background-color: colors.get(accent);
+				content: "";
+				opacity: 0%;
+				transition: opacity 0.1s;
+				left: 0;
+
+				@include mixins.breakpoint(sm) {
+					width: calc(100% - #{functions.gutter(2)});
+					left: functions.gutter();
+				}
+			}
+		}
+
+		&.active,
+		&:hover,
+		&:focus,
+		&:focus-visible {
+			.item::after {
+				opacity: 100%;
+			}
+		}
+	}
+
+	@include mixins.breakpoint(sm) {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+}

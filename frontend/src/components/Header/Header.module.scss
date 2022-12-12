@@ -1,0 +1,76 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	height: 100%;
+
+	.inner {
+		@include mixins.keep-within-width;
+		margin: 0 auto;
+		padding: 0 functions.gutter();
+		display: grid;
+		grid-template-rows: 6rem;
+		grid-template-columns: repeat(2, 1fr);
+
+		.home-link,
+		.button {
+			align-self: center;
+		}
+
+		.home-link {
+			justify-self: flex-start;
+			display: inline-flex;
+		}
+
+		.button {
+			justify-self: flex-end;
+		}
+
+		.icon {
+			width: 2rem;
+			height: 2rem;
+			margin: 1rem;
+		}
+
+		@include mixins.breakpoint(sm, true) {
+			.navigation {
+				display: none;
+			}
+		}
+
+		@include mixins.breakpoint(sm) {
+			grid-template-columns: auto 1fr;
+			grid-template-areas: "home-link navigation";
+			column-gap: functions.gutter();
+
+			.button {
+				display: none;
+			}
+		}
+	}
+
+	@include mixins.breakpoint(sm, true) {
+		&.open {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+
+			z-index: 100;
+			background-color: colors.get(background);
+
+			.inner {
+				grid-template-rows: 6rem 1fr;
+				height: 100%;
+				grid-template-areas: "home-link button" "navigation navigation";
+
+				.navigation {
+					display: block;
+					grid-area: navigation;
+				}
+			}
+		}
+	}
+}
