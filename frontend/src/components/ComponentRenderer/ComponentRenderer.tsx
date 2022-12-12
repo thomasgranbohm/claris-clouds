@@ -4,6 +4,7 @@ import {
 	ArtworkDisplay,
 	CallToAction,
 	RichText,
+	Showcase,
 } from "components/ComponentRenderer/components";
 
 import Sections from "types/sections";
@@ -25,6 +26,9 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 				break;
 			case "ComponentSectionsRichText":
 				Element = RichText;
+				break;
+			case "ComponentSectionsShowcase":
+				Element = Showcase;
 				break;
 			default:
 				throw new Error("Not implemented");

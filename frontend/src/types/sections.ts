@@ -21,6 +21,15 @@ export interface CallToActionSchema {
 	title?: string;
 }
 
-type AllSections = ArtworkDisplaySchema | CallToActionSchema | RichTextSchema;
+export interface ShowcaseSchema {
+	__typename: "ComponentSectionsShowcase";
+	images: GraphQL.Data<ImageSchema[]>;
+}
+
+type AllSections =
+	| ArtworkDisplaySchema
+	| CallToActionSchema
+	| RichTextSchema
+	| ShowcaseSchema;
 
 export default AllSections;
