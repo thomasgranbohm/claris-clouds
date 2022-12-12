@@ -21,17 +21,22 @@
       ]
     },
     "favicon": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "links": {
       "type": "component",
       "repeatable": true,
       "component": "navigation.link"
+    },
+    "socials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.social-media"
     }
   }
 }

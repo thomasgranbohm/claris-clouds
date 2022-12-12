@@ -61,13 +61,15 @@
 			z-index: 100;
 			background-color: colors.get(background);
 
+			overflow-y: auto;
+
 			.inner {
 				grid-template-rows: 6rem 1fr;
-				height: 100%;
+				min-height: 100%;
 				grid-template-areas: "home-link button" "navigation navigation";
 
 				.navigation {
-					display: block;
+					display: grid;
 					grid-area: navigation;
 				}
 			}

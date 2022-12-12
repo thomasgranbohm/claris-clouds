@@ -23,10 +23,10 @@ interface HeaderProps
 	// Remove me
 }
 
-const Header: FC<HeaderProps> = ({ className, links, logo }) => {
+const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 	const strippedLogo = stripWrapper(logo);
 
-	const { isSelected, setSelected, toggle } = useToggleState();
+	const { isSelected, toggle } = useToggleState();
 
 	const breakpoint = useBreakpoint();
 
@@ -57,6 +57,7 @@ const Header: FC<HeaderProps> = ({ className, links, logo }) => {
 					<Navigation
 						className={classes["navigation"]}
 						links={links}
+						socials={socials}
 					/>
 				</div>
 			</div>

@@ -1,4 +1,5 @@
 import Artwork from "types/api/artwork";
+import Components from "types/api/components";
 import { GraphQL, ImageSchema } from "types/api/strapi";
 
 export interface ArtworkDisplaySchema {
@@ -15,10 +16,7 @@ export interface RichTextSchema {
 export interface CallToActionSchema {
 	__typename: "ComponentSectionsCallToAction";
 	image: GraphQL.Data<ImageSchema>;
-	link?: {
-		label: string;
-		path: string;
-	};
+	link?: Components.Link;
 	text: string;
 	title?: string;
 }
