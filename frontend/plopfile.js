@@ -29,27 +29,33 @@ function plopFunction(
 				message: "With classname",
 				name: "className",
 			},
+			{
+				type: "confirm",
+				default: false,
+				message: "Is Aria component",
+				name: "aria",
+			},
 		],
 		actions: [
 			{
 				type: "add",
 				templateFile: "templates/component/exports.hbs",
-				path: "src/components/{{ properCase name }}/index.ts",
+				path: "src/components/{{#if aria}}aria/{{/if}}{{ properCase name }}/index.ts",
 			},
 			{
 				type: "add",
 				templateFile: "templates/component/stories.hbs",
-				path: "src/components/{{ properCase name }}/{{ properCase name }}.stories.tsx",
+				path: "src/components/{{#if aria}}aria/{{/if}}{{ properCase name }}/{{ properCase name }}.stories.tsx",
 			},
 			{
 				type: "add",
 				templateFile: "templates/component/styling.hbs",
-				path: "src/components/{{ properCase name }}/{{ properCase name }}.module.scss",
+				path: "src/components/{{#if aria}}aria/{{/if}}{{ properCase name }}/{{ properCase name }}.module.scss",
 			},
 			{
 				type: "add",
 				templateFile: "templates/component/typescript.hbs",
-				path: "src/components/{{ properCase name }}/{{ properCase name }}.tsx",
+				path: "src/components/{{#if aria}}aria/{{/if}}{{ properCase name }}/{{ properCase name }}.tsx",
 			},
 		],
 	});

@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 
 import { getArtwork } from "api/artwork";
 
-import Button from "components/Button";
 import Column from "components/Column";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
@@ -12,6 +11,7 @@ import Layout from "components/Layout";
 import Link from "components/Link";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
+import StyledButton from "components/StyledButton";
 import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
@@ -100,7 +100,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					<Row row-gap="none">
 						<Column md={8} lg={6} align="center">
 							<Link href={redbubble_link} asWrapper>
-								<Button>Buy a print</Button>
+								<StyledButton>Buy a print</StyledButton>
 							</Link>
 						</Column>
 						<Column md={4} lg={6} align="center">
@@ -127,7 +127,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					lg={[8, 2]}
 					className={classes["specifications"]}
 				>
-					<Labeler label={<Icon variant="fullscreen" />}>
+					<Labeler label={<Icon variant="ruler" />}>
 						{width} × {height} cm
 					</Labeler>
 					<Labeler label={<Icon variant="material" />}>

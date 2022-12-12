@@ -25,6 +25,7 @@ const nextConfig = {
 			},
 		];
 	},
+	reactStrictMode: false,
 	async redirects() {
 		return [
 			{

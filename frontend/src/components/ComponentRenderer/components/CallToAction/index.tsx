@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
-import Button from "components/Button";
 import Column from "components/Column";
 import Heading from "components/Heading";
 import Image from "components/Image";
 import Link from "components/Link";
 import Row from "components/Row";
+import StyledButton from "components/StyledButton";
 import Typography from "components/Typography";
 
 import { CallToActionSchema } from "types/sections";
@@ -34,7 +34,7 @@ const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 					<Row>
 						<Column sm={[10, 1]} md={[8, 2]} lg={12} xl={8}>
 							<Link href={link.path} asWrapper>
-								<Button>{link.label}</Button>
+								<StyledButton>{link.label}</StyledButton>
 							</Link>
 						</Column>
 					</Row>

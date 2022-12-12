@@ -5,11 +5,11 @@ import Heading from "components/Heading";
 
 import { WithChildren, WithClassname } from "types/components";
 
-import classes from "./Button.module.scss";
+import classes from "./StyledButton.module.scss";
 
-interface ButtonProps extends WithClassname, WithChildren {}
+interface StyledButtonProps extends WithClassname, WithChildren {}
 
-const Button: FC<ButtonProps> = ({ children, className }) => {
+const StyledButton: FC<StyledButtonProps> = ({ children, className }) => {
 	return (
 		<div className={clsx(classes["container"], className)}>
 			<Heading className={classes["title"]} color="background" type="b">
@@ -19,4 +19,4 @@ const Button: FC<ButtonProps> = ({ children, className }) => {
 	);
 };
 
-export default Button;
+export default StyledButton;
