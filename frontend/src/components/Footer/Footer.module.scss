@@ -10,7 +10,7 @@
 	.sections {
 		display: grid;
 		gap: functions.gutter();
-		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
 
 		.links {
 			list-style-type: none;
