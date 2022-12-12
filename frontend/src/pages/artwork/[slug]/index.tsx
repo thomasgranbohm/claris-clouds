@@ -119,12 +119,12 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 				</Column>
 			</Row>
 			<Row row-gap="none">
-				<Column md={[10, 1]} lg={[6, 3]}>
+				<Column md={[10, 1]} lg={[8, 2]}>
 					<Heading type="h4">Specifications</Heading>
 				</Column>
 				<Column
 					md={[10, 1]}
-					lg={[6, 3]}
+					lg={[8, 2]}
 					className={classes["specifications"]}
 				>
 					<Labeler label={<Icon variant="fullscreen" />}>

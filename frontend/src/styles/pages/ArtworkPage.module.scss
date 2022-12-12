@@ -12,4 +12,8 @@
 		flex-direction: row;
 		justify-content: space-between;
 	}
+
+	@include mixins.breakpoint(lg) {
+		justify-content: space-evenly;
+	}
 }
