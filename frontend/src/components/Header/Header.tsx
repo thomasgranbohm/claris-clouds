@@ -12,51 +12,46 @@ import useBreakpoint from "hooks/useBreakpoint";
 
 import PageInformationSchema from "types/api/page-information";
 import { WithClassname } from "types/components";
-import { BREAKPOINTS } from "types/generics";
 
 import stripWrapper from "utils/stripWrapper";
 
 import classes from "./Header.module.scss";
 
-interface HeaderProps extends WithClassname, PageInformationSchema {
+interface HeaderProps
+	extends WithClassname,
+		Omit<PageInformationSchema, "favicon"> {
 	// Remove me
 }
 
 const Header: FC<HeaderProps> = ({ className, links, logo }) => {
 	const strippedLogo = stripWrapper(logo);
 
-	const state = useToggleState();
+	const { isSelected, setSelected, toggle } = useToggleState();
 
 	const breakpoint = useBreakpoint();
 
-	useEffect(() => {
-		console.log("Breakpoint: %d", breakpoint);
-	}, [breakpoint]);
-
 	usePreventScroll({
-		isDisabled: breakpoint !== null || !state.isSelected,
+		isDisabled: breakpoint !== null || !isSelected,
 	});
 
 	return (
-		<FocusScope contain={state.isSelected}>
+		<FocusScope contain={isSelected}>
 			<div
 				className={clsx(
 					classes["container"],
-					state.isSelected && classes["open"],
+					isSelected && classes["open"],
 					className
 				)}
 			>
 				<div className={classes["inner"]}>
 					<Link className={classes["home-link"]} href="/">
+						{/* TODO: Add logo */}
 						<Icon variant="ruler" className={classes["icon"]} />
 					</Link>
-					<Button
-						className={classes["button"]}
-						onPress={state.toggle}
-					>
+					<Button className={classes["button"]} onPress={toggle}>
 						<Icon
 							className={classes["icon"]}
-							variant={state.isSelected ? "x-mark" : "bars"}
+							variant={isSelected ? "x-mark" : "bars"}
 						/>
 					</Button>
 					<Navigation

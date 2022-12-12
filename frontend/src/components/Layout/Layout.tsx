@@ -12,10 +12,10 @@ export interface LayoutProps extends WithChildren, PageInformationSchema {
 	// Remove me
 }
 
-const Layout: FC<LayoutProps> = ({ children, ...headerProps }) => {
+const Layout: FC<LayoutProps> = ({ children, links, logo }) => {
 	return (
 		<main className={classes["container"]}>
-			<Header {...headerProps} className={classes["header"]} />
+			<Header className={classes["header"]} links={links} logo={logo} />
 			<article className={classes["content"]}>{children}</article>
 			<footer className={classes["footer"]}></footer>
 		</main>
