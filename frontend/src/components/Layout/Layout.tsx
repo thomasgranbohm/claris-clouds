@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import Footer from "components/Footer";
 import Header from "components/Header";
 
 import PageInformationSchema from "types/api/page-information";
@@ -21,7 +22,7 @@ const Layout: FC<LayoutProps> = ({ children, links, logo, socials }) => {
 				socials={socials}
 			/>
 			<article className={classes["content"]}>{children}</article>
-			<footer className={classes["footer"]}></footer>
+			<Footer links={links} socials={socials} />
 		</main>
 	);
 };

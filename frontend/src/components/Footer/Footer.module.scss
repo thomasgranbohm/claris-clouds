@@ -1,0 +1,29 @@
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	@include mixins.keep-within-width;
+	width: 100%;
+	margin: functions.gutter() auto;
+	padding: functions.gutter();
+
+	.sections {
+		display: grid;
+		gap: functions.gutter();
+		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+
+		.links {
+			list-style-type: none;
+
+			.link {
+				display: block;
+				margin: functions.gutter(0.5) 0;
+			}
+		}
+	}
+
+	.copyright {
+		text-align: center;
+		margin-top: functions.gutter(2);
+	}
+}
