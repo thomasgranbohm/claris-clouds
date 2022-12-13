@@ -30,7 +30,8 @@
       "components": [
         "sections.artwork-display",
         "sections.rich-text",
-        "sections.call-to-action"
+        "sections.call-to-action",
+        "sections.showcase"
       ]
     }
   }

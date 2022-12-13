@@ -10,6 +10,8 @@ body {
 	font-size: 18px;
 
 	background: colors.get(background);
+
+	overflow-x: hidden;
 }
 
 * {

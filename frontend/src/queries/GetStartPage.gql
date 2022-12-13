@@ -50,6 +50,15 @@ query Startpage {
 							}
 						}
 					}
+					... on ComponentSectionsShowcase {
+						images {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
 				}
 			}
 		}
