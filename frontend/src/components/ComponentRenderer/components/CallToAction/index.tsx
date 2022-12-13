@@ -16,13 +16,14 @@ import classes from "../../ComponentRenderer.module.scss";
 const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 	return (
 		<Row className={classes["call-to-action"]}>
-			<Column lg={8} xl={6}>
+			<Column lg={8} xl={6} align="end">
 				<Image
 					className={classes["image"]}
 					alt={image.data.attributes.alternativeText}
 					height={image.data.attributes.height}
 					layout="fill"
 					objectFit="contain"
+					objectPosition="bottom"
 					src={image.data.attributes.hash + image.data.attributes.ext}
 					width={image.data.attributes.width}
 				/>
