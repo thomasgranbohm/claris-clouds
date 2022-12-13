@@ -21,6 +21,7 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 					className={classes["image"]}
 					height={background.height}
 					layout="fill"
+					objectFit="cover"
 					src={background.hash + background.ext}
 					width={background.width}
 				/>

@@ -118,26 +118,28 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					</Row>
 				</Column>
 			</Row>
-			<Row row-gap="none">
-				<Column md={[10, 1]} lg={[8, 2]}>
-					<Heading type="h4">Specifications</Heading>
-				</Column>
-				<Column
-					md={[10, 1]}
-					lg={[8, 2]}
-					className={classes["specifications"]}
-				>
-					<Labeler label={<Icon variant="ruler" />}>
-						{width} × {height} cm
-					</Labeler>
-					<Labeler label={<Icon variant="material" />}>
-						{medium}
-					</Labeler>
-					<Labeler label={<Icon variant="calendar" />}>
-						{year_of_creation}
-					</Labeler>
-				</Column>
-			</Row>
+			{[year_of_creation, height, width, medium].every(Boolean) && (
+				<Row row-gap="none">
+					<Column md={[10, 1]} lg={[8, 2]}>
+						<Heading type="h4">Specifications</Heading>
+					</Column>
+					<Column
+						md={[10, 1]}
+						lg={[8, 2]}
+						className={classes["specifications"]}
+					>
+						<Labeler label={<Icon variant="ruler" />}>
+							{width} × {height} cm
+						</Labeler>
+						<Labeler label={<Icon variant="material" />}>
+							{medium}
+						</Labeler>
+						<Labeler label={<Icon variant="calendar" />}>
+							{year_of_creation}
+						</Labeler>
+					</Column>
+				</Row>
+			)}
 			<Row>
 				<Column md={[8, 2]}>
 					{description && (
