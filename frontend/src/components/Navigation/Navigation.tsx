@@ -29,7 +29,7 @@ interface NavigationSocialProps extends Components.Social {}
 
 const NavigationSocial: FC<NavigationSocialProps> = ({ link, type }) => {
 	return (
-		<Link className={classes["social"]} href={link}>
+		<Link className={classes["social"]} href={link} target="_blank">
 			<li className={classes["item"]}>
 				<Icon
 					className={classes["icon"]}

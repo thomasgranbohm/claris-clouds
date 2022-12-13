@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { AriaLinkOptions } from "react-aria";
 import clsx from "clsx";
 import NextLink from "next/link";
 
@@ -11,9 +12,16 @@ import classes from "./Link.module.scss";
 interface LinkProps extends WithChildren, WithClassname {
 	asWrapper?: boolean;
 	href: string;
+	target?: string;
 }
 
-const Link: FC<LinkProps> = ({ asWrapper, children, className, href }) => {
+const Link: FC<LinkProps> = ({
+	asWrapper,
+	children,
+	className,
+	href,
+	target,
+}) => {
 	return (
 		<NextLink href={href} passHref>
 			<AriaLink
@@ -22,6 +30,7 @@ const Link: FC<LinkProps> = ({ asWrapper, children, className, href }) => {
 					asWrapper && classes["wrapper"],
 					className
 				)}
+				target={target}
 			>
 				{children}
 			</AriaLink>

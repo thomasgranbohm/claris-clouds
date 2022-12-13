@@ -4,6 +4,10 @@
 
 .container {
 	height: 100%;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: colors.get(background);
 
 	.inner {
 		padding: 0 functions.gutter();

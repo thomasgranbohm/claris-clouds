@@ -5,24 +5,14 @@
 .container {
 	display: grid;
 	min-height: 100vh;
-	grid-template:
-		"header" auto "content" 1fr "footer" auto
-		/ 1fr;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr auto;
 
 	.content {
-		grid-area: content;
 		width: 100%;
 		margin: functions.gutter(2) auto;
 		padding: 0 functions.gutter(1);
 
 		@include mixins.keep-within-width();
-	}
-
-	.footer {
-		grid-area: footer;
-	}
-
-	.header {
-		grid-area: header;
 	}
 }
