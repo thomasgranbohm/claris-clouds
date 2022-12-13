@@ -3,9 +3,11 @@ import request from "api/index";
 import { PageSchema } from "types/api/page";
 
 export const getPage = async (slug: string) => {
-	return request<PageSchema>("GET", `pages/${slug}`);
+	throw new Error("Not implemented");
+	// return request<PageSchema, "page">("GET", `pages/${slug}`);
 };
 
 export const getPages = async () => {
-	return request<PageSchema[]>("GET", "pages/");
+	throw new Error("Not implemented");
+	// return request<PageSchema[]>("GET", "pages/");
 };
