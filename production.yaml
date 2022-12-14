@@ -1,21 +1,31 @@
-version: "3"
 services:
   backend:
     build:
       context: backend/
       dockerfile: Dockerfile.prod
     env_file: backend/.env
+    environment: 
+      - NODE_ENV=production
+    expose:
+      - 1337
     volumes:
       - ./backend/.env:/opt/app/.env
       - ./backend/public/uploads:/opt/app/public/uploads
-    expose:
-      - 1337
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: clarisclouds
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: abcdefgh12345678
+    volumes:
+      - ./database:/var/lib/postgresql/data
   frontend:
     build:
       context: frontend/
       dockerfile: Dockerfile.prod
     environment:
       - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=production
     expose:
       - 3000
   nginx:
