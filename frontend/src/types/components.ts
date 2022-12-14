@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { NextPage } from "next";
 
-import { LayoutProps } from "components/Layout";
+import PageInformationSchema from "types/api/page-information";
 
 export interface WithClassname {
 	className?: string;
@@ -12,7 +12,7 @@ export interface WithChildren {
 }
 
 export interface LayoutSchema {
-	layout: LayoutProps;
+	layout: PageInformationSchema;
 }
 
 export type LayoutPage<T> = NextPage<T & LayoutSchema>;
