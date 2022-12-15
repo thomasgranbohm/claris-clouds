@@ -20,14 +20,6 @@
         "images"
       ]
     },
-    "favicon": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "links": {
       "type": "component",
       "repeatable": true,

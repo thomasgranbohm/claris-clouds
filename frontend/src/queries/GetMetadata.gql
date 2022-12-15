@@ -1,23 +1,18 @@
 #import "./fragments/UploadFile.fragment.gql"
 
-query PageInformation {
-	pageInformation {
+query Meta {
+	meta {
 		data {
 			attributes {
-				logo {
+				title
+				page_prefix
+				description
+				favicon {
 					data {
 						attributes {
 							...UploadFile
 						}
 					}
-				}
-				links {
-					label
-					path
-				}
-				socials {
-					link
-					type
 				}
 			}
 		}
