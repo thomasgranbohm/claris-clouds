@@ -50,7 +50,6 @@ services:
     depends_on:
       - frontend
     image: nginx
-    restart: unless-stopped
     ports:
       - ${NGINX_PORT:-9000}:80
     volumes:
