@@ -3,7 +3,7 @@ import {} from "react-stately";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Column from "components/Column";
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 import Row from "components/Row";
 import Typography from "components/Typography";
 
@@ -30,21 +30,16 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 					loop={true}
 					className={classes["swiper"]}
 				>
-					{strippedImages.map(
-						({ alternativeText, ext, hash, height, width }, i) => (
-							<SwiperSlide className={classes["slide"]} key={i}>
-								<Image
-									className={classes["image"]}
-									alt={alternativeText}
-									height={height}
-									layout="fill"
-									objectFit="cover"
-									src={hash + ext}
-									width={width}
-								/>
-							</SwiperSlide>
-						)
-					)}
+					{strippedImages.map((image, i) => (
+						<SwiperSlide className={classes["slide"]} key={i}>
+							<StrapiImage
+								className={classes["image"]}
+								image={image}
+								layout="fill"
+								objectFit="cover"
+							/>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</div>
 			<Row>

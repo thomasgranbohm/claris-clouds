@@ -1,9 +1,8 @@
 import { FC } from "react";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 import Row from "components/Row";
 import StyledButton from "components/StyledButton";
@@ -17,15 +16,12 @@ const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 	return (
 		<Row className={classes["call-to-action"]}>
 			<Column lg={8} xl={6} align="end">
-				<Image
+				<StrapiImage
 					className={classes["image"]}
-					alt={image.data.attributes.alternativeText}
-					height={image.data.attributes.height}
+					image={image}
 					layout="fill"
 					objectFit="contain"
 					objectPosition="bottom"
-					src={image.data.attributes.hash + image.data.attributes.ext}
-					width={image.data.attributes.width}
 				/>
 			</Column>
 			<Column lg={4} xl={6} align="end">

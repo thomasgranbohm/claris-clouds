@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 import Row from "components/Row";
 
@@ -31,17 +31,11 @@ const ArtworkDisplay: FC<ArtworkDisplaySchema> = ({ artworks, title }) => {
 							className={classes["link"]}
 							asWrapper
 						>
-							<Image
+							<StrapiImage
 								className={classes["image"]}
-								alt={image.data.attributes.alternativeText}
-								height={image.data.attributes.height}
+								image={image}
 								layout="fill"
 								objectFit="contain"
-								src={
-									image.data.attributes.hash +
-									image.data.attributes.ext
-								}
-								width={image.data.attributes.width}
 							/>
 							<Heading type="b" className={classes["title"]}>
 								{name}

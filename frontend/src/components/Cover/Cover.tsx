@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import Heading from "components/Heading";
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 
 import { ImageSchema as TImage } from "types/api/strapi";
 import { WithChildren } from "types/components";
@@ -16,14 +16,11 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 	return (
 		<div className={classes["container"]}>
 			<div className={classes["background"]}>
-				<Image
-					alt={background.alternativeText}
+				<StrapiImage
+					image={background}
 					className={classes["image"]}
-					height={background.height}
 					layout="fill"
 					objectFit="cover"
-					src={background.hash + background.ext}
-					width={background.width}
 				/>
 			</div>
 			<div className={classes["foreground"]}>

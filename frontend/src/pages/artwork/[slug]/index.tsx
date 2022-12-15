@@ -5,7 +5,7 @@ import { getArtwork } from "api/artwork";
 import Column from "components/Column";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 import Labeler from "components/Labeler";
 import Layout from "components/Layout";
 import Link from "components/Link";
@@ -87,13 +87,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 			/>
 			<Row>
 				<Column lg={6} align="end">
-					<Image
-						alt={image.alternativeText}
-						height={image.height}
-						layout="responsive"
-						src={image.hash + image.ext}
-						width={image.width}
-					/>
+					<StrapiImage image={image} layout="responsive" />
 				</Column>
 				<Column lg={6} align="end">
 					<Heading type="h2">{name}</Heading>

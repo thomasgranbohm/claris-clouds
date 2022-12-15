@@ -2,19 +2,41 @@ import { FC } from "react";
 import clsx from "clsx";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 
+import { GraphQL, ImageSchema } from "types/api/strapi";
 import { WithClassname } from "types/components";
+
+import getImageLink from "utils/getImageLink";
+import stripWrapper from "utils/stripWrapper";
 
 import classes from "./Image.module.scss";
 
-interface ImageProps extends WithClassname, NextImageProps {
+interface StrapiImageProps extends Partial<NextImageProps> {
+	image: ImageSchema | GraphQL.Data<ImageSchema>;
+}
+
+export const StrapiImage: FC<StrapiImageProps> = ({ image, ...props }) => {
+	const { alternativeText, caption, ext, hash, height, name, width } =
+		"data" in image ? stripWrapper(image) : image;
+
+	return (
+		<Image
+			{...props}
+			alt={caption || alternativeText || name}
+			height={height}
+			src={getImageLink({ ext, hash })}
+			width={width}
+		/>
+	);
+};
+
+interface ImageProps extends WithClassname {
 	alt: string;
 	height?: number;
-	layout?: "fill" | "intrinsic" | "responsive";
 	src: string;
 	width?: number;
 }
 
-const Image: FC<ImageProps> = ({
+const Image: FC<ImageProps & NextImageProps> = ({
 	alt,
 	className,
 	height,
@@ -23,8 +45,6 @@ const Image: FC<ImageProps> = ({
 	width,
 	...props
 }) => {
-	const url = `/api/image/${src}`;
-
 	return (
 		<div
 			className={clsx(
@@ -38,7 +58,7 @@ const Image: FC<ImageProps> = ({
 				alt={alt}
 				height={height}
 				layout={layout}
-				src={url}
+				src={src}
 				width={width}
 			/>
 		</div>

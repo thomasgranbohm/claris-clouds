@@ -1,6 +1,6 @@
 import { FC, useMemo, useRef } from "react";
 
-import Image from "components/Image";
+import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 
 import useBreakpoint from "hooks/useBreakpoint";
@@ -27,17 +27,9 @@ interface GalleryItemProps extends Artwork {
 }
 
 const GalleryItem: FC<GalleryItemProps> = ({ image, layout, slug }) => {
-	const { alternativeText, ext, hash, height, width } = stripWrapper(image);
-
 	return (
 		<Link href={`/artwork/${slug}`} className={classes["item"]}>
-			<Image
-				src={hash + ext}
-				alt={alternativeText}
-				layout={layout}
-				height={height}
-				width={width}
-			/>
+			<StrapiImage image={image} layout={layout} />
 		</Link>
 	);
 };
