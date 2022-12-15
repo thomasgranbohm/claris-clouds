@@ -3,6 +3,9 @@ services:
     build:
       context: backend/
       dockerfile: Dockerfile.prod
+    depends_on: 
+      database:
+        condition: service_healthy
     env_file: backend/.env
     environment: 
       - NODE_ENV=production
@@ -12,17 +15,26 @@ services:
       - ./backend/.env:/opt/app/.env
       - ./backend/public/uploads:/opt/app/public/uploads
   database:
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_DB: clarisclouds
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: abcdefgh12345678
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d clarisclouds"]
+      timeout: 60s
+      retries: 5
+      start_period: 5s
     volumes:
       - ./database:/var/lib/postgresql/data
+      - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql
   frontend:
     build:
       context: frontend/
       dockerfile: Dockerfile.prod
+    depends_on:
+      backend:
+        condition: service_healthy
     environment:
       - NEXT_TELEMETRY_DISABLED=1
       - NODE_ENV=production
