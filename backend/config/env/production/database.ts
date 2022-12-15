@@ -4,9 +4,9 @@ export default ({ env }) => ({
 		connection: {
 			host: "database",
 			port: 5432,
-			database: env("DATABASE_NAME", "clarisclouds"),
-			user: env("DATABASE_USERNAME", "strapi"),
-			password: env("DATABASE_PASSWORD", "strapi"),
+			database: env("DATABASE_NAME"),
+			user: env("DATABASE_USERNAME"),
+			password: env("DATABASE_PASSWORD"),
 		},
 		debug: false,
 	},
