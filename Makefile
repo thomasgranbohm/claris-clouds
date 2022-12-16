@@ -17,12 +17,12 @@ restore-database:
 
 dump-backend-config:
 	@echo "Dumping config...";
-	${DC} run -i backend sh -c "npm run strapi -- configuration:dump" | tail -n1 > ./config/strapi-config.json
+	${DC} run --rm -i backend sh -c "npm run strapi -- configuration:dump" | tail -n1 > ./config/strapi-config.json
 	@echo "Dumped!";
 
 restore-backend-config:
 	@echo "Restoring config...";
-	${DC} run -T backend sh -c "npm run strapi -- configuration:restore" < ./config/strapi-config.json
+	${DC} run --rm -T backend sh -c "npm run strapi -- configuration:restore" < ./config/strapi-config.json
 	@echo "Restored!";
 
 build:
