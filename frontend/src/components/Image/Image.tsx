@@ -2,7 +2,6 @@ import { FC } from "react";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 
 import { GraphQL, ImageSchema } from "types/api/strapi";
-import { WithClassname } from "types/components";
 
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
@@ -39,7 +38,7 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 			: {};
 
 	return (
-		<Image
+		<NextImage
 			{...props}
 			{...placeholderProps}
 			height={!fill ? height : undefined}
@@ -51,29 +50,4 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 	);
 };
 
-interface ImageProps extends WithClassname {
-	alt: string;
-	height?: number;
-	src: string;
-	width?: number;
-}
-
-const Image: FC<ImageProps & NextImageProps> = ({
-	alt,
-	height,
-	src,
-	width,
-	...props
-}) => {
-	return (
-		<NextImage
-			{...props}
-			alt={alt}
-			height={height}
-			src={src}
-			width={width}
-		/>
-	);
-};
-
-export default Image;
+export default StrapiImage;
