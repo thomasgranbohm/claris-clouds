@@ -19,7 +19,7 @@ const generateBase64 = async (file) => {
 
 	const base64Obj = await sharp(buffer)
 		.resize({
-			width: 32,
+			width: 16,
 			height: undefined,
 		})
 		.jpeg({
