@@ -13,6 +13,7 @@ import useBreakpoint from "hooks/useBreakpoint";
 
 import PageInformationSchema from "types/api/page-information";
 import { WithClassname } from "types/components";
+import { Breakpoint } from "types/generics";
 
 import classes from "./Header.module.scss";
 
@@ -28,7 +29,7 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 	const breakpoint = useBreakpoint();
 
 	usePreventScroll({
-		isDisabled: breakpoint !== null || !isSelected,
+		isDisabled: Number(breakpoint) > Breakpoint.sm || !isSelected,
 	});
 
 	return (

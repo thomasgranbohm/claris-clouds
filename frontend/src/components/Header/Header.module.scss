@@ -4,15 +4,17 @@
 
 .container {
 	--height: 5rem;
-	height: 100%;
+	height: var(--height);
 	position: sticky;
 	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 10;
-	background-color: change-color(colors.get(background), $alpha: 0.9);
+	background-color: change-color(colors.get(background), $alpha: 0.8);
 	backdrop-filter: saturate(180%) blur(8px);
 
 	.inner {
-		height: var(--height);
+		height: 100%;
 		display: grid;
 		grid-template-rows: 1fr;
 		grid-template-columns: repeat(2, 1fr);
@@ -61,6 +63,7 @@
 
 	@include mixins.breakpoint(sm, true) {
 		&.open {
+			height: 100%;
 			position: fixed;
 			top: 0;
 			left: 0;

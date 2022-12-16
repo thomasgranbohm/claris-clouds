@@ -1,4 +1,4 @@
-export type COLORS =
+export type Colors =
 	| "foreground"
 	| "background"
 	| "gray"
@@ -6,10 +6,10 @@ export type COLORS =
 	| "white"
 	| "black";
 
-export type HEADINGS = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "b";
+export type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "b";
 
-export enum BREAKPOINTS {
-	sm = 480,
+export enum Breakpoint {
+	sm = 580,
 	md = 768,
 	lg = 1024,
 	xl = 1200,

@@ -2,14 +2,14 @@ import { createElement, FC } from "react";
 import clsx from "clsx";
 
 import { WithChildren, WithClassname } from "types/components";
-import { COLORS, HEADINGS } from "types/generics";
+import { Colors, Headings } from "types/generics";
 
 import classes from "./Heading.module.scss";
 
 interface HeadingProps extends WithChildren, WithClassname {
-	color?: COLORS;
-	look?: HEADINGS;
-	type: HEADINGS;
+	color?: Colors;
+	look?: Headings;
+	type: Headings;
 }
 
 const Heading: FC<HeadingProps> = ({

@@ -1,6 +1,8 @@
 import type { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
 
+import FocusRing from "components/aria/FocusRing";
+
 import MetadataSchema from "types/api/metadata";
 
 import getImageLink from "utils/getImageLink";
@@ -29,6 +31,11 @@ function CustomApp({
 				]}
 				openGraph={{ description, title, type: "website" }}
 			/>
+			<FocusRing>
+				<a href="#main-content" className="skip-link">
+					Skip to main content
+				</a>
+			</FocusRing>
 			<Component {...pageProps} />
 		</>
 	);

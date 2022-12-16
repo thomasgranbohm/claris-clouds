@@ -42,7 +42,7 @@ const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
 	return (
 		<Fragment>
 			<Cover background={stripWrapper(background)}>{title}</Cover>
-			<Layout {...layout}>
+			<Layout {...layout} conformity={false}>
 				<ComponentRenderer components={sections} />
 			</Layout>
 		</Fragment>

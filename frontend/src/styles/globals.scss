@@ -1,6 +1,6 @@
 @use "styles/colors";
+@use "styles/functions";
 
-html,
 body {
 	height: 100%;
 
@@ -24,9 +24,10 @@ body {
 
 .skip-link {
 	position: absolute;
-	top: -3em;
-	background: #fff;
+	top: calc(-4 * #{functions.gutter()});
 	z-index: 1000;
+	padding: functions.gutter();
+	background: #fff;
 }
 
 .skip-link:focus {

@@ -5,14 +5,34 @@
 .container {
 	display: grid;
 	min-height: 100vh;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto 1fr auto;
+	grid-template-areas: "content" "footer";
+	grid-template-rows: 1fr auto;
+	position: relative;
 
 	.content {
 		width: 100%;
-		margin: functions.gutter(2) auto;
+		margin: 0 auto;
 		padding: 0 functions.gutter(1);
+		padding-top: 5rem;
 
 		@include mixins.keep-within-width();
+
+		@include mixins.breakpoint(md) {
+			padding-top: 6rem;
+		}
+	}
+
+	&.non-conformity {
+		grid-template-areas: "header" "content" "footer";
+		grid-template-rows: auto 1fr auto;
+
+		.header {
+			position: sticky;
+		}
+
+		.content {
+			padding-top: 6rem;
+			margin-top: -6rem;
+		}
 	}
 }

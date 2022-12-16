@@ -2,12 +2,12 @@ import { createElement, FC, ReactHTML } from "react";
 import clsx from "clsx";
 
 import { WithChildren, WithClassname } from "types/components";
-import { COLORS } from "types/generics";
+import { Colors } from "types/generics";
 
 import classes from "./Typography.module.scss";
 
 interface TypographyProps extends WithChildren, WithClassname {
-	color?: COLORS;
+	color?: Colors;
 	inline?: true;
 	size?: "normal" | "large" | "larger" | "small" | "smaller";
 	type?: Extract<keyof ReactHTML, "span" | "p">;

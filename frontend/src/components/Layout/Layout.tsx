@@ -1,6 +1,6 @@
 import { FC } from "react";
+import clsx from "clsx";
 
-import FocusRing from "components/aria/FocusRing";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
@@ -10,19 +10,23 @@ import { WithChildren } from "types/components";
 import classes from "./Layout.module.scss";
 
 export interface LayoutProps extends WithChildren, PageInformationSchema {
-	// Remove me
+	conformity?: boolean;
 }
 
-const Layout: FC<LayoutProps> = ({ children, links, logo, socials }) => {
-	// TODO: Skip link does not work correctly on non layout pages
-
+const Layout: FC<LayoutProps> = ({
+	children,
+	conformity = true,
+	links,
+	logo,
+	socials,
+}) => {
 	return (
-		<main className={classes["container"]}>
-			<FocusRing>
-				<a href="#main-content" className="skip-link">
-					Skip to main content
-				</a>
-			</FocusRing>
+		<main
+			className={clsx(
+				classes["container"],
+				!conformity && classes["non-conformity"]
+			)}
+		>
 			<Header
 				className={classes["header"]}
 				links={links}
@@ -32,7 +36,11 @@ const Layout: FC<LayoutProps> = ({ children, links, logo, socials }) => {
 			<article id="main-content" className={classes["content"]}>
 				{children}
 			</article>
-			<Footer links={links} socials={socials} />
+			<Footer
+				className={classes["footer"]}
+				links={links}
+				socials={socials}
+			/>
 		</main>
 	);
 };

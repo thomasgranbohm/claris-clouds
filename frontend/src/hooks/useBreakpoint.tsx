@@ -1,22 +1,22 @@
-import { UIEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { BREAKPOINTS } from "types/generics";
+import { Breakpoint } from "types/generics";
 
-const useBreakpoint = (): BREAKPOINTS | null => {
-	const [breakpoint, setBreakpoint] = useState<BREAKPOINTS | null>(null);
+const useBreakpoint = (): Breakpoint | null => {
+	const [breakpoint, setBreakpoint] = useState<Breakpoint | null>(null);
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			if (window.innerWidth >= BREAKPOINTS.xxl) {
-				setBreakpoint(BREAKPOINTS.xxl);
-			} else if (window.innerWidth >= BREAKPOINTS.xl) {
-				setBreakpoint(BREAKPOINTS.xl);
-			} else if (window.innerWidth >= BREAKPOINTS.lg) {
-				setBreakpoint(BREAKPOINTS.lg);
-			} else if (window.innerWidth >= BREAKPOINTS.md) {
-				setBreakpoint(BREAKPOINTS.md);
-			} else if (window.innerWidth >= BREAKPOINTS.sm) {
-				setBreakpoint(BREAKPOINTS.sm);
+			if (window.innerWidth >= Breakpoint.xxl) {
+				setBreakpoint(Breakpoint.xxl);
+			} else if (window.innerWidth >= Breakpoint.xl) {
+				setBreakpoint(Breakpoint.xl);
+			} else if (window.innerWidth >= Breakpoint.lg) {
+				setBreakpoint(Breakpoint.lg);
+			} else if (window.innerWidth >= Breakpoint.md) {
+				setBreakpoint(Breakpoint.md);
+			} else if (window.innerWidth >= Breakpoint.sm) {
+				setBreakpoint(Breakpoint.sm);
 			} else {
 				setBreakpoint(null);
 			}

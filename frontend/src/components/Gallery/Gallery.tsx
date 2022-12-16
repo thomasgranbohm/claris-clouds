@@ -7,7 +7,7 @@ import useBreakpoint from "hooks/useBreakpoint";
 
 import Artwork from "types/api/artwork";
 import { ImageSchema } from "types/api/strapi";
-import { BREAKPOINTS } from "types/generics";
+import { Breakpoint } from "types/generics";
 
 import stripWrapper from "utils/stripWrapper";
 
@@ -49,9 +49,9 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
-		if (Number(breakpoint) > BREAKPOINTS.sm) {
+		if (Number(breakpoint) > Breakpoint.sm) {
 			for (let index = 0; parsed.length < artworks.length; index++) {
-				const toPick = breakpoint === BREAKPOINTS.md ? 2 : 3;
+				const toPick = breakpoint === Breakpoint.md ? 2 : 3;
 				const sliced = artworks.slice(
 					parsed.length,
 					parsed.length + toPick
