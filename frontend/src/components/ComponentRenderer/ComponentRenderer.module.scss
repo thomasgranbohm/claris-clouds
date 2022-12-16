@@ -2,7 +2,9 @@
 @use "styles/mixins";
 
 .container {
-	margin: functions.gutter(4) 0;
+	&:not(:first-of-type) {
+		margin: functions.gutter(4) 0;
+	}
 }
 
 .artwork-display {

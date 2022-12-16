@@ -14,10 +14,10 @@
 
 	.links {
 		.item {
-			display: inline-block;
+			display: block;
 
 			.link {
-				display: block;
+				display: inline-block;
 				padding: functions.gutter(1) 0;
 				position: relative;
 				color: black;
