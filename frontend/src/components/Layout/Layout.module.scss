@@ -18,7 +18,7 @@
 		@include mixins.keep-within-width();
 
 		@include mixins.breakpoint(md) {
-			padding-top: 6rem;
+			padding-top: 7rem;
 		}
 	}
 
@@ -31,8 +31,8 @@
 		}
 
 		.content {
-			padding-top: 6rem;
-			margin-top: -6rem;
+			padding-top: 7rem;
+			margin-top: -7rem;
 		}
 	}
 }

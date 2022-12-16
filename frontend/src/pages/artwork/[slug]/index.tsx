@@ -155,13 +155,13 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					</Column>
 				</Row>
 			)}
-			<Row>
-				<Column md={[8, 2]}>
-					{description && (
+			{description && (
+				<Row>
+					<Column md={[8, 2]}>
 						<Typography size="large">{description}</Typography>
-					)}
-				</Column>
-			</Row>
+					</Column>
+				</Row>
+			)}
 		</Layout>
 	);
 };

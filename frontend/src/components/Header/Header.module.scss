@@ -5,7 +5,7 @@
 .container {
 	--height: 5rem;
 	height: var(--height);
-	position: sticky;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
