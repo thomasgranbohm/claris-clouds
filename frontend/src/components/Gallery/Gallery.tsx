@@ -90,6 +90,16 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 				const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
 				const multiplier = combinedWidths / WIDTH;
 
+				const combinedScaledWidths = scaled.reduce(
+					(p, c) => p + c.width / multiplier,
+					0
+				);
+
+				console.assert(
+					combinedScaledWidths === WIDTH,
+					`Width should be ${WIDTH}, was ${combinedScaledWidths}`
+				);
+
 				parsed.push(
 					...picked.map(({ image, ...artwork }, index) => {
 						const { height, width } = scaled[index];
