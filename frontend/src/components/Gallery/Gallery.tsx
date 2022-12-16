@@ -105,7 +105,9 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 						const { height, width } = scaled[index];
 
 						image.data.attributes.height = height / multiplier;
-						image.data.attributes.width = width / multiplier;
+						image.data.attributes.width = Math.floor(
+							width / multiplier
+						);
 
 						return {
 							...artwork,
