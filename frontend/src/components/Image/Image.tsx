@@ -11,16 +11,39 @@ import stripWrapper from "utils/stripWrapper";
 import classes from "./Image.module.scss";
 
 interface StrapiImageProps extends Partial<NextImageProps> {
+	blur?: true;
 	image: ImageSchema | GraphQL.Data<ImageSchema>;
 }
 
-export const StrapiImage: FC<StrapiImageProps> = ({ image, ...props }) => {
-	const { alternativeText, caption, ext, hash, height, name, width } =
-		"data" in image ? stripWrapper(image) : image;
+export const StrapiImage: FC<StrapiImageProps> = ({
+	blur,
+	image,
+	...props
+}) => {
+	const {
+		alternativeText,
+		caption,
+		ext,
+		formats,
+		hash,
+		height,
+		name,
+		width,
+	} = "data" in image ? stripWrapper(image) : image;
+
+	const placeholderProps: Partial<NextImageProps> =
+		blur && formats.base64.url
+			? {
+					blurDataURL: formats.base64.url,
+					loading: "lazy",
+					placeholder: "blur",
+			  }
+			: {};
 
 	return (
 		<Image
 			{...props}
+			{...placeholderProps}
 			alt={caption || alternativeText || name}
 			height={height}
 			src={getImageLink({ ext, hash })}

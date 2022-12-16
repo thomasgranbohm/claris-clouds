@@ -1,6 +1,44 @@
 import utils from "@strapi/utils";
+import _ from "lodash";
+import sharp from "sharp";
 
 const { NotFoundError } = utils.errors;
+
+const generateBase64 = async (file) => {
+	const stream = await file.getStream();
+	const buffer = await new Promise((resolve, reject) => {
+		const chunks = [];
+		stream.on("data", (chunk) => {
+			chunks.push(chunk);
+		});
+		stream.on("end", () => {
+			resolve(Buffer.concat(chunks));
+		});
+		stream.on("error", reject);
+	});
+
+	const base64Obj = await sharp(buffer)
+		.resize({
+			width: 32,
+			height: undefined,
+		})
+		.jpeg({
+			quality: 50,
+		})
+		.toBuffer({
+			resolveWithObject: true,
+		});
+
+	if (base64Obj) {
+		const { data, info } = base64Obj;
+
+		return {
+			url: `data:image/${info.format};base64,${data.toString("base64")}`,
+			width: info.width,
+			height: info.height,
+		};
+	}
+};
 
 export default {
 	register({ strapi }) {
@@ -36,6 +74,67 @@ export default {
 				},
 			},
 		}));
+
+		const uploadPlugin = strapi.plugin("upload");
+		const uploadService = uploadPlugin.service("upload");
+
+		// Stolen from strapi/packages/core/upload/server/services/upload.js
+		async function uploadImage(fileData) {
+			const {
+				getDimensions,
+				generateThumbnail,
+				generateResponsiveFormats,
+				isOptimizableImage,
+			} = uploadPlugin.service("image-manipulation");
+
+			const { width, height } = await getDimensions(fileData);
+
+			_.assign(fileData, {
+				width,
+				height,
+			});
+
+			const uploadThumbnail = async (thumbnailFile) => {
+				await uploadPlugin.service("provider").upload(thumbnailFile);
+				_.set(fileData, "formats.thumbnail", thumbnailFile);
+			};
+
+			const uploadResponsiveFormat = async (format) => {
+				const { key, file } = format;
+				await uploadPlugin.service("provider").upload(file);
+				_.set(fileData, ["formats", key], file);
+			};
+
+			const uploadPromises = [];
+
+			uploadPromises.push(
+				uploadPlugin.service("provider").upload(fileData)
+			);
+
+			if (await isOptimizableImage(fileData)) {
+				const base64File = await generateBase64(fileData);
+				if (base64File) {
+					_.set(fileData, "formats.base64", base64File);
+				}
+
+				const thumbnailFile = await generateThumbnail(fileData);
+				if (thumbnailFile) {
+					uploadPromises.push(uploadThumbnail(thumbnailFile));
+				}
+
+				const formats = await generateResponsiveFormats(fileData);
+				if (Array.isArray(formats) && formats.length > 0) {
+					for (const format of formats) {
+						if (!format) continue;
+						uploadPromises.push(uploadResponsiveFormat(format));
+					}
+				}
+			}
+
+			await Promise.all(uploadPromises);
+		}
+
+		uploadService.uploadImage = uploadImage;
 	},
 
 	/**

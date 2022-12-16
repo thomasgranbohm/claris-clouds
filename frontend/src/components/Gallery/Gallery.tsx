@@ -29,7 +29,7 @@ interface GalleryItemProps extends Artwork {
 const GalleryItem: FC<GalleryItemProps> = ({ image, layout, slug }) => {
 	return (
 		<Link href={`/artwork/${slug}`} className={classes["item"]}>
-			<StrapiImage image={image} layout={layout} />
+			<StrapiImage blur image={image} layout={layout} />
 		</Link>
 	);
 };
