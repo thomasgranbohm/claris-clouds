@@ -20,5 +20,5 @@ dump-backend-config:
 
 restore-backend-config:
 	@echo "Restoring config...";
-	docker compose -f production.yaml run -i backend sh -c "npm run strapi -- configuration:restore" < ./config/strapi-config.json
+	docker compose -f production.yaml run -T backend sh -c "npm run strapi -- configuration:restore" < ./config/strapi-config.json
 	@echo "Restored!";
