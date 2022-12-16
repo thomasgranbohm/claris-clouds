@@ -5,7 +5,7 @@
 	$width: map.get(variables.$breakpoints, $breakpoint);
 
 	@if $max {
-		@media screen and (max-width: $width) {
+		@media screen and (max-width: #{$width - 1}) {
 			@content;
 		}
 	} @else {

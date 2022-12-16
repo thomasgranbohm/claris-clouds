@@ -3,6 +3,7 @@
 @use "styles/mixins";
 
 .container {
+	--height: 5rem;
 	height: 100%;
 	position: sticky;
 	top: 0;
@@ -11,9 +12,9 @@
 	backdrop-filter: saturate(180%) blur(8px);
 
 	.inner {
-		padding: 0 functions.gutter();
+		height: var(--height);
 		display: grid;
-		grid-template-rows: 6rem;
+		grid-template-rows: 1fr;
 		grid-template-columns: repeat(2, 1fr);
 
 		.home-link,
@@ -27,13 +28,19 @@
 			padding: functions.gutter();
 
 			.icon {
-				height: 4rem;
+				height: calc(var(--height) - 2 * #{functions.gutter()});
 				width: auto;
 			}
 		}
 
 		.button {
 			justify-self: flex-end;
+			padding: functions.gutter(1.5);
+
+			.icon {
+				height: 2rem;
+				aspect-ratio: 1 / 1;
+			}
 		}
 
 		@include mixins.breakpoint(sm, true) {
@@ -67,15 +74,21 @@
 			overflow-y: auto;
 
 			.inner {
-				grid-template-rows: 6rem 1fr;
+				grid-template-rows: var(--height) 1fr;
 				min-height: 100%;
 				grid-template-areas: "home-link button" "navigation navigation";
 
 				.navigation {
 					display: grid;
 					grid-area: navigation;
+					margin-top: functions.gutter(2);
+					padding: 0 functions.gutter();
 				}
 			}
 		}
+	}
+
+	@include mixins.breakpoint(md) {
+		--height: 6rem;
 	}
 }
