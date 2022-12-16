@@ -32,7 +32,7 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 	} = "data" in image ? stripWrapper(image) : image;
 
 	const placeholderProps: Partial<NextImageProps> =
-		blur && formats.base64.url
+		Boolean(blur) && formats.base64
 			? {
 					blurDataURL: formats.base64.url,
 					loading: "lazy",

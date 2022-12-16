@@ -51,7 +51,7 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
-		if (breakpoint !== null && breakpoint !== BREAKPOINTS.sm) {
+		if (Number(breakpoint) > BREAKPOINTS.sm) {
 			for (let index = 0; parsed.length < artworks.length; index++) {
 				const toPick = breakpoint === BREAKPOINTS.md ? 2 : 3;
 				const sliced = artworks.slice(
