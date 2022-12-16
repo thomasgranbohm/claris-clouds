@@ -15,8 +15,11 @@ interface StrapiImageProps extends Partial<NextImageProps> {
 	image: ImageSchema | GraphQL.Data<ImageSchema>;
 }
 
+// TODO: Need to upgrade to next/image 13
+
 export const StrapiImage: FC<StrapiImageProps> = ({
 	blur,
+	fill,
 	image,
 	...props
 }) => {
@@ -44,10 +47,11 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 		<Image
 			{...props}
 			{...placeholderProps}
+			height={!fill ? height : undefined}
+			width={!fill ? width : undefined}
+			fill={fill}
 			alt={caption || alternativeText || name}
-			height={height}
 			src={getImageLink({ ext, hash })}
-			width={width}
 		/>
 	);
 };
@@ -61,30 +65,19 @@ interface ImageProps extends WithClassname {
 
 const Image: FC<ImageProps & NextImageProps> = ({
 	alt,
-	className,
 	height,
-	layout = "intrinsic",
 	src,
 	width,
 	...props
 }) => {
 	return (
-		<div
-			className={clsx(
-				classes["container"],
-				layout && classes[`layout--${layout}`],
-				className
-			)}
-		>
-			<NextImage
-				{...props}
-				alt={alt}
-				height={height}
-				layout={layout}
-				src={src}
-				width={width}
-			/>
-		</div>
+		<NextImage
+			{...props}
+			alt={alt}
+			height={height}
+			src={src}
+			width={width}
+		/>
 	);
 };
 

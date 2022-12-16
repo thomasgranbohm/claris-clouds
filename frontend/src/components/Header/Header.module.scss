@@ -23,16 +23,16 @@
 		.home-link {
 			justify-self: flex-start;
 			display: inline-flex;
+			padding: functions.gutter();
+
+			.icon {
+				height: 3rem;
+				width: auto;
+			}
 		}
 
 		.button {
 			justify-self: flex-end;
-		}
-
-		.icon {
-			width: 2rem;
-			height: 2rem;
-			margin: 1rem;
 		}
 
 		@include mixins.breakpoint(sm, true) {

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import clsx from "clsx";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
@@ -16,7 +17,7 @@ const ArtworkDisplay: FC<ArtworkDisplaySchema> = ({ artworks, title }) => {
 	const stripped = stripWrapper(artworks);
 
 	return (
-		<div className={classes["artwork-display"]}>
+		<div className={clsx(classes["container"], classes["artwork-display"])}>
 			<Heading type="h2">{title}</Heading>
 			<Row>
 				{stripped.map(({ image, name, slug }, i) => (
@@ -31,12 +32,13 @@ const ArtworkDisplay: FC<ArtworkDisplaySchema> = ({ artworks, title }) => {
 							className={classes["link"]}
 							asWrapper
 						>
-							<StrapiImage
-								className={classes["image"]}
-								image={image}
-								layout="fill"
-								objectFit="contain"
-							/>
+							<div className={classes["image-container"]}>
+								<StrapiImage
+									fill
+									image={image}
+									objectFit="contain"
+								/>
+							</div>
 							<Heading type="b" className={classes["title"]}>
 								{name}
 							</Heading>
