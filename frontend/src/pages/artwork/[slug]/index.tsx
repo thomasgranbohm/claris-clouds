@@ -19,6 +19,7 @@ import classes from "styles/pages/ArtworkPage.module.scss";
 import Artwork from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
+import getImageLink from "utils/getImageLink";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
@@ -77,11 +78,25 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 				description={description}
 				images={[
 					{
-						alt: image.alternativeText,
+						alt:
+							image.caption ||
+							image.alternativeText ||
+							image.name,
 						height: image.height,
-						url: image.hash + image.ext,
+						url: getImageLink(image),
 						width: image.width,
 					},
+					...Object.values(image.formats).map(
+						({ height, width, ...i }) => ({
+							alt:
+								image.caption ||
+								image.alternativeText ||
+								image.name,
+							height,
+							url: getImageLink(i),
+							width,
+						})
+					),
 				]}
 				path={asPath}
 			/>

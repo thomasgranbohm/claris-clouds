@@ -2,9 +2,7 @@ import { FC } from "react";
 import getConfig from "next/config";
 import { NextSeo, NextSeoProps } from "next-seo";
 
-import classes from "./MetaData.module.scss";
-
-interface MetaDataProps {
+interface MetaDataProps extends NextSeoProps {
 	description?: string;
 	images?: Array<{
 		alt: string;
@@ -16,21 +14,29 @@ interface MetaDataProps {
 	title: string;
 }
 
-const MetaData: FC<MetaDataProps> = ({ description, images, path, title }) => {
+const MetaData: FC<MetaDataProps> = ({
+	canonical,
+	description,
+	images,
+	path,
+	title,
+	...props
+}) => {
 	const { publicRuntimeConfig } = getConfig();
 
 	return (
 		<NextSeo
+			{...props}
 			title={title}
 			description={description}
-			canonical={publicRuntimeConfig.PAGE_URL + path}
+			canonical={canonical || publicRuntimeConfig.PAGE_URL + path}
 			openGraph={{
 				description,
 				images:
 					images &&
 					images.map(({ url, ...rest }) => ({
 						...rest,
-						url: `${publicRuntimeConfig.PAGE_URL}/api/image?src=${url}`,
+						url: `${publicRuntimeConfig.PAGE_URL}/api/image/${url}`,
 					})),
 				title,
 				type: "website",
