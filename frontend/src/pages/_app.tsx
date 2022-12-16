@@ -22,7 +22,10 @@ function CustomApp({
 				titleTemplate={page_prefix || title}
 				description={description}
 				additionalLinkTags={[
-					{ href: getImageLink(stripWrapper(favicon)), rel: "icon" },
+					{
+						href: favicon && getImageLink(stripWrapper(favicon)),
+						rel: "icon",
+					},
 				]}
 				openGraph={{ description, title, type: "website" }}
 			/>

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import clsx from "clsx";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
@@ -13,7 +14,7 @@ import classes from "../../ComponentRenderer.module.scss";
 
 const RichText: FC<RichTextSchema> = ({ text }) => {
 	return (
-		<Row className={classes["rich-text"]}>
+		<Row className={clsx(classes["container"], classes["rich-text"])}>
 			<Column md={[10, 1]} lg={[8, 2]}>
 				{/* eslint-disable react/no-children-prop */}
 				<ReactMarkdown

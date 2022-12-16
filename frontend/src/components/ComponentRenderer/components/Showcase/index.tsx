@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {} from "react-stately";
+import clsx from "clsx";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Column from "components/Column";
@@ -21,7 +21,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 	// TODO: Use artworks instead
 
 	return (
-		<div className={classes["showcase"]}>
+		<div className={clsx(classes["container"], classes["showcase"])}>
 			<div className={classes["swiper-container"]}>
 				<Swiper
 					slidesPerView="auto"

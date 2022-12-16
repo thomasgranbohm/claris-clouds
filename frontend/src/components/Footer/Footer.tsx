@@ -1,6 +1,5 @@
 import { FC } from "react";
 import clsx from "clsx";
-import { link } from "fs";
 
 import Heading from "components/Heading";
 import Link from "components/Link";
@@ -38,8 +37,10 @@ const Footer: FC<FooterProps> = ({ className, links, socials }) => {
 	return (
 		<footer className={clsx(classes["container"], className)}>
 			<div className={classes["sections"]}>
-				{links && <LinkSection title="Links" links={links} />}
-				{socials && (
+				{links && links.length > 0 && (
+					<LinkSection title="Links" links={links} />
+				)}
+				{socials && socials.length > 0 && (
 					<LinkSection
 						title="Socials"
 						links={socials.map(({ link, type }) => ({

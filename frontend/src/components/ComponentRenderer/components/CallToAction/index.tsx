@@ -1,4 +1,5 @@
 import { FC } from "react";
+import clsx from "clsx";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
@@ -14,7 +15,7 @@ import classes from "../../ComponentRenderer.module.scss";
 
 const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 	return (
-		<Row className={classes["call-to-action"]}>
+		<Row className={clsx(classes["container"], classes["call-to-action"])}>
 			<Column lg={8} xl={6} align="end">
 				<StrapiImage
 					className={classes["image"]}
