@@ -86,10 +86,13 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 				path={asPath}
 			/>
 			<Row>
-				<Column lg={6} align="end">
-					<StrapiImage image={image} layout="responsive" />
+				<Column lg={6} xl={[5, 1]} align="end" justify="end">
+					<StrapiImage
+						image={image}
+						style={{ height: "auto", width: "100%" }}
+					/>
 				</Column>
-				<Column lg={6} align="end">
+				<Column lg={6} xl={5} align="end">
 					<Heading type="h2">{name}</Heading>
 					<Row row-gap="none">
 						<Column md={8} lg={6} align="center">

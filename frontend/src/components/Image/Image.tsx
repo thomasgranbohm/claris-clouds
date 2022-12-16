@@ -1,5 +1,4 @@
 import { FC } from "react";
-import clsx from "clsx";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 
 import { GraphQL, ImageSchema } from "types/api/strapi";
@@ -8,14 +7,10 @@ import { WithClassname } from "types/components";
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
-import classes from "./Image.module.scss";
-
 interface StrapiImageProps extends Partial<NextImageProps> {
 	blur?: true;
 	image: ImageSchema | GraphQL.Data<ImageSchema>;
 }
-
-// TODO: Need to upgrade to next/image 13
 
 export const StrapiImage: FC<StrapiImageProps> = ({
 	blur,
