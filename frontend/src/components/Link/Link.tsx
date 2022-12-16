@@ -3,6 +3,8 @@ import { AriaLinkOptions, useLink } from "react-aria";
 import clsx from "clsx";
 import NextLink from "next/link";
 
+import FocusRing from "components/aria/FocusRing";
+
 import { WithChildren, WithClassname } from "types/components";
 
 import classes from "./Link.module.scss";
@@ -19,19 +21,21 @@ const Link: FC<LinkProps> = ({ asWrapper, className, ...props }) => {
 	const { children, href } = props;
 
 	return (
-		<NextLink
-			{...props}
-			{...linkProps}
-			href={href}
-			passHref
-			className={clsx(
-				classes["container"],
-				asWrapper && classes["wrapper"],
-				className
-			)}
-		>
-			{children}
-		</NextLink>
+		<FocusRing>
+			<NextLink
+				{...props}
+				{...linkProps}
+				href={href}
+				passHref
+				className={clsx(
+					classes["container"],
+					asWrapper && classes["wrapper"],
+					className
+				)}
+			>
+				{children}
+			</NextLink>
+		</FocusRing>
 	);
 };
 

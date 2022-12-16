@@ -16,7 +16,7 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 	return (
 		<div className={classes["container"]}>
 			<div className={classes["background"]}>
-				<StrapiImage image={background} fill />
+				<StrapiImage image={background} fill priority />
 			</div>
 			<div className={classes["foreground"]}>
 				<Heading className={classes["title"]} type="h1" color="white">

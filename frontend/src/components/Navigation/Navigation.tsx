@@ -16,12 +16,14 @@ interface NavigationLinkProps extends Components.Link {
 
 const NavigationLink: FC<NavigationLinkProps> = ({ active, label, path }) => {
 	return (
-		<Link
-			className={clsx(classes["link"], active && classes["active"])}
-			href={path}
-		>
-			<li className={classes["item"]}>{label}</li>
-		</Link>
+		<li className={classes["item"]}>
+			<Link
+				className={clsx(classes["link"], active && classes["active"])}
+				href={path}
+			>
+				{label}
+			</Link>
+		</li>
 	);
 };
 
@@ -29,16 +31,21 @@ interface NavigationSocialProps extends Components.Social {}
 
 const NavigationSocial: FC<NavigationSocialProps> = ({ link, type }) => {
 	return (
-		<Link className={classes["social"]} href={link} target="_blank">
-			<li className={classes["item"]}>
+		<li className={classes["item"]}>
+			<Link
+				className={classes["social"]}
+				href={link}
+				target="_blank"
+				aria-label={type}
+			>
 				<Icon
 					className={classes["icon"]}
 					variant={
 						type.toLowerCase() as Lowercase<Components.SocialType>
 					}
 				/>
-			</li>
-		</Link>
+			</Link>
+		</li>
 	);
 };
 

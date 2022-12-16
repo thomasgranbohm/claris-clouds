@@ -1,3 +1,4 @@
+@use "styles/colors";
 @use "styles/functions";
 @use "styles/mixins";
 
@@ -6,6 +7,7 @@
 	width: 100%;
 	margin: functions.gutter() auto;
 	padding: functions.gutter();
+	background: colors.get(background);
 
 	.sections {
 		display: grid;

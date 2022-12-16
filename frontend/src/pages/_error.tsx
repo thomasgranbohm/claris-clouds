@@ -1,39 +1,23 @@
-import { GetServerSideProps } from "next";
-
-import { getPageInformation } from "api/page-information";
-
 import Heading from "components/Heading";
 import Layout from "components/Layout";
 
-import { LayoutPage, LayoutSchema } from "types/components";
+import { LayoutPage } from "types/components";
 
-import stripWrapper from "utils/stripWrapper";
+import getLayoutData from "utils/getLayoutData";
 
 interface ErrorPageProps {
 	statusCode: number;
 }
 
-export const getServerSideProps: GetServerSideProps<
-	ErrorPageProps & LayoutSchema
-> = async ({ res }) => {
-	const { data, error } = await getPageInformation();
-
-	if (error) {
-		throw error;
-	}
-
+export const getServerSideProps = getLayoutData(async ({ res }) => {
 	return {
 		props: {
-			layout: stripWrapper(data.pageInformation),
 			statusCode: res.statusCode,
 		},
 	};
-};
+});
 
-const Error404: LayoutPage<{ statusCode: number }> = ({
-	layout,
-	statusCode,
-}) => {
+const ErrorPage: LayoutPage<ErrorPageProps> = ({ layout, statusCode }) => {
 	const title =
 		statusCode === 404 ? "Page not found" : "Something went wrong :(";
 
@@ -46,4 +30,4 @@ const Error404: LayoutPage<{ statusCode: number }> = ({
 	);
 };
 
-export default Error404;
+export default ErrorPage;

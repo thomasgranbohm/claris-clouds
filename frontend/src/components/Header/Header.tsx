@@ -41,10 +41,22 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 				)}
 			>
 				<div className={classes["inner"]}>
-					<Link className={classes["home-link"]} href="/">
-						<StrapiImage image={logo} className={classes["icon"]} />
+					<Link
+						className={classes["home-link"]}
+						href="/"
+						aria-label="Home"
+					>
+						<StrapiImage
+							image={logo}
+							className={classes["icon"]}
+							priority
+						/>
 					</Link>
-					<Button className={classes["button"]} onPress={toggle}>
+					<Button
+						className={classes["button"]}
+						onPress={toggle}
+						aria-label={isSelected ? "Close menu" : "Open menu"}
+					>
 						<Icon
 							className={classes["icon"]}
 							variant={isSelected ? "x-mark" : "bars"}

@@ -119,7 +119,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 			{[year_of_creation, height, width, medium].every(Boolean) && (
 				<Row row-gap="none">
 					<Column md={[10, 1]} lg={[8, 2]}>
-						<Heading type="h4">Specifications</Heading>
+						<Heading type="h3" look="h4">
+							Specifications
+						</Heading>
 					</Column>
 					<Column
 						md={[10, 1]}

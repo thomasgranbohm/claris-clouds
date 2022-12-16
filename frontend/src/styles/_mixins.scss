@@ -22,3 +22,11 @@
 		}
 	}
 }
+
+@mixin has-general-focus {
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		@content;
+	}
+}

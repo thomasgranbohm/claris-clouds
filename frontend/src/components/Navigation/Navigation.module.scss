@@ -13,15 +13,15 @@
 	}
 
 	.links {
-		.link {
-			display: block;
-			text-decoration: none;
+		.item {
+			display: inline-block;
 
-			.item {
-				display: inline-block;
+			.link {
+				display: block;
 				padding: functions.gutter(1) 0;
 				position: relative;
 				color: black;
+				text-decoration: none;
 
 				@include mixins.breakpoint(sm) {
 					padding: functions.gutter(1);
@@ -44,13 +44,14 @@
 						left: functions.gutter();
 					}
 				}
-			}
 
-			&.active,
-			&:hover,
-			&:focus,
-			&:focus-visible {
-				.item::after {
+				@include mixins.has-general-focus {
+					&::after {
+						opacity: 100%;
+					}
+				}
+
+				&.active::after {
 					opacity: 100%;
 				}
 			}
@@ -70,20 +71,28 @@
 		justify-content: center;
 		gap: functions.gutter();
 
-		.social {
+		.item {
 			display: inline-flex;
 
-			.item {
+			.social {
 				display: inline-flex;
 				padding: functions.gutter();
 
 				.icon {
 					height: 2rem;
 					width: 2rem;
+					color: colors.get(foreground);
+					transition: color 0.1s;
 
 					@include mixins.breakpoint(sm) {
 						height: 1.5rem;
 						width: 1.5rem;
+					}
+				}
+
+				@include mixins.has-general-focus {
+					.icon {
+						color: colors.get(accent);
 					}
 				}
 			}

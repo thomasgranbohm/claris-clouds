@@ -19,9 +19,11 @@ const LinkSection: FC<{ links: Components.Link[]; title: string }> = ({
 			<Heading type="b">{title}</Heading>
 			<ul className={classes["links"]}>
 				{links.map(({ label, path }, i) => (
-					<Link href={path} key={i} className={classes["link"]}>
-						<li>{label}</li>
-					</Link>
+					<li key={i}>
+						<Link href={path} className={classes["link"]}>
+							{label}
+						</Link>
+					</li>
 				))}
 			</ul>
 		</div>
