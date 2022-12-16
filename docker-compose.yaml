@@ -11,6 +11,7 @@ services:
       - ./backend/package-lock.json:/opt/package-lock.json
       - ./backend/.env:/opt/app/.env
       - ./backend/public/uploads:/opt/app/public/uploads
+      - ./backend/.tmp:/opt/app/.tmp
     ports:
       - "1337:1337"
   frontend:

@@ -22,19 +22,17 @@ interface GalleryProps {
 	artworks: Artwork[];
 }
 
-interface GalleryItemProps extends Artwork {
-	layout?: "responsive";
-}
+interface GalleryItemProps extends Artwork {}
 
-const GalleryItem: FC<GalleryItemProps> = ({ image, layout, slug }) => {
+const GalleryItem: FC<GalleryItemProps> = ({ image, slug }) => {
 	return (
 		<Link href={`/artwork/${slug}`} className={classes["item"]}>
-			<StrapiImage blur image={image} layout={layout} />
+			<StrapiImage blur image={image} />
 		</Link>
 	);
 };
 
-const GAP = 18;
+const GAP = 36;
 
 const Gallery: FC<GalleryProps> = ({ artworks }) => {
 	const breakpoint = useBreakpoint();
@@ -77,15 +75,12 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 				);
 
 				const scaled = images.map(({ height, width, ...rest }) => {
-					const m = biggestHeight / height;
-
 					return {
 						...rest,
-						height: m * height,
-						width:
-							m *
-							height *
-							getAspectRatio({ ...rest, height, width }),
+						height: biggestHeight,
+						width: Math.floor(
+							biggestHeight * getAspectRatio({ height, width })
+						),
 					};
 				});
 
@@ -110,12 +105,7 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 				);
 			}
 		} else {
-			parsed.push(
-				...artworks.map<GalleryItemProps>((artwork) => ({
-					...artwork,
-					layout: "responsive",
-				}))
-			);
+			parsed.push(...artworks);
 		}
 
 		return parsed.map((props) => (

@@ -52,7 +52,6 @@
 		@include mixins.breakpoint(sm) {
 			grid-template-columns: auto 1fr;
 			grid-template-areas: "home-link navigation";
-			column-gap: functions.gutter();
 
 			.button {
 				display: none;
@@ -90,5 +89,9 @@
 
 	@include mixins.breakpoint(md) {
 		--height: 6rem;
+
+		.navigation {
+			padding-right: functions.gutter();
+		}
 	}
 }

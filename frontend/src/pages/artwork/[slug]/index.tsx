@@ -88,6 +88,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 			<Row>
 				<Column lg={6} xl={[5, 1]} align="end" justify="end">
 					<StrapiImage
+						blur
 						image={image}
 						style={{ height: "auto", width: "100%" }}
 					/>
