@@ -28,14 +28,16 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 		width,
 	} = "data" in image ? stripWrapper(image) : image;
 
-	const placeholderProps: Partial<NextImageProps> =
-		Boolean(blur) && formats.base64
-			? {
-					blurDataURL: formats.base64.url,
-					loading: "lazy",
-					placeholder: "blur",
-			  }
-			: {};
+	const placeholderProps: Partial<NextImageProps> = Boolean(blur)
+		? {
+				blurDataURL:
+					formats.base64?.url ??
+					formats.thumbnail?.url ??
+					formats.small?.url,
+				loading: "lazy",
+				placeholder: "blur",
+		  }
+		: {};
 
 	return (
 		<NextImage
