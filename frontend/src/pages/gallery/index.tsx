@@ -1,4 +1,4 @@
-import { getGallery } from "api/artwork";
+import { getArtworks } from "api/artwork";
 
 import Gallery from "components/Gallery";
 import Layout from "components/Layout";
@@ -12,7 +12,7 @@ import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
 export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
-	const { data, error } = await getGallery();
+	const { data, error } = await getArtworks();
 
 	if (error) {
 		if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {

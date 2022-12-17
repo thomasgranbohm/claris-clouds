@@ -1,7 +1,8 @@
 import request from "api";
 
+import GetAllArtworkSlugs from "queries/GetAllArtworkSlugs.gql";
 import GetArtworkBySlug from "queries/GetArtworkBySlug.gql";
-import GetGallery from "queries/GetGallery.gql";
+import GetArtworksQuery from "queries/GetArtworks.gql";
 
 import Artwork from "types/api/artwork";
 
@@ -12,8 +13,14 @@ export const getArtwork = async (slug: string) => {
 	});
 };
 
-export const getGallery = async () => {
+export const getArtworks = async () => {
 	return request<"artworks", Artwork[]>({
-		query: GetGallery,
+		query: GetArtworksQuery,
+	});
+};
+
+export const getArtworkSlugs = async () => {
+	return request<"artworks", Pick<Artwork, "slug">[]>({
+		query: GetAllArtworkSlugs,
 	});
 };
