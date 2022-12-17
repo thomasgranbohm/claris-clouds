@@ -1,4 +1,6 @@
 import type { AppProps } from "next/app";
+import getConfig from "next/config";
+import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 
 import FocusRing from "components/aria/FocusRing";
@@ -10,10 +12,13 @@ import stripWrapper from "utils/stripWrapper";
 
 import "../styles/globals.scss";
 
+const { publicRuntimeConfig } = getConfig();
+
 function CustomApp({
 	Component,
 	pageProps,
 }: AppProps<{ meta: MetadataSchema }>) {
+	const router = useRouter();
 	const { meta } = pageProps;
 	const { description, favicon, page_prefix, title } = meta;
 
@@ -30,6 +35,7 @@ function CustomApp({
 					},
 				]}
 				openGraph={{ description, title, type: "website" }}
+				canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
 			/>
 			<FocusRing>
 				<a href="#main-content" className="skip-link">

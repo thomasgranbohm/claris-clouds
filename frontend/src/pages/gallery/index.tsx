@@ -40,7 +40,7 @@ interface GalleryPageProps {
 const GalleryPage: LayoutPage<GalleryPageProps> = ({ artworks, layout }) => {
 	return (
 		<Layout {...layout}>
-			<MetaData title="Gallery" path="/gallery" />
+			<MetaData title="Gallery" />
 
 			<Gallery artworks={artworks} />
 		</Layout>

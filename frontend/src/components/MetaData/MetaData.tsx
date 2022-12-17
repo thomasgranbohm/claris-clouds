@@ -1,5 +1,6 @@
 import { FC } from "react";
 import getConfig from "next/config";
+import { useRouter } from "next/router";
 import { NextSeo, NextSeoProps } from "next-seo";
 
 interface MetaDataProps extends NextSeoProps {
@@ -10,7 +11,7 @@ interface MetaDataProps extends NextSeoProps {
 		url: string;
 		width: number;
 	}>;
-	path: string;
+	path?: string;
 	title: string;
 }
 
@@ -22,6 +23,7 @@ const MetaData: FC<MetaDataProps> = ({
 	title,
 	...props
 }) => {
+	const router = useRouter();
 	const { publicRuntimeConfig } = getConfig();
 
 	return (
@@ -29,7 +31,10 @@ const MetaData: FC<MetaDataProps> = ({
 			{...props}
 			title={title}
 			description={description}
-			canonical={canonical || publicRuntimeConfig.PAGE_URL + path}
+			canonical={
+				canonical ||
+				publicRuntimeConfig.PAGE_URL + (path || router.asPath)
+			}
 			openGraph={{
 				description,
 				images:

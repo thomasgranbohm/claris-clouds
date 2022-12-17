@@ -14,7 +14,7 @@ interface CoverProps extends WithChildren {
 
 const Cover: FC<CoverProps> = ({ background, children }) => {
 	return (
-		<div className={classes["container"]}>
+		<div className={classes["container"]} role="banner">
 			<div className={classes["background"]}>
 				<StrapiImage
 					image={background}
