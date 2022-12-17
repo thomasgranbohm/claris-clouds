@@ -2,7 +2,7 @@
 @use "styles/utils";
 
 .container {
-	margin: utils.gutter(0.5) 0;
+	margin: 1em 0;
 
 	&.inline {
 		display: inline-block;
@@ -12,7 +12,6 @@
 		@each $name, $value in $colors {
 			&--#{$name} {
 				color: $value;
-				fill: $name;
 			}
 		}
 	}

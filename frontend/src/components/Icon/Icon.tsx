@@ -12,10 +12,12 @@ import TikTok from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
 
 import { WithClassname } from "types/components";
+import { Colors } from "types/generics";
 
 import classes from "./Icon.module.scss";
 
 interface IconProps extends WithClassname {
+	fill?: Colors;
 	variant:
 		| "calendar"
 		| "ruler"
@@ -28,7 +30,7 @@ interface IconProps extends WithClassname {
 		| "redbubble";
 }
 
-const Icon: FC<IconProps> = ({ className, variant }) => {
+const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
 	let Element = null;
 
 	switch (variant) {
@@ -63,7 +65,15 @@ const Icon: FC<IconProps> = ({ className, variant }) => {
 			return null;
 	}
 
-	return <Element className={clsx(classes["container"], className)} />;
+	return (
+		<Element
+			className={clsx(
+				classes["container"],
+				classes[`fill--${fill}`],
+				className
+			)}
+		/>
+	);
 };
 
 export default Icon;

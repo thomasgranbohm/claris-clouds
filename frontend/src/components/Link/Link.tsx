@@ -4,16 +4,36 @@ import clsx from "clsx";
 import NextLink from "next/link";
 
 import FocusRing from "components/aria/FocusRing";
+import Heading from "components/Heading";
 
 import { WithChildren, WithClassname } from "types/components";
 
 import classes from "./Link.module.scss";
 
-interface LinkProps extends WithChildren, WithClassname, AriaLinkOptions {
+export interface LinkProps
+	extends WithChildren,
+		WithClassname,
+		AriaLinkOptions {
 	asWrapper?: boolean;
 	href: string;
 	target?: string;
 }
+
+export const StyledLink: FC<LinkProps> = ({ children, ...props }) => {
+	return (
+		<Link {...props} asWrapper>
+			<div className={classes["box"]}>
+				<Heading
+					className={classes["title"]}
+					color="background"
+					type="b"
+				>
+					{children}
+				</Heading>
+			</div>
+		</Link>
+	);
+};
 
 const Link: FC<LinkProps> = ({ asWrapper, className, ...props }) => {
 	const ref = useRef<HTMLAnchorElement>(null);

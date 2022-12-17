@@ -2,6 +2,8 @@ import { FC, useRef } from "react";
 import { AriaButtonProps, useButton } from "react-aria";
 import clsx from "clsx";
 
+import FocusRing from "components/aria/FocusRing";
+
 import { WithClassname } from "types/components";
 
 import classes from "./Button.module.scss";
@@ -15,17 +17,19 @@ const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
 	const { buttonProps, isPressed } = useButton(props, ref);
 
 	return (
-		<button
-			{...buttonProps}
-			ref={ref}
-			className={clsx(
-				classes["container"],
-				isPressed && activeClassName,
-				className
-			)}
-		>
-			{props.children}
-		</button>
+		<FocusRing>
+			<button
+				{...buttonProps}
+				ref={ref}
+				className={clsx(
+					classes["container"],
+					isPressed && activeClassName,
+					className
+				)}
+			>
+				{props.children}
+			</button>
+		</FocusRing>
 	);
 };
 

@@ -8,10 +8,9 @@ import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
 import Labeler from "components/Labeler";
 import Layout from "components/Layout";
-import Link from "components/Link";
+import Link, { StyledLink } from "components/Link";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
-import StyledButton from "components/StyledButton";
 import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
@@ -113,9 +112,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					<Heading type="h2">{name}</Heading>
 					<Row row-gap="none">
 						<Column md={8} lg={6} align="center">
-							<Link href={redbubble_link} asWrapper>
-								<StyledButton>Buy a print</StyledButton>
-							</Link>
+							<StyledLink href={redbubble_link}>
+								Buy a print
+							</StyledLink>
 						</Column>
 						<Column md={4} lg={6} align="center">
 							{!original_sold ? (

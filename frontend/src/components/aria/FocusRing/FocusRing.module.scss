@@ -2,4 +2,5 @@
 
 .active {
 	outline: 2px solid colors.get(accent) !important;
+	outline-offset: 2px;
 }

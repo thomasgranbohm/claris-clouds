@@ -10,10 +10,9 @@
 	background: colors.get(background);
 
 	.sections {
-		display: flex;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 		gap: functions.gutter() functions.gutter(2);
-		align-items: flex-start;
-		justify-content: flex-start;
 
 		.section {
 			max-width: 12rem;
