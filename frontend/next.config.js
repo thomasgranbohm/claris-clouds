@@ -9,9 +9,6 @@ const nextConfig = {
 			{
 				hostname: "backend",
 			},
-			{
-				hostname: "localhost",
-			},
 		],
 		minimumCacheTTL: 60,
 	},
