@@ -30,10 +30,9 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 
 	const placeholderProps: Partial<NextImageProps> = Boolean(blur)
 		? {
-				blurDataURL:
-					formats.base64?.url ??
-					formats.thumbnail?.url ??
-					formats.small?.url,
+				blurDataURL: getImageLink(
+					formats.base64 ?? formats.thumbnail ?? formats.small
+				),
 				loading: "lazy",
 				placeholder: "blur",
 		  }
