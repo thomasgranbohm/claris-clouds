@@ -9,4 +9,8 @@
 			text-decoration: none;
 		}
 	}
+
+	&:focus {
+		outline: none;
+	}
 }
