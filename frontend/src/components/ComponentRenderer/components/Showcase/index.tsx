@@ -22,31 +22,22 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 
 	return (
 		<div className={clsx(classes["container"], classes["showcase"])}>
-			<div className={classes["swiper-container"]}>
-				<Swiper
-					slidesPerView="auto"
-					spaceBetween={9}
-					centeredSlides={true}
-					loop={true}
-					className={classes["swiper"]}
-				>
-					{strippedImages.map((image, i) => (
-						<SwiperSlide className={classes["slide"]} key={i}>
-							<StrapiImage
-								className={classes["image"]}
-								image={image}
-								layout="fill"
-								objectFit="cover"
-							/>
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</div>
-			<Row>
-				<Column md={[8, 2]}>
-					<Typography>Artwork name</Typography>
-				</Column>
-			</Row>
+			<Swiper
+				slidesPerView="auto"
+				spaceBetween={9}
+				centeredSlides={true}
+				loop={true}
+				className={classes["swiper"]}
+			>
+				{strippedImages.map((image, i) => (
+					<SwiperSlide className={classes["slide"]} key={i}>
+						<StrapiImage
+							className={classes["image"]}
+							image={image}
+						/>
+					</SwiperSlide>
+				))}
+			</Swiper>
 		</div>
 	);
 };

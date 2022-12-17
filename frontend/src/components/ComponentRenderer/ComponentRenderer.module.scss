@@ -3,7 +3,8 @@
 
 .container {
 	&:not(:first-of-type) {
-		margin: functions.gutter(4) 0;
+		margin-top: functions.gutter(4);
+		margin-bottom: functions.gutter(4);
 	}
 }
 
@@ -43,33 +44,33 @@
 }
 
 .showcase {
-	margin: functions.gutter(2) 0;
+	margin-left: calc((100vw - 100%) / -2);
+	margin-right: calc((100vw - 100%) / -2);
+	padding-left: calc((100vw - 100%) / 2);
+	padding-right: calc((100vw - 100%) / 2);
 
-	.swiper-container {
-		margin-left: calc((100vw - 100%) / -2);
-		margin-right: calc((100vw - 100%) / -2);
-		padding-left: calc((100vw - 100%) / 2);
-		padding-right: calc((100vw - 100%) / 2);
+	overflow: hidden;
 
-		overflow-x: hidden;
+	.swiper {
+		overflow: visible;
 
-		.swiper {
-			overflow: visible;
+		.slide {
+			width: unset;
+			height: 30vh;
 
-			.slide {
-				width: 100%;
+			.image {
+				height: 100%;
+				width: auto;
+				max-width: 100%;
+				@include mixins.keep-within-width(functions.gutter(1));
+			}
 
-				.image {
-					aspect-ratio: 16 / 9;
-				}
+			@include mixins.breakpoint(md) {
+				height: 50vh;
+			}
 
-				@include mixins.breakpoint(md) {
-					width: calc(100% * (10 / 12));
-				}
-
-				@include mixins.breakpoint(lg) {
-					width: calc(100% * (8 / 12));
-				}
+			@include mixins.breakpoint(lg) {
+				height: 40vh;
 			}
 		}
 	}

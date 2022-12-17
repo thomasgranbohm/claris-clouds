@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "styles/functions";
 @use "styles/variables";
 
 @mixin breakpoint($breakpoint, $max: false) {
@@ -15,10 +16,14 @@
 	}
 }
 
-@mixin keep-within-width {
+@mixin keep-within-width($padding: false) {
 	@each $name, $size in variables.$breakpoints {
 		@include breakpoint($name) {
-			max-width: $size;
+			@if $padding {
+				max-width: calc(#{$size} - #{functions.gutter(2)});
+			} @else {
+				max-width: $size;
+			}
 		}
 	}
 }
