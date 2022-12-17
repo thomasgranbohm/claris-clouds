@@ -13,6 +13,7 @@ const nextConfig = {
 				hostname: "localhost",
 			},
 		],
+		minimumCacheTTL: 60,
 	},
 	output:
 		(process.env.NODE_ENV === "production" && "standalone") || undefined,

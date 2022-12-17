@@ -33,6 +33,9 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 			fill={fill}
 			alt={caption || alternativeText || name}
 			src={getImageLink({ ext, hash })}
+			sizes="(max-width: 768px) 100vw,
+			(max-width: 1200px) 50vw,
+			33vw"
 			blurDataURL={formats.base64?.url}
 			placeholder={formats.base64 && "blur"}
 			{...props}
