@@ -10,16 +10,22 @@
 	background: colors.get(background);
 
 	.sections {
-		display: grid;
-		gap: functions.gutter();
-		grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+		display: flex;
+		gap: functions.gutter() functions.gutter(2);
+		align-items: flex-start;
+		justify-content: flex-start;
 
-		.links {
-			list-style-type: none;
+		.section {
+			max-width: 12rem;
+			display: inline-block;
 
-			.link {
-				display: block;
-				margin: functions.gutter(0.5) 0;
+			.links {
+				list-style-type: none;
+
+				.link {
+					display: block;
+					margin: functions.gutter(0.5) 0;
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 
 import { StrapiImage } from "components/Image";
 import Link from "components/Link";
@@ -22,16 +22,6 @@ interface GalleryProps {
 	artworks: Artwork[];
 }
 
-interface GalleryItemProps extends Artwork {}
-
-const GalleryItem: FC<GalleryItemProps> = ({ image, slug }) => {
-	return (
-		<Link href={`/artwork/${slug}`} className={classes["item"]}>
-			<StrapiImage image={image} />
-		</Link>
-	);
-};
-
 const GAP = 36;
 
 const Gallery: FC<GalleryProps> = ({ artworks }) => {
@@ -39,17 +29,19 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 
 	const ref = useRef<HTMLDivElement>(null);
 
-	const parsedArtworks = useMemo(() => {
-		const parsed: Array<GalleryItemProps> = [];
+	const [parsedArtworks, setParsedArtworks] = useState<ReactNode>();
 
+	useEffect(() => {
 		if (!ref.current) {
-			return null;
+			return;
 		}
 
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
 		if (Number(breakpoint) > Breakpoint.sm) {
+			const parsed: Array<Artwork> = [];
+
 			for (let index = 0; parsed.length < artworks.length; index++) {
 				const toPick = breakpoint === Breakpoint.md ? 2 : 3;
 				const sliced = artworks.slice(
@@ -90,9 +82,10 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 				const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
 				const multiplier = combinedWidths / WIDTH;
 
-				const combinedScaledWidths = scaled.reduce(
-					(p, c) => p + c.width / multiplier,
-					0
+				const combinedScaledWidths = Number(
+					scaled
+						.reduce((p, c) => p + c.width / multiplier, 0)
+						.toFixed(2)
 				);
 
 				console.assert(
@@ -116,13 +109,35 @@ const Gallery: FC<GalleryProps> = ({ artworks }) => {
 					})
 				);
 			}
+			setParsedArtworks(
+				parsed.map(({ image, slug }, i) => (
+					<Link
+						href={`/artwork/${slug}`}
+						className={classes["item"]}
+						key={slug}
+					>
+						<StrapiImage image={image} priority={i <= 6} />
+					</Link>
+				))
+			);
 		} else {
-			parsed.push(...artworks);
+			setParsedArtworks(
+				artworks.map(({ image, slug }, i) => (
+					<Link
+						href={`/artwork/${slug}`}
+						className={classes["item"]}
+						key={slug}
+					>
+						<StrapiImage
+							image={image}
+							priority={i < 2}
+							style={{ height: "auto", width: "100%" }}
+							sizes="100vw"
+						/>
+					</Link>
+				))
+			);
 		}
-
-		return parsed.map((props) => (
-			<GalleryItem {...props} key={props.slug} />
-		));
 	}, [artworks, breakpoint, ref]);
 
 	return (
