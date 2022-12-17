@@ -36,7 +36,7 @@ const MetaData: FC<MetaDataProps> = ({
 					images &&
 					images.map(({ url, ...rest }) => ({
 						...rest,
-						url: `${publicRuntimeConfig.PAGE_URL}/api/image/${url}`,
+						url: `${publicRuntimeConfig.PAGE_URL}${url}`,
 					})),
 				title,
 				type: "website",
