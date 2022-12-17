@@ -105,6 +105,8 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					<StrapiImage
 						image={image}
 						style={{ height: "auto", width: "100%" }}
+						sizes="(max-width: 1024px) 100vw
+						50vw"
 					/>
 				</Column>
 				<Column lg={6} xl={5} align="end">
