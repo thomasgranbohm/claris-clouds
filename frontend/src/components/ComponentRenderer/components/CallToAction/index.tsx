@@ -16,14 +16,8 @@ import classes from "../../ComponentRenderer.module.scss";
 const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 	return (
 		<Row className={clsx(classes["container"], classes["call-to-action"])}>
-			<Column lg={8} xl={6} align="end">
-				<StrapiImage
-					className={classes["image"]}
-					image={image}
-					layout="fill"
-					objectFit="contain"
-					objectPosition="bottom"
-				/>
+			<Column lg={8} xl={6} align="end" justify="center">
+				<StrapiImage className={classes["image"]} image={image} />
 			</Column>
 			<Column lg={4} xl={6} align="end">
 				{title && <Heading type="h3">{title}</Heading>}

@@ -9,6 +9,9 @@ const nextConfig = {
 			{
 				hostname: "backend",
 			},
+			{
+				hostname: new URL(process.env.PAGE_URL).hostname,
+			},
 		],
 		minimumCacheTTL: 60,
 	},

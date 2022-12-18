@@ -18,7 +18,7 @@ import classes from "../../ComponentRenderer.module.scss";
 const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 	const strippedImages = stripWrapper(images);
 
-	// TODO: Use artworks instead
+	// TODO: Set correct sizes
 
 	return (
 		<div className={clsx(classes["container"], classes["showcase"])}>
@@ -32,8 +32,16 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 				{strippedImages.map((image, i) => (
 					<SwiperSlide className={classes["slide"]} key={i}>
 						<StrapiImage
-							className={classes["image"]}
 							image={image}
+							sizes="(max-width: 768px) 100vw,
+									(max-width: 1200px) 50vw,
+									33vw"
+							style={{
+								height: "100%",
+								maxWidth: "100%",
+								objectFit: "contain",
+								width: "auto",
+							}}
 						/>
 					</SwiperSlide>
 				))}

@@ -20,6 +20,7 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 					image={background}
 					fill
 					priority
+					loading="eager"
 					style={{ objectFit: "cover" }}
 				/>
 			</div>

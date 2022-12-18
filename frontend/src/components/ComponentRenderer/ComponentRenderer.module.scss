@@ -39,7 +39,10 @@
 .call-to-action {
 	.image {
 		width: 100%;
-		aspect-ratio: 4 / 3;
+		max-height: 60vh;
+		height: auto;
+		object-fit: contain;
+		object-position: center;
 	}
 }
 
@@ -63,25 +66,16 @@
 
 			// TODO: May create problems in the future
 			width: unset;
-			max-height: 10rem;
-			height: 50vw;
+			height: 9rem;
 			max-width: 100%;
 			@include mixins.keep-within-width(true);
 
-			.image {
-				height: 100%;
-				width: auto;
-				max-width: 100%;
-				object-fit: contain;
-			}
-
 			@include mixins.breakpoint(md) {
-				max-height: 18rem;
-				height: 50vh;
+				height: 18rem;
 			}
 
 			@include mixins.breakpoint(lg) {
-				max-height: 24rem;
+				height: 27rem;
 			}
 		}
 	}
