@@ -3,8 +3,8 @@
 
 .container {
 	&:not(:first-of-type) {
-		margin-top: functions.gutter(4);
-		margin-bottom: functions.gutter(4);
+		margin-top: functions.gutter(2);
+		margin-bottom: functions.gutter(2);
 	}
 }
 
@@ -55,22 +55,33 @@
 		overflow: visible;
 
 		.slide {
+			/*
+				Welcome back!
+				The solution you want is for the largest image to scale to 100% width and then have auto height
+				and every other picture should follow that height and contain the ratio
+			*/
+
+			// TODO: May create problems in the future
 			width: unset;
-			height: 30vh;
+			max-height: 10rem;
+			height: 50vw;
+			max-width: 100%;
+			@include mixins.keep-within-width(true);
 
 			.image {
 				height: 100%;
 				width: auto;
 				max-width: 100%;
-				@include mixins.keep-within-width(functions.gutter(1));
+				object-fit: contain;
 			}
 
 			@include mixins.breakpoint(md) {
+				max-height: 18rem;
 				height: 50vh;
 			}
 
 			@include mixins.breakpoint(lg) {
-				height: 40vh;
+				max-height: 24rem;
 			}
 		}
 	}
