@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Column from "components/Column";
 import Heading from "components/Heading";
 import Link from "components/Link";
+import List, { ListItem } from "components/List";
 import Row from "components/Row";
 import Typography from "components/Typography";
 
@@ -21,7 +22,6 @@ const RichText: FC<RichTextSchema> = ({ text }) => {
 					children={text}
 					components={{
 						a({ children, node }) {
-							console.log(children, node);
 							const { properties } = node;
 							if (!properties) {
 								return null;
@@ -57,8 +57,17 @@ const RichText: FC<RichTextSchema> = ({ text }) => {
 						h6({ children }) {
 							return <Heading type="h6">{children}</Heading>;
 						},
+						li({ children }) {
+							return <ListItem>{children}</ListItem>;
+						},
+						ol({ children }) {
+							return <List variant="ordered">{children}</List>;
+						},
 						p({ children }) {
 							return <Typography>{children}</Typography>;
+						},
+						ul({ children }) {
+							return <List variant="unordered">{children}</List>;
 						},
 					}}
 				/>

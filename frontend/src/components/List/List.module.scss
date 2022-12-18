@@ -1,0 +1,9 @@
+@use "styles/functions";
+
+.container {
+	margin-inline-start: functions.gutter(1.5);
+
+	.item {
+		margin-block: functions.gutter();
+	}
+}
