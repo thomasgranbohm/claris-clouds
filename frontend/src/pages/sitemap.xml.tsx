@@ -2,19 +2,40 @@ import { GetServerSideProps } from "next";
 import getConfig from "next/config";
 
 import { getArtworkSlugs } from "api/artwork";
+import { getPageSlugs } from "api/page";
 
 import stripWrapper from "utils/stripWrapper";
 
 const { publicRuntimeConfig } = getConfig();
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-	const { data, error } = await getArtworkSlugs();
+	const [artworks, pages] = await Promise.all([
+		(async () => {
+			const { data, error } = await getArtworkSlugs();
 
-	if (error) {
-		throw error;
-	}
+			if (error) {
+				throw error;
+			}
 
-	const artworks = stripWrapper(data.artworks);
+			return stripWrapper(data.artworks);
+		})(),
+		(async () => {
+			const { data, error } = await getPageSlugs();
+
+			if (error) {
+				throw error;
+			}
+
+			return stripWrapper(data.pages);
+		})(),
+	]);
+
+	const genXMLBlock =
+		<T extends { slug: string }>(prefix?: string) =>
+		({ slug }: T) =>
+			`<url><loc>${`${publicRuntimeConfig.PAGE_URL}/${
+				prefix ? `${prefix}/` : ""
+			}${slug}`}</loc></url>`;
 
 	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -24,12 +45,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 <url>
 	<loc>${publicRuntimeConfig.PAGE_URL}/gallery</loc>
 </url>
-	${artworks
-		.map(
-			({ slug }) =>
-				`<url><loc>${`${publicRuntimeConfig.PAGE_URL}/artwork/${slug}`}</loc></url>`
-		)
-		.join("\n")}
+	${artworks.map(genXMLBlock("artwork")).join("\n")}
+	${pages.map(genXMLBlock()).join("\n")}
 </urlset>`;
 
 	res.setHeader("Content-Type", "text/xml");

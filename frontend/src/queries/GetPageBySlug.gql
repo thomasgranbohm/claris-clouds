@@ -1,0 +1,53 @@
+#import "./fragments/UploadFile.fragment.gql"
+
+query PageBySlug($slug: String!) {
+	page(slug: $slug) {
+		data {
+			attributes {
+				title
+				slug
+				accessibility {
+					title
+					description
+					image {
+						data {
+							attributes {
+								...UploadFile
+							}
+						}
+					}
+				}
+				sections {
+					__typename
+					... on ComponentSectionsRichText {
+						text
+					}
+					... on ComponentSectionsCallToAction {
+						title
+						text
+						link {
+							label
+							path
+						}
+						image {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
+					... on ComponentSectionsShowcase {
+						images {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

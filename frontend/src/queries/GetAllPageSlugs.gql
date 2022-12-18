@@ -1,0 +1,9 @@
+query GetAllPageSlugs {
+	pages(pagination: { pageSize: 100000 }) {
+		data {
+			attributes {
+				slug
+			}
+		}
+	}
+}

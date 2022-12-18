@@ -1,13 +1,19 @@
 import request from "api/index";
 
+import GetAllPageSlugs from "queries/GetAllPageSlugs.gql";
+import GetPageBySlug from "queries/GetPageBySlug.gql";
+
 import { PageSchema } from "types/api/page";
 
 export const getPage = async (slug: string) => {
-	throw new Error("Not implemented");
-	// return request<PageSchema, "page">("GET", `pages/${slug}`);
+	return request<"page", PageSchema>({
+		query: GetPageBySlug,
+		variables: { slug },
+	});
 };
 
-export const getPages = async () => {
-	throw new Error("Not implemented");
-	// return request<PageSchema[]>("GET", "pages/");
+export const getPageSlugs = async () => {
+	return request<"pages", Pick<PageSchema, "slug">[]>({
+		query: GetAllPageSlugs,
+	});
 };

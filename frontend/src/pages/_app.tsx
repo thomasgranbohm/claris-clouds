@@ -1,3 +1,4 @@
+import { SSRProvider } from "react-aria";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
 import { useRouter } from "next/router";
@@ -23,7 +24,7 @@ function CustomApp({
 	const { description, favicon, page_prefix, title } = meta;
 
 	return (
-		<>
+		<SSRProvider>
 			<DefaultSeo
 				defaultTitle={title}
 				titleTemplate={page_prefix || title}
@@ -43,7 +44,7 @@ function CustomApp({
 				</a>
 			</FocusRing>
 			<Component {...pageProps} />
-		</>
+		</SSRProvider>
 	);
 }
 
