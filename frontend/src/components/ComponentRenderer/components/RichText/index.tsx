@@ -16,7 +16,7 @@ import classes from "../../ComponentRenderer.module.scss";
 const RichText: FC<RichTextSchema> = ({ text }) => {
 	return (
 		<Row className={clsx(classes["container"], classes["rich-text"])}>
-			<Column md={[10, 1]} lg={[8, 2]}>
+			<Column lg={[8, 2]}>
 				{/* eslint-disable react/no-children-prop */}
 				<ReactMarkdown
 					children={text}
