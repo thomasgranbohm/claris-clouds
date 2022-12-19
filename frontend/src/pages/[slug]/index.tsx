@@ -2,7 +2,7 @@ import { getPage } from "api/page";
 
 import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
-import Heading from "components/Heading";
+import Heading, { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
@@ -57,7 +57,7 @@ const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
 			/>
 			<Row>
 				<Column lg={[8, 2]}>
-					<Heading type="h1">{title}</Heading>
+					<PageTitle>{title}</PageTitle>
 					{accessibility?.description && (
 						<Typography size="large">
 							{accessibility.description}

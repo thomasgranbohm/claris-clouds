@@ -6,6 +6,20 @@ import { Colors, Headings } from "types/generics";
 
 import classes from "./Heading.module.scss";
 
+export const PageTitle: FC<Omit<HeadingProps, "type">> = ({
+	children,
+	className,
+	...props
+}) => (
+	<Heading
+		{...props}
+		type="h1"
+		className={clsx(classes["page-title"], className)}
+	>
+		{children}
+	</Heading>
+);
+
 interface HeadingProps extends WithChildren, WithClassname {
 	color?: Colors;
 	look?: Headings;
