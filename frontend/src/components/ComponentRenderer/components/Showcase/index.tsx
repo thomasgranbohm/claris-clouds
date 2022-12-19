@@ -28,6 +28,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 				centeredSlides={true}
 				loop={true}
 				className={classes["swiper"]}
+				grabCursor
 			>
 				{strippedImages.map((image, i) => (
 					<SwiperSlide className={classes["slide"]} key={i}>

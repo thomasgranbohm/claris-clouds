@@ -4,9 +4,8 @@ import clsx from "clsx";
 import Column from "components/Column";
 import Heading from "components/Heading";
 import { StrapiImage } from "components/Image";
-import Link from "components/Link";
+import { StyledLink } from "components/Link";
 import Row from "components/Row";
-import StyledButton from "components/StyledButton";
 import Typography from "components/Typography";
 
 import { CallToActionSchema } from "types/sections";
@@ -25,9 +24,9 @@ const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 				{link && (
 					<Row>
 						<Column sm={[10, 1]} md={[8, 2]} lg={12} xl={8}>
-							<Link href={link.path} asWrapper>
-								<StyledButton>{link.label}</StyledButton>
-							</Link>
+							<StyledLink href={link.path} asWrapper>
+								{link.label}
+							</StyledLink>
 						</Column>
 					</Row>
 				)}

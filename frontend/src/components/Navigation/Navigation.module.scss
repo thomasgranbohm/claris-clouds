@@ -20,7 +20,7 @@
 				display: inline-block;
 				padding: functions.gutter(1) 0;
 				position: relative;
-				color: black;
+				color: colors.get(foreground);
 				text-decoration: none;
 
 				@include mixins.breakpoint(sm) {

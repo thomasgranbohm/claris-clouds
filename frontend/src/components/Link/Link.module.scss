@@ -4,6 +4,7 @@
 
 .container {
 	display: inline-block;
+	color: colors.get(link-color);
 
 	&.wrapper {
 		width: 100%;
@@ -34,6 +35,8 @@
 
 		.title {
 			margin: 0;
+
+			@include mixins.text-contrast(colors.get(accent));
 		}
 	}
 
