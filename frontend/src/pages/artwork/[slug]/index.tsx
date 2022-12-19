@@ -111,34 +111,26 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 				</Column>
 				<Column lg={6} xl={5} align="end">
 					<Heading type="h2">{name}</Heading>
-					<Row row-gap="none">
-						<Column md={8} lg={6} align="center">
-							<StyledLink href={redbubble_link}>
-								Buy a print
-							</StyledLink>
-						</Column>
-						<Column md={4} lg={6} align="center">
-							<Typography type="span">
-								{!original_sold ? (
-									<Fragment>
-										Wanna buy the original?{" "}
-										<Link href="#">
-											Message me about it!
-										</Link>
-									</Fragment>
-								) : (
-									<Fragment>
-										The original has been sold
-									</Fragment>
-								)}
-							</Typography>
-						</Column>
-					</Row>
+					<div className={classes["purchase-actions"]}>
+						<StyledLink href={redbubble_link}>
+							Buy a print
+						</StyledLink>
+						<Typography type="span">
+							{!original_sold ? (
+								<Fragment>
+									Wanna buy the original?{" "}
+									<Link href="#">Message me about it!</Link>
+								</Fragment>
+							) : (
+								<Fragment>The original has been sold</Fragment>
+							)}
+						</Typography>
+					</div>
 				</Column>
 			</Row>
 			{[year_of_creation, height, width, medium].every(Boolean) && (
 				<Row row-gap="none">
-					<Column md={[10, 1]} lg={[8, 2]}>
+					<Column lg={[8, 2]}>
 						<Heading type="h3" look="h4">
 							Specifications
 						</Heading>
@@ -158,7 +150,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 			)}
 			{description && (
 				<Row>
-					<Column md={[8, 2]}>
+					<Column lg={[8, 2]}>
 						<Typography size="large">{description}</Typography>
 					</Column>
 				</Row>

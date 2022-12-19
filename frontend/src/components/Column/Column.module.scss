@@ -5,10 +5,7 @@
 .container {
 	width: 100%;
 	height: auto;
-
-	&:not(:first-child) {
-		padding-inline-start: functions.gutter();
-	}
+	padding-inline-start: functions.gutter();
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {

@@ -1,7 +1,20 @@
+@use "styles/functions";
 @use "styles/mixins";
 
 .image {
 	aspect-ratio: 4 / 3;
+}
+
+.purchase-actions {
+	display: grid;
+	gap: functions.gutter();
+
+	margin-top: functions.gutter();
+
+	@include mixins.breakpoint(md) {
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+	}
 }
 
 .specifications {
@@ -11,6 +24,7 @@
 	@include mixins.breakpoint(md) {
 		flex-direction: row;
 		justify-content: space-between;
+		justify-content: space-evenly;
 	}
 
 	@include mixins.breakpoint(lg) {
