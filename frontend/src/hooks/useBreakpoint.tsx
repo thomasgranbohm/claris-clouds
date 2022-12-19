@@ -7,9 +7,7 @@ const useBreakpoint = (): Breakpoint | null => {
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			if (window.innerWidth >= Breakpoint.xxl) {
-				setBreakpoint(Breakpoint.xxl);
-			} else if (window.innerWidth >= Breakpoint.xl) {
+			if (window.innerWidth >= Breakpoint.xl) {
 				setBreakpoint(Breakpoint.xl);
 			} else if (window.innerWidth >= Breakpoint.lg) {
 				setBreakpoint(Breakpoint.lg);
@@ -17,6 +15,8 @@ const useBreakpoint = (): Breakpoint | null => {
 				setBreakpoint(Breakpoint.md);
 			} else if (window.innerWidth >= Breakpoint.sm) {
 				setBreakpoint(Breakpoint.sm);
+			} else if (window.innerWidth >= Breakpoint.xs) {
+				setBreakpoint(Breakpoint.xs);
 			} else {
 				setBreakpoint(null);
 			}
