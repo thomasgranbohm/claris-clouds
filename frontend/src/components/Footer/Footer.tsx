@@ -1,8 +1,10 @@
 import { FC } from "react";
 import clsx from "clsx";
 
+import Column from "components/Column";
 import Heading from "components/Heading";
 import Link from "components/Link";
+import Row from "components/Row";
 import Typography from "components/Typography";
 
 import Components from "types/api/components";
@@ -38,25 +40,30 @@ interface FooterProps extends WithClassname {
 const Footer: FC<FooterProps> = ({ className, links, socials }) => {
 	return (
 		<footer className={clsx(classes["container"], className)}>
-			<div className={classes["sections"]}>
-				{links && links.length > 0 && (
-					<LinkSection title="Links" links={links} />
-				)}
-				{socials && socials.length > 0 && (
-					<LinkSection
-						title="Socials"
-						links={socials.map(({ link, type }) => ({
-							label: type,
-							path: link,
-						}))}
-					/>
-				)}
-			</div>
-			<div className={classes["copyright"]}>
-				<Typography>
-					&copy; {new Date().getUTCFullYear()} Clari&apos;s Clouds
-				</Typography>
-			</div>
+			<Row>
+				<Column>
+					<div className={classes["sections"]}>
+						{links && links.length > 0 && (
+							<LinkSection title="Links" links={links} />
+						)}
+						{socials && socials.length > 0 && (
+							<LinkSection
+								title="Socials"
+								links={socials.map(({ link, type }) => ({
+									label: type,
+									path: link,
+								}))}
+							/>
+						)}
+					</div>
+					<div className={classes["copyright"]}>
+						<Typography>
+							&copy; {new Date().getUTCFullYear()} Clari&apos;s
+							Clouds
+						</Typography>
+					</div>
+				</Column>
+			</Row>
 		</footer>
 	);
 };

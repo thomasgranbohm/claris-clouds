@@ -2,9 +2,8 @@
 @use "styles/mixins";
 
 .container {
-	&:not(:first-of-type) {
+	&:not(:first-child, .rich-text) {
 		margin-top: functions.gutter(2);
-		margin-bottom: functions.gutter(2);
 	}
 }
 

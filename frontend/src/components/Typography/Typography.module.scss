@@ -2,8 +2,6 @@
 @use "styles/utils";
 
 .container {
-	margin: 1em 0;
-
 	&.inline {
 		display: inline-block;
 	}
@@ -35,6 +33,12 @@
 
 		&--smaller {
 			font-size: 0.8em;
+		}
+	}
+
+	&.type {
+		&--p {
+			margin-top: 1em;
 		}
 	}
 

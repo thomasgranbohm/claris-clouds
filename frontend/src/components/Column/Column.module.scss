@@ -1,21 +1,26 @@
+@use "styles/functions";
 @use "styles/mixins";
 @use "styles/variables";
 
 .container {
-	grid-column: span 12;
 	width: 100%;
+	height: auto;
+
+	&:not(:first-child) {
+		padding-inline-start: functions.gutter();
+	}
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {
 			@include mixins.breakpoint($name) {
 				&.size--#{$name}-#{$i} {
-					grid-column: span $i;
+					width: ($i / 12) * 100%;
+				}
 
-					@for $start from 1 through 12 {
-						&-#{$start} {
-							grid-column: ($start + 1) / span $i;
-						}
-					}
+				&.start--#{$name}-#{$i} {
+					margin-inline-start: calc(
+						(100% * #{$i} / 12) + #{functions.gutter()}
+					);
 				}
 			}
 		}
@@ -36,20 +41,15 @@
 	}
 
 	&.justify {
-		width: unset;
-
 		&--center {
-			@extend .justify;
 			justify-self: center;
 		}
 
 		&--end {
-			@extend .justify;
 			justify-self: flex-end;
 		}
 
 		&--start {
-			@extend .justify;
 			justify-self: flex-start;
 		}
 	}

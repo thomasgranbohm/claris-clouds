@@ -49,8 +49,6 @@ interface GenericPageProps {
 const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
 	const { accessibility, sections, title } = page;
 
-	console.log(accessibility);
-
 	return (
 		<Layout {...layout}>
 			<MetaData

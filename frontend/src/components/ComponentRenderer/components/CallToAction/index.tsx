@@ -21,15 +21,7 @@ const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
 			<Column lg={4} xl={6} align="end">
 				{title && <Heading type="h3">{title}</Heading>}
 				<Typography>{text}</Typography>
-				{link && (
-					<Row>
-						<Column sm={[10, 1]} md={[8, 2]} lg={12} xl={8}>
-							<StyledLink href={link.path} asWrapper>
-								{link.label}
-							</StyledLink>
-						</Column>
-					</Row>
-				)}
+				{link && <StyledLink href={link.path}>{link.label}</StyledLink>}
 			</Column>
 		</Row>
 	);

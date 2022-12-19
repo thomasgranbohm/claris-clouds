@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 
 import { getArtwork } from "api/artwork";
@@ -117,16 +118,20 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 							</StyledLink>
 						</Column>
 						<Column md={4} lg={6} align="center">
-							{!original_sold ? (
-								<Typography>
-									Wanna buy the original?{" "}
-									<Link href="#">Message me about it!</Link>
-								</Typography>
-							) : (
-								<Typography>
-									The original has been sold
-								</Typography>
-							)}
+							<Typography type="span">
+								{!original_sold ? (
+									<Fragment>
+										Wanna buy the original?{" "}
+										<Link href="#">
+											Message me about it!
+										</Link>
+									</Fragment>
+								) : (
+									<Fragment>
+										The original has been sold
+									</Fragment>
+								)}
+							</Typography>
 						</Column>
 					</Row>
 				</Column>
@@ -137,21 +142,17 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 						<Heading type="h3" look="h4">
 							Specifications
 						</Heading>
-					</Column>
-					<Column
-						md={[10, 1]}
-						lg={[8, 2]}
-						className={classes["specifications"]}
-					>
-						<Labeler label={<Icon variant="ruler" />}>
-							{width} × {height} cm
-						</Labeler>
-						<Labeler label={<Icon variant="material" />}>
-							{medium}
-						</Labeler>
-						<Labeler label={<Icon variant="calendar" />}>
-							{year_of_creation}
-						</Labeler>
+						<div className={classes["specifications"]}>
+							<Labeler label={<Icon variant="ruler" />}>
+								{width} × {height} cm
+							</Labeler>
+							<Labeler label={<Icon variant="material" />}>
+								{medium}
+							</Labeler>
+							<Labeler label={<Icon variant="calendar" />}>
+								{year_of_creation}
+							</Labeler>
+						</div>
 					</Column>
 				</Row>
 			)}

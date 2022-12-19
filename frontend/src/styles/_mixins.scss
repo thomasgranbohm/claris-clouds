@@ -3,7 +3,7 @@
 @use "styles/variables";
 
 @mixin breakpoint($breakpoint, $max: false) {
-	$width: map.get(variables.$breakpoints, $breakpoint);
+	$width: map.get(variables.$breakpoints, $breakpoint) + functions.gutter(2);
 
 	@if $max {
 		@media screen and (max-width: #{$width - 1}) {
@@ -19,11 +19,7 @@
 @mixin keep-within-width($padding: false) {
 	@each $name, $size in variables.$breakpoints {
 		@include breakpoint($name) {
-			@if $padding {
-				max-width: calc(#{$size} - #{functions.gutter(2)});
-			} @else {
-				max-width: $size;
-			}
+			max-width: $size;
 		}
 	}
 }

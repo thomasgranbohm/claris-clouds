@@ -30,6 +30,7 @@ const Typography: FC<TypographyProps> = ({
 				classes["container"],
 				classes[`color--${color}`],
 				classes[`size--${size}`],
+				classes[`type--${type}`],
 				classes[`weight--${weight}`],
 				inline && classes["inline"],
 				className

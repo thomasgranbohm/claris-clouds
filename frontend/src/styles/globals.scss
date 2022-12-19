@@ -24,7 +24,7 @@ body {
 
 .skip-link {
 	position: absolute;
-	top: calc(-4 * #{functions.gutter()});
+	top: functions.gutter(-4);
 	z-index: 1000;
 	padding: functions.gutter();
 	background: #fff;
