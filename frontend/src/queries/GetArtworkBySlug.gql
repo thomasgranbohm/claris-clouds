@@ -65,4 +65,23 @@ query ArtworkBySlug($slug: String!) {
 			}
 		}
 	}
+	artworks(
+		sort: "updatedAt:desc"
+		pagination: { pageSize: 3 }
+		filters: { name: { ne: $slug } }
+	) {
+		data {
+			attributes {
+				name
+				slug
+				image {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -17,7 +17,7 @@ import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
 
-import { ArtworkPageSchema } from "types/api/artwork";
+import Artwork, { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
 import getImageLink from "utils/getImageLink";
@@ -47,16 +47,24 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 		}
 
 		return {
-			props: { artwork: stripWrapper(data.artwork) },
+			props: {
+				artwork: stripWrapper(data.artwork),
+				latestArtworks: stripWrapper(data.artworks),
+			},
 		};
 	}
 );
 
 interface ArtworkPageProps {
 	artwork: ArtworkPageSchema;
+	latestArtworks: Pick<Artwork, "name" | "slug" | "image">[];
 }
 
-const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
+const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
+	artwork,
+	latestArtworks,
+	layout,
+}) => {
 	const { asPath } = useRouter();
 	const {
 		description,
@@ -162,6 +170,13 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 				</Row>
 			)}
 			<ComponentRenderer components={sections} />
+			<Row>
+				{latestArtworks.map(({ name, slug }, i) => (
+					<Column md={4} key={i}>
+						{name}
+					</Column>
+				))}
+			</Row>
 		</Layout>
 	);
 };

@@ -31,12 +31,8 @@ export namespace GraphQL {
 		message: string;
 	}
 
-	export type Response<DataName extends string, ResponseData> = {
-		[Key in DataName]: Data<ResponseData>;
-	};
-
-	export type Wrapper<DataName extends string, ResponseData> = {
-		data: Response<DataName, ResponseData>;
+	export type Wrapper<ResponseData> = {
+		data: ResponseData;
 		error?: Error;
 	};
 }

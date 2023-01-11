@@ -30,13 +30,9 @@ export const internalAPI = new ApolloClient({
 	uri: serverRuntimeConfig.API_URL + "/graphql",
 });
 
-const request = async <
-	DataName extends string,
-	ReturnType,
-	TVariables = Record<string, any>
->(
-	options: QueryOptions<TVariables, ReturnType>
-): Promise<GraphQL.Wrapper<DataName, ReturnType>> => {
+const request = async <ReturnType, TVariables = Record<string, any>>(
+	options: QueryOptions<TVariables>
+): Promise<GraphQL.Wrapper<ReturnType>> => {
 	const resolver = serverRuntimeConfig.API_URL ? internalAPI : undefined;
 
 	if (!resolver) {
@@ -45,7 +41,7 @@ const request = async <
 
 	try {
 		const { data, error, errors } = await resolver.query<
-			GraphQL.Response<DataName, ReturnType>,
+			ReturnType,
 			TVariables
 		>(options);
 
