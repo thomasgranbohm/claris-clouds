@@ -1,0 +1,35 @@
+{
+	"name": "request-manager",
+	"version": "0.0.1",
+	"description": "This is the description of the plugin.",
+	"strapi": {
+		"name": "request-manager",
+		"description": "Description of request-manager plugin",
+		"kind": "plugin"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"typescript": "4.6.3"
+	},
+	"author": {
+		"name": "Thomas Granbohm",
+		"email": "thomas.granbohm@gmail.com",
+		"url": "https://thomas.granbohm.dev"
+	},
+	"maintainers": [
+		{
+			"name": "Thomas Granbohm",
+			"email": "thomas.granbohm@gmail.com",
+			"url": "https://thomas.granbohm.dev"
+		}
+	],
+	"engines": {
+		"node": ">=14.19.1 <=18.x.x",
+		"npm": ">=6.0.0"
+	},
+	"scripts": {
+		"develop": "tsc -w",
+		"build": "tsc"
+	},
+	"license": "MIT"
+}

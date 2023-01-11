@@ -1,4 +1,8 @@
 module.exports = ({ env }) => ({
+	"request-manager": {
+		enabled: true,
+		resolve: "./src/plugins/request-manager",
+	},
 	slugify: {
 		enabled: true,
 		config: {

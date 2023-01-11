@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "purchase_requests",
+  "info": {
+    "singularName": "purchase-request",
+    "pluralName": "purchase-requests",
+    "displayName": "Purchase Request",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "artwork": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::artwork.artwork"
+    },
+    "country": {
+      "type": "string",
+      "regex": "^[A-Z]{3}$",
+      "required": true,
+      "maxLength": 3,
+      "minLength": 3
+    }
+  }
+}
