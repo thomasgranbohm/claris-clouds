@@ -8,17 +8,18 @@ export interface ArtworkDisplaySchema {
 	title?: string;
 }
 
-export interface RichTextSchema {
-	__typename: "ComponentSectionsRichText";
-	text: string;
-}
-
 export interface CallToActionSchema {
 	__typename: "ComponentSectionsCallToAction";
+	cta_picture_alignment: "left" | "right";
 	image: GraphQL.Data<ImageSchema>;
 	link?: Components.Link;
 	text: string;
 	title?: string;
+}
+
+export interface RichTextSchema {
+	__typename: "ComponentSectionsRichText";
+	text: string;
 }
 
 export interface ShowcaseSchema {
@@ -26,10 +27,18 @@ export interface ShowcaseSchema {
 	images: GraphQL.Data<ImageSchema[]>;
 }
 
+export interface TextWithPictureSchema {
+	__typename: "ComponentSectionsTextWithPicture";
+	image: GraphQL.Data<ImageSchema>;
+	text: string;
+	twp_picture_alignment: "left" | "right";
+}
+
 type AllSections =
 	| ArtworkDisplaySchema
 	| CallToActionSchema
 	| RichTextSchema
-	| ShowcaseSchema;
+	| ShowcaseSchema
+	| TextWithPictureSchema;
 
 export default AllSections;

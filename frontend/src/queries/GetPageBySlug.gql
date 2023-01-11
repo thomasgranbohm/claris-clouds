@@ -22,9 +22,21 @@ query PageBySlug($slug: String!) {
 					... on ComponentSectionsRichText {
 						text
 					}
+					... on ComponentSectionsTextWithPicture {
+						picture_alignment
+						text
+						image {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
 					... on ComponentSectionsCallToAction {
 						title
 						text
+						picture_alignment
 						link {
 							label
 							path

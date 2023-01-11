@@ -1,32 +1,36 @@
 {
-  "collectionName": "components_sections_call_to_actions",
-  "info": {
-    "displayName": "Call to Action",
-    "icon": "address-card",
-    "description": ""
-  },
-  "options": {},
-  "attributes": {
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "title": {
-      "type": "string",
-      "required": false
-    },
-    "text": {
-      "type": "text",
-      "required": true
-    },
-    "link": {
-      "type": "component",
-      "repeatable": false,
-      "component": "navigation.link"
-    }
-  }
+	"collectionName": "components_sections_call_to_actions",
+	"info": {
+		"displayName": "Call to Action",
+		"icon": "address-card",
+		"description": ""
+	},
+	"options": {},
+	"attributes": {
+		"image": {
+			"type": "media",
+			"multiple": false,
+			"required": true,
+			"allowedTypes": ["images"]
+		},
+		"title": {
+			"type": "string",
+			"required": false
+		},
+		"text": {
+			"type": "text",
+			"required": true
+		},
+		"link": {
+			"type": "component",
+			"repeatable": false,
+			"component": "navigation.link"
+		},
+		"picture_alignment": {
+			"type": "enumeration",
+			"enum": ["left", "right"],
+			"default": "left",
+			"required": true
+		}
+	}
 }

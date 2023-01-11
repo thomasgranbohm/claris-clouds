@@ -12,9 +12,21 @@ import { CallToActionSchema } from "types/sections";
 
 import classes from "../../ComponentRenderer.module.scss";
 
-const CallToAction: FC<CallToActionSchema> = ({ image, link, text, title }) => {
+const CallToAction: FC<CallToActionSchema> = ({
+	cta_picture_alignment: picture_alignment,
+	image,
+	link,
+	text,
+	title,
+}) => {
 	return (
-		<Row className={clsx(classes["container"], classes["call-to-action"])}>
+		<Row
+			className={clsx(
+				classes["container"],
+				classes["call-to-action"],
+				classes[`align--${picture_alignment}`]
+			)}
+		>
 			<Column lg={8} xl={6} align="end" justify="center">
 				<StrapiImage className={classes["image"]} image={image} />
 			</Column>

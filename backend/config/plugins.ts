@@ -18,6 +18,7 @@ module.exports = ({ env }) => ({
 						"specialCharacters",
 						"|",
 						"fullScreen",
+						"sourceEditing",
 						"undo",
 						"redo",
 					],
