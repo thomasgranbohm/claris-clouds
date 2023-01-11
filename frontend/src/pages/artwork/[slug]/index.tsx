@@ -121,7 +121,11 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 							{!original_sold ? (
 								<Fragment>
 									Wanna buy the original?{" "}
-									<Link href="#">Message me about it!</Link>
+									<Link
+										href={`mailto:clarisclouds@gmail.com?subject=I%20want%20to%20buy%20${name}!&body=Hello!%0A%0A%0A%0ABest%20regards%2C%0A%0A`}
+									>
+										Message me about it!
+									</Link>
 								</Fragment>
 							) : (
 								<Fragment>The original has been sold</Fragment>
