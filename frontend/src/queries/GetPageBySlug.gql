@@ -19,11 +19,29 @@ query PageBySlug($slug: String!) {
 				}
 				sections {
 					__typename
+					... on ComponentSectionsArtworkDisplay {
+						title
+						artworks {
+							data {
+								attributes {
+									name
+									slug
+									image {
+										data {
+											attributes {
+												...UploadFile
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 					... on ComponentSectionsRichText {
 						text
 					}
 					... on ComponentSectionsTextWithPicture {
-						picture_alignment
+						twp_picture_alignment: picture_alignment
 						text
 						image {
 							data {
@@ -36,7 +54,7 @@ query PageBySlug($slug: String!) {
 					... on ComponentSectionsCallToAction {
 						title
 						text
-						picture_alignment
+						cta_picture_alignment: picture_alignment
 						link {
 							label
 							path

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getArtwork } from "api/artwork";
 
 import Column from "components/Column";
+import ComponentRenderer from "components/ComponentRenderer";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
@@ -16,7 +17,7 @@ import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
 
-import Artwork from "types/api/artwork";
+import { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
 import getImageLink from "utils/getImageLink";
@@ -52,7 +53,7 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 );
 
 interface ArtworkPageProps {
-	artwork: Artwork;
+	artwork: ArtworkPageSchema;
 }
 
 const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
@@ -65,6 +66,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 		name,
 		original_sold,
 		redbubble_link,
+		sections,
 		width,
 		year_of_creation,
 	} = artwork;
@@ -155,6 +157,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({ artwork, layout }) => {
 					</Column>
 				</Row>
 			)}
+			<ComponentRenderer components={sections} />
 		</Layout>
 	);
 };

@@ -1,3 +1,5 @@
+import AllSections from "types/sections";
+
 import { GraphQL, ImageSchema } from "./strapi";
 
 interface Artwork {
@@ -11,6 +13,10 @@ interface Artwork {
 	slug: string;
 	width: number;
 	year_of_creation: number;
+}
+
+export interface ArtworkPageSchema extends Artwork {
+	sections: AllSections[];
 }
 
 export default Artwork;

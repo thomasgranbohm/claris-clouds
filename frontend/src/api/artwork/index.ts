@@ -4,10 +4,10 @@ import GetAllArtworkSlugs from "queries/GetAllArtworkSlugs.gql";
 import GetArtworkBySlug from "queries/GetArtworkBySlug.gql";
 import GetArtworksQuery from "queries/GetArtworks.gql";
 
-import Artwork from "types/api/artwork";
+import Artwork, { ArtworkPageSchema } from "types/api/artwork";
 
 export const getArtwork = async (slug: string) => {
-	return request<"artwork", Artwork>({
+	return request<"artwork", ArtworkPageSchema>({
 		query: GetArtworkBySlug,
 		variables: { slug },
 	});

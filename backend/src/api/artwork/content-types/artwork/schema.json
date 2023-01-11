@@ -53,6 +53,15 @@
     "medium": {
       "type": "string",
       "required": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.call-to-action",
+        "sections.rich-text",
+        "sections.showcase",
+        "sections.text-with-picture"
+      ]
     }
   }
 }

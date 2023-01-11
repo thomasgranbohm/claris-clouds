@@ -20,6 +20,48 @@ query ArtworkBySlug($slug: String!) {
 				width
 				height
 				medium
+				sections {
+					__typename
+					... on ComponentSectionsRichText {
+						text
+					}
+					... on ComponentSectionsTextWithPicture {
+						twp_picture_alignment: picture_alignment
+						text
+						image {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
+					... on ComponentSectionsCallToAction {
+						title
+						text
+						cta_picture_alignment: picture_alignment
+						link {
+							label
+							path
+						}
+						image {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
+					... on ComponentSectionsShowcase {
+						images {
+							data {
+								attributes {
+									...UploadFile
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
