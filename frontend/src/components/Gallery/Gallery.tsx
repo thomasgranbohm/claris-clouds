@@ -1,13 +1,10 @@
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
-
-import { StrapiImage } from "components/Image";
-import Link from "components/Link";
+import { FC, ReactNode, useMemo, useRef } from "react";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
 import Artwork from "types/api/artwork";
 import { ImageSchema } from "types/api/strapi";
-import { Breakpoint } from "types/generics";
+import { Breakpoint, BreakpointNames } from "types/generics";
 
 import stripWrapper from "utils/stripWrapper";
 
@@ -20,131 +17,117 @@ import classes from "./Gallery.module.scss";
 
 interface GalleryProps {
 	artworks: Artwork[];
+	gap?: number;
+	renderChild: (
+		props: Artwork,
+		index: number,
+		breakpoint: Breakpoint | null
+	) => ReactNode;
+	rows?: Partial<
+		{ defaultRow: number } & { [key in BreakpointNames]: number }
+	>;
 }
 
-const GAP = 36;
-
-const Gallery: FC<GalleryProps> = ({ artworks }) => {
+const Gallery: FC<GalleryProps> = ({
+	artworks,
+	gap = 36,
+	renderChild,
+	rows = { defaultRow: 1, lg: 3, md: 2 },
+}) => {
 	const breakpoint = useBreakpoint();
-
 	const ref = useRef<HTMLDivElement>(null);
 
-	const [parsedArtworks, setParsedArtworks] = useState<ReactNode>();
-
-	useEffect(() => {
+	const parsedArtworks = useMemo(() => {
 		if (!ref.current) {
-			return;
+			return [];
 		}
 
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
-		if (Number(breakpoint) > Breakpoint.sm) {
-			const parsed: Array<Artwork> = [];
+		const parsed: Array<Artwork> = [];
 
-			for (let index = 0; parsed.length < artworks.length; index++) {
-				const toPick = breakpoint === Breakpoint.md ? 2 : 3;
-				const sliced = artworks.slice(
-					parsed.length,
-					parsed.length + toPick
-				);
+		const { defaultRow, ...breakpoints } = rows;
+		const toPick =
+			Object.entries(breakpoints)
+				.map(([k, v]) => [Breakpoint[k as BreakpointNames], v])
+				.sort(([a], [b]) => b - a)
+				.find(([b]) => Number(breakpoint) >= b)?.[1] ||
+			defaultRow ||
+			1;
 
-				const picked = [];
-				for (const artwork of sliced) {
-					const image = stripWrapper(artwork.image);
-
-					picked.push(artwork);
-
-					if (getAspectRatio(image) > 2) {
-						break;
-					}
-				}
-
-				const images = picked.map(({ image }) => stripWrapper(image));
-
-				const biggestHeight = Math.max(
-					...images.map(({ height }) => height)
-				);
-
-				const scaled = images.map(({ height, width, ...rest }) => {
-					return {
-						...rest,
-						height: biggestHeight,
-						width: Math.floor(
-							biggestHeight * getAspectRatio({ height, width })
-						),
-					};
-				});
-
-				const WIDTH =
-					ref.current.clientWidth - GAP * (picked.length - 1);
-
-				const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
-				const multiplier = combinedWidths / WIDTH;
-
-				const combinedScaledWidths = Number(
-					scaled
-						.reduce((p, c) => p + c.width / multiplier, 0)
-						.toFixed(2)
-				);
-
-				console.assert(
-					combinedScaledWidths === WIDTH,
-					`Width should be ${WIDTH}, was ${combinedScaledWidths}`
-				);
-
-				parsed.push(
-					...picked.map(({ image, ...artwork }, index) => {
-						const { height, width } = scaled[index];
-
-						image.data.attributes.height = height / multiplier;
-						image.data.attributes.width = Math.floor(
-							width / multiplier
-						);
-
-						return {
-							...artwork,
-							image,
-						};
-					})
-				);
-			}
-			setParsedArtworks(
-				parsed.map(({ image, slug }, i) => (
-					<Link
-						href={`/artwork/${slug}`}
-						className={classes["item"]}
-						key={slug}
-					>
-						<StrapiImage image={image} priority={i <= 6} />
-					</Link>
-				))
+		for (let index = 0; parsed.length < artworks.length; index++) {
+			const sliced = artworks.slice(
+				parsed.length,
+				parsed.length + toPick
 			);
-		} else {
-			setParsedArtworks(
-				artworks.map(({ image, slug }, i) => (
-					<Link
-						href={`/artwork/${slug}`}
-						className={classes["item"]}
-						key={slug}
-					>
-						<StrapiImage
-							image={image}
-							priority={i < 2}
-							style={{ height: "auto", width: "100%" }}
-							sizes="100vw"
-						/>
-					</Link>
-				))
+
+			const picked = [];
+			for (const artwork of sliced) {
+				const image = stripWrapper(artwork.image);
+
+				picked.push(artwork);
+
+				if (getAspectRatio(image) > 2) {
+					break;
+				}
+			}
+
+			const images = picked.map(({ image }) => stripWrapper(image));
+
+			const biggestHeight = Math.max(
+				...images.map(({ height }) => height)
+			);
+
+			const scaled = images.map(({ height, width, ...rest }) => {
+				return {
+					...rest,
+					height: biggestHeight,
+					width: Math.floor(
+						biggestHeight * getAspectRatio({ height, width })
+					),
+				};
+			});
+
+			const WIDTH = ref.current.clientWidth - gap * (picked.length - 1);
+
+			const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
+			const multiplier = combinedWidths / WIDTH;
+
+			const combinedScaledWidths = Number(
+				scaled.reduce((p, c) => p + c.width / multiplier, 0).toFixed(2)
+			);
+
+			console.assert(
+				combinedScaledWidths === WIDTH,
+				`Width should be ${WIDTH}, was ${combinedScaledWidths}`
+			);
+
+			parsed.push(
+				...picked.map(({ image, ...artwork }, index) => {
+					const { height, width } = scaled[index];
+
+					image.data.attributes.height = height / multiplier;
+					image.data.attributes.width = Math.floor(
+						width / multiplier
+					);
+
+					return {
+						...artwork,
+						image,
+					};
+				})
 			);
 		}
-	}, [artworks, breakpoint, ref]);
+
+		return parsed.map((props, i) => renderChild(props, i, breakpoint));
+	}, [artworks, breakpoint, gap, ref, renderChild, rows]);
 
 	return (
 		<div
 			ref={ref}
 			className={classes["container"]}
-			style={{ gap: GAP + "px" }}
+			style={{ gap: gap + "px" }}
 		>
 			{parsedArtworks}
 		</div>

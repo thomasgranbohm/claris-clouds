@@ -7,15 +7,19 @@ const useBreakpoint = (): Breakpoint | null => {
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			if (window.innerWidth >= Breakpoint.xl) {
+			// TODO: Badly implemented
+			// Removes the padding on the edges
+			const width = window.innerWidth - 36;
+
+			if (width >= Breakpoint.xl) {
 				setBreakpoint(Breakpoint.xl);
-			} else if (window.innerWidth >= Breakpoint.lg) {
+			} else if (width >= Breakpoint.lg) {
 				setBreakpoint(Breakpoint.lg);
-			} else if (window.innerWidth >= Breakpoint.md) {
+			} else if (width >= Breakpoint.md) {
 				setBreakpoint(Breakpoint.md);
-			} else if (window.innerWidth >= Breakpoint.sm) {
+			} else if (width >= Breakpoint.sm) {
 				setBreakpoint(Breakpoint.sm);
-			} else if (window.innerWidth >= Breakpoint.xs) {
+			} else if (width >= Breakpoint.xs) {
 				setBreakpoint(Breakpoint.xs);
 			} else {
 				setBreakpoint(null);

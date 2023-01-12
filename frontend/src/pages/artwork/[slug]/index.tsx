@@ -5,6 +5,7 @@ import { getArtwork } from "api/artwork";
 
 import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
+import Gallery from "components/Gallery";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
@@ -171,11 +172,29 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			)}
 			<ComponentRenderer components={sections} />
 			<Row>
-				{latestArtworks.map(({ name, slug }, i) => (
-					<Column md={4} key={i}>
-						{name}
-					</Column>
-				))}
+				<Column>
+					<Heading type="h3">Latest artworks</Heading>
+					<Gallery
+						artworks={latestArtworks as Artwork[]}
+						gap={18}
+						rows={{ defaultRow: 2, lg: 4 }}
+						renderChild={({ image, slug }, i) => {
+							return (
+								<Link href={`/artwork/${slug}`} key={slug}>
+									<StrapiImage
+										image={image}
+										priority={i <= 6}
+										style={{
+											height: "auto",
+											maxWidth: "100%",
+										}}
+										sizes="100vw"
+									/>
+								</Link>
+							);
+						}}
+					/>
+				</Column>
 			</Row>
 		</Layout>
 	);
