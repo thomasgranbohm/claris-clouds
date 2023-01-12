@@ -23,10 +23,10 @@ const TextWithPicture: FC<TextWithPictureSchema> = ({
 				classes[`align--${picture_alignment}`]
 			)}
 		>
-			<Column lg={8} xl={6} justify="center">
+			<Column lg={6} justify="center">
 				<StrapiImage className={classes["image"]} image={image} />
 			</Column>
-			<Column lg={4} xl={6}>
+			<Column lg={6}>
 				<div className={classes["text"]}>
 					<Markdown text={text} />
 				</div>
