@@ -178,7 +178,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 						<Gallery
 							artworks={latestArtworks as Artwork[]}
 							gap={18}
-							rows={{ defaultRow: 2, lg: 4 }}
+							rows={{ defaultRow: 2, lg: latestArtworks.length }}
 							renderChild={({ image, slug }, i) => (
 								<Link href={`/artwork/${slug}`} key={slug}>
 									<NoWhitespaceImage

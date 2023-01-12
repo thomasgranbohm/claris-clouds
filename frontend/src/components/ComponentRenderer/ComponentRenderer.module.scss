@@ -42,8 +42,10 @@
 		flex-direction: row-reverse;
 	}
 
-	.link {
-		width: 50%;
+	@include mixins.breakpoint(xl) {
+		.link {
+			width: 50%;
+		}
 	}
 }
 
