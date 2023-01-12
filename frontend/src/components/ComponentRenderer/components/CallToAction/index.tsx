@@ -28,7 +28,16 @@ const CallToAction: FC<CallToActionSchema> = ({
 			)}
 		>
 			<Column lg={8} xl={6} align="end" justify="center">
-				<NoWhitespaceImage className={classes["image"]} image={image} />
+				<NoWhitespaceImage
+					image={image}
+					style={{
+						height: "auto",
+						maxHeight: "60vh",
+						objectFit: "contain",
+						objectPosition: "center",
+						width: "100%",
+					}}
+				/>
 			</Column>
 			<Column lg={4} xl={6} align="end">
 				{title && <Heading type="h3">{title}</Heading>}

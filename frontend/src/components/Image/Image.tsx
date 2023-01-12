@@ -7,11 +7,12 @@ import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
 export const NoWhitespaceImage: FC<StrapiImageProps> = ({
+	className,
 	style,
 	...props
 }) => {
 	return (
-		<div style={{ fontSize: 0 }}>
+		<div className={className} style={{ fontSize: 0 }}>
 			<StrapiImage {...props} style={{ ...style, fontSize: "initial" }} />
 		</div>
 	);
