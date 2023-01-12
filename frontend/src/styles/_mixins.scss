@@ -19,7 +19,7 @@
 @mixin keep-within-width($padding: false) {
 	@each $name, $size in variables.$breakpoints {
 		@include breakpoint($name) {
-			max-width: $size;
+			max-width: $size + functions.gutter();
 		}
 	}
 }
