@@ -2,7 +2,7 @@ import { FC } from "react";
 import clsx from "clsx";
 
 import Column from "components/Column";
-import { StrapiImage } from "components/Image";
+import { NoWhitespaceImage } from "components/Image";
 import Markdown from "components/Markdown";
 import Row from "components/Row";
 
@@ -24,7 +24,7 @@ const TextWithPicture: FC<TextWithPictureSchema> = ({
 			)}
 		>
 			<Column lg={6} justify="center">
-				<StrapiImage className={classes["image"]} image={image} />
+				<NoWhitespaceImage className={classes["image"]} image={image} />
 			</Column>
 			<Column lg={6}>
 				<div className={classes["text"]}>

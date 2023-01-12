@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import Column from "components/Column";
 import Heading from "components/Heading";
-import { StrapiImage } from "components/Image";
+import { NoWhitespaceImage } from "components/Image";
 import { StyledLink } from "components/Link";
 import Row from "components/Row";
 import Typography from "components/Typography";
@@ -28,12 +28,16 @@ const CallToAction: FC<CallToActionSchema> = ({
 			)}
 		>
 			<Column lg={8} xl={6} align="end" justify="center">
-				<StrapiImage className={classes["image"]} image={image} />
+				<NoWhitespaceImage className={classes["image"]} image={image} />
 			</Column>
 			<Column lg={4} xl={6} align="end">
 				{title && <Heading type="h3">{title}</Heading>}
 				<Typography>{text}</Typography>
-				{link && <StyledLink href={link.path}>{link.label}</StyledLink>}
+				{link && (
+					<StyledLink className={classes["link"]} href={link.path}>
+						{link.label}
+					</StyledLink>
+				)}
 			</Column>
 		</Row>
 	);

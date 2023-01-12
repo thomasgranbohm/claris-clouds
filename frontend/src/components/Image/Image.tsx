@@ -6,6 +6,17 @@ import { GraphQL, ImageSchema } from "types/api/strapi";
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
+export const NoWhitespaceImage: FC<StrapiImageProps> = ({
+	style,
+	...props
+}) => {
+	return (
+		<div style={{ fontSize: 0 }}>
+			<StrapiImage {...props} style={{ ...style, fontSize: "initial" }} />
+		</div>
+	);
+};
+
 interface StrapiImageProps extends Partial<NextImageProps> {
 	image: ImageSchema | GraphQL.Data<ImageSchema>;
 }

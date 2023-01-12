@@ -4,7 +4,7 @@ import { getArtworks } from "api/artwork";
 
 import Column from "components/Column";
 import Gallery from "components/Gallery";
-import { StrapiImage } from "components/Image";
+import { NoWhitespaceImage } from "components/Image";
 import Layout from "components/Layout";
 import Link from "components/Link";
 import MetaData from "components/MetaData";
@@ -48,7 +48,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({ artworks, layout }) => {
 		({ image, slug }, i) => {
 			return (
 				<Link href={`/artwork/${slug}`} key={slug}>
-					<StrapiImage
+					<NoWhitespaceImage
 						image={image}
 						priority={i <= 6}
 						style={{

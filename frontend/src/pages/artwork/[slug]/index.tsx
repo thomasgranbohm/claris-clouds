@@ -8,7 +8,7 @@ import ComponentRenderer from "components/ComponentRenderer";
 import Gallery from "components/Gallery";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
-import { StrapiImage } from "components/Image";
+import { NoWhitespaceImage } from "components/Image";
 import Labeler from "components/Labeler";
 import Layout from "components/Layout";
 import Link, { StyledLink } from "components/Link";
@@ -113,7 +113,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			/>
 			<Row>
 				<Column lg={6} xl={[5, 1]} align="end" justify="end">
-					<StrapiImage
+					<NoWhitespaceImage
 						image={image}
 						style={{ height: "auto", width: "100%" }}
 						sizes="(max-width: 1024px) 100vw
@@ -181,7 +181,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 						renderChild={({ image, slug }, i) => {
 							return (
 								<Link href={`/artwork/${slug}`} key={slug}>
-									<StrapiImage
+									<NoWhitespaceImage
 										image={image}
 										priority={i <= 6}
 										style={{

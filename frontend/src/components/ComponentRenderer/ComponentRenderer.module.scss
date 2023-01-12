@@ -49,6 +49,10 @@
 		object-fit: contain;
 		object-position: center;
 	}
+
+	.link {
+		width: 50%;
+	}
 }
 
 .showcase {
@@ -112,9 +116,4 @@
 		object-position: center;
 		font-size: 0;
 	}
-
-	// .text {
-	// 	position: sticky;
-	// 	top: 7rem;
-	// }
 }
