@@ -68,7 +68,7 @@ query ArtworkBySlug($slug: String!) {
 	artworks(
 		sort: "updatedAt:desc"
 		pagination: { pageSize: 4 }
-		filters: { name: { ne: $slug } }
+		filters: { slug: { ne: $slug } }
 	) {
 		data {
 			attributes {

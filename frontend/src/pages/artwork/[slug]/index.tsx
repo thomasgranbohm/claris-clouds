@@ -171,15 +171,15 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 				</Row>
 			)}
 			<ComponentRenderer components={sections} />
-			<Row>
-				<Column>
-					<Heading type="h3">Latest artworks</Heading>
-					<Gallery
-						artworks={latestArtworks as Artwork[]}
-						gap={18}
-						rows={{ defaultRow: 2, lg: 4 }}
-						renderChild={({ image, slug }, i) => {
-							return (
+			{latestArtworks && latestArtworks.length > 0 && (
+				<Row>
+					<Column>
+						<Heading type="h3">Latest artworks</Heading>
+						<Gallery
+							artworks={latestArtworks as Artwork[]}
+							gap={18}
+							rows={{ defaultRow: 2, lg: 4 }}
+							renderChild={({ image, slug }, i) => (
 								<Link href={`/artwork/${slug}`} key={slug}>
 									<NoWhitespaceImage
 										image={image}
@@ -191,11 +191,11 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 										sizes="100vw"
 									/>
 								</Link>
-							);
-						}}
-					/>
-				</Column>
-			</Row>
+							)}
+						/>
+					</Column>
+				</Row>
+			)}
 		</Layout>
 	);
 };
