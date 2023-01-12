@@ -77,7 +77,7 @@
 			width: unset;
 			height: 9rem;
 			max-width: 100%;
-			@include mixins.keep-within-width(true);
+			@include mixins.keep-within-width;
 
 			@include mixins.breakpoint(md) {
 				height: 18rem;

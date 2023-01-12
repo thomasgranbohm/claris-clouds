@@ -15,7 +15,7 @@
 		padding-top: 6rem;
 
 		padding-inline-end: functions.gutter();
-		@include mixins.keep-within-width();
+		@include mixins.keep-within-width;
 
 		@include mixins.breakpoint(md) {
 			padding-top: 7rem;
