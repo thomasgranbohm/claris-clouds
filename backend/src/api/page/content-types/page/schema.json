@@ -29,8 +29,7 @@
       "components": [
         "sections.call-to-action",
         "sections.rich-text",
-        "sections.showcase",
-        "sections.text-with-picture"
+        "sections.showcase"
       ]
     }
   }

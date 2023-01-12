@@ -42,9 +42,18 @@
 		flex-direction: row-reverse;
 	}
 
-	@include mixins.breakpoint(xl) {
-		.link {
+	.link {
+		width: 100%;
+
+		@include mixins.breakpoint(xl) {
 			width: 50%;
+		}
+	}
+
+	&.type--sticky-image {
+		.image {
+			position: sticky;
+			top: 7rem;
 		}
 	}
 }
@@ -84,24 +93,9 @@
 	}
 }
 
-.rich-text .text,
-.text-with-picture .text {
+.call-to-action .text,
+.rich-text .text {
 	& > :first-child {
 		margin-top: 0;
-	}
-}
-
-.text-with-picture {
-	&.align--left {
-		flex-direction: row;
-	}
-
-	&.align--right {
-		flex-direction: row-reverse;
-	}
-
-	.image {
-		position: sticky;
-		top: 7rem;
 	}
 }

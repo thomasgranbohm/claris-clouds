@@ -38,16 +38,22 @@
 	}
 
 	&.justify {
+		display: flex;
+		flex-direction: column;
+
 		&--center {
-			justify-self: center;
+			@extend .justify;
+			align-items: center;
 		}
 
 		&--end {
-			justify-self: flex-end;
+			@extend .justify;
+			align-items: flex-end;
 		}
 
 		&--start {
-			justify-self: flex-start;
+			@extend .justify;
+			align-items: flex-start;
 		}
 	}
 }

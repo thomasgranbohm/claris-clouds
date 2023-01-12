@@ -5,7 +5,6 @@ import {
 	CallToAction,
 	RichText,
 	Showcase,
-	TextWithPicture,
 } from "components/ComponentRenderer/components";
 
 import Sections from "types/sections";
@@ -31,11 +30,8 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 			case "ComponentSectionsShowcase":
 				Element = Showcase;
 				break;
-			case "ComponentSectionsTextWithPicture":
-				Element = TextWithPicture;
-				break;
 			default:
-				throw new Error("Not implemented");
+				return null;
 		}
 
 		Element = Element as unknown as FunctionComponent;

@@ -31,8 +31,7 @@
         "sections.artwork-display",
         "sections.rich-text",
         "sections.call-to-action",
-        "sections.showcase",
-        "sections.text-with-picture"
+        "sections.showcase"
       ]
     }
   }

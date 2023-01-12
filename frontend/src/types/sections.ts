@@ -10,11 +10,11 @@ export interface ArtworkDisplaySchema {
 
 export interface CallToActionSchema {
 	__typename: "ComponentSectionsCallToAction";
-	cta_picture_alignment: "left" | "right";
 	image: GraphQL.Data<ImageSchema>;
+	image_alignment: "Left" | "Right";
 	link?: Components.Link;
 	text: string;
-	title?: string;
+	type: "Sticky Image" | "Centered" | "Gravity";
 }
 
 export interface RichTextSchema {
@@ -27,18 +27,10 @@ export interface ShowcaseSchema {
 	images: GraphQL.Data<ImageSchema[]>;
 }
 
-export interface TextWithPictureSchema {
-	__typename: "ComponentSectionsTextWithPicture";
-	image: GraphQL.Data<ImageSchema>;
-	text: string;
-	twp_picture_alignment: "left" | "right";
-}
-
 type AllSections =
 	| ArtworkDisplaySchema
 	| CallToActionSchema
 	| RichTextSchema
-	| ShowcaseSchema
-	| TextWithPictureSchema;
+	| ShowcaseSchema;
 
 export default AllSections;

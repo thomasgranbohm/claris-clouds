@@ -35,21 +35,10 @@ query Startpage {
 					... on ComponentSectionsRichText {
 						text
 					}
-					... on ComponentSectionsTextWithPicture {
-						twp_picture_alignment: picture_alignment
-						text
-						image {
-							data {
-								attributes {
-									...UploadFile
-								}
-							}
-						}
-					}
 					... on ComponentSectionsCallToAction {
 						title
 						text
-						cta_picture_alignment: picture_alignment
+						image_alignment
 						link {
 							label
 							path

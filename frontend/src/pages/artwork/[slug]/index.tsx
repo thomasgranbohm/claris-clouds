@@ -112,7 +112,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 				path={asPath}
 			/>
 			<Row>
-				<Column lg={6} xl={[5, 1]} align="end" justify="end">
+				<Column lg={6} align="end" justify="end">
 					<NoWhitespaceImage
 						image={image}
 						style={{ height: "auto", width: "100%" }}
@@ -120,7 +120,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 						50vw"
 					/>
 				</Column>
-				<Column lg={6} xl={5} align="end">
+				<Column lg={6} align="end">
 					<Heading type="h2">{name}</Heading>
 					<div className={classes["purchase-actions"]}>
 						<StyledLink href={redbubble_link}>
