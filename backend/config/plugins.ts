@@ -65,9 +65,6 @@ module.exports = ({ env }) => ({
 			},
 		},
 	},
-	seo: {
-		enabled: true,
-	},
 	slugify: {
 		enabled: true,
 		config: {
