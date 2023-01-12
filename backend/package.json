@@ -11,10 +11,10 @@
 	"dependencies": {
 		"@_sh/strapi-plugin-ckeditor": "^1.1.2",
 		"@strapi/plugin-graphql": "^4.4.6",
-		"@strapi/plugin-i18n": "4.4.6",
-		"@strapi/plugin-users-permissions": "4.4.6",
-		"@strapi/strapi": "4.4.6",
-		"better-sqlite3": "7.4.6",
+		"@strapi/plugin-i18n": "^4.4.6",
+		"@strapi/plugin-users-permissions": "^4.4.6",
+		"@strapi/strapi": "^4.4.6",
+		"better-sqlite3": "^7.4.6",
 		"pg": "^8.8.0",
 		"sharp": "^0.31.1",
 		"strapi-plugin-slugify": "^2.3.1"
