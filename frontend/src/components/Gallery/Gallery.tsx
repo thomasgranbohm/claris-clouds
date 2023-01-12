@@ -89,18 +89,19 @@ const Gallery: FC<GalleryProps> = ({
 				};
 			});
 
-			const WIDTH = ref.current.clientWidth - gap * (picked.length - 1);
+			const containerWidth =
+				ref.current.clientWidth - gap * (picked.length - 1);
 
 			const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
-			const multiplier = combinedWidths / WIDTH;
+			const multiplier = combinedWidths / containerWidth;
 
 			const combinedScaledWidths = Number(
 				scaled.reduce((p, c) => p + c.width / multiplier, 0).toFixed(2)
 			);
 
 			console.assert(
-				combinedScaledWidths === WIDTH,
-				`Width should be ${WIDTH}, was ${combinedScaledWidths}`
+				combinedScaledWidths === containerWidth,
+				`Width should be ${containerWidth}, was ${combinedScaledWidths}`
 			);
 
 			parsed.push(

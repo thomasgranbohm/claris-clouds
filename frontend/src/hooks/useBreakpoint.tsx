@@ -22,7 +22,7 @@ const useBreakpoint = (): Breakpoint | null => {
 			} else if (width >= Breakpoint.xs) {
 				setBreakpoint(Breakpoint.xs);
 			} else {
-				setBreakpoint(null);
+				setBreakpoint(0);
 			}
 		};
 
