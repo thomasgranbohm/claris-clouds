@@ -55,6 +55,7 @@ const CallToAction: FC<CallToActionSchema> = ({
 						style={{
 							height: "auto",
 							maxHeight: "60vh",
+							maxWidth: "100%",
 							objectFit: "contain",
 							objectPosition: "center",
 							width: type === "Centered" ? "auto" : "100%",
