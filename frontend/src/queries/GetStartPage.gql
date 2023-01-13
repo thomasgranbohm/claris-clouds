@@ -4,6 +4,7 @@ query Startpage {
 	startPage {
 		data {
 			attributes {
+				title
 				foreground {
 					data {
 						attributes {

@@ -5,4 +5,5 @@ export interface StartPage {
 	background: GraphQL.Data<ImageSchema>;
 	foreground: GraphQL.Data<ImageSchema>;
 	sections: AllSections[];
+	title: string;
 }

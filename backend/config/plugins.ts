@@ -6,6 +6,7 @@ module.exports = ({ env }) => ({
 				removePlugins: [],
 				toolbar: {
 					items: [
+						"heading",
 						"bold",
 						"italic",
 						"underline",

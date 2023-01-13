@@ -9,9 +9,10 @@ import classes from "./Cover.module.scss";
 interface CoverProps {
 	background: TImage;
 	foreground: TImage;
+	title: string;
 }
 
-const Cover: FC<CoverProps> = ({ background, foreground }) => {
+const Cover: FC<CoverProps> = ({ background, foreground, title }) => {
 	return (
 		<div className={classes["container"]} role="banner">
 			<div className={classes["background"]}>
@@ -25,6 +26,7 @@ const Cover: FC<CoverProps> = ({ background, foreground }) => {
 				/>
 			</div>
 			<div className={classes["foreground"]}>
+				<h1 hidden>{title}</h1>
 				<StrapiImage
 					image={foreground}
 					blur={false}
