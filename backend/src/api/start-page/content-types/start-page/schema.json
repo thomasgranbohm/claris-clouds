@@ -12,10 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": true,
-      "default": "Clari's Clouds"
+    "foreground": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
     },
     "background": {
       "type": "media",

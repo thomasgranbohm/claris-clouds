@@ -4,7 +4,13 @@ query Startpage {
 	startPage {
 		data {
 			attributes {
-				title
+				foreground {
+					data {
+						attributes {
+							...UploadFile
+						}
+					}
+				}
 				background {
 					data {
 						attributes {

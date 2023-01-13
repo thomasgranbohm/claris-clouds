@@ -1,18 +1,17 @@
 import { FC } from "react";
 
-import Heading from "components/Heading";
 import { StrapiImage } from "components/Image";
 
 import { ImageSchema as TImage } from "types/api/strapi";
-import { WithChildren } from "types/components";
 
 import classes from "./Cover.module.scss";
 
-interface CoverProps extends WithChildren {
+interface CoverProps {
 	background: TImage;
+	foreground: TImage;
 }
 
-const Cover: FC<CoverProps> = ({ background, children }) => {
+const Cover: FC<CoverProps> = ({ background, foreground }) => {
 	return (
 		<div className={classes["container"]} role="banner">
 			<div className={classes["background"]}>
@@ -26,9 +25,18 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 				/>
 			</div>
 			<div className={classes["foreground"]}>
-				<Heading className={classes["title"]} type="h1" color="white">
-					{children}
-				</Heading>
+				<StrapiImage
+					image={foreground}
+					blur={false}
+					priority
+					loading="eager"
+					style={{
+						maxHeight: "60vh",
+						maxWidth: "60vw",
+						objectFit: "contain",
+						objectPosition: "center",
+					}}
+				/>
 			</div>
 		</div>
 	);
