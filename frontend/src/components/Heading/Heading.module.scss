@@ -5,7 +5,10 @@
 .container {
 	display: block;
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
-	margin-top: 1em;
+
+	&:not(:first-child) {
+		margin-top: functions.gutter(2);
+	}
 
 	&.color {
 		@each $name, $value in $colors {

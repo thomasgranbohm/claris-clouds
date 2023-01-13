@@ -1,4 +1,7 @@
+@use "styles/functions";
+
 .container {
 	.caption {
+		margin-top: functions.gutter();
 	}
 }

@@ -6,7 +6,7 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	&:last-child {
-		margin-inline-end: 0;
+	& + & {
+		margin-top: functions.gutter(2);
 	}
 }

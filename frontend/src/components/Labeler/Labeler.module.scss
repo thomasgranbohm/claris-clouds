@@ -3,6 +3,7 @@
 .container {
 	display: inline-flex;
 	align-items: center;
+	margin-top: functions.gutter();
 
 	& > * {
 		flex-grow: 0;

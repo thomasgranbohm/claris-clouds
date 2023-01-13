@@ -1,8 +1,10 @@
 @use "styles/functions";
 @use "styles/mixins";
 
-.image {
-	aspect-ratio: 4 / 3;
+.title {
+	@include mixins.breakpoint("lg", true) {
+		margin-top: functions.gutter();
+	}
 }
 
 .purchase-actions {

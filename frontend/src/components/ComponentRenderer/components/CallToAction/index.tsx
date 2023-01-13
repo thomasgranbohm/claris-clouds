@@ -21,7 +21,6 @@ const CallToAction: FC<CallToActionSchema> = ({
 	text,
 	type,
 }) => {
-	console.log(image);
 	return (
 		<Row
 			className={clsx(
@@ -60,7 +59,9 @@ const CallToAction: FC<CallToActionSchema> = ({
 							objectPosition: "center",
 							width: type === "Centered" ? "auto" : "100%",
 						}}
-						sizes="(max-width: 1024px) 100vw
+						sizes="(max-width: 600px) 100vw,
+						(max-width: 1080px) 600px,
+						(max-width: 1440px) 768px,
 						50vw"
 					/>
 				</Figure>

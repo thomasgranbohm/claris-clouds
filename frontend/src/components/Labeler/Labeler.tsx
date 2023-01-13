@@ -16,6 +16,7 @@ const Labeler: FC<LabelerProps> = ({ children, className, label }) => {
 	return (
 		<div className={clsx(classes["container"], className)}>
 			<Typography
+				type="span"
 				className={clsx(
 					classes["label"],
 					typeof label === "string" && classes["needs-colon"]
@@ -23,7 +24,9 @@ const Labeler: FC<LabelerProps> = ({ children, className, label }) => {
 			>
 				{label}
 			</Typography>
-			<Typography className={classes["content"]}>{children}</Typography>
+			<Typography type="span" className={classes["content"]}>
+				{children}
+			</Typography>
 		</div>
 	);
 };

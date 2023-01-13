@@ -121,7 +121,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 					/>
 				</Column>
 				<Column lg={6} align="end">
-					<Heading type="h2">{name}</Heading>
+					<Heading className={classes["title"]} type="h2">
+						{name}
+					</Heading>
 					<div className={classes["purchase-actions"]}>
 						<StyledLink href={redbubble_link}>
 							Buy a print

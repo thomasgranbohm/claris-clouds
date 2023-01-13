@@ -58,11 +58,6 @@ const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
 			<Row>
 				<Column lg={[8, 2]}>
 					<PageTitle>{title}</PageTitle>
-					{accessibility?.description && (
-						<Typography size="large">
-							{accessibility.description}
-						</Typography>
-					)}
 				</Column>
 			</Row>
 			<ComponentRenderer components={sections} />
