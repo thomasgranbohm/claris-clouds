@@ -31,7 +31,11 @@ function CustomApp({
 				description={description}
 				additionalLinkTags={[
 					{
-						href: favicon && getImageLink(stripWrapper(favicon)),
+						href:
+							favicon &&
+							`/_next/image?url=${getImageLink(
+								stripWrapper(favicon)
+							)}&w=128&q=75`,
 						rel: "icon",
 					},
 				]}

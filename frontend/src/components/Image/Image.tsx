@@ -29,16 +29,8 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 	image,
 	...props
 }) => {
-	const {
-		alternativeText,
-		caption,
-		ext,
-		formats,
-		hash,
-		height,
-		name,
-		width,
-	} = "data" in image ? stripWrapper(image) : image;
+	const { alternativeText, ext, formats, hash, height, width } =
+		"data" in image ? stripWrapper(image) : image;
 
 	return (
 		<NextImage
