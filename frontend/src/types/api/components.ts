@@ -1,5 +1,5 @@
 namespace Components {
-	export type SocialType = "Instagram" | "RedBubble" | "TikTok";
+	export type SocialType = "Instagram" | "RedBubble" | "TikTok" | "YouTube";
 
 	export interface Link {
 		label: string;

@@ -10,6 +10,7 @@ import RedBubbleSVG from "assets/icons/redbubble.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
 import TikTok from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
+import YouTube from "assets/icons/youtube.svg";
 
 import { WithClassname } from "types/components";
 import { Colors } from "types/generics";
@@ -27,7 +28,8 @@ interface IconProps extends WithClassname {
 		| "x-mark"
 		| "instagram"
 		| "tiktok"
-		| "redbubble";
+		| "redbubble"
+		| "youtube";
 }
 
 const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
@@ -60,6 +62,9 @@ const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
 			break;
 		case "tiktok":
 			Element = TikTok;
+			break;
+		case "youtube":
+			Element = YouTube;
 			break;
 		default:
 			return null;

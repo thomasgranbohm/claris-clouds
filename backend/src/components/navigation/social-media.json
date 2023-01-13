@@ -16,7 +16,8 @@
       "enum": [
         "Instagram",
         "RedBubble",
-        "TikTok"
+        "TikTok",
+        "YouTube"
       ],
       "required": true
     }
