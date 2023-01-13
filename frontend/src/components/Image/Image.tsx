@@ -19,10 +19,12 @@ export const NoWhitespaceImage: FC<StrapiImageProps> = ({
 };
 
 interface StrapiImageProps extends Partial<NextImageProps> {
+	blur?: boolean;
 	image: ImageSchema | GraphQL.Data<ImageSchema>;
 }
 
 export const StrapiImage: FC<StrapiImageProps> = ({
+	blur = true,
 	fill,
 	image,
 	...props
@@ -45,8 +47,8 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 			fill={fill}
 			alt={caption || alternativeText || name}
 			src={getImageLink({ ext, hash })}
-			blurDataURL={formats.base64?.url}
-			placeholder={formats.base64 && "blur"}
+			blurDataURL={blur ? formats.base64?.url : undefined}
+			placeholder={blur && formats.base64 ? "blur" : undefined}
 			{...props}
 		/>
 	);

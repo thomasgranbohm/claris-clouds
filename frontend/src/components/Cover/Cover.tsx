@@ -18,6 +18,7 @@ const Cover: FC<CoverProps> = ({ background, children }) => {
 			<div className={classes["background"]}>
 				<StrapiImage
 					image={background}
+					blur={false}
 					fill
 					priority
 					loading="eager"
