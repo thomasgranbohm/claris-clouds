@@ -1,8 +1,6 @@
-import utils from "@strapi/utils";
+import createError from "http-errors";
 import _ from "lodash";
 import sharp from "sharp";
-
-const { NotFoundError } = utils.errors;
 
 const generateBase64 = async (file) => {
 	const stream = await file.getStream();
@@ -64,7 +62,7 @@ export default {
 							});
 
 							if (data.results.length === 0) {
-								throw new NotFoundError();
+								throw createError(404);
 							}
 
 							const response = toEntityResponse(data.results[0]);
@@ -85,7 +83,7 @@ export default {
 							});
 
 							if (data.results.length === 0) {
-								throw new NotFoundError();
+								throw createError(404);
 							}
 
 							const response = toEntityResponse(data.results[0]);

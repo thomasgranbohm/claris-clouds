@@ -1,4 +1,4 @@
-import Heading from "components/Heading";
+import Heading, { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
 
@@ -25,9 +25,9 @@ const ErrorPage: LayoutPage<ErrorPageProps> = ({ layout, statusCode }) => {
 	return (
 		<Layout {...layout}>
 			<MetaData title={title} noindex />
-			<Heading type="h2">
+			<PageTitle>
 				{statusCode} - {title}
-			</Heading>
+			</PageTitle>
 		</Layout>
 	);
 };
