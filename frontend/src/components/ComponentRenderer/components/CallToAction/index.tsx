@@ -60,6 +60,8 @@ const CallToAction: FC<CallToActionSchema> = ({
 							objectPosition: "center",
 							width: type === "Centered" ? "auto" : "100%",
 						}}
+						sizes="(max-width: 1024px) 100vw
+						50vw"
 					/>
 				</Figure>
 			</Column>
