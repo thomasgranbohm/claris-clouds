@@ -36,7 +36,7 @@ query Startpage {
 						text
 					}
 					... on ComponentSectionsCallToAction {
-						title
+						type
 						text
 						image_alignment
 						link {
