@@ -1,4 +1,9 @@
-import { FC, useRef } from "react";
+import {
+	forwardRef,
+	ForwardRefRenderFunction,
+	MutableRefObject,
+	useRef,
+} from "react";
 import { AriaButtonProps, useButton } from "react-aria";
 import clsx from "clsx";
 
@@ -12,15 +17,21 @@ interface ButtonProps extends WithClassname, AriaButtonProps {
 	activeClassName?: string;
 }
 
-const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
+const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+	{ activeClassName, className, ...props }: ButtonProps,
+	forwardRef
+) => {
 	const ref = useRef(null);
-	const { buttonProps, isPressed } = useButton(props, ref);
+	const { buttonProps, isPressed } = useButton(
+		props,
+		(forwardRef as MutableRefObject<HTMLButtonElement | null>) || ref
+	);
 
 	return (
 		<FocusRing>
 			<button
 				{...buttonProps}
-				ref={ref}
+				ref={forwardRef || ref}
 				className={clsx(
 					classes["container"],
 					isPressed && activeClassName,
@@ -33,4 +44,6 @@ const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
 	);
 };
 
-export default Button;
+Button.displayName = "BUtton";
+
+export default forwardRef(Button);

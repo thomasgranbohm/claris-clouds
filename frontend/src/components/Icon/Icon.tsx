@@ -1,6 +1,8 @@
 import { FC } from "react";
 import clsx from "clsx";
 
+import ArrowBackward from "assets/icons/arrow-backward.svg";
+import ArrowForward from "assets/icons/arrow-forward.svg";
 import BarsSVG from "assets/icons/bars-solid.svg";
 import CalendarRegularSVG from "assets/icons/calendar-regular.svg";
 import ClipboardSVG from "assets/icons/clipboard.svg";
@@ -21,6 +23,8 @@ interface IconProps extends WithClassname {
 	fill?: Colors;
 	variant:
 		| "calendar"
+		| "forward"
+		| "backward"
 		| "ruler"
 		| "material"
 		| "palette"
@@ -65,6 +69,12 @@ const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
 			break;
 		case "youtube":
 			Element = YouTube;
+			break;
+		case "backward":
+			Element = ArrowBackward;
+			break;
+		case "forward":
+			Element = ArrowForward;
 			break;
 		default:
 			return null;

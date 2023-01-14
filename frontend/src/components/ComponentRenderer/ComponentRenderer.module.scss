@@ -51,6 +51,14 @@
 			max-width: 100%;
 			@include mixins.keep-within-width;
 
+			@include mixins.breakpoint(xs) {
+				height: 12rem;
+			}
+
+			@include mixins.breakpoint(sm) {
+				height: 15rem;
+			}
+
 			@include mixins.breakpoint(md) {
 				height: 18rem;
 			}
@@ -58,6 +66,23 @@
 			@include mixins.breakpoint(lg) {
 				height: 27rem;
 			}
+		}
+	}
+
+	.buttons {
+		display: none;
+		padding: functions.gutter(0.5) 0;
+
+		@include mixins.breakpoint(md) {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+		}
+
+		.button {
+			padding: functions.gutter(0.5);
+			display: inline-flex;
+			cursor: pointer;
 		}
 	}
 }
