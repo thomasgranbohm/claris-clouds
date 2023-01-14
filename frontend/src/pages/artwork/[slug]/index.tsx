@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import { getArtwork } from "api/artwork";
 
+import ArtworkLink from "components/ArtworkLink";
 import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
 import Gallery from "components/Gallery";
@@ -181,18 +182,19 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 							artworks={latestArtworks as ArtworkSchema[]}
 							gap={18}
 							rows={{ defaultRow: 2, lg: latestArtworks.length }}
-							renderChild={({ image, slug }, i) => (
-								<Link href={`/artwork/${slug}`} key={slug}>
-									<NoWhitespaceImage
-										image={image}
-										priority={i <= 6}
-										style={{
+							renderChild={(artwork, i) => (
+								<ArtworkLink
+									artwork={artwork}
+									key={i}
+									imageProps={{
+										priority: i <= 4,
+										sizes: "(max-width: 600px) 100vw, (max-width: 1080px) 600px, (max-width: 1440px) 768px, 50vw",
+										style: {
 											height: "auto",
 											maxWidth: "100%",
-										}}
-										sizes="100vw"
-									/>
-								</Link>
+										},
+									}}
+								/>
 							)}
 						/>
 					</Column>

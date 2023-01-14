@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo, useRef } from "react";
+import { FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
@@ -15,7 +15,7 @@ import classes from "./Gallery.module.scss";
  * Especially the GAP part.
  */
 
-interface GalleryProps {
+interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 	artworks: ArtworkSchema[];
 	gap?: number;
 	renderChild: (
@@ -33,6 +33,7 @@ const Gallery: FC<GalleryProps> = ({
 	gap = 36,
 	renderChild,
 	rows = { defaultRow: 1, lg: 3, md: 2 },
+	...props
 }) => {
 	const breakpoint = useBreakpoint();
 	const ref = useRef<HTMLDivElement>(null);
@@ -129,7 +130,7 @@ const Gallery: FC<GalleryProps> = ({
 			ref={ref}
 			className={classes["container"]}
 			style={{ gap: gap + "px" }}
-			role="feed"
+			{...props}
 		>
 			{parsedArtworks}
 		</div>

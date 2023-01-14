@@ -1,24 +1,27 @@
-import { FC } from "react";
+import { FC, HTMLAttributes } from "react";
 import { ImageProps } from "next/image";
 
 import { NoWhitespaceImage } from "components/Image";
 import Link from "components/Link";
 
 import ArtworkSchema from "types/api/artwork";
-import { ImageSchema } from "types/api/strapi";
 
 import classes from "./ArtworkLink.module.scss";
 
-interface ArtworkLinkProps {
+interface ArtworkLinkProps extends HTMLAttributes<HTMLAnchorElement> {
 	artwork: ArtworkSchema;
 	imageProps: Partial<ImageProps>;
 }
 
 const ArtworkLink: FC<ArtworkLinkProps> = ({ artwork, imageProps }) => {
-	const { image, slug } = artwork;
+	const { image, name, slug } = artwork;
 
 	return (
-		<Link className={classes["container"]} href={`/artwork/${slug}`}>
+		<Link
+			aria-label={`Link to artwork titled ${name}`}
+			className={classes["container"]}
+			href={`/artwork/${slug}`}
+		>
 			<NoWhitespaceImage
 				className={classes["image"]}
 				image={image}

@@ -38,5 +38,5 @@ export const useObserver = (
 		};
 	});
 
-	return ref;
+	return { loading, ref };
 };

@@ -51,7 +51,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 }) => {
 	const [artworks, setArtworks] = useState<ArtworkSchema[]>(_artworks);
 
-	const ref = useObserver(
+	const { loading, ref } = useObserver(
 		async () => {
 			const newArtworks = await getArtworks(artworks.length);
 			setArtworks([
@@ -72,19 +72,27 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 					<Gallery
 						artworks={artworks}
 						renderChild={(artwork, i) => (
-							<ArtworkLink
-								artwork={artwork}
+							<div
+								aria-posinset={i + 1}
+								aria-setsize={pagination.total}
 								key={i}
-								imageProps={{
-									priority: i <= 6,
-									sizes: "100vw",
-									style: {
-										height: "auto",
-										maxWidth: "100%",
-									},
-								}}
-							/>
+								role="article"
+							>
+								<ArtworkLink
+									artwork={artwork}
+									imageProps={{
+										priority: i <= 6,
+										sizes: "100vw",
+										style: {
+											height: "auto",
+											maxWidth: "100%",
+										},
+									}}
+								/>
+							</div>
 						)}
+						role="feed"
+						aria-busy={loading}
 					/>
 					<div aria-hidden="true" ref={ref} />
 				</Column>
