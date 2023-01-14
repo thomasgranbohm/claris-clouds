@@ -52,6 +52,7 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 							className={classes["icon"]}
 							priority
 							placeholder="empty"
+							sizes="64px"
 						/>
 					</Link>
 					<Button

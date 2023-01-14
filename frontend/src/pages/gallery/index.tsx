@@ -82,7 +82,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 									artwork={artwork}
 									imageProps={{
 										priority: i <= 6,
-										sizes: "100vw",
+										sizes: `(max-width: 600px) 100vw, ${artwork.width}px`,
 										style: {
 											height: "auto",
 											maxWidth: "100%",
