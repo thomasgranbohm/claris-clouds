@@ -116,8 +116,12 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 				<Column lg={6} align="end" justify="end">
 					<NoWhitespaceImage
 						image={image}
+						priority
+						loading="eager"
 						style={{ height: "auto", width: "100%" }}
-						sizes="(max-width: 1024px) 100vw
+						sizes="(max-width: 600px) 100vw,
+						(max-width: 1080px) 600px,
+						(max-width: 1440px) 768px,
 						50vw"
 					/>
 				</Column>
