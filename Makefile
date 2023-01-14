@@ -12,7 +12,7 @@ backup-database:
 restore-database:
 	@echo "Restoring database...";
 	${DC} exec -T database \
-		/bin/bash -c "PGPASSWORD=${DATABASE_PASSWORD} psql --username ${DATABASE_USERNAME} ${DATABASE_NAME}" < backups/$(shell dir -tr backups/ | tail -n 1 | awk '{print $$NF}')
+		/bin/bash -c "PGPASSWORD=${DATABASE_PASSWORD} psql --username ${DATABASE_USERNAME} ${DATABASE_NAME}" < backups/$(shell dir -1tr backups/ | tail -n 1 | awk '{print $$NF}')
 	@echo "Restored!";
 
 dump-backend-config:
