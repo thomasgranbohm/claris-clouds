@@ -69,32 +69,34 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 			<MetaData title="Gallery" />
 			<Row>
 				<Column>
-					<Gallery
-						artworks={artworks}
-						renderChild={(artwork, i) => (
-							<div
-								aria-posinset={i + 1}
-								aria-setsize={pagination.total}
-								key={i}
-								role="article"
-							>
-								<ArtworkLink
-									artwork={artwork}
-									imageProps={{
-										priority: i <= 6,
-										sizes: `(max-width: 600px) 100vw, ${artwork.image.data.attributes.width}px`,
-										style: {
-											height: "auto",
-											maxWidth: "100%",
-										},
-									}}
-								/>
-							</div>
-						)}
-						role="feed"
-						aria-busy={loading}
-					/>
-					<div aria-hidden="true" ref={ref} />
+					<div style={{ minHeight: "60vh" }}>
+						<Gallery
+							artworks={artworks}
+							renderChild={(artwork, i) => (
+								<div
+									aria-posinset={i + 1}
+									aria-setsize={pagination.total}
+									key={i}
+									role="article"
+								>
+									<ArtworkLink
+										artwork={artwork}
+										imageProps={{
+											priority: i <= 6,
+											sizes: `(max-width: 600px) 100vw, ${artwork.image.data.attributes.width}px`,
+											style: {
+												height: "auto",
+												maxWidth: "100%",
+											},
+										}}
+									/>
+								</div>
+							)}
+							role="feed"
+							aria-busy={loading}
+						/>
+						<div aria-hidden="true" ref={ref} />
+					</div>
 				</Column>
 			</Row>
 		</Layout>
