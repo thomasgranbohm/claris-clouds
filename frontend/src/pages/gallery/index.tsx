@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 
 import { getArtworks } from "api/artwork";
 
@@ -9,6 +9,8 @@ import Layout from "components/Layout";
 import Link from "components/Link";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
+
+import { useObserver } from "hooks/useObserver";
 
 import Artwork from "types/api/artwork";
 import { PaginationSchema } from "types/api/strapi";
@@ -43,7 +45,26 @@ interface GalleryPageProps {
 	pagination: PaginationSchema;
 }
 
-const GalleryPage: LayoutPage<GalleryPageProps> = ({ artworks, layout }) => {
+const GalleryPage: LayoutPage<GalleryPageProps> = ({
+	artworks: _artworks,
+	layout,
+	pagination,
+}) => {
+	const [artworks, setArtworks] = useState<Artwork[]>(_artworks);
+
+	const ref = useObserver(
+		async () => {
+			const newArtworks = await getArtworks(artworks.length);
+			setArtworks([
+				...artworks,
+				...stripWrapper(newArtworks.data.artworks),
+			]);
+		},
+		{
+			stoppingCondition: pagination.total <= artworks.length,
+		}
+	);
+
 	const renderChild = useCallback<(props: Artwork, i: number) => ReactNode>(
 		({ image, slug }, i) => {
 			return (
@@ -69,6 +90,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({ artworks, layout }) => {
 			<Row>
 				<Column>
 					<Gallery artworks={artworks} renderChild={renderChild} />
+					<div aria-hidden="true" ref={ref}></div>
 				</Column>
 			</Row>
 		</Layout>

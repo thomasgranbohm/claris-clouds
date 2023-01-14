@@ -17,9 +17,10 @@ export const getArtwork = async (slug: string) => {
 	});
 };
 
-export const getArtworks = async () => {
+export const getArtworks = async (start: number = 0) => {
 	return request<{ artworks: GraphQL.Data<Artwork[]> }>({
 		query: GetArtworksQuery,
+		variables: { start: start },
 	});
 };
 

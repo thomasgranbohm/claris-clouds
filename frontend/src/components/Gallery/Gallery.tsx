@@ -129,6 +129,7 @@ const Gallery: FC<GalleryProps> = ({
 			ref={ref}
 			className={classes["container"]}
 			style={{ gap: gap + "px" }}
+			role="feed"
 		>
 			{parsedArtworks}
 		</div>

@@ -9,7 +9,7 @@ import getConfig from "next/config";
 
 import { GraphQL } from "types/api/strapi";
 
-const { serverRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 const defaults = {
 	cache: new InMemoryCache(),
@@ -30,14 +30,15 @@ export const internalAPI = new ApolloClient({
 	uri: serverRuntimeConfig.API_URL + "/graphql",
 });
 
+export const externalAPI = new ApolloClient({
+	...defaults,
+	uri: publicRuntimeConfig.API_URL + "/graphql",
+});
+
 const request = async <ReturnType, TVariables = Record<string, any>>(
 	options: QueryOptions<TVariables>
 ): Promise<GraphQL.Wrapper<ReturnType>> => {
-	const resolver = serverRuntimeConfig.API_URL ? internalAPI : undefined;
-
-	if (!resolver) {
-		throw new Error("Not implemented.");
-	}
+	const resolver = serverRuntimeConfig.API_URL ? internalAPI : externalAPI;
 
 	try {
 		const { data, error, errors } = await resolver.query<

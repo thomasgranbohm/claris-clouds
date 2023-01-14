@@ -1,5 +1,5 @@
-query Artworks {
-	artworks(sort: "id:desc") {
+query Artworks($start: Int = 0) {
+	artworks(sort: "id:desc", pagination: { start: $start, limit: 9 }) {
 		data {
 			attributes {
 				name
