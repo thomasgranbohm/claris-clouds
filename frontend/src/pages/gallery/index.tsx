@@ -1,18 +1,17 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 import { getArtworks } from "api/artwork";
 
+import ArtworkLink from "components/ArtworkLink";
 import Column from "components/Column";
 import Gallery from "components/Gallery";
-import { NoWhitespaceImage } from "components/Image";
 import Layout from "components/Layout";
-import Link from "components/Link";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
 
 import { useObserver } from "hooks/useObserver";
 
-import Artwork from "types/api/artwork";
+import ArtworkSchema from "types/api/artwork";
 import { PaginationSchema } from "types/api/strapi";
 import { LayoutPage } from "types/components";
 
@@ -41,7 +40,7 @@ export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
 });
 
 interface GalleryPageProps {
-	artworks: Artwork[];
+	artworks: ArtworkSchema[];
 	pagination: PaginationSchema;
 }
 
@@ -50,7 +49,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 	layout,
 	pagination,
 }) => {
-	const [artworks, setArtworks] = useState<Artwork[]>(_artworks);
+	const [artworks, setArtworks] = useState<ArtworkSchema[]>(_artworks);
 
 	const ref = useObserver(
 		async () => {
@@ -65,32 +64,29 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 		}
 	);
 
-	const renderChild = useCallback<(props: Artwork, i: number) => ReactNode>(
-		({ image, slug }, i) => {
-			return (
-				<Link href={`/artwork/${slug}`} key={slug}>
-					<NoWhitespaceImage
-						image={image}
-						priority={i <= 6}
-						style={{
-							height: "auto",
-							maxWidth: "100%",
-						}}
-						sizes="100vw"
-					/>
-				</Link>
-			);
-		},
-		[]
-	);
-
 	return (
 		<Layout {...layout}>
 			<MetaData title="Gallery" />
 			<Row>
 				<Column>
-					<Gallery artworks={artworks} renderChild={renderChild} />
-					<div aria-hidden="true" ref={ref}></div>
+					<Gallery
+						artworks={artworks}
+						renderChild={(artwork, i) => (
+							<ArtworkLink
+								artwork={artwork}
+								key={i}
+								imageProps={{
+									priority: i <= 6,
+									sizes: "100vw",
+									style: {
+										height: "auto",
+										maxWidth: "100%",
+									},
+								}}
+							/>
+						)}
+					/>
+					<div aria-hidden="true" ref={ref} />
 				</Column>
 			</Row>
 		</Layout>

@@ -2,7 +2,7 @@ import { FC, ReactNode, useMemo, useRef } from "react";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
-import Artwork from "types/api/artwork";
+import ArtworkSchema from "types/api/artwork";
 import { ImageSchema } from "types/api/strapi";
 import { Breakpoint, BreakpointNames } from "types/generics";
 
@@ -16,10 +16,10 @@ import classes from "./Gallery.module.scss";
  */
 
 interface GalleryProps {
-	artworks: Artwork[];
+	artworks: ArtworkSchema[];
 	gap?: number;
 	renderChild: (
-		props: Artwork,
+		props: ArtworkSchema,
 		index: number,
 		breakpoint: Breakpoint | null
 	) => ReactNode;
@@ -45,7 +45,7 @@ const Gallery: FC<GalleryProps> = ({
 		const getAspectRatio = (img: Pick<ImageSchema, "width" | "height">) =>
 			img.width / img.height;
 
-		const parsed: Array<Artwork> = [];
+		const parsed: Array<ArtworkSchema> = [];
 
 		const { defaultRow, ...breakpoints } = rows;
 		const toPick =

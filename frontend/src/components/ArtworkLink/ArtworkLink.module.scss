@@ -1,0 +1,15 @@
+@use "styles/mixins";
+
+.container {
+	overflow: hidden;
+
+	@include mixins.has-general-focus {
+		.image {
+			transform: scale(1.02);
+		}
+	}
+
+	.image {
+		transition: 0.1s transform;
+	}
+}

@@ -18,7 +18,7 @@ import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
 
-import Artwork, { ArtworkPageSchema } from "types/api/artwork";
+import ArtworkSchema, { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
 import getImageLink from "utils/getImageLink";
@@ -58,7 +58,7 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 
 interface ArtworkPageProps {
 	artwork: ArtworkPageSchema;
-	latestArtworks: Pick<Artwork, "name" | "slug" | "image">[];
+	latestArtworks: Pick<ArtworkSchema, "name" | "slug" | "image">[];
 }
 
 const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
@@ -178,7 +178,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 					<Column>
 						<Heading type="h3">Latest artworks</Heading>
 						<Gallery
-							artworks={latestArtworks as Artwork[]}
+							artworks={latestArtworks as ArtworkSchema[]}
 							gap={18}
 							rows={{ defaultRow: 2, lg: latestArtworks.length }}
 							renderChild={({ image, slug }, i) => (

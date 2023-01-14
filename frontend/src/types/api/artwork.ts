@@ -2,7 +2,7 @@ import AllSections from "types/sections";
 
 import { GraphQL, ImageSchema } from "./strapi";
 
-interface Artwork {
+interface ArtworkSchema {
 	description?: string;
 	height: number;
 	image: GraphQL.Data<ImageSchema>;
@@ -15,8 +15,8 @@ interface Artwork {
 	year_of_creation: number;
 }
 
-export interface ArtworkPageSchema extends Artwork {
+export interface ArtworkPageSchema extends ArtworkSchema {
 	sections: AllSections[];
 }
 
-export default Artwork;
+export default ArtworkSchema;
