@@ -24,6 +24,10 @@ const nextConfig = {
 				destination:
 					this.serverRuntimeConfig.API_URL + "/uploads/:name",
 			},
+			{
+				source: "/api/graphql",
+				destination: this.serverRuntimeConfig.API_URL + "/graphql",
+			},
 		];
 	},
 	reactStrictMode: false,
