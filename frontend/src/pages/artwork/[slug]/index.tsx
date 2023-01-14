@@ -188,7 +188,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 									key={i}
 									imageProps={{
 										priority: i <= 4,
-										sizes: "(max-width: 600px) 100vw, (max-width: 1080px) 600px, (max-width: 1440px) 768px, 50vw",
+										sizes: `${artwork.image.data.attributes.width}px`,
 										style: {
 											height: "auto",
 											maxWidth: "100%",
