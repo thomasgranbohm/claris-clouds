@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 
 import FocusRing from "components/aria/FocusRing";
+import CookieConsent from "components/CookieConsent";
 
 import MetadataSchema from "types/api/metadata";
 
@@ -25,6 +26,7 @@ function CustomApp({
 
 	return (
 		<SSRProvider>
+			<CookieConsent />
 			<DefaultSeo
 				defaultTitle={title}
 				titleTemplate={page_prefix || title}

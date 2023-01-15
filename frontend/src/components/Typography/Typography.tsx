@@ -17,7 +17,7 @@ interface TypographyProps extends WithChildren, WithClassname {
 const Typography: FC<TypographyProps> = ({
 	children,
 	className,
-	color = "foreground",
+	color,
 	inline,
 	size = "normal",
 	type = "p",

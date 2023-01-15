@@ -6,6 +6,7 @@ import ArrowForward from "assets/icons/arrow-forward.svg";
 import BarsSVG from "assets/icons/bars-solid.svg";
 import CalendarRegularSVG from "assets/icons/calendar-regular.svg";
 import ClipboardSVG from "assets/icons/clipboard.svg";
+import Done from "assets/icons/done.svg";
 import InstagramSVG from "assets/icons/instagram.svg";
 import PaletteSVG from "assets/icons/palette.svg";
 import RedBubbleSVG from "assets/icons/redbubble.svg";
@@ -33,10 +34,11 @@ interface IconProps extends WithClassname {
 		| "instagram"
 		| "tiktok"
 		| "redbubble"
-		| "youtube";
+		| "youtube"
+		| "done";
 }
 
-const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
+const Icon: FC<IconProps> = ({ className, fill, variant }) => {
 	let Element = null;
 
 	switch (variant) {
@@ -75,6 +77,9 @@ const Icon: FC<IconProps> = ({ className, fill = "foreground", variant }) => {
 			break;
 		case "forward":
 			Element = ArrowForward;
+			break;
+		case "done":
+			Element = Done;
 			break;
 		default:
 			return null;
