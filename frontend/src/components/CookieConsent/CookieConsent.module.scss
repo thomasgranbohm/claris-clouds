@@ -1,6 +1,7 @@
 @use "styles/colors";
 @use "styles/functions";
 @use "styles/mixins";
+@use "styles/variables";
 
 .container {
 	position: fixed;
@@ -20,7 +21,7 @@
 	.inner {
 		display: grid;
 		grid-template-rows: auto 1fr auto;
-		max-width: 36rem;
+		max-width: map-get(variables.$breakpoints, "md");
 		width: 100%;
 
 		background-color: colors.get("background");

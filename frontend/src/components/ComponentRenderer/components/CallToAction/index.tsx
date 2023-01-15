@@ -53,14 +53,12 @@ const CallToAction: FC<CallToActionSchema> = ({
 						image={image}
 						style={{
 							height: "auto",
-							maxHeight: "60vh",
 							maxWidth: "100%",
 							objectFit: "contain",
 							objectPosition: "center",
 							width: type === "Centered" ? "auto" : "100%",
 						}}
-						sizes="(max-width: 600px) 100vw,
-						(max-width: 1080px) 600px,
+						sizes="(max-width: 1080px) 100vw,
 						(max-width: 1440px) 768px,
 						50vw"
 					/>
