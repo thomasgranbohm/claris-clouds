@@ -36,7 +36,9 @@ const CookieConsent = () => {
 						ipsum dolor sit amet consectetur adipisicing elit. Quae
 						ipsum ea vitae hic tempora inventore atque animi
 						ratione. Eius debitis blanditiis ipsa maiores inventore
-						magni quaerat doloribus quisquam mollitia dignissimos.
+						magni quaerat doloribus quisquam mollitia dignissimos.{" "}
+						<br />
+						Denying will not have any impact on your use experience.
 					</Typography>
 					<div className={classes["buttons"]}>
 						<Button
@@ -46,6 +48,16 @@ const CookieConsent = () => {
 							)}
 							onPress={() => {
 								document.cookie = "cookie-consent=yes";
+
+								if (
+									window &&
+									"dataLayer" in window &&
+									Array.isArray(window.dataLayer)
+								) {
+									window.dataLayer.push({
+										cookie_consent: "yes",
+									});
+								}
 
 								setShowCookieConsent(false);
 							}}
