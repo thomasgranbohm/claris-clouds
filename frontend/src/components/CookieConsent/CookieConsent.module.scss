@@ -34,6 +34,10 @@
 			display: none;
 		}
 
+		.text {
+			margin-top: functions.gutter();
+		}
+
 		.buttons {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
