@@ -35,7 +35,9 @@ const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 					<Heading type="h2" look="h6">
 						Cookie Consent
 					</Heading>
-					<Markdown text={text} />
+					<div className={classes["text"]}>
+						<Markdown text={text} />
+					</div>
 					<div className={classes["buttons"]}>
 						<Button
 							className={clsx(
