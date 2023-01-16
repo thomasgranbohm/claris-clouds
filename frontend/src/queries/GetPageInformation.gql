@@ -19,6 +19,7 @@ query PageInformation {
 					link
 					type
 				}
+				cookie_consent_text
 			}
 		}
 	}

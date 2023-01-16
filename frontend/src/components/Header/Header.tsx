@@ -19,7 +19,7 @@ import classes from "./Header.module.scss";
 
 interface HeaderProps
 	extends WithClassname,
-		Omit<PageInformationSchema, "favicon"> {
+		Pick<PageInformationSchema, "links" | "logo" | "socials"> {
 	// Remove me
 }
 

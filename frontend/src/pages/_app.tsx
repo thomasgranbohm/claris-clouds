@@ -8,6 +8,7 @@ import FocusRing from "components/aria/FocusRing";
 import CookieConsent from "components/CookieConsent";
 
 import MetadataSchema from "types/api/metadata";
+import PageInformationSchema from "types/api/page-information";
 
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
@@ -19,14 +20,14 @@ const { publicRuntimeConfig } = getConfig();
 function CustomApp({
 	Component,
 	pageProps,
-}: AppProps<{ meta: MetadataSchema }>) {
+}: AppProps<{ layout: PageInformationSchema; meta: MetadataSchema }>) {
 	const router = useRouter();
-	const { meta } = pageProps;
+	const { layout, meta } = pageProps;
 	const { description, favicon, page_prefix, title } = meta;
 
 	return (
 		<SSRProvider>
-			<CookieConsent />
+			<CookieConsent text={layout.cookie_consent_text} />
 			<DefaultSeo
 				defaultTitle={title}
 				titleTemplate={page_prefix || title}

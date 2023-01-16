@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FocusScope } from "react-aria";
 import clsx from "clsx";
 
 import Button from "components/aria/Button";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
-import Typography from "components/Typography";
+import Markdown from "components/Markdown";
 
 import classes from "./CookieConsent.module.scss";
 
-const CookieConsent = () => {
+interface CookieConsentProps {
+	text: string;
+}
+
+const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 	const [showCookieConsent, setShowCookieConsent] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -31,15 +35,7 @@ const CookieConsent = () => {
 					<Heading type="h2" look="h6">
 						Cookie Consent
 					</Heading>
-					<Typography>
-						We use cookies to track your movement on the site. Lorem
-						ipsum dolor sit amet consectetur adipisicing elit. Quae
-						ipsum ea vitae hic tempora inventore atque animi
-						ratione. Eius debitis blanditiis ipsa maiores inventore
-						magni quaerat doloribus quisquam mollitia dignissimos.{" "}
-						<br />
-						Denying will not have any impact on your use experience.
-					</Typography>
+					<Markdown text={text} />
 					<div className={classes["buttons"]}>
 						<Button
 							className={clsx(
@@ -52,6 +48,7 @@ const CookieConsent = () => {
 								if (
 									window &&
 									"dataLayer" in window &&
+									typeof window.dataLayer !== "undefined" &&
 									Array.isArray(window.dataLayer)
 								) {
 									window.dataLayer.push({
