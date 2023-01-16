@@ -9,5 +9,5 @@ export default {
 } as ComponentMeta<typeof CookieConsent>;
 
 export const Primary: ComponentStory<typeof CookieConsent> = (props) => (
-	<CookieConsent />
+	<CookieConsent {...props} />
 );

@@ -45,12 +45,7 @@ const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 							onPress={() => {
 								document.cookie = "cookie-consent=yes";
 
-								if (
-									window &&
-									"dataLayer" in window &&
-									typeof window.dataLayer !== "undefined" &&
-									Array.isArray(window.dataLayer)
-								) {
+								if (window && window.dataLayer) {
 									window.dataLayer.push({
 										cookie_consent: "yes",
 									});
