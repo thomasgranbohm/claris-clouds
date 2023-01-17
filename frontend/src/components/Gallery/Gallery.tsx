@@ -1,4 +1,5 @@
 import { FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
+import clsx from "clsx";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
@@ -30,6 +31,7 @@ interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 
 const Gallery: FC<GalleryProps> = ({
 	artworks,
+	className,
 	gap = 36,
 	renderChild,
 	rows = { defaultRow: 1, lg: 3, md: 2 },
@@ -128,7 +130,7 @@ const Gallery: FC<GalleryProps> = ({
 	return (
 		<div
 			ref={ref}
-			className={classes["container"]}
+			className={clsx(classes["container"], className)}
 			style={{ gap: gap + "px" }}
 			{...props}
 		>

@@ -44,7 +44,7 @@ const Footer: FC<FooterProps> = ({ className, links, socials }) => {
 				<Column>
 					<div className={classes["sections"]}>
 						{links && links.length > 0 && (
-							<LinkSection title="Links" links={links} />
+							<LinkSection title="Navigation" links={links} />
 						)}
 						{socials && socials.length > 0 && (
 							<LinkSection

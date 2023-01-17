@@ -113,20 +113,23 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 				path={asPath}
 			/>
 			<Row>
-				<Column lg={6} align="end" justify="end">
+				<Column md={6} align="end" justify="center">
 					<NoWhitespaceImage
 						image={image}
 						priority
 						loading="eager"
-						style={{ height: "auto", width: "100%" }}
+						style={{
+							height: "auto",
+							width: "100%",
+						}}
 						sizes="(max-width: 600px) 100vw,
 						(max-width: 1080px) 600px,
 						(max-width: 1440px) 768px,
 						50vw"
 					/>
 				</Column>
-				<Column lg={6} align="end">
-					<Heading className={classes["title"]} type="h2">
+				<Column md={6} align="end">
+					<Heading className={classes["title"]} type="h1">
 						{name}
 					</Heading>
 					<div className={classes["purchase-actions"]}>
@@ -152,10 +155,8 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			</Row>
 			{[year_of_creation, height, width, medium].every(Boolean) && (
 				<Row row-gap="none">
-					<Column lg={[8, 2]}>
-						<Heading type="h3" look="h4">
-							Specifications
-						</Heading>
+					<Column md={[8, 2]}>
+						<Heading type="h3">Specifications</Heading>
 						<div className={classes["specifications"]}>
 							<Labeler label={<Icon variant="ruler" />}>
 								{width} × {height} cm
@@ -172,7 +173,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			)}
 			{description && (
 				<Row>
-					<Column lg={[8, 2]}>
+					<Column md={[8, 2]}>
 						<Typography size="large">{description}</Typography>
 					</Column>
 				</Row>
@@ -183,9 +184,10 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 					<Column>
 						<Heading type="h3">Latest artworks</Heading>
 						<Gallery
+							className={classes["gallery"]}
 							artworks={latestArtworks as ArtworkSchema[]}
 							gap={18}
-							rows={{ defaultRow: 2, lg: latestArtworks.length }}
+							rows={{ defaultRow: 2, md: latestArtworks.length }}
 							renderChild={(artwork, i) => (
 								<ArtworkLink
 									artwork={artwork}

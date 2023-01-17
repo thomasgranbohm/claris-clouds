@@ -1,5 +1,6 @@
 @use "styles/colors" as *;
 @use "styles/functions";
+@use "styles/mixins";
 @use "styles/utils";
 
 .container {
@@ -23,32 +24,60 @@
 
 		&--h1 {
 			@extend .look;
-			font-size: 4.5em;
+			font-size: 2.5em;
+
+			@include mixins.breakpoint(md) {
+				font-size: 70px;
+			}
 		}
 
 		&--h2 {
 			@extend .look;
-			font-size: 3em;
+			font-size: 30px;
+			line-height: 36px;
+
+			@include mixins.breakpoint(lg) {
+				font-size: 48px;
+				line-height: 60px;
+			}
 		}
 
 		&--h3 {
 			@extend .look;
-			font-size: 2.25em;
+			font-size: 24px;
+			line-height: 30px;
+
+			@include mixins.breakpoint(lg) {
+				font-size: 26px;
+				line-height: 32px;
+			}
 		}
 
 		&--h4 {
 			@extend .look;
-			font-size: 1.75em;
+			font-size: 20px;
+			line-height: 26px;
+
+			@include mixins.breakpoint(lg) {
+				font-size: 24px;
+				line-height: 26px;
+			}
 		}
 
 		&--h5 {
 			@extend .look;
-			font-size: 1.5em;
+
+			@include mixins.breakpoint(md) {
+				font-size: 22px;
+			}
 		}
 
 		&--h6 {
 			@extend .look;
-			font-size: 1.25em;
+
+			@include mixins.breakpoint(md) {
+				font-size: 20px;
+			}
 		}
 
 		&--b {

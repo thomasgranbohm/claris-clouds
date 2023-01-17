@@ -31,7 +31,7 @@ const CallToAction: FC<CallToActionSchema> = ({
 			)}
 		>
 			<Column
-				lg={6}
+				md={6}
 				align={
 					type === "Centered"
 						? "center"
@@ -65,7 +65,7 @@ const CallToAction: FC<CallToActionSchema> = ({
 				</Figure>
 			</Column>
 			<Column
-				lg={6}
+				md={6}
 				align={
 					type === "Centered"
 						? "center"

@@ -13,7 +13,17 @@
 
 	margin-top: functions.gutter();
 
+	@include mixins.breakpoint(sm) {
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+	}
+
 	@include mixins.breakpoint(md) {
+		grid-template-columns: unset;
+		align-items: unset;
+	}
+
+	@include mixins.breakpoint(lg) {
 		grid-template-columns: repeat(2, 1fr);
 		align-items: center;
 	}
@@ -25,11 +35,10 @@
 
 	@include mixins.breakpoint(md) {
 		flex-direction: row;
-		justify-content: space-between;
 		justify-content: space-evenly;
 	}
+}
 
-	@include mixins.breakpoint(lg) {
-		justify-content: space-evenly;
-	}
+.gallery {
+	margin-top: functions.gutter();
 }

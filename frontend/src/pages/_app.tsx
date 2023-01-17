@@ -1,6 +1,7 @@
 import { SSRProvider } from "react-aria";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 
@@ -27,6 +28,12 @@ function CustomApp({
 
 	return (
 		<SSRProvider>
+			<Head>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0"
+				/>
+			</Head>
 			<CookieConsent text={layout.cookie_consent_text} />
 			<DefaultSeo
 				defaultTitle={title}
