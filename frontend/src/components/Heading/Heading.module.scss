@@ -8,7 +8,7 @@
 	font-family: "Poppins", Arial, Helvetica, sans-serif;
 
 	&:not(:first-child) {
-		margin-top: functions.gutter(2);
+		margin-top: 1em;
 	}
 
 	&.color {
@@ -36,7 +36,7 @@
 			font-size: 30px;
 			line-height: 36px;
 
-			@include mixins.breakpoint(lg) {
+			@include mixins.breakpoint(md) {
 				font-size: 48px;
 				line-height: 60px;
 			}
@@ -47,9 +47,9 @@
 			font-size: 24px;
 			line-height: 30px;
 
-			@include mixins.breakpoint(lg) {
-				font-size: 26px;
-				line-height: 32px;
+			@include mixins.breakpoint(md) {
+				font-size: 30px;
+				line-height: 36px;
 			}
 		}
 
@@ -58,14 +58,15 @@
 			font-size: 20px;
 			line-height: 26px;
 
-			@include mixins.breakpoint(lg) {
+			@include mixins.breakpoint(md) {
 				font-size: 24px;
-				line-height: 26px;
+				line-height: 30px;
 			}
 		}
 
 		&--h5 {
 			@extend .look;
+			font-size: initial;
 
 			@include mixins.breakpoint(md) {
 				font-size: 22px;
@@ -74,6 +75,7 @@
 
 		&--h6 {
 			@extend .look;
+			font-size: initial;
 
 			@include mixins.breakpoint(md) {
 				font-size: 20px;
