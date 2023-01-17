@@ -156,7 +156,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			{[year_of_creation, height, width, medium].every(Boolean) && (
 				<Row row-gap="none">
 					<Column md={[8, 2]}>
-						<Heading type="h3">Specifications</Heading>
+						<Heading type="h2" look="h3">
+							Specifications
+						</Heading>
 						<div className={classes["specifications"]}>
 							<Labeler label={<Icon variant="ruler" />}>
 								{width} × {height} cm
@@ -182,7 +184,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			{latestArtworks && latestArtworks.length > 0 && (
 				<Row>
 					<Column>
-						<Heading type="h3">Latest artworks</Heading>
+						<Heading type="h2" look="h3">
+							Latest artworks
+						</Heading>
 						<Gallery
 							className={classes["gallery"]}
 							artworks={latestArtworks as ArtworkSchema[]}
@@ -194,7 +198,9 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 									key={i}
 									imageProps={{
 										priority: i <= 4,
-										sizes: `${artwork.image.data.attributes.width}px`,
+										sizes: `${
+											stripWrapper(artwork.image).width
+										}px`,
 										style: {
 											height: "auto",
 											maxWidth: "100%",
