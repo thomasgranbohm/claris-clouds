@@ -20,11 +20,6 @@ const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 		if (document) {
 			if (!document.cookie.includes("cookie-consent")) {
 				setTimeout(() => setShowCookieConsent(true), 5e3);
-			} else if (document.cookie.includes("cookie-consent=yes")) {
-				window.dataLayer.push({
-					cookie_consent: "yes",
-					event: "cookie_consent_update",
-				});
 			}
 		}
 	}, []);
