@@ -17,8 +17,15 @@ const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 	const [showCookieConsent, setShowCookieConsent] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (document && !document.cookie.includes("cookie-consent")) {
-			setTimeout(() => setShowCookieConsent(true), 5e3);
+		if (document) {
+			if (!document.cookie.includes("cookie-consent")) {
+				setTimeout(() => setShowCookieConsent(true), 5e3);
+			} else if (document.cookie.includes("cookie-consent=yes")) {
+				window.dataLayer.push({
+					cookie_consent: "yes",
+					event: "cookie_consent_update",
+				});
+			}
 		}
 	}, []);
 
@@ -50,6 +57,7 @@ const CookieConsent: FC<CookieConsentProps> = ({ text }) => {
 								if (window && window.dataLayer) {
 									window.dataLayer.push({
 										cookie_consent: "yes",
+										event: "cookie_consent_update",
 									});
 								}
 

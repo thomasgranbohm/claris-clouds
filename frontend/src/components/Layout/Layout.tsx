@@ -1,6 +1,7 @@
 import { FC } from "react";
 import clsx from "clsx";
 
+import CookieConsent from "components/CookieConsent";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
@@ -16,6 +17,7 @@ export interface LayoutProps extends WithChildren, PageInformationSchema {
 const Layout: FC<LayoutProps> = ({
 	children,
 	conformity = true,
+	cookie_consent_text,
 	links,
 	logo,
 	socials,
@@ -41,6 +43,7 @@ const Layout: FC<LayoutProps> = ({
 				links={links}
 				socials={socials}
 			/>
+			<CookieConsent text={cookie_consent_text} />
 		</main>
 	);
 };

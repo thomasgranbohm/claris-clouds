@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 
 import FocusRing from "components/aria/FocusRing";
-import CookieConsent from "components/CookieConsent";
 
 import MetadataSchema from "types/api/metadata";
 import PageInformationSchema from "types/api/page-information";
@@ -23,7 +22,7 @@ function CustomApp({
 	pageProps,
 }: AppProps<{ layout: PageInformationSchema; meta: MetadataSchema }>) {
 	const router = useRouter();
-	const { layout, meta } = pageProps;
+	const { meta } = pageProps;
 	const { description, favicon, page_prefix, title } = meta;
 
 	return (
@@ -34,7 +33,6 @@ function CustomApp({
 					content="width=device-width, initial-scale=1.0"
 				/>
 			</Head>
-			<CookieConsent text={layout.cookie_consent_text} />
 			<DefaultSeo
 				defaultTitle={title}
 				titleTemplate={page_prefix || title}
