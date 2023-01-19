@@ -32,6 +32,13 @@ export const internalAPI = new ApolloClient({
 
 export const externalAPI = new ApolloClient({
 	...defaults,
+	...(publicRuntimeConfig.HTTP_AUTH
+		? {
+				headers: {
+					Authorization: publicRuntimeConfig.HTTP_AUTH,
+				},
+		  }
+		: {}),
 	uri: publicRuntimeConfig.API_URL + "/graphql",
 });
 

@@ -49,6 +49,7 @@ const nextConfig = {
 		API_URL: process.env.EXTERNAL_API_URL,
 		GTM_ID: process.env.GTM_ID,
 		PAGE_URL: process.env.PAGE_URL,
+		HTTP_AUTH: process.env.HTTP_AUTH,
 	},
 	reactStrictMode: false,
 	swcMinify: true,
