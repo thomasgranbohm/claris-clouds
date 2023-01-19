@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+import { GetStaticPaths } from "next";
 import { useRouter } from "next/router";
 
-import { getArtwork } from "api/artwork";
+import { getArtwork, getArtworkSlugs } from "api/artwork";
 
 import ArtworkLink from "components/ArtworkLink";
 import Column from "components/Column";
@@ -26,7 +27,7 @@ import getImageLink from "utils/getImageLink";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getServerSideProps = getLayoutData<ArtworkPageProps>(
+export const getStaticProps = getLayoutData<ArtworkPageProps>(
 	async ({ params }) => {
 		const slug = params?.["slug"];
 
@@ -57,6 +58,21 @@ export const getServerSideProps = getLayoutData<ArtworkPageProps>(
 	}
 );
 
+export const getStaticPaths: GetStaticPaths = async () => {
+	if (process.env.TARGET !== "production") {
+		return { fallback: "blocking", paths: [] };
+	}
+
+	const { data } = await getArtworkSlugs();
+
+	return {
+		fallback: "blocking",
+		paths: stripWrapper(data.artworks).map((p) => ({
+			params: { slug: p.slug },
+		})),
+	};
+};
+
 interface ArtworkPageProps {
 	artwork: ArtworkPageSchema;
 	latestArtworks: Pick<ArtworkSchema, "name" | "slug" | "image">[];
@@ -71,7 +87,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 	const {
 		description,
 		height,
-		image: rawImage,
+		image: _image,
 		medium,
 		name,
 		original_sold,
@@ -81,7 +97,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 		year_of_creation,
 	} = artwork;
 
-	const image = stripWrapper(rawImage);
+	const image = stripWrapper(_image);
 
 	return (
 		<Layout {...layout}>

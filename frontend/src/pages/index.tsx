@@ -12,7 +12,7 @@ import { LayoutPage } from "types/components";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getServerSideProps = getLayoutData(async () => {
+export const getStaticProps = getLayoutData(async () => {
 	const { data, error } = await getStartPage();
 
 	if (error) {

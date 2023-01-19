@@ -18,7 +18,7 @@ import { LayoutPage } from "types/components";
 import getLayoutData from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getServerSideProps = getLayoutData<GalleryPageProps>(async () => {
+export const getStaticProps = getLayoutData<GalleryPageProps>(async () => {
 	const { data, error } = await getArtworks();
 
 	if (error) {

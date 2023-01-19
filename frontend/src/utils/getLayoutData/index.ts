@@ -1,7 +1,7 @@
 import {
-	GetServerSideProps,
-	GetServerSidePropsContext,
-	GetServerSidePropsResult,
+	GetStaticProps,
+	GetStaticPropsContext,
+	GetStaticPropsResult,
 } from "next";
 
 import { getMetadata } from "api/metadata";
@@ -12,11 +12,10 @@ import { LayoutSchema } from "types/components";
 
 import stripWrapper from "utils/stripWrapper";
 
-function getLayoutData<T extends { [key: string]: any }>(
-	f: GetServerSideProps<T>
-): GetServerSideProps<T & LayoutSchema & { meta: MetadataSchema }> {
-	// TODO: needs some cleanup
-	return async (context: GetServerSidePropsContext) => {
+export function getLayoutData<T extends { [key: string]: any }>(
+	f: GetStaticProps<T>
+): GetStaticProps<T & LayoutSchema & { meta: MetadataSchema }> {
+	return async (context: GetStaticPropsContext) => {
 		const [
 			{ data: dataPI, error: errorPI },
 			{ data: dataMD, error: errorMD },
@@ -36,7 +35,7 @@ function getLayoutData<T extends { [key: string]: any }>(
 			}
 		}
 
-		const res: GetServerSidePropsResult<T> = await f(context);
+		const res: GetStaticPropsResult<T> = await f(context);
 
 		if ("notFound" in res || "redirect" in res) {
 			return res;
