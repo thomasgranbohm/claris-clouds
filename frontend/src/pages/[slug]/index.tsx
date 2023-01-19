@@ -39,7 +39,6 @@ export const getStaticProps = getLayoutDataSSG<GenericPageProps>(
 
 		return {
 			props: { page: stripWrapper(data.page) },
-			revalidate: 60,
 		};
 	}
 );

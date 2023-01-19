@@ -85,6 +85,8 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 		}
 
 		return {
+			revalidate: 60,
+			...res,
 			props: {
 				...res.props,
 				layout: stripWrapper(dataPI.pageInformation),
