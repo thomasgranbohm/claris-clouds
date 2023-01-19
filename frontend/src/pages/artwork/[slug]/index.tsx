@@ -59,7 +59,7 @@ export const getStaticProps = getLayoutDataSSG<ArtworkPageProps>(
 );
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	if (process.env.TARGET !== "production") {
+	if (process.env.NODE_ENV !== "production") {
 		return { fallback: "blocking", paths: [] };
 	}
 

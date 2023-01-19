@@ -44,7 +44,7 @@ export const getStaticProps = getLayoutDataSSG<GenericPageProps>(
 );
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	if (process.env.TARGET !== "production") {
+	if (process.env.NODE_ENV !== "production") {
 		return { fallback: "blocking", paths: [] };
 	}
 

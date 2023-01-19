@@ -9,7 +9,7 @@ services:
         condition: service_healthy
     env_file: backend/.env
     environment: 
-      NODE_ENV: production
+      NODE_ENV: development
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -43,8 +43,7 @@ services:
         condition: service_healthy
     environment:
       - NEXT_TELEMETRY_DISABLED=1
-      - NODE_ENV=production
-      - TARGET=staging
+      - NODE_ENV=development
     expose:
       - 3000
   nginx:
