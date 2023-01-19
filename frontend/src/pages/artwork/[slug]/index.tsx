@@ -24,10 +24,10 @@ import ArtworkSchema, { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
 import getImageLink from "utils/getImageLink";
-import getLayoutData from "utils/getLayoutData";
+import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData<ArtworkPageProps>(
+export const getStaticProps = getLayoutDataSSG<ArtworkPageProps>(
 	async ({ params }) => {
 		const slug = params?.["slug"];
 

@@ -4,13 +4,13 @@ import MetaData from "components/MetaData";
 
 import { LayoutPage } from "types/components";
 
-import getLayoutData from "utils/getLayoutData";
+import { getLayoutDataSSR } from "utils/getLayoutData";
 
 interface ErrorPageProps {
 	statusCode: number;
 }
 
-export const getServerSideProps = getLayoutData(async ({ res }) => {
+export const getServerSideProps = getLayoutDataSSR(async ({ res }) => {
 	return {
 		props: {
 			statusCode: res.statusCode,

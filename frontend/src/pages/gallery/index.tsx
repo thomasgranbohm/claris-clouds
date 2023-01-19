@@ -15,10 +15,10 @@ import ArtworkSchema from "types/api/artwork";
 import { PaginationSchema } from "types/api/strapi";
 import { LayoutPage } from "types/components";
 
-import getLayoutData from "utils/getLayoutData";
+import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData<GalleryPageProps>(async () => {
+export const getStaticProps = getLayoutDataSSG<GalleryPageProps>(async () => {
 	const { data, error } = await getArtworks();
 
 	if (error) {

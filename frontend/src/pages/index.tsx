@@ -9,10 +9,10 @@ import Layout from "components/Layout";
 import { StartPage } from "types/api/start-page";
 import { LayoutPage } from "types/components";
 
-import getLayoutData from "utils/getLayoutData";
+import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData(async () => {
+export const getStaticProps = getLayoutDataSSG(async () => {
 	const { data, error } = await getStartPage();
 
 	if (error) {

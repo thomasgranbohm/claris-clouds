@@ -4,19 +4,18 @@ import { getPage, getPageSlugs } from "api/page";
 
 import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
-import Heading, { PageTitle } from "components/Heading";
+import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
 import Row from "components/Row";
-import Typography from "components/Typography";
 
 import { PageSchema } from "types/api/page";
 import { LayoutPage } from "types/components";
 
-import getLayoutData from "utils/getLayoutData";
+import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutData<GenericPageProps>(
+export const getStaticProps = getLayoutDataSSG<GenericPageProps>(
 	async ({ params }) => {
 		const slug = params?.["slug"];
 
