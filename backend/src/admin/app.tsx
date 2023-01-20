@@ -1,3 +1,5 @@
+import Logo from "./extensions/logo@256px.png";
+
 export default {
 	config: {
 		locales: [],
@@ -12,6 +14,9 @@ export default {
 						: "Development",
 			},
 		},
+		head: { favicon: Logo },
+		auth: { logo: Logo },
+		menu: { logo: Logo },
 	},
 	bootstrap(app) {},
 };
