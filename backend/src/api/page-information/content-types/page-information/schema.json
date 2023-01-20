@@ -33,6 +33,11 @@
     "cookie_consent_text": {
       "type": "richtext",
       "required": true
+    },
+    "legal": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.link"
     }
   }
 }

@@ -13,13 +13,20 @@
 
 	@include mixins.keep-within-width;
 
+	.links {
+		list-style-type: none;
+
+		.link {
+			color: colors.get("foreground");
+		}
+	}
+
 	.sections {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
 		gap: functions.gutter() functions.gutter(2);
 
 		.section {
-			max-width: 12rem;
 			display: inline-block;
 
 			.links {
@@ -28,13 +35,31 @@
 				.link {
 					display: block;
 					margin: functions.gutter(0.5) 0;
+					text-decoration: none;
+
+					@include mixins.has-general-focus {
+						text-decoration: underline;
+					}
 				}
 			}
 		}
 	}
 
-	.copyright {
-		text-align: center;
-		margin-top: functions.gutter(2);
+	.legal {
+		@include mixins.breakpoint("md") {
+			border-top: 1px solid colors.get("gray");
+			padding-top: functions.gutter(2);
+		}
+
+		.links {
+			.link {
+				display: inline-block;
+				padding: 0 functions.gutter(1.5) functions.gutter() 0;
+			}
+		}
+
+		.copyright {
+			text-align: center;
+		}
 	}
 }

@@ -4,6 +4,15 @@ query PageInformation {
 	pageInformation {
 		data {
 			attributes {
+				cookie_consent_text
+				legal {
+					label
+					path
+				}
+				links {
+					label
+					path
+				}
 				logo {
 					data {
 						attributes {
@@ -11,15 +20,10 @@ query PageInformation {
 						}
 					}
 				}
-				links {
-					label
-					path
-				}
 				socials {
 					link
 					type
 				}
-				cookie_consent_text
 			}
 		}
 	}

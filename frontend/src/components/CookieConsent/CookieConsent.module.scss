@@ -21,8 +21,7 @@
 	.inner {
 		display: grid;
 		grid-template-rows: auto 1fr auto;
-		max-width: map-get(variables.$breakpoints, "md");
-		width: 100%;
+		max-width: map-get(variables.$breakpoints, "xs");
 
 		background-color: colors.get("background");
 		padding: functions.gutter();
@@ -36,6 +35,7 @@
 
 		.text {
 			margin-top: functions.gutter();
+			overflow-y: auto;
 		}
 
 		.buttons {

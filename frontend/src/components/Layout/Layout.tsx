@@ -18,9 +18,7 @@ const Layout: FC<LayoutProps> = ({
 	children,
 	conformity = true,
 	cookie_consent_text,
-	links,
-	logo,
-	socials,
+	...props
 }) => {
 	return (
 		<main
@@ -29,20 +27,11 @@ const Layout: FC<LayoutProps> = ({
 				!conformity && classes["non-conformity"]
 			)}
 		>
-			<Header
-				className={classes["header"]}
-				links={links}
-				logo={logo}
-				socials={socials}
-			/>
+			<Header className={classes["header"]} {...props} />
 			<article id="main-content" className={classes["content"]}>
 				{children}
 			</article>
-			<Footer
-				className={classes["footer"]}
-				links={links}
-				socials={socials}
-			/>
+			<Footer className={classes["footer"]} {...props} />
 			<CookieConsent text={cookie_consent_text} />
 		</main>
 	);

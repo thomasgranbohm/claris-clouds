@@ -33,11 +33,12 @@ const LinkSection: FC<{ links: Components.Link[]; title: string }> = ({
 };
 
 interface FooterProps extends WithClassname {
+	legal?: Components.Link[];
 	links?: Components.Link[];
 	socials?: Components.Social[];
 }
 
-const Footer: FC<FooterProps> = ({ className, links, socials }) => {
+const Footer: FC<FooterProps> = ({ className, legal, links, socials }) => {
 	return (
 		<footer className={clsx(classes["container"], className)}>
 			<Row>
@@ -56,11 +57,30 @@ const Footer: FC<FooterProps> = ({ className, links, socials }) => {
 							/>
 						)}
 					</div>
-					<div className={classes["copyright"]}>
-						<Typography>
-							&copy; {new Date().getUTCFullYear()} Clari&apos;s
-							Clouds
-						</Typography>
+				</Column>
+			</Row>
+			<Row>
+				<Column>
+					<div className={classes["legal"]}>
+						{legal && (
+							<ul className={classes["links"]}>
+								{legal.map(({ label, path }) => (
+									<Link
+										className={classes["link"]}
+										href={path}
+										key={label}
+									>
+										{label}
+									</Link>
+								))}
+							</ul>
+						)}
+						<div className={classes["copyright"]}>
+							<Typography>
+								&copy; {new Date().getUTCFullYear()}{" "}
+								Clari&apos;s Clouds
+							</Typography>
+						</div>
 					</div>
 				</Column>
 			</Row>

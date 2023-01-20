@@ -32,7 +32,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 					<Swiper
 						slidesPerView="auto"
 						spaceBetween={9}
-						// centeredSlides={true}
+						centeredSlides={true}
 						loop={true}
 						className={classes["swiper"]}
 						grabCursor
