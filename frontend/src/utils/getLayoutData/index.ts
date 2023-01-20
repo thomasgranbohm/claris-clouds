@@ -16,7 +16,7 @@ import { LayoutSchema } from "types/components";
 import stripWrapper from "utils/stripWrapper";
 
 export function getLayoutDataSSR<T extends { [key: string]: any }>(
-	f: GetServerSideProps<T>
+	f?: GetServerSideProps<T>
 ): GetServerSideProps<T & LayoutSchema & { meta: MetadataSchema }> {
 	return async (context: GetServerSidePropsContext) => {
 		const [
@@ -38,6 +38,15 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 			}
 		}
 
+		if (!f) {
+			return {
+				props: {
+					layout: stripWrapper(dataPI.pageInformation),
+					meta: stripWrapper(dataMD.meta),
+				} as T & LayoutSchema & { meta: MetadataSchema },
+			};
+		}
+
 		const res: GetServerSidePropsResult<T> = await f(context);
 
 		if ("notFound" in res || "redirect" in res) {
@@ -55,7 +64,7 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 }
 
 export function getLayoutDataSSG<T extends { [key: string]: any }>(
-	f: GetStaticProps<T>
+	f?: GetStaticProps<T>
 ): GetStaticProps<T & LayoutSchema & { meta: MetadataSchema }> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
@@ -76,6 +85,16 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 					throw error;
 				}
 			}
+		}
+
+		if (!f) {
+			return {
+				props: {
+					layout: stripWrapper(dataPI.pageInformation),
+					meta: stripWrapper(dataMD.meta),
+				} as T & LayoutSchema & { meta: MetadataSchema },
+				revalidate: 60,
+			};
 		}
 
 		const res: GetStaticPropsResult<T> = await f(context);

@@ -6,6 +6,10 @@ import Row from "components/Row";
 
 import { LayoutPage } from "types/components";
 
+import { getLayoutDataSSG } from "utils/getLayoutData";
+
+export const getStaticProps = getLayoutDataSSG();
+
 const ErrorPage: LayoutPage = ({ layout }) => {
 	return (
 		<Layout {...layout}>
