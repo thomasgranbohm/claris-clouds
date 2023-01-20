@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, HTMLAttributes } from "react";
 import clsx from "clsx";
 
 import ArrowBackward from "assets/icons/arrow-backward.svg";
@@ -20,7 +20,7 @@ import { Colors } from "types/generics";
 
 import classes from "./Icon.module.scss";
 
-interface IconProps extends WithClassname {
+interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
 	fill?: Colors;
 	variant:
 		| "calendar"
@@ -38,7 +38,7 @@ interface IconProps extends WithClassname {
 		| "done";
 }
 
-const Icon: FC<IconProps> = ({ className, fill, variant }) => {
+const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 	let Element = null;
 
 	switch (variant) {
@@ -87,6 +87,7 @@ const Icon: FC<IconProps> = ({ className, fill, variant }) => {
 
 	return (
 		<Element
+			{...props}
 			className={clsx(
 				classes["container"],
 				classes[`fill--${fill}`],

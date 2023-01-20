@@ -176,13 +176,28 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 							Specifications
 						</Heading>
 						<div className={classes["specifications"]}>
-							<Labeler label={<Icon variant="ruler" />}>
+							<Labeler
+								label={
+									<Icon title="Dimensions" variant="ruler" />
+								}
+							>
 								{width} × {height} cm
 							</Labeler>
-							<Labeler label={<Icon variant="material" />}>
+							<Labeler
+								label={
+									<Icon title="Material" variant="material" />
+								}
+							>
 								{medium}
 							</Labeler>
-							<Labeler label={<Icon variant="calendar" />}>
+							<Labeler
+								label={
+									<Icon
+										title="Year of creation"
+										variant="calendar"
+									/>
+								}
+							>
 								{year_of_creation}
 							</Labeler>
 						</div>
