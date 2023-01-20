@@ -66,7 +66,7 @@
 
 		&--h5 {
 			@extend .look;
-			font-size: initial;
+			font-size: 1em;
 
 			@include mixins.breakpoint(md) {
 				font-size: 22px;
@@ -75,7 +75,7 @@
 
 		&--h6 {
 			@extend .look;
-			font-size: initial;
+			font-size: 1em;
 
 			@include mixins.breakpoint(md) {
 				font-size: 20px;
@@ -84,7 +84,7 @@
 
 		&--b {
 			@extend .look;
-			font-size: initial;
+			font-size: 1em;
 		}
 	}
 
