@@ -157,7 +157,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 								<Fragment>
 									Wanna buy the original?{" "}
 									<Link
-										href={`mailto:clarisclouds@gmail.com?subject=I%20want%20to%20buy%20${name}!&body=Hello!%0A%0A%0A%0ABest%20regards%2C%0A%0A`}
+										href={`mailto:purchase@clarisclouds.com?subject=I%20want%20to%20buy%20${name}!&body=Hello!%0A%0A%0A%0ABest%20regards%2C%0A%0A`}
 									>
 										Message me about it!
 									</Link>
