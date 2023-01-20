@@ -44,7 +44,6 @@ services:
     environment:
       - NEXT_TELEMETRY_DISABLED=1
       - NODE_ENV=production
-      - TARGET=production
     expose:
       - 3000
   nginx:
