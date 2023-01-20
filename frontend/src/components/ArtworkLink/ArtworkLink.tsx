@@ -25,6 +25,7 @@ const ArtworkLink: FC<ArtworkLinkProps> = ({ artwork, imageProps }) => {
 			<NoWhitespaceImage
 				className={classes["image"]}
 				image={image}
+				title={name}
 				{...imageProps}
 			/>
 		</Link>

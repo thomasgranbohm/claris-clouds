@@ -31,7 +31,7 @@ const Layout: FC<LayoutProps> = ({
 			<article id="main-content" className={classes["content"]}>
 				{children}
 			</article>
-			<Footer className={classes["footer"]} {...props} />
+			<Footer {...props} />
 			<CookieConsent text={cookie_consent_text} />
 		</main>
 	);

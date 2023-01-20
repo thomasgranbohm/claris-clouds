@@ -15,4 +15,4 @@ export interface LayoutSchema {
 	layout: PageInformationSchema;
 }
 
-export type LayoutPage<T> = NextPage<T & LayoutSchema>;
+export type LayoutPage<T = unknown> = NextPage<T & LayoutSchema>;

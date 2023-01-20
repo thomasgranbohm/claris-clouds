@@ -1,6 +1,8 @@
-import Heading, { PageTitle } from "components/Heading";
+import Column from "components/Column";
+import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
+import Row from "components/Row";
 
 import { LayoutPage } from "types/components";
 
@@ -19,15 +21,18 @@ export const getServerSideProps = getLayoutDataSSR(async ({ res }) => {
 });
 
 const ErrorPage: LayoutPage<ErrorPageProps> = ({ layout, statusCode }) => {
-	const title =
-		statusCode === 404 ? "Page not found" : "Something went wrong :(";
+	const title = "Something went wrong. Please try again later.";
 
 	return (
 		<Layout {...layout}>
 			<MetaData title={title} noindex />
-			<PageTitle>
-				{statusCode} - {title}
-			</PageTitle>
+			<Row>
+				<Column>
+					<PageTitle>
+						{statusCode} - {title}
+					</PageTitle>
+				</Column>
+			</Row>
 		</Layout>
 	);
 };

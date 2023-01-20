@@ -14,20 +14,24 @@
 	display: flex;
 	justify-content: center;
 
-	@include mixins.breakpoint("lg") {
+	@include mixins.breakpoint("sm") {
 		justify-content: flex-end;
+		left: unset;
 	}
 
 	.inner {
 		display: grid;
 		grid-template-rows: auto 1fr auto;
-		max-width: map-get(variables.$breakpoints, "xs");
 
 		background-color: colors.get("background");
 		padding: functions.gutter();
 		border-radius: functions.gutter(0.5);
 
 		border: 4px solid colors.get("accent");
+
+		@include mixins.breakpoint("sm") {
+			max-width: map-get(variables.$breakpoints, "xs");
+		}
 
 		&.hidden {
 			display: none;
