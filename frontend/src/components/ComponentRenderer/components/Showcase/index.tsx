@@ -10,6 +10,9 @@ import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
 import Row from "components/Row";
 
+import useBreakpoint from "hooks/useBreakpoint";
+
+import { Breakpoint } from "types/generics";
 import { ShowcaseSchema } from "types/sections";
 
 import stripWrapper from "utils/stripWrapper";
@@ -23,6 +26,8 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 
 	const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 
+	const breakpoint = useBreakpoint();
+
 	return (
 		<Row>
 			<Column>
@@ -32,7 +37,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 					<Swiper
 						slidesPerView="auto"
 						spaceBetween={9}
-						centeredSlides={true}
+						centeredSlides={Number(breakpoint) < Breakpoint.sm}
 						loop={true}
 						className={classes["swiper"]}
 						grabCursor

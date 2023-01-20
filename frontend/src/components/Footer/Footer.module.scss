@@ -22,9 +22,13 @@
 	}
 
 	.sections {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+		display: flex;
 		gap: functions.gutter() functions.gutter(2);
+
+		@include mixins.breakpoint("sm") {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+		}
 
 		.section {
 			display: inline-block;
@@ -52,14 +56,12 @@
 		}
 
 		.links {
-			.link {
-				display: inline-block;
-				padding: 0 functions.gutter(1.5) functions.gutter() 0;
-			}
+			display: flex;
+			gap: functions.gutter() functions.gutter(1.5);
 		}
+	}
 
-		.copyright {
-			text-align: center;
-		}
+	.copyright {
+		text-align: center;
 	}
 }

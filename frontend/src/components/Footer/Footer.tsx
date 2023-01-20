@@ -65,22 +65,27 @@ const Footer: FC<FooterProps> = ({ className, legal, links, socials }) => {
 						{legal && (
 							<ul className={classes["links"]}>
 								{legal.map(({ label, path }) => (
-									<Link
-										className={classes["link"]}
-										href={path}
-										key={label}
-									>
-										{label}
-									</Link>
+									<li key={label} className={classes["item"]}>
+										<Link
+											className={classes["link"]}
+											href={path}
+										>
+											{label}
+										</Link>
+									</li>
 								))}
 							</ul>
 						)}
-						<div className={classes["copyright"]}>
-							<Typography>
-								&copy; {new Date().getUTCFullYear()}{" "}
-								Clari&apos;s Clouds
-							</Typography>
-						</div>
+					</div>
+				</Column>
+			</Row>
+			<Row>
+				<Column>
+					<div className={classes["copyright"]}>
+						<Typography>
+							&copy; {new Date().getUTCFullYear()} Clari&apos;s
+							Clouds
+						</Typography>
 					</div>
 				</Column>
 			</Row>
