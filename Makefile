@@ -32,3 +32,7 @@ start:
 	${DC} up -d
 
 update: backup-database build start restore-database restore-backend-config
+
+release:
+	@sed -i -e "s/\"version\":\ \"0\.1\.0\"/\"version\":\ \"0\.1\.1\"/g" frontend/package.json backend/package.json
+	@sed -i -e "s/0\.1\.0/\0\.1\.1/g" frontend/public/service-worker.js

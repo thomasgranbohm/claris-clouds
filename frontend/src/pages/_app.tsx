@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SSRProvider } from "react-aria";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
@@ -24,6 +25,18 @@ function CustomApp({
 	const router = useRouter();
 	const { meta } = pageProps;
 	const { description, favicon, page_prefix, title } = meta;
+
+	// Install service-worker
+	useEffect(() => {
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker
+				.register("/service-worker.js")
+				.then(() => console.log("Registration succeeded."))
+				.catch((error) =>
+					console.log("Registration failed with " + error)
+				);
+		}
+	}, []);
 
 	return (
 		<SSRProvider>
