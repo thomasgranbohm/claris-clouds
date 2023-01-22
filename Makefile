@@ -1,6 +1,16 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+PREV_TAG := $(shell git describe --tags --abbrev=0)
+
+ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+$(eval $(ARGS):;@:)
+
+require-args:
+ifndef ARGS
+	$(error Missing target args, i.e. make <target> <arg>)
+endif
+
 DC=docker compose -f production.yaml
 
 backup-database:
@@ -33,6 +43,7 @@ start:
 
 update: backup-database build start restore-database restore-backend-config
 
-release:
-	@sed -i -e "s/\"version\":\ \"0\.1\.0\"/\"version\":\ \"0\.1\.1\"/g" frontend/package.json backend/package.json
-	@sed -i -e "s/0\.1\.0/\0\.1\.1/g" frontend/public/service-worker.js
+release: require-args
+	sed -i -e "s/\"version\":\ \"${PREV_TAG}\"/\"version\":\ \"$(ARGS)\"/g" frontend/package.json backend/package.json
+	sed -i -e "s/${PREV_TAG}/$(ARGS)/g" frontend/public/service-worker.js
+	git commit -am "Release: $(ARGS)"
