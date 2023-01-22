@@ -10,6 +10,7 @@ import Row from "components/Row";
 
 import { CallToActionSchema } from "types/sections";
 
+import generateImageBreakpoints from "utils/generateImageBreakpoints";
 import stripWrapper from "utils/stripWrapper";
 
 import classes from "../../ComponentRenderer.module.scss";
@@ -58,9 +59,13 @@ const CallToAction: FC<CallToActionSchema> = ({
 							objectPosition: "center",
 							width: type === "Centered" ? "auto" : "100%",
 						}}
-						sizes="(max-width: 1080px) 100vw,
-						(max-width: 1440px) 768px,
-						50vw"
+						sizes={generateImageBreakpoints({
+							lg: 0.5,
+							md: 0.5,
+							sm: 1,
+							xl: 0.5,
+							xs: "100vw",
+						})}
 					/>
 				</Figure>
 			</Column>

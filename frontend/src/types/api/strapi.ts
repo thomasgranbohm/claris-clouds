@@ -56,12 +56,7 @@ export type ImageFormat = {
 	width: number;
 };
 
-export type ImageFormatNames =
-	| "base64"
-	| "thumbnail"
-	| "small"
-	| "medium"
-	| "large";
+export type ImageFormatNames = "base64" | "thumbnail";
 
 export type ImageFormats = {
 	[formatName in ImageFormatNames]: ImageFormat;

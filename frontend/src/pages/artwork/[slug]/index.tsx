@@ -23,6 +23,7 @@ import classes from "styles/pages/ArtworkPage.module.scss";
 import ArtworkSchema, { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
+import generateImageBreakpoints from "utils/generateImageBreakpoints";
 import getImageLink from "utils/getImageLink";
 import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
@@ -138,10 +139,13 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 							height: "auto",
 							width: "100%",
 						}}
-						sizes="(max-width: 600px) 100vw,
-						(max-width: 1080px) 600px,
-						(max-width: 1440px) 768px,
-						50vw"
+						sizes={generateImageBreakpoints({
+							lg: 0.5,
+							md: 0.5,
+							sm: 1,
+							xl: 0.5,
+							xs: "100vw",
+						})}
 					/>
 				</Column>
 				<Column md={6} align="end">

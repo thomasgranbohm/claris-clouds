@@ -15,6 +15,7 @@ import useBreakpoint from "hooks/useBreakpoint";
 import { Breakpoint } from "types/generics";
 import { ShowcaseSchema } from "types/sections";
 
+import generateImageBreakpoints from "utils/generateImageBreakpoints";
 import stripWrapper from "utils/stripWrapper";
 
 import "swiper/css";
@@ -48,9 +49,11 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 							<SwiperSlide className={classes["slide"]} key={i}>
 								<StrapiImage
 									image={image}
-									sizes="(max-width: 768px) 100vw,
-									(max-width: 1200px) 50vw,
-									33vw"
+									sizes={generateImageBreakpoints({
+										lg: "50vw",
+										sm: "100vw",
+										xl: "33vw",
+									})}
 									style={{
 										height: "100%",
 										maxWidth: "100%",
