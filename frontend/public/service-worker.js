@@ -4,7 +4,7 @@ const VERSION = "0.1.0";
 const CACHES = [
 	{
 		name: `${BASE_NAME}-images`,
-		regex: /\/_next\/image\?url=\/api\/image\/(.*?)/,
+		regex: /\/_next\/image\?url=(.*?)/,
 	},
 ];
 
