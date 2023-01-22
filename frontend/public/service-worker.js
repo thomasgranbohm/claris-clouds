@@ -12,7 +12,9 @@ self.addEventListener("install", (event) => {
 	event.waitUntil(
 		Promise.all(
 			CACHES.map(({ files, name }) => {
-				return caches.open(name).then((cache) => cache.addAll(files));
+				return caches
+					.open(name)
+					.then((cache) => files && cache.addAll(files));
 			})
 		)
 	);

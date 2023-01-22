@@ -31,7 +31,6 @@ function CustomApp({
 		if ("serviceWorker" in navigator) {
 			navigator.serviceWorker
 				.register("/service-worker.js")
-				.then(() => console.log("Registration succeeded."))
 				.catch((error) =>
 					console.log("Registration failed with " + error)
 				);
