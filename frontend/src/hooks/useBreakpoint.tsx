@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 
 import { Breakpoint } from "types/generics";
 
+import getGutter from "utils/getGutter";
+
 const useBreakpoint = (): Breakpoint | null => {
 	const [breakpoint, setBreakpoint] = useState<Breakpoint | null>(null);
+	const gutter = getGutter(2);
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			// TODO: Badly implemented
-			// Removes the padding on the edges
-			const width = window.innerWidth - 36;
+			const width = window.innerWidth - gutter;
 
 			if (width >= Breakpoint.xl) {
 				setBreakpoint(Breakpoint.xl);
@@ -32,7 +33,7 @@ const useBreakpoint = (): Breakpoint | null => {
 		return () => {
 			window.removeEventListener("resize", calculateBreakpoint);
 		};
-	}, []);
+	}, [gutter]);
 
 	return breakpoint;
 };

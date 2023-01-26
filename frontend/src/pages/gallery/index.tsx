@@ -72,6 +72,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 					<div style={{ minHeight: "60vh" }}>
 						<Gallery
 							artworks={artworks}
+							gutter={2}
 							renderChild={(artwork, i) => (
 								<div
 									aria-posinset={i + 1}

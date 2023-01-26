@@ -7,18 +7,18 @@ import ArtworkSchema from "types/api/artwork";
 import { ImageSchema } from "types/api/strapi";
 import { Breakpoint, BreakpointNames } from "types/generics";
 
+import getGutter from "utils/getGutter";
 import stripWrapper from "utils/stripWrapper";
 
 import classes from "./Gallery.module.scss";
 
 /**
  * TODO: This component isn't very cleanly coded and should be reworked
- * Especially the GAP part.
  */
 
 interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 	artworks: ArtworkSchema[];
-	gap?: number;
+	gutter?: number;
 	renderChild: (
 		props: ArtworkSchema,
 		index: number,
@@ -32,13 +32,14 @@ interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 const Gallery: FC<GalleryProps> = ({
 	artworks,
 	className,
-	gap = 36,
+	gutter: multiplier = 1,
 	renderChild,
 	rows = { defaultRow: 1, lg: 3, md: 2 },
 	...props
 }) => {
 	const breakpoint = useBreakpoint();
 	const ref = useRef<HTMLDivElement>(null);
+	const gutter = getGutter(multiplier);
 
 	const parsedArtworks = useMemo(() => {
 		if (!ref.current) {
@@ -93,7 +94,7 @@ const Gallery: FC<GalleryProps> = ({
 			});
 
 			const containerWidth =
-				ref.current.clientWidth - gap * (picked.length - 1);
+				ref.current.clientWidth - gutter * (picked.length - 1);
 
 			const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
 			const multiplier = combinedWidths / containerWidth;
@@ -125,13 +126,13 @@ const Gallery: FC<GalleryProps> = ({
 		}
 
 		return parsed.map((props, i) => renderChild(props, i, breakpoint));
-	}, [artworks, breakpoint, gap, ref, renderChild, rows]);
+	}, [artworks, breakpoint, gutter, ref, renderChild, rows]);
 
 	return (
 		<div
 			ref={ref}
 			className={clsx(classes["container"], className)}
-			style={{ gap: gap + "px" }}
+			style={{ gap: gutter + "px" }}
 			{...props}
 		>
 			{parsedArtworks}
