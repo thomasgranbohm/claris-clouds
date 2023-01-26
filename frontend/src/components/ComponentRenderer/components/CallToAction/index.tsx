@@ -61,7 +61,7 @@ const CallToAction: FC<CallToActionSchema> = ({
 						}}
 						sizes={generateImageBreakpoints({
 							lg: 0.5,
-							md: 0.5,
+							md: 1,
 							sm: 1,
 							xl: 0.5,
 							xs: "100vw",
