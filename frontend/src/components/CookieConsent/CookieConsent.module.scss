@@ -9,7 +9,6 @@
 	left: functions.gutter();
 	right: functions.gutter();
 	min-height: 16rem;
-	max-height: 24rem;
 	z-index: 999;
 	display: flex;
 	justify-content: center;
@@ -39,7 +38,6 @@
 
 		.text {
 			margin-top: functions.gutter();
-			overflow-y: auto;
 		}
 
 		.buttons {
