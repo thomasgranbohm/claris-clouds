@@ -72,7 +72,7 @@ const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
 				description={accessibility?.description}
 			/>
 			<Row>
-				<Column md={[6, 3]}>
+				<Column md={[8, 2]} lg={[6, 3]}>
 					<PageTitle>{title}</PageTitle>
 				</Column>
 			</Row>
