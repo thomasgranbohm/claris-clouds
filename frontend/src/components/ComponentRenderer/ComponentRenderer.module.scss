@@ -14,13 +14,16 @@
 		width: 100%;
 		margin-top: functions.gutter();
 
-		@include mixins.breakpoint(xl) {
-			width: 50%;
+		@include mixins.breakpoint(lg) {
+			width: fit-content;
+			min-width: 50%;
+			max-width: 100%;
 		}
 	}
 
 	&.type--sticky-image {
-		.image {
+		.image,
+		.text {
 			position: sticky;
 			top: 7rem;
 		}

@@ -59,6 +59,10 @@
 					@include mixins.text-contrast(colors.get("accent"));
 				}
 
+				&.deny {
+					color: colors.get("foreground");
+				}
+
 				@include mixins.has-general-focus {
 					box-shadow: 0 0 6px 3px rgba(0 0 0 / 10%);
 				}

@@ -28,7 +28,7 @@
 		text-decoration: none;
 		text-transform: uppercase;
 
-		padding: functions.gutter(1.25) 0;
+		padding: functions.gutter(1.25) functions.gutter(2);
 		border-radius: functions.gutter(0.5);
 
 		transition: 0.2s box-shadow;
