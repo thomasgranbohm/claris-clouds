@@ -81,12 +81,15 @@ const CallToAction: FC<CallToActionSchema> = ({
 			>
 				<div className={classes["text"]}>
 					<Markdown text={text} />
+					{link && (
+						<StyledLink
+							className={classes["link"]}
+							href={link.path}
+						>
+							{link.label}
+						</StyledLink>
+					)}
 				</div>
-				{link && (
-					<StyledLink className={classes["link"]} href={link.path}>
-						{link.label}
-					</StyledLink>
-				)}
 			</Column>
 		</Row>
 	);

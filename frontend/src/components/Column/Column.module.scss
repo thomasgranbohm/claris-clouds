@@ -20,9 +20,7 @@
 				}
 
 				&.start--#{$name}-#{$i} {
-					margin-inline-start: calc(
-						(100% * #{$i} / 12) + #{functions.gutter()}
-					);
+					margin-inline-start: calc((100% * #{$i} / 12));
 				}
 			}
 		}

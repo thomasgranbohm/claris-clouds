@@ -22,17 +22,7 @@
 	}
 
 	.sections {
-		display: flex;
-		gap: functions.gutter() functions.gutter(2);
-
-		@include mixins.breakpoint("sm") {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-		}
-
 		.section {
-			display: inline-block;
-
 			.links {
 				list-style-type: none;
 

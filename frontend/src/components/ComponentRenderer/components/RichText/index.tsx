@@ -12,7 +12,7 @@ import classes from "../../ComponentRenderer.module.scss";
 const RichText: FC<RichTextSchema> = ({ text }) => {
 	return (
 		<Row className={clsx(classes["container"], classes["rich-text"])}>
-			<Column md={[8, 2]} xl={[6, 3]} className={classes["text"]}>
+			<Column md={[6, 3]} className={classes["text"]}>
 				<Markdown text={text} />
 			</Column>
 		</Row>

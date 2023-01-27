@@ -17,7 +17,7 @@ const LinkSection: FC<{ links: Components.Link[]; title: string }> = ({
 	title,
 }) => {
 	return (
-		<div className={classes["section"]}>
+		<Column className={classes["section"]} md={3} sm={4} xs={6}>
 			<Heading type="b">{title}</Heading>
 			<ul className={classes["links"]}>
 				{links.map(({ label, path }, i) => (
@@ -28,7 +28,7 @@ const LinkSection: FC<{ links: Components.Link[]; title: string }> = ({
 					</li>
 				))}
 			</ul>
-		</div>
+		</Column>
 	);
 };
 
@@ -41,23 +41,19 @@ interface FooterProps extends WithClassname {
 const Footer: FC<FooterProps> = ({ className, legal, links, socials }) => {
 	return (
 		<footer className={clsx(classes["container"], className)}>
-			<Row>
-				<Column>
-					<div className={classes["sections"]}>
-						{links && links.length > 0 && (
-							<LinkSection title="Navigation" links={links} />
-						)}
-						{socials && socials.length > 0 && (
-							<LinkSection
-								title="Socials"
-								links={socials.map(({ link, type }) => ({
-									label: type,
-									path: link,
-								}))}
-							/>
-						)}
-					</div>
-				</Column>
+			<Row className={classes["sections"]}>
+				{links && links.length > 0 && (
+					<LinkSection title="Navigation" links={links} />
+				)}
+				{socials && socials.length > 0 && (
+					<LinkSection
+						title="Socials"
+						links={socials.map(({ link, type }) => ({
+							label: type,
+							path: link,
+						}))}
+					/>
+				)}
 			</Row>
 			<Row>
 				<Column>
