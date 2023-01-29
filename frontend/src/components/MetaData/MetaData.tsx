@@ -3,14 +3,13 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import { NextSeo, NextSeoProps } from "next-seo";
 
+import { ImageFormat, ImageSchema } from "types/api/strapi";
+
+import getImageLink from "utils/getImageLink";
+
 interface MetaDataProps extends NextSeoProps {
 	description?: string;
-	images?: Array<{
-		alt: string;
-		height: number;
-		url: string;
-		width: number;
-	}>;
+	image?: ImageSchema;
 	path?: string;
 	title: string;
 }
@@ -18,7 +17,7 @@ interface MetaDataProps extends NextSeoProps {
 const MetaData: FC<MetaDataProps> = ({
 	canonical,
 	description,
-	images,
+	image,
 	path,
 	title,
 	...props
@@ -36,15 +35,36 @@ const MetaData: FC<MetaDataProps> = ({
 				publicRuntimeConfig.PAGE_URL + (path || router.asPath)
 			}
 			openGraph={{
-				description,
-				images:
-					images &&
-					images.map(({ url, ...rest }) => ({
-						...rest,
-						url: `${publicRuntimeConfig.PAGE_URL}${url}`,
-					})),
-				title,
 				type: "website",
+				...props.openGraph,
+				description,
+				images: image
+					? [
+							{
+								alt: image.alternativeText,
+								height: image.height,
+								url:
+									publicRuntimeConfig.PAGE_URL +
+									getImageLink(image),
+								width: image.width,
+							},
+							...Object.entries(image.formats)
+								.reduce<ImageFormat[]>(
+									(p, c) =>
+										c[0] !== "base64" ? [...p, c[1]] : p,
+									[]
+								)
+								.map(({ height, width, ...i }) => ({
+									alt: image.alternativeText,
+									height,
+									url:
+										publicRuntimeConfig.PAGE_URL +
+										getImageLink(i),
+									width,
+								})),
+					  ]
+					: [],
+				title,
 			}}
 		/>
 	);

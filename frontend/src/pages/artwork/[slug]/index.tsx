@@ -105,28 +105,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 			<MetaData
 				title={name}
 				description={description}
-				images={[
-					{
-						alt:
-							image.caption ||
-							image.alternativeText ||
-							image.name,
-						height: image.height,
-						url: getImageLink(image),
-						width: image.width,
-					},
-					...Object.values(image.formats).map(
-						({ height, width, ...i }) => ({
-							alt:
-								image.caption ||
-								image.alternativeText ||
-								image.name,
-							height,
-							url: getImageLink(i),
-							width,
-						})
-					),
-				]}
+				image={image}
 				path={asPath}
 			/>
 			<Row>

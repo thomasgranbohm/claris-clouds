@@ -70,6 +70,11 @@ const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
 			<MetaData
 				title={accessibility?.title || title}
 				description={accessibility?.description}
+				image={
+					accessibility?.image
+						? stripWrapper(accessibility.image)
+						: undefined
+				}
 			/>
 			<Row>
 				<Column md={[8, 2]} lg={[6, 3]}>

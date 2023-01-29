@@ -2,13 +2,13 @@ import { FC } from "react";
 
 import { StrapiImage } from "components/Image";
 
-import { ImageSchema as TImage } from "types/api/strapi";
+import { ImageSchema } from "types/api/strapi";
 
 import classes from "./Cover.module.scss";
 
 interface CoverProps {
-	background: TImage;
-	foreground: TImage;
+	background: ImageSchema;
+	foreground: ImageSchema;
 	title: string;
 }
 
@@ -21,7 +21,6 @@ const Cover: FC<CoverProps> = ({ background, foreground, title }) => {
 					blur={false}
 					fill
 					priority
-					loading="eager"
 					style={{ objectFit: "cover" }}
 				/>
 			</div>
@@ -31,10 +30,9 @@ const Cover: FC<CoverProps> = ({ background, foreground, title }) => {
 					image={foreground}
 					blur={false}
 					priority
-					loading="eager"
 					style={{
 						maxHeight: "60vh",
-						maxWidth: "60vw",
+						maxWidth: "80vw",
 						objectFit: "contain",
 						objectPosition: "center",
 					}}

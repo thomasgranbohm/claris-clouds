@@ -10,8 +10,12 @@
 	left: 0;
 	right: 0;
 	z-index: 10;
-	background-color: change-color(colors.get(background), $alpha: 0.8);
-	backdrop-filter: saturate(180%) blur(8px);
+	background-color: colors.get(background);
+
+	@include mixins.breakpoint("sm") {
+		background-color: change-color(colors.get(background), $alpha: 0.8);
+		backdrop-filter: saturate(180%) blur(8px);
+	}
 
 	.inner {
 		height: 100%;
