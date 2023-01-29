@@ -225,7 +225,8 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 						<Gallery
 							className={classes["gallery"]}
 							artworks={latestArtworks as ArtworkSchema[]}
-							rows={{ defaultRow: 2, md: latestArtworks.length }}
+							fill={false}
+							rows={{ defaultRow: 2, md: 4 }}
 							renderChild={(artwork, i) => (
 								<ArtworkLink
 									artwork={artwork}

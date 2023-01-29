@@ -18,6 +18,7 @@ import classes from "./Gallery.module.scss";
 
 interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 	artworks: ArtworkSchema[];
+	fill?: boolean;
 	gutter?: number;
 	renderChild: (
 		props: ArtworkSchema,
@@ -32,6 +33,7 @@ interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 const Gallery: FC<GalleryProps> = ({
 	artworks,
 	className,
+	fill = true,
 	gutter: multiplier = 1,
 	renderChild,
 	rows = { defaultRow: 1, lg: 3, md: 2 },
@@ -96,17 +98,30 @@ const Gallery: FC<GalleryProps> = ({
 			const containerWidth =
 				ref.current.clientWidth - gutter * (picked.length - 1);
 
-			const combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
+			let combinedWidths = 0;
+
+			if (!fill && picked.length < toPick) {
+				for (let i = 0; i < toPick; i++) {
+					combinedWidths += scaled[i % picked.length].width;
+				}
+			} else {
+				combinedWidths = scaled.reduce((p, c) => p + c.width, 0);
+			}
+
 			const multiplier = combinedWidths / containerWidth;
 
-			const combinedScaledWidths = Number(
-				scaled.reduce((p, c) => p + c.width / multiplier, 0).toFixed(2)
-			);
+			if (fill) {
+				const combinedScaledWidths = Number(
+					scaled
+						.reduce((p, c) => p + c.width / multiplier, 0)
+						.toFixed(2)
+				);
 
-			console.assert(
-				combinedScaledWidths === containerWidth,
-				`Width should be ${containerWidth}, was ${combinedScaledWidths}`
-			);
+				console.assert(
+					combinedScaledWidths === containerWidth,
+					`Width should be ${containerWidth}, was ${combinedScaledWidths}`
+				);
+			}
 
 			parsed.push(
 				...picked.map(({ image, ...artwork }, index) => {
@@ -126,7 +141,7 @@ const Gallery: FC<GalleryProps> = ({
 		}
 
 		return parsed.map((props, i) => renderChild(props, i, breakpoint));
-	}, [artworks, breakpoint, gutter, ref, renderChild, rows]);
+	}, [artworks, breakpoint, fill, gutter, ref, renderChild, rows]);
 
 	return (
 		<div
