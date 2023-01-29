@@ -59,7 +59,7 @@ export type ImageFormat = {
 export type ImageFormatNames = "base64" | "thumbnail";
 
 export type ImageFormats = {
-	[formatName in ImageFormatNames]: ImageFormat;
+	[formatName in ImageFormatNames]?: ImageFormat;
 };
 
 export interface ImageSchema extends Dates {

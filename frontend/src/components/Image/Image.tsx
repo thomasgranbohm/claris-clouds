@@ -26,19 +26,29 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 	image,
 	...props
 }) => {
-	const { alternativeText, ext, formats, hash, height, width } =
+	const { alternativeText, ext, formats, hash, height, name, width } =
 		"data" in image ? stripWrapper(image) : image;
+
+	if (blur) {
+		console.assert(
+			Boolean(formats.base64),
+			`%s does not have Base64 image`,
+			name
+		);
+	}
 
 	return (
 		<NextImage
+			{...props}
 			height={!fill ? height : undefined}
 			width={!fill ? width : undefined}
 			fill={fill}
 			alt={alternativeText || ""}
 			src={getImageLink({ ext, hash })}
-			blurDataURL={blur ? formats.base64?.url : undefined}
+			blurDataURL={
+				blur && formats.base64 ? formats.base64.url : undefined
+			}
 			placeholder={blur && formats.base64 ? "blur" : undefined}
-			{...props}
 		/>
 	);
 };

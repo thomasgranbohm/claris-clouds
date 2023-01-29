@@ -135,10 +135,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 						image={image}
 						priority
 						loading="eager"
-						style={{
-							height: "auto",
-							width: "100%",
-						}}
+						style={{ height: "auto", maxWidth: "100%" }}
 						sizes={generateImageBreakpoints({
 							lg: 0.5,
 							md: 0.5,
