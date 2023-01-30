@@ -17,6 +17,10 @@
 		backdrop-filter: saturate(180%) blur(8px);
 	}
 
+	@include mixins.breakpoint(md) {
+		--height: 6rem;
+	}
+
 	.inner {
 		height: 100%;
 		display: grid;
@@ -92,14 +96,6 @@
 					padding: 0 functions.gutter();
 				}
 			}
-		}
-	}
-
-	@include mixins.breakpoint(md) {
-		--height: 6rem;
-
-		.navigation {
-			padding-right: functions.gutter();
 		}
 	}
 }

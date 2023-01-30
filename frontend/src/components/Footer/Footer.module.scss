@@ -26,13 +26,17 @@
 			.links {
 				list-style-type: none;
 
-				.link {
+				.item {
 					display: block;
 					margin: functions.gutter(0.5) 0;
-					text-decoration: none;
 
-					@include mixins.has-general-focus {
-						text-decoration: underline;
+					.link {
+						display: inline-block;
+						text-decoration: none;
+
+						@include mixins.has-general-focus {
+							text-decoration: underline;
+						}
 					}
 				}
 			}

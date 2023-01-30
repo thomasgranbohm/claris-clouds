@@ -23,11 +23,10 @@ import "swiper/css";
 import classes from "../../ComponentRenderer.module.scss";
 
 const Showcase: FC<ShowcaseSchema> = ({ images }) => {
-	const strippedImages = stripWrapper(images);
-
+	const breakpoint = useBreakpoint();
 	const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 
-	const breakpoint = useBreakpoint();
+	const strippedImages = stripWrapper(images);
 
 	return (
 		<Row>

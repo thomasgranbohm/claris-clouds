@@ -1,3 +1,4 @@
+@use "styles/colors";
 @use "styles/functions";
 @use "styles/mixins";
 
@@ -90,6 +91,10 @@
 			padding: functions.gutter(0.5);
 			display: inline-flex;
 			cursor: pointer;
+
+			@include mixins.has-general-focus {
+				color: colors.get(accent);
+			}
 		}
 	}
 }

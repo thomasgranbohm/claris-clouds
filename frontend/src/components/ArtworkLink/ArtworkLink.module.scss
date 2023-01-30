@@ -2,6 +2,7 @@
 
 .container {
 	overflow: hidden;
+	vertical-align: bottom;
 
 	@include mixins.has-general-focus {
 		.image {

@@ -6,6 +6,7 @@
 	display: grid;
 	grid-template-areas: "links" "socials";
 	grid-template-rows: 1fr auto;
+	padding-right: functions.gutter();
 
 	.links,
 	.socials {
@@ -100,10 +101,6 @@
 
 		@include mixins.breakpoint(sm) {
 			padding: 0;
-			display: none;
-		}
-
-		@include mixins.breakpoint(md) {
 			display: flex;
 			gap: 0;
 		}
