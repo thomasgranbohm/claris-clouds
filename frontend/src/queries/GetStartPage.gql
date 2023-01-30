@@ -19,6 +19,17 @@ query Startpage {
 						}
 					}
 				}
+				accessibility {
+					title
+					description
+					image {
+						data {
+							attributes {
+								...UploadFile
+							}
+						}
+					}
+				}
 				sections {
 					__typename
 					... on ComponentSectionsArtworkDisplay {

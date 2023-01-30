@@ -1,8 +1,9 @@
 {
   "collectionName": "components_helpers_accessibilities",
   "info": {
-    "displayName": "Accessibility",
-    "icon": "universal-access"
+    "displayName": "SEO",
+    "icon": "universal-access",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -14,11 +15,12 @@
       "type": "text"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

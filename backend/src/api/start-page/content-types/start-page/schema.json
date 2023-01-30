@@ -41,7 +41,7 @@
       "type": "string",
       "required": true
     },
-    "accessibility": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "component": "helpers.accessibility"

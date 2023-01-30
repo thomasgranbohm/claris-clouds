@@ -20,7 +20,7 @@
       "type": "uid",
       "targetField": "title"
     },
-    "accessibility": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "component": "helpers.accessibility"
