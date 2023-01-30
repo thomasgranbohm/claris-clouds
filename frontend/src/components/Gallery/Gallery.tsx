@@ -19,7 +19,9 @@ import classes from "./Gallery.module.scss";
 interface GalleryProps extends HTMLAttributes<HTMLDivElement> {
 	artworks: ArtworkSchema[];
 	fill?: boolean;
-	gutter?: number;
+	gutter?: Partial<
+		{ defaultGutter: number } & { [key in BreakpointNames]: number }
+	>;
 	renderChild: (
 		props: ArtworkSchema,
 		index: number,
@@ -34,14 +36,25 @@ const Gallery: FC<GalleryProps> = ({
 	artworks,
 	className,
 	fill = true,
-	gutter: multiplier = 1,
+	gutter: multiplier = { defaultGutter: 1 },
 	renderChild,
 	rows = { defaultRow: 1, lg: 3, md: 2 },
 	...props
 }) => {
 	const breakpoint = useBreakpoint();
 	const ref = useRef<HTMLDivElement>(null);
-	const gutter = getGutter(multiplier);
+
+	const gutter = useMemo(() => {
+		const { defaultGutter, ...gutters } = multiplier;
+		return getGutter(
+			Object.entries(gutters)
+				.map(([k, v]) => [Breakpoint[k as BreakpointNames], v])
+				.sort(([a], [b]) => b - a)
+				.find(([b]) => Number(breakpoint) >= b)?.[1] ||
+				defaultGutter ||
+				1
+		);
+	}, [breakpoint, multiplier]);
 
 	const parsedArtworks = useMemo(() => {
 		if (!ref.current) {

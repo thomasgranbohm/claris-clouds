@@ -72,13 +72,14 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 					<div style={{ minHeight: "60vh" }}>
 						<Gallery
 							artworks={artworks}
-							gutter={2}
+							gutter={{ md: 2 }}
 							renderChild={(artwork, i) => (
 								<div
 									aria-posinset={i + 1}
 									aria-setsize={pagination.total}
 									key={i}
 									role="article"
+									style={{ verticalAlign: "bottom" }}
 								>
 									<ArtworkLink
 										artwork={artwork}

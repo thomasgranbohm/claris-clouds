@@ -24,7 +24,6 @@ import ArtworkSchema, { ArtworkPageSchema } from "types/api/artwork";
 import { LayoutPage } from "types/components";
 
 import generateImageBreakpoints from "utils/generateImageBreakpoints";
-import getImageLink from "utils/getImageLink";
 import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
