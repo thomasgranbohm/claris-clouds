@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 
 import { Breakpoint } from "types/generics";
 
-import getGutter from "utils/getGutter";
-
 const useBreakpoint = (): Breakpoint | null => {
 	const [breakpoint, setBreakpoint] = useState<Breakpoint | null>(null);
-	const gutter = getGutter(2);
 
 	useEffect(() => {
 		const calculateBreakpoint = () => {
-			const width = window.innerWidth - gutter;
+			const width = window.innerWidth;
 
 			if (width >= Breakpoint.xl) {
 				setBreakpoint(Breakpoint.xl);
@@ -33,7 +30,7 @@ const useBreakpoint = (): Breakpoint | null => {
 		return () => {
 			window.removeEventListener("resize", calculateBreakpoint);
 		};
-	}, [gutter]);
+	}, []);
 
 	return breakpoint;
 };
