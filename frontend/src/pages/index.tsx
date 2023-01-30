@@ -5,6 +5,7 @@ import { getStartPage } from "api/start-page";
 import ComponentRenderer from "components/ComponentRenderer";
 import Cover from "components/Cover";
 import Layout from "components/Layout";
+import MetaData from "components/MetaData";
 
 import { StartPage } from "types/api/start-page";
 import { LayoutPage } from "types/components";
@@ -37,10 +38,16 @@ interface StartPageProps {
 }
 
 const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
-	const { background, foreground, sections, title } = startPage;
+	const { accessibility, background, foreground, sections, title } =
+		startPage;
 
 	return (
 		<Fragment>
+			<MetaData
+				title={accessibility?.title || title}
+				description={accessibility?.description}
+				image={accessibility?.image}
+			/>
 			<Cover
 				background={stripWrapper(background)}
 				foreground={stripWrapper(foreground)}

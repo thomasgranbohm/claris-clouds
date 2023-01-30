@@ -3,27 +3,29 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import { NextSeo, NextSeoProps } from "next-seo";
 
-import { ImageFormat, ImageSchema } from "types/api/strapi";
+import { GraphQL, ImageFormat, ImageSchema } from "types/api/strapi";
 
 import getImageLink from "utils/getImageLink";
+import stripWrapper from "utils/stripWrapper";
 
 interface MetaDataProps extends NextSeoProps {
 	description?: string;
-	image?: ImageSchema;
+	image?: ImageSchema | GraphQL.Data<ImageSchema>;
 	path?: string;
-	title: string;
+	title?: string;
 }
 
 const MetaData: FC<MetaDataProps> = ({
 	canonical,
 	description,
-	image,
+	image: _image,
 	path,
 	title,
 	...props
 }) => {
 	const router = useRouter();
 	const { publicRuntimeConfig } = getConfig();
+	const image = _image && "data" in _image ? stripWrapper(_image) : _image;
 
 	return (
 		<NextSeo
