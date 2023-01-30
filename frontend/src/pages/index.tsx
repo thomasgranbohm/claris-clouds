@@ -43,7 +43,7 @@ const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
 	return (
 		<Fragment>
 			<MetaData
-				title={seo?.title || title}
+				defaultTitle={seo?.title || title}
 				description={seo?.description}
 				image={seo?.image}
 			/>
