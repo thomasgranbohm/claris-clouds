@@ -90,7 +90,7 @@ export interface Dates {
 	updatedAt: Date;
 }
 
-export interface AccessibilitySchema {
+export interface SEOSchema {
 	description?: string;
 	image?: GraphQL.Data<ImageSchema>;
 	title?: string;

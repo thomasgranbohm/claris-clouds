@@ -63,18 +63,14 @@ interface GenericPageProps {
 }
 
 const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
-	const { accessibility, sections, title } = page;
+	const { sections, seo, title } = page;
 
 	return (
 		<Layout {...layout}>
 			<MetaData
-				title={accessibility?.title || title}
-				description={accessibility?.description}
-				image={
-					accessibility?.image
-						? stripWrapper(accessibility.image)
-						: undefined
-				}
+				title={seo?.title || title}
+				description={seo?.description}
+				image={seo?.image ? stripWrapper(seo.image) : undefined}
 			/>
 			<Row>
 				<Column md={[8, 2]} lg={[6, 3]}>

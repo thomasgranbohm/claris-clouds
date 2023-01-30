@@ -38,15 +38,14 @@ interface StartPageProps {
 }
 
 const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
-	const { accessibility, background, foreground, sections, title } =
-		startPage;
+	const { background, foreground, sections, seo, title } = startPage;
 
 	return (
 		<Fragment>
 			<MetaData
-				title={accessibility?.title || title}
-				description={accessibility?.description}
-				image={accessibility?.image}
+				title={seo?.title || title}
+				description={seo?.description}
+				image={seo?.image}
 			/>
 			<Cover
 				background={stripWrapper(background)}

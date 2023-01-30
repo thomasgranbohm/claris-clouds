@@ -19,7 +19,7 @@ query Startpage {
 						}
 					}
 				}
-				accessibility {
+				seo {
 					title
 					description
 					image {
