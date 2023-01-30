@@ -6,8 +6,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import { MetaTag } from "next-seo/lib/types";
+import ProgressBar from "nextjs-progressbar";
 
 import FocusRing from "components/aria/FocusRing";
+
+import variables from "styles/exports.module.scss";
 
 import MetadataSchema from "types/api/metadata";
 import PageInformationSchema from "types/api/page-information";
@@ -77,6 +80,11 @@ function CustomApp({
 					Skip to main content
 				</a>
 			</FocusRing>
+			<ProgressBar
+				color={variables.color_accent}
+				nonce="claris-clouds-progress-bar"
+				options={{ easing: "ease", showSpinner: false, speed: 500 }}
+			/>
 			<Component {...pageProps} />
 		</SSRProvider>
 	);
