@@ -12,15 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "page_prefix": {
       "type": "string",
       "required": true
-    },
-    "page_prefix": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
     },
     "favicon": {
       "type": "media",
@@ -29,6 +23,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "metatags": {
+      "displayName": "metatag",
+      "type": "component",
+      "repeatable": true,
+      "component": "seo.metatag"
     }
   }
 }

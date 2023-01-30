@@ -1,12 +1,8 @@
-import { GraphQL, ImageSchema } from "types/api/strapi";
+import { AccessibilitySchema } from "types/api/strapi";
 import AllSections from "types/sections";
 
 export interface PageSchema {
-	accessibility?: {
-		description?: string;
-		image: GraphQL.Data<ImageSchema>;
-		title?: string;
-	};
+	accessibility?: AccessibilitySchema;
 	sections: AllSections[];
 	slug: string;
 	title: string;

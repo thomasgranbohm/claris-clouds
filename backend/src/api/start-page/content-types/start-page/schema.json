@@ -40,6 +40,11 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "accessibility": {
+      "type": "component",
+      "repeatable": false,
+      "component": "helpers.accessibility"
     }
   }
 }

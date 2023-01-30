@@ -4,15 +4,18 @@ query Meta {
 	meta {
 		data {
 			attributes {
-				title
 				page_prefix
-				description
 				favicon {
 					data {
 						attributes {
 							...UploadFile
 						}
 					}
+				}
+				metatags {
+					content
+					name
+					property
 				}
 			}
 		}

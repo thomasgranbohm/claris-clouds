@@ -5,6 +5,7 @@ import getConfig from "next/config";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
+import { MetaTag } from "next-seo/lib/types";
 
 import FocusRing from "components/aria/FocusRing";
 
@@ -24,7 +25,7 @@ function CustomApp({
 }: AppProps<{ layout: PageInformationSchema; meta: MetadataSchema }>) {
 	const router = useRouter();
 	const { meta } = pageProps;
-	const { description, favicon, page_prefix, title } = meta;
+	const { favicon, metatags, page_prefix } = meta;
 
 	// Install service-worker
 	useEffect(() => {
@@ -49,9 +50,7 @@ function CustomApp({
 				/>
 			</Head>
 			<DefaultSeo
-				defaultTitle={title}
-				titleTemplate={page_prefix || title}
-				description={description}
+				titleTemplate={page_prefix}
 				additionalLinkTags={[
 					{
 						href:
@@ -62,7 +61,15 @@ function CustomApp({
 						rel: "icon",
 					},
 				]}
-				openGraph={{ description, title, type: "website" }}
+				additionalMetaTags={
+					metatags
+						? (metatags.map(({ content, name, property }) => ({
+								content,
+								name,
+								property,
+						  })) as MetaTag[])
+						: []
+				}
 				canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
 			/>
 			<FocusRing>

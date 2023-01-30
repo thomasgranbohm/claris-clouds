@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_seo_metatags",
+  "info": {
+    "displayName": "metatag"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+	"property": {
+		"type": "string"
+	},
+    "content": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

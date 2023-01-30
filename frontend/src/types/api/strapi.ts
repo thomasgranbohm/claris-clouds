@@ -89,3 +89,9 @@ export interface Dates {
 	publishedAt?: Date;
 	updatedAt: Date;
 }
+
+export interface AccessibilitySchema {
+	description?: string;
+	image?: GraphQL.Data<ImageSchema>;
+	title?: string;
+}

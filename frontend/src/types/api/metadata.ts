@@ -1,10 +1,11 @@
 import { GraphQL, ImageSchema } from "types/api/strapi";
 
+type MetaTag = { content: string; name?: string; property?: string };
+
 type MetadataSchema = {
-	description?: string;
 	favicon: GraphQL.Data<ImageSchema>;
-	page_prefix?: string;
-	title: string;
+	metatags?: MetaTag[];
+	page_prefix: string;
 };
 
 export default MetadataSchema;
