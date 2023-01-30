@@ -25,7 +25,12 @@ const MetaData: FC<MetaDataProps> = ({
 }) => {
 	const router = useRouter();
 	const { publicRuntimeConfig } = getConfig();
-	const image = _image && "data" in _image ? stripWrapper(_image) : _image;
+	const image =
+		_image && "data" in _image
+			? _image.data !== null
+				? stripWrapper(_image)
+				: undefined
+			: _image;
 
 	return (
 		<NextSeo
