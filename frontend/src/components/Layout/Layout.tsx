@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+import { FocusScope } from "react-aria";
 import clsx from "clsx";
 
 import CookieConsent from "components/CookieConsent";
@@ -20,6 +21,41 @@ const Layout: FC<LayoutProps> = ({
 	cookie_consent_text,
 	...props
 }) => {
+	const [showCookieConsent, setShowCookieConsent] = useState<boolean>(false);
+	const sentinel = useRef(null);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			async ([entry]) => {
+				if (!entry.isIntersecting) return;
+
+				if (document && !document.cookie.includes("cookie-consent")) {
+					console.debug("Timer started");
+					setTimeout(() => setShowCookieConsent(true), 3e3);
+				}
+			},
+			{
+				threshold: 0.5,
+			}
+		);
+
+		const { current } = sentinel;
+
+		if (
+			current &&
+			!showCookieConsent &&
+			!document.cookie.includes("cookie-consent")
+		) {
+			observer.observe(current);
+		}
+
+		return () => {
+			if (current) {
+				observer.disconnect();
+			}
+		};
+	}, [showCookieConsent]);
+
 	return (
 		<main
 			className={clsx(
@@ -32,7 +68,19 @@ const Layout: FC<LayoutProps> = ({
 				{children}
 			</article>
 			<Footer {...props} />
-			<CookieConsent text={cookie_consent_text} />
+			{showCookieConsent && (
+				<FocusScope contain restoreFocus>
+					<CookieConsent
+						hideFunction={() => setShowCookieConsent(false)}
+						text={cookie_consent_text}
+					/>
+				</FocusScope>
+			)}
+			<div
+				className={classes["cookie-consent-observer"]}
+				ref={sentinel}
+				aria-hidden
+			/>
 		</main>
 	);
 };

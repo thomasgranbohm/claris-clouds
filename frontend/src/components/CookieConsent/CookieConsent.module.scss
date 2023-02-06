@@ -42,9 +42,13 @@
 
 		.buttons {
 			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: functions.gutter();
+			grid-template-columns: 1fr;
+			gap: functions.gutter(0.5) functions.gutter();
 			margin-top: functions.gutter();
+
+			@include mixins.breakpoint("xs") {
+				grid-template-columns: repeat(2, 1fr);
+			}
 
 			.button {
 				padding: functions.gutter(0.75) functions.gutter(0.5);
@@ -63,8 +67,10 @@
 					color: colors.get("foreground");
 				}
 
-				@include mixins.has-general-focus {
-					box-shadow: 0 0 6px 3px rgba(0 0 0 / 10%);
+				@include mixins.breakpoint("xs") {
+					@include mixins.has-general-focus {
+						box-shadow: 0 0 6px 3px rgba(0 0 0 / 10%);
+					}
 				}
 			}
 		}

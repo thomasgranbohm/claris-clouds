@@ -32,46 +32,52 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 		isDisabled: Number(breakpoint) > Breakpoint.sm || !isSelected,
 	});
 
-	return (
-		<FocusScope contain={isSelected}>
-			<div
-				className={clsx(
-					classes["container"],
-					isSelected && classes["open"],
-					className
-				)}
-			>
-				<div className={classes["inner"]}>
-					<Link
-						className={classes["home-link"]}
-						href="/"
-						aria-label="Home"
-					>
-						<StrapiImage
-							image={logo}
-							className={classes["icon"]}
-							priority
-							blur={false}
-							sizes="64px"
-						/>
-					</Link>
-					<Button
-						className={classes["button"]}
-						onPress={toggle}
-						aria-label={isSelected ? "Close menu" : "Open menu"}
-					>
-						<Icon
-							className={classes["icon"]}
-							variant={isSelected ? "x-mark" : "bars"}
-						/>
-					</Button>
-					<Navigation
-						className={classes["navigation"]}
-						links={links}
-						socials={socials}
+	const HeaderInner = () => (
+		<div
+			className={clsx(
+				classes["container"],
+				isSelected && classes["open"],
+				className
+			)}
+		>
+			<div className={classes["inner"]}>
+				<Link
+					className={classes["home-link"]}
+					href="/"
+					aria-label="Home"
+				>
+					<StrapiImage
+						image={logo}
+						className={classes["icon"]}
+						priority
+						blur={false}
+						sizes="64px"
 					/>
-				</div>
+				</Link>
+				<Button
+					className={classes["button"]}
+					onPress={toggle}
+					aria-label={isSelected ? "Close menu" : "Open menu"}
+				>
+					<Icon
+						className={classes["icon"]}
+						variant={isSelected ? "x-mark" : "bars"}
+					/>
+				</Button>
+				<Navigation
+					className={classes["navigation"]}
+					links={links}
+					socials={socials}
+				/>
 			</div>
+		</div>
+	);
+
+	return Number(breakpoint) > Breakpoint.sm ? (
+		<HeaderInner />
+	) : (
+		<FocusScope contain={isSelected}>
+			<HeaderInner />
 		</FocusScope>
 	);
 };
