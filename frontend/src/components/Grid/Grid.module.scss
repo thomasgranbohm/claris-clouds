@@ -9,25 +9,21 @@
 	flex-wrap: wrap;
 
 	& + & {
-		margin-top: functions.gutter(2);
+		margin-top: functions.gutter();
 	}
 }
 
 .column {
 	width: 100%;
 	height: auto;
+	margin-top: functions.gutter();
 	padding-inline-start: functions.gutter();
-
-	& + & {
-		margin-top: functions.gutter();
-	}
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {
 			@include mixins.breakpoint($name) {
 				&.size--#{$name}-#{$i} {
 					width: ($i / 12) * 100%;
-					margin-top: unset;
 				}
 
 				&.start--#{$name}-#{$i} {
@@ -70,10 +66,10 @@
 			align-items: flex-start;
 		}
 	}
-}
 
-.column > .row {
-	margin-top: functions.gutter();
-	margin-inline: functions.gutter(-1);
-	width: calc(100% + #{functions.gutter()});
+	& > .row {
+		width: calc(100% + #{functions.gutter()});
+		margin-top: functions.gutter();
+		margin-inline: functions.gutter(-1);
+	}
 }
