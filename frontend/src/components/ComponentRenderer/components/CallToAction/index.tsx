@@ -1,12 +1,11 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-import Column from "components/Column";
 import Figure from "components/Figure";
+import { Column, Row } from "components/Grid";
 import { NoWhitespaceImage } from "components/Image";
 import { StyledLink } from "components/Link";
 import Markdown from "components/Markdown";
-import Row from "components/Row";
 
 import { CallToActionSchema } from "types/sections";
 

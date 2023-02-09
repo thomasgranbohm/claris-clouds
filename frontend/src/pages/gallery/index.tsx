@@ -3,11 +3,10 @@ import { useState } from "react";
 import { getArtworks } from "api/artwork";
 
 import ArtworkLink from "components/ArtworkLink";
-import Column from "components/Column";
 import Gallery from "components/Gallery";
+import { Column, Row } from "components/Grid";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
-import Row from "components/Row";
 
 import { useObserver } from "hooks/useObserver";
 

@@ -2,12 +2,11 @@ import { GetStaticPaths } from "next";
 
 import { getPage, getPageSlugs } from "api/page";
 
-import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
+import { Column, Row } from "components/Grid";
 import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
-import Row from "components/Row";
 
 import { PageSchema } from "types/api/page";
 import { LayoutPage } from "types/components";

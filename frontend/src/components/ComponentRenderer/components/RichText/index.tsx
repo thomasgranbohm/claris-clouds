@@ -1,9 +1,8 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-import Column from "components/Column";
+import { Column, Row } from "components/Grid";
 import Markdown from "components/Markdown";
-import Row from "components/Row";
 
 import { RichTextSchema } from "types/sections";
 

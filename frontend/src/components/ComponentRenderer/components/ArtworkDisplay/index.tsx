@@ -1,11 +1,10 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-import Column from "components/Column";
+import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import { StrapiImage } from "components/Image";
 import Link from "components/Link";
-import Row from "components/Row";
 
 import { ArtworkDisplaySchema } from "types/sections";
 

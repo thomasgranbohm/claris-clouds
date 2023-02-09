@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { getArtwork, getArtworkSlugs } from "api/artwork";
 
 import ArtworkLink from "components/ArtworkLink";
-import Column from "components/Column";
 import ComponentRenderer from "components/ComponentRenderer";
 import Gallery from "components/Gallery";
+import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
 import { NoWhitespaceImage } from "components/Image";
@@ -15,7 +15,6 @@ import Labeler from "components/Labeler";
 import Layout from "components/Layout";
 import Link, { StyledLink } from "components/Link";
 import MetaData from "components/MetaData";
-import Row from "components/Row";
 import Typography from "components/Typography";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
@@ -127,25 +126,31 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 					<Heading className={classes["title"]} type="h1">
 						{name}
 					</Heading>
-					<div className={classes["purchase-actions"]}>
-						<StyledLink href={redbubble_link}>
-							Buy a print
-						</StyledLink>
-						<Typography type="span">
-							{!original_sold ? (
-								<Fragment>
-									Wanna buy the original?{" "}
-									<Link
-										href={`mailto:purchase@clarisclouds.com?subject=I%20want%20to%20buy%20${name}!&body=Hello!%0A%0A%0A%0ABest%20regards%2C%0A%0A`}
-									>
-										Message me about it!
-									</Link>
-								</Fragment>
-							) : (
-								<Fragment>The original has been sold</Fragment>
-							)}
-						</Typography>
-					</div>
+					<Row>
+						<Column sm={6} md={12} lg={6}>
+							<StyledLink href={redbubble_link}>
+								Buy a print
+							</StyledLink>
+						</Column>
+						<Column sm={6} md={12} lg={6} align="center">
+							<Typography type="span">
+								{!original_sold ? (
+									<Fragment>
+										Wanna buy the original?{" "}
+										<Link
+											href={`mailto:purchase@clarisclouds.com?subject=I%20want%20to%20buy%20${name}!&body=Hello!%0A%0A%0A%0ABest%20regards%2C%0A%0A`}
+										>
+											Message me about it!
+										</Link>
+									</Fragment>
+								) : (
+									<Fragment>
+										The original has been sold
+									</Fragment>
+								)}
+							</Typography>
+						</Column>
+					</Row>
 				</Column>
 			</Row>
 			{[year_of_creation, height, width, medium].every(Boolean) && (

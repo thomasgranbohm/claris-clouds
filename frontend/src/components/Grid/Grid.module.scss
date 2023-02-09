@@ -2,7 +2,18 @@
 @use "styles/mixins";
 @use "styles/variables";
 
-.container {
+.row {
+	width: 100%;
+	height: min-content;
+	display: flex;
+	flex-wrap: wrap;
+
+	& + & {
+		margin-top: functions.gutter(2);
+	}
+}
+
+.column {
 	width: 100%;
 	height: auto;
 	padding-inline-start: functions.gutter();
@@ -59,4 +70,10 @@
 			align-items: flex-start;
 		}
 	}
+}
+
+.column > .row {
+	margin-top: functions.gutter();
+	margin-inline: functions.gutter(-1);
+	width: calc(100% + #{functions.gutter()});
 }

@@ -5,10 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
 import Button from "components/aria/Button";
-import Column from "components/Column";
+import { Column, Row } from "components/Grid";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
-import Row from "components/Row";
 
 import useBreakpoint from "hooks/useBreakpoint";
 

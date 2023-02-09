@@ -1,12 +1,14 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-import { WithChildren, WithClassname } from "types/components";
+import { WithChildren } from "types/components";
+import { WithClassname } from "types/components";
 import { BreakpointNames } from "types/generics";
 
-import classes from "./Column.module.scss";
+import classes from "./Grid.module.scss";
 
 type ALIGNMENTS = "center" | "end" | "start";
+type GAP_VALUES = "none" | "single" | "double";
 type SIZE_PROPERTY = number | [number, number];
 
 type BreakpointMappings = {
@@ -18,7 +20,7 @@ interface ColumnProps extends WithChildren, WithClassname, BreakpointMappings {
 	justify?: ALIGNMENTS;
 }
 
-const Column: FC<ColumnProps> = ({
+export const Column: FC<ColumnProps> = ({
 	align,
 	children,
 	className,
@@ -45,7 +47,7 @@ const Column: FC<ColumnProps> = ({
 	return (
 		<div
 			className={clsx(
-				classes["container"],
+				classes["column"],
 				Object.entries(breakpoints).map(([key, value]) =>
 					getClass(key as BreakpointNames, value)
 				),
@@ -59,4 +61,31 @@ const Column: FC<ColumnProps> = ({
 	);
 };
 
-export default Column;
+interface RowProps extends WithChildren, WithClassname {
+	"column-gap"?: GAP_VALUES;
+	gap?: GAP_VALUES;
+	"row-gap"?: GAP_VALUES;
+}
+
+export const Row: FC<RowProps> = ({
+	children,
+	className,
+	"column-gap": columnGap,
+	gap = "single",
+	"row-gap": rowGap,
+}) => {
+	return (
+		<div
+			className={clsx(
+				classes["row"],
+				classes[`column-gap--${columnGap || gap}`],
+				classes[`row-gap--${rowGap || gap}`],
+				className
+			)}
+		>
+			{children}
+		</div>
+	);
+};
+
+export default Row;

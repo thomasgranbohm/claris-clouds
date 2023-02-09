@@ -1,10 +1,9 @@
 import { FC } from "react";
 import clsx from "clsx";
 
-import Column from "components/Column";
+import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import Link from "components/Link";
-import Row from "components/Row";
 import Typography from "components/Typography";
 
 import Components from "types/api/components";
