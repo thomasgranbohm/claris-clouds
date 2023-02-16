@@ -12,6 +12,10 @@ const nextConfig = {
 			{
 				hostname: new URL(process.env.PAGE_URL).hostname,
 			},
+			{
+				hostname: "cdn.shopify.com",
+				protocol: "https",
+			},
 		],
 		minimumCacheTTL: 60,
 	},
@@ -50,11 +54,15 @@ const nextConfig = {
 		GTM_ID: process.env.GTM_ID,
 		PAGE_URL: process.env.PAGE_URL,
 		HTTP_AUTH: process.env.HTTP_AUTH,
+		SHOPIFY_URL: process.env.SHOPIFY_URL,
+		SHOPIFY_ACCESS_TOKEN: process.env.SHOPIFY_ACCESS_TOKEN,
 	},
 	reactStrictMode: false,
 	swcMinify: true,
 	serverRuntimeConfig: {
 		API_URL: process.env.INTERNAL_API_URL,
+		SHOPIFY_URL: process.env.SHOPIFY_URL,
+		SHOPIFY_ACCESS_TOKEN: process.env.SHOPIFY_ACCESS_TOKEN,
 	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find(

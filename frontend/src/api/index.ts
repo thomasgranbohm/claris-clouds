@@ -9,7 +9,7 @@ import getConfig from "next/config";
 
 import { GraphQL } from "types/api/strapi";
 
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 const defaults = {
 	cache: new InMemoryCache(),
@@ -37,10 +37,22 @@ export const externalAPI = new ApolloClient({
 	uri: publicRuntimeConfig.API_URL + "/graphql",
 });
 
+export const internalAPI = new ApolloClient({
+	...defaults,
+	...(serverRuntimeConfig.HTTP_AUTH
+		? {
+				headers: {
+					Authorization: serverRuntimeConfig.HTTP_AUTH,
+				},
+		  }
+		: {}),
+	uri: serverRuntimeConfig.API_URL + "/graphql",
+});
+
 const request = async <ReturnType, TVariables = Record<string, any>>(
 	options: QueryOptions<TVariables>
 ): Promise<GraphQL.Wrapper<ReturnType>> => {
-	const resolver = externalAPI;
+	const resolver = serverRuntimeConfig.API_URL ? internalAPI : externalAPI;
 
 	try {
 		const { data, error, errors } = await resolver.query<
