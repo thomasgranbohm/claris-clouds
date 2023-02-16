@@ -1,6 +1,7 @@
 import { FC } from "react";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 
+import { Shopify } from "types/api/shopify";
 import { GraphQL, ImageSchema } from "types/api/strapi";
 
 import getImageLink from "utils/getImageLink";
@@ -12,6 +13,24 @@ export const NoWhitespaceImage: FC<StrapiImageProps> = ({
 }) => {
 	return (
 		<StrapiImage {...props} style={{ ...style, verticalAlign: "bottom" }} />
+	);
+};
+
+interface ShopifyImageProps extends Partial<NextImageProps> {
+	image: Shopify.Image;
+}
+
+export const ShopifyImage: FC<ShopifyImageProps> = ({ image, ...props }) => {
+	const { altText, height, url, width } = image;
+
+	return (
+		<NextImage
+			{...props}
+			src={url}
+			width={width}
+			height={height}
+			alt={altText || ""}
+		/>
 	);
 };
 
@@ -52,5 +71,3 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 		/>
 	);
 };
-
-export default StrapiImage;

@@ -5,6 +5,7 @@
 				title
 				description
 				handle
+				id
 				featuredImage {
 					altText
 					height

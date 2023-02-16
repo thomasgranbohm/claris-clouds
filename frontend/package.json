@@ -27,7 +27,6 @@
 		"react-stately": "^3.19.0",
 		"sass": "^1.55.0",
 		"sharp": "^0.31.2",
-		"shopify-buy": "^2.18.0",
 		"swiper": "^8.4.5"
 	},
 	"devDependencies": {
