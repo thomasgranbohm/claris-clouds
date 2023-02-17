@@ -11,13 +11,18 @@
 	& + & {
 		margin-top: functions.gutter();
 	}
+
+	&.reverse {
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+	}
 }
 
 .column {
 	width: 100%;
 	height: auto;
 	margin-top: functions.gutter();
-	padding-inline-start: functions.gutter();
+	padding-left: functions.gutter();
 
 	@each $name, $size in variables.$breakpoints {
 		@for $i from 1 through 12 {

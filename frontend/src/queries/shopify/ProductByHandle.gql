@@ -1,0 +1,42 @@
+query ProductByHandle($handle: String!) {
+	productByHandle(handle: $handle) {
+		title
+		description
+		featuredImage {
+			altText
+			height
+			url
+			width
+		}
+		options {
+			name
+			values
+		}
+		variants(first: 10) {
+			edges {
+				node {
+					sku
+					selectedOptions {
+						name
+						value
+					}
+					media(first: 10) {
+						edges {
+							node {
+								alt
+								status
+								... on MediaImage {
+									preview {
+										image {
+											url
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
