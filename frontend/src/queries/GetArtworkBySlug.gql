@@ -13,7 +13,7 @@ query ArtworkBySlug($slug: String!) {
 						}
 					}
 				}
-				redbubble_link
+				external_link
 				original_sold
 				slug
 				year_of_creation

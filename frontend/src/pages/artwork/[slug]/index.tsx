@@ -85,12 +85,12 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 	const { asPath } = useRouter();
 	const {
 		description,
+		external_link,
 		height,
 		image: _image,
 		medium,
 		name,
 		original_sold,
-		redbubble_link,
 		sections,
 		width,
 		year_of_creation,
@@ -128,7 +128,7 @@ const ArtworkPage: LayoutPage<ArtworkPageProps> = ({
 					</Heading>
 					<Row>
 						<Column sm={6} md={12} lg={6}>
-							<StyledLink href={redbubble_link}>
+							<StyledLink href={external_link}>
 								Buy a print
 							</StyledLink>
 						</Column>

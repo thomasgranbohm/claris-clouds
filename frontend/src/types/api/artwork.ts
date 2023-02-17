@@ -4,12 +4,12 @@ import { GraphQL, ImageSchema } from "./strapi";
 
 interface ArtworkSchema {
 	description?: string;
+	external_link: string;
 	height: number;
 	image: GraphQL.Data<ImageSchema>;
 	medium: string;
 	name: string;
 	original_sold: boolean;
-	redbubble_link: string;
 	slug: string;
 	width: number;
 	year_of_creation: number;
