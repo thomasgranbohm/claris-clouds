@@ -28,9 +28,9 @@
         "images"
       ]
     },
-    "redbubble_link": {
+    "external_link": {
       "type": "string",
-      "regex": "^https:\\/\\/www\\.redbubble\\.com\\/.+",
+      "regex": "^https:\\/\\/.+$",
       "required": true
     },
     "original_sold": {

@@ -4,4 +4,4 @@
 backups/*
 !backups/.gitkeep
 
-database
+./database
