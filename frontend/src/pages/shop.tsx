@@ -2,11 +2,13 @@ import { useState } from "react";
 
 import { getArtworks } from "api/artwork";
 
-import ArtworkLink from "components/ArtworkLink";
-import Gallery from "components/Gallery";
 import { Column, Row } from "components/Grid";
+import Heading from "components/Heading";
+import { NoWhitespaceImage } from "components/Image";
 import Layout from "components/Layout";
+import { StyledLink } from "components/Link";
 import MetaData from "components/MetaData";
+import Typography from "components/Typography";
 
 import { useObserver } from "hooks/useObserver";
 
@@ -50,7 +52,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 }) => {
 	const [artworks, setArtworks] = useState<ArtworkSchema[]>(_artworks);
 
-	const { loading, ref } = useObserver(
+	const { ref } = useObserver(
 		async () => {
 			const newArtworks = await getArtworks(artworks.length);
 			setArtworks([
@@ -66,40 +68,35 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 	return (
 		<Layout {...layout}>
 			<MetaData title="Gallery" />
-			<Row>
-				<Column>
-					<div style={{ minHeight: "60vh" }}>
-						<Gallery
-							artworks={artworks}
-							gutter={{ md: 2 }}
-							renderChild={(artwork, i) => (
-								<div
-									aria-posinset={i + 1}
-									aria-setsize={pagination.total}
-									key={i}
-									role="article"
-									style={{ verticalAlign: "bottom" }}
-								>
-									<ArtworkLink
-										artwork={artwork}
-										imageProps={{
-											priority: i <= 6,
-											sizes: `(max-width: 600px) 100vw, ${artwork.image.data.attributes.width}px`,
-											style: {
-												height: "auto",
-												maxWidth: "100%",
-											},
-										}}
-									/>
-								</div>
-							)}
-							role="feed"
-							aria-busy={loading}
-						/>
-						<div aria-hidden="true" ref={ref} />
-					</div>
-				</Column>
-			</Row>
+			{artworks.length > 0 &&
+				artworks.map((artwork) => (
+					<Row key={artwork.slug}>
+						<Column md={6} lg={[4, 2]}>
+							<NoWhitespaceImage
+								image={artwork.image}
+								style={{
+									aspectRatio: "1 / 1",
+									height: "auto",
+									maxWidth: "100%",
+									objectFit: "cover",
+									objectPosition: "center",
+								}}
+							/>
+						</Column>
+						<Column md={6} lg={4} align="center">
+							<Heading type="h2">{artwork.name}</Heading>
+							<Typography>{artwork.description}</Typography>
+							<Row>
+								<Column lg={8}>
+									<StyledLink href={artwork.external_link}>
+										Buy a print
+									</StyledLink>
+								</Column>
+							</Row>
+						</Column>
+					</Row>
+				))}
+			<div ref={ref} aria-hidden />
 		</Layout>
 	);
 };
