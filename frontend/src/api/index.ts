@@ -45,7 +45,10 @@ export const externalAPI = new ApolloClient({
 const request = async <ReturnType, TVariables = Record<string, any>>(
 	options: QueryOptions<TVariables>
 ): Promise<GraphQL.Wrapper<ReturnType>> => {
-	const resolver = serverRuntimeConfig.API_URL ? internalAPI : externalAPI;
+	const resolver =
+		process.env.NODE_ENV !== "production" && serverRuntimeConfig.API_URL
+			? internalAPI
+			: externalAPI;
 
 	try {
 		const { data, error, errors } = await resolver.query<
