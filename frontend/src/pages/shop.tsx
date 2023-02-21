@@ -77,9 +77,9 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 								style={{
 									aspectRatio: "1 / 1",
 									height: "auto",
-									maxWidth: "100%",
 									objectFit: "cover",
 									objectPosition: "center",
+									width: "100%",
 								}}
 							/>
 						</Column>

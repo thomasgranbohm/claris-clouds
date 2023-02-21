@@ -69,7 +69,6 @@
 
 	& > .row {
 		width: calc(100% + #{functions.gutter()});
-		margin-top: functions.gutter();
 		margin-inline: functions.gutter(-1);
 	}
 }
