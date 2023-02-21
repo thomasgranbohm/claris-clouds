@@ -52,6 +52,7 @@
 		.links {
 			display: flex;
 			gap: functions.gutter() functions.gutter(1.5);
+			flex-wrap: wrap;
 		}
 	}
 
