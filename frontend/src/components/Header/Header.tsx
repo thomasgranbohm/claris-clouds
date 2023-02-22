@@ -3,9 +3,10 @@ import { FocusScope, usePreventScroll } from "react-aria";
 import { useToggleState } from "react-stately";
 import clsx from "clsx";
 
+import LogoSVG from "assets/images/logo.svg";
+
 import Button from "components/aria/Button";
 import Icon from "components/Icon";
-import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 import Navigation from "components/Navigation";
 
@@ -19,11 +20,11 @@ import classes from "./Header.module.scss";
 
 interface HeaderProps
 	extends WithClassname,
-		Pick<PageInformationSchema, "links" | "logo" | "socials"> {
+		Pick<PageInformationSchema, "links" | "socials"> {
 	// Remove me
 }
 
-const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
+const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 	const { isSelected, toggle } = useToggleState();
 
 	const breakpoint = useBreakpoint();
@@ -46,13 +47,7 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 					href="/"
 					aria-label="Home"
 				>
-					<StrapiImage
-						image={logo}
-						className={classes["icon"]}
-						priority
-						blur={false}
-						sizes="64px"
-					/>
+					<LogoSVG className={classes["icon"]} />
 				</Link>
 				<Button
 					className={classes["button"]}

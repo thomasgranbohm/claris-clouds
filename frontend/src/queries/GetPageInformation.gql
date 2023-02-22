@@ -1,5 +1,3 @@
-#import "./fragments/UploadFile.fragment.gql"
-
 query PageInformation {
 	pageInformation {
 		data {
@@ -12,13 +10,6 @@ query PageInformation {
 				links {
 					label
 					path
-				}
-				logo {
-					data {
-						attributes {
-							...UploadFile
-						}
-					}
 				}
 				socials {
 					link

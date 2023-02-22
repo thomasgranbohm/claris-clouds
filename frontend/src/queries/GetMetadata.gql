@@ -1,17 +1,8 @@
-#import "./fragments/UploadFile.fragment.gql"
-
 query Meta {
 	meta {
 		data {
 			attributes {
 				page_prefix
-				favicon {
-					data {
-						attributes {
-							...UploadFile
-						}
-					}
-				}
 				metatags {
 					content
 					name
