@@ -7,10 +7,13 @@ import {
 	GetStaticPropsResult,
 } from "next";
 
-import { getMetadata } from "api/metadata";
-import { getPageInformation } from "api/page-information";
+import request from "api/index";
+
+import GetGeneralInformation from "queries/GetGeneralInformation.gql";
 
 import MetadataSchema from "types/api/metadata";
+import PageInformationSchema from "types/api/page-information";
+import { GraphQL } from "types/api/strapi";
 import { LayoutSchema } from "types/components";
 
 import stripWrapper from "utils/stripWrapper";
@@ -19,30 +22,28 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 	f?: GetServerSideProps<T>
 ): GetServerSideProps<T & LayoutSchema & { meta: MetadataSchema }> {
 	return async (context: GetServerSidePropsContext) => {
-		const [
-			{ data: dataPI, error: errorPI },
-			{ data: dataMD, error: errorMD },
-		] = await Promise.all([getPageInformation(), getMetadata()]);
+		const { data, error } = await request<{
+			meta: GraphQL.Data<MetadataSchema>;
+			pageInformation: GraphQL.Data<PageInformationSchema>;
+		}>({
+			query: GetGeneralInformation,
+		});
 
-		if (errorPI || errorMD) {
-			const error = errorPI || errorMD;
-
-			if (error) {
-				if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
-					return {
-						notFound: true,
-					};
-				} else {
-					throw error;
-				}
+		if (error) {
+			if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
+				return {
+					notFound: true,
+				};
+			} else {
+				throw error;
 			}
 		}
 
 		if (!f) {
 			return {
 				props: {
-					layout: stripWrapper(dataPI.pageInformation),
-					meta: stripWrapper(dataMD.meta),
+					layout: stripWrapper(data.pageInformation),
+					meta: stripWrapper(data.meta),
 				} as T & LayoutSchema & { meta: MetadataSchema },
 			};
 		}
@@ -56,8 +57,8 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 		return {
 			props: {
 				...res.props,
-				layout: stripWrapper(dataPI.pageInformation),
-				meta: stripWrapper(dataMD.meta),
+				layout: stripWrapper(data.pageInformation),
+				meta: stripWrapper(data.meta),
 			} as T & LayoutSchema & { meta: MetadataSchema },
 		};
 	};
@@ -68,30 +69,28 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 ): GetStaticProps<T & LayoutSchema & { meta: MetadataSchema }> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
-		const [
-			{ data: dataPI, error: errorPI },
-			{ data: dataMD, error: errorMD },
-		] = await Promise.all([getPageInformation(), getMetadata()]);
+		const { data, error } = await request<{
+			meta: GraphQL.Data<MetadataSchema>;
+			pageInformation: GraphQL.Data<PageInformationSchema>;
+		}>({
+			query: GetGeneralInformation,
+		});
 
-		if (errorPI || errorMD) {
-			const error = errorPI || errorMD;
-
-			if (error) {
-				if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
-					return {
-						notFound: true,
-					};
-				} else {
-					throw error;
-				}
+		if (error) {
+			if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
+				return {
+					notFound: true,
+				};
+			} else {
+				throw error;
 			}
 		}
 
 		if (!f) {
 			return {
 				props: {
-					layout: stripWrapper(dataPI.pageInformation),
-					meta: stripWrapper(dataMD.meta),
+					layout: stripWrapper(data.pageInformation),
+					meta: stripWrapper(data.meta),
 				} as T & LayoutSchema & { meta: MetadataSchema },
 				revalidate: 60,
 			};
@@ -108,8 +107,8 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 			...res,
 			props: {
 				...res.props,
-				layout: stripWrapper(dataPI.pageInformation),
-				meta: stripWrapper(dataMD.meta),
+				layout: stripWrapper(data.pageInformation),
+				meta: stripWrapper(data.meta),
 			} as T & LayoutSchema & { meta: MetadataSchema },
 		};
 	};

@@ -1,4 +1,16 @@
-query PageInformation {
+query GeneralInformation {
+	meta {
+		data {
+			attributes {
+				page_prefix
+				metatags {
+					content
+					name
+					property
+				}
+			}
+		}
+	}
 	pageInformation {
 		data {
 			attributes {
