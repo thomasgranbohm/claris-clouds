@@ -5,10 +5,8 @@
 .container {
 	width: 100%;
 	background: colors.get(background);
-	margin-top: functions.gutter(3);
-	margin-bottom: functions.gutter(2);
 
-	margin-inline: auto;
+	margin: functions.gutter() auto functions.gutter(2);
 	padding-inline-end: functions.gutter();
 
 	@include mixins.keep-within-width;
@@ -28,7 +26,7 @@
 
 				.item {
 					display: block;
-					margin: functions.gutter(0.5) 0;
+					margin-top: functions.gutter(0.5);
 
 					.link {
 						display: inline-block;
