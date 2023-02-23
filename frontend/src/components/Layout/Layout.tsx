@@ -30,7 +30,6 @@ const Layout: FC<LayoutProps> = ({
 				if (!entry.isIntersecting) return;
 
 				if (document && !document.cookie.includes("cookie-consent")) {
-					console.debug("Timer started");
 					setTimeout(() => setShowCookieConsent(true), 3e3);
 				}
 			},
