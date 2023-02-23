@@ -28,7 +28,7 @@ const CookieConsent: FC<CookieConsentProps> = ({ hideFunction, text }) => (
 					className={clsx(classes["button"], classes["allow"])}
 					onPress={() => {
 						document.cookie =
-							"cookie-consent=yes; Secure; SameSite=strict; Max-Age=31536000";
+							"cookie-consent=yes; SameSite=strict; Max-Age=31536000; Secure";
 
 						if (window && window.dataLayer) {
 							window.dataLayer.push({
@@ -46,7 +46,8 @@ const CookieConsent: FC<CookieConsentProps> = ({ hideFunction, text }) => (
 				<Button
 					className={clsx(classes["button"], classes["deny"])}
 					onPress={() => {
-						document.cookie = "cookie-consent=no";
+						document.cookie =
+							"cookie-consent=no; SameSite=strict; Max-Age=31536000; Secure";
 
 						hideFunction();
 					}}
