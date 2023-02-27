@@ -1,0 +1,57 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	padding: 0 functions.gutter();
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 100vh;
+	@include mixins.keep-within-width;
+
+	.form {
+		max-width: 32ch;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin-top: functions.gutter();
+	}
+
+	.password {
+		max-width: 100%;
+		width: 100%;
+		border: 1px solid colors.get("gray");
+		padding: functions.gutter(0.75);
+		border-radius: functions.gutter(0.25);
+		font-size: 21px;
+	}
+
+	.button {
+		margin-top: functions.gutter();
+		max-width: 100%;
+		width: 24ch;
+		padding: functions.gutter();
+		border-radius: functions.gutter(0.25);
+		background-color: colors.get("accent");
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		cursor: pointer;
+		transition: box-shadow 0.1s;
+
+		@include mixins.has-general-focus {
+			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.14),
+				0px 1px 10px 0px rgba(0, 0, 0, 0.12),
+				0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+		}
+	}
+}
