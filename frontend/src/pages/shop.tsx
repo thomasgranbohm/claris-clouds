@@ -70,7 +70,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 			<MetaData title="Gallery" />
 			{artworks.length > 0 &&
 				artworks.map((artwork) => (
-					<Row key={artwork.slug}>
+					<Row key={artwork.name}>
 						<Column md={6} lg={[4, 2]} align="center">
 							<NoWhitespaceImage
 								image={artwork.image}
@@ -87,7 +87,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 							<Heading type="h2">{artwork.name}</Heading>
 							<Typography>{artwork.description}</Typography>
 							<Row>
-								<Column lg={8}>
+								<Column md={8}>
 									<StyledLink href={artwork.external_link}>
 										Buy a print
 									</StyledLink>
