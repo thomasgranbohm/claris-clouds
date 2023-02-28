@@ -8,13 +8,19 @@
 	@include mixins.keep-within-width;
 
 	.inner {
-		margin-top: functions.gutter(-2);
 		padding: 0 functions.gutter();
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		min-height: 100vh;
+
+		margin-top: 5vh;
+		@include mixins.breakpoint("md") {
+			margin-top: 10vh;
+		}
+		@include mixins.breakpoint("xl") {
+			margin-top: 25vh;
+		}
 
 		.logo {
 			width: 192px;
@@ -32,6 +38,8 @@
 
 		.description {
 			margin-top: functions.gutter(0.5);
+			max-width: 32ch;
+			width: 100%;
 		}
 
 		.title,

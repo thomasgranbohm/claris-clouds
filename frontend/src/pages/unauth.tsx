@@ -10,12 +10,15 @@ import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG();
 
-const LoginPage = () => {
+const Unauthpage = () => {
 	return (
 		<main className={classes["container"]}>
 			<MetaData defaultTitle="Clari's Clouds" />
 			<div className={classes["inner"]}>
-				<LogoSVG className={classes["logo"]} />
+				<LogoSVG
+					className={classes["logo"]}
+					alt="Clari's Clouds logo"
+				/>
 				<Heading className={classes["title"]} type="h1">
 					Clari&apos;s Clouds
 				</Heading>
@@ -27,4 +30,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default Unauthpage;
