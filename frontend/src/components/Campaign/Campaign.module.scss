@@ -1,6 +1,7 @@
 @use "styles/colors";
 @use "styles/functions";
 @use "styles/mixins";
+@use "styles/variables";
 
 .container {
 	position: fixed;
@@ -8,7 +9,7 @@
 	left: 0;
 	right: 0;
 
-	z-index: 100;
+	z-index: map-get(variables.$stacking, "campaign");
 	background-color: colors.get("accent");
 
 	display: grid;

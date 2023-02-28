@@ -1,13 +1,14 @@
 @use "styles/colors";
 @use "styles/functions";
 @use "styles/mixins";
+@use "styles/variables";
 
 .container {
 	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 100;
+	z-index: map-get(variables.$stacking, "header");
 
 	background-color: colors.get("background");
 
