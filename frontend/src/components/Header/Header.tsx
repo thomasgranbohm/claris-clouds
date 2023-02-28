@@ -20,9 +20,7 @@ import classes from "./Header.module.scss";
 
 interface HeaderProps
 	extends WithClassname,
-		Pick<PageInformationSchema, "links" | "socials"> {
-	// Remove me
-}
+		Pick<PageInformationSchema, "links" | "socials"> {}
 
 const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 	const { isSelected, toggle } = useToggleState();

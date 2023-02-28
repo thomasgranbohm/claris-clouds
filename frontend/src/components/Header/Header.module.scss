@@ -3,98 +3,88 @@
 @use "styles/mixins";
 
 .container {
-	--height: 5rem;
-	height: var(--height);
-	position: fixed;
+	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 10;
-	background-color: colors.get(background);
+	z-index: 100;
+
+	background-color: colors.get("background");
 
 	@include mixins.breakpoint("sm") {
-		background-color: change-color(colors.get(background), $alpha: 0.8);
+		background-color: change-color(colors.get("background"), $alpha: 0.8);
 		backdrop-filter: saturate(180%) blur(8px);
 	}
 
-	@include mixins.breakpoint(md) {
-		--height: 6rem;
-	}
-
 	.inner {
-		height: 100%;
 		display: grid;
-		grid-template-rows: 1fr;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: auto 1fr;
+		grid-template-columns: auto auto;
+		grid-template-areas: "home toggle" "navigation navigation";
 
 		.home-link,
 		.button {
+			padding: functions.gutter();
 			align-self: center;
 		}
 
 		.home-link {
+			grid-area: home;
 			justify-self: flex-start;
-			display: inline-flex;
-			padding: functions.gutter();
+			height: functions.gutter(5);
+			width: functions.gutter(5);
 
 			.icon {
-				height: calc(var(--height) - 2 * #{functions.gutter()});
-				width: auto;
+				width: 100%;
+				height: auto;
 			}
 		}
 
 		.button {
+			grid-area: toggle;
 			justify-self: flex-end;
-			padding: 1.5rem;
 
 			.icon {
 				height: 2rem;
-				aspect-ratio: 1 / 1;
-				color: colors.get("foreground");
+				width: 2rem;
 			}
 		}
 
-		@include mixins.breakpoint(sm, true) {
+		.navigation {
+			grid-area: navigation;
+			display: none;
+
+			padding: functions.gutter();
+		}
+	}
+
+	&.open {
+		height: unset;
+		position: fixed;
+
+		.inner {
+			min-height: 100vh;
+
 			.navigation {
-				display: none;
-			}
-		}
-
-		@include mixins.breakpoint(sm) {
-			grid-template-columns: auto 1fr;
-			grid-template-areas: "home-link navigation";
-
-			.button {
-				display: none;
+				display: grid;
 			}
 		}
 	}
 
-	@include mixins.breakpoint(sm, true) {
-		&.open {
-			height: 100%;
-			position: fixed !important;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
+	@include mixins.breakpoint("sm") {
+		.inner {
+			grid-template-rows: 1fr;
+			grid-template-columns: auto 1fr;
+			grid-template-areas: "home navigation";
 
-			z-index: 100;
-			background-color: colors.get(background);
+			.button {
+				display: none;
+			}
 
-			overflow-y: auto;
-
-			.inner {
-				grid-template-rows: var(--height) 1fr;
-				min-height: 100%;
-				grid-template-areas: "home-link button" "navigation navigation";
-
-				.navigation {
-					display: grid;
-					grid-area: navigation;
-					margin-top: functions.gutter(2);
-					padding: 0 functions.gutter();
-				}
+			.navigation {
+				display: flex;
+				padding: unset;
+				padding-right: functions.gutter();
 			}
 		}
 	}
