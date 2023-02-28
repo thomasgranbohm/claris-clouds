@@ -30,4 +30,12 @@ query GeneralInformation {
 			}
 		}
 	}
+	campaign {
+		data {
+			attributes {
+				text
+				link
+			}
+		}
+	}
 }

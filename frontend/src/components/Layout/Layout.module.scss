@@ -12,14 +12,9 @@
 	.content {
 		width: 100%;
 		margin: 0 auto;
-		padding-top: 5rem;
 
 		padding-inline-end: functions.gutter();
 		@include mixins.keep-within-width;
-
-		@include mixins.breakpoint(md) {
-			padding-top: 6rem;
-		}
 	}
 
 	&.non-conformity {
@@ -28,10 +23,6 @@
 
 		.header {
 			position: sticky;
-		}
-
-		.content {
-			padding-top: 0;
 		}
 	}
 

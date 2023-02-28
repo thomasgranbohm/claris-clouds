@@ -1,4 +1,4 @@
-import { createElement, FC, ReactHTML } from "react";
+import { createElement, FC, HTMLAttributes, ReactHTML } from "react";
 import clsx from "clsx";
 
 import { WithChildren, WithClassname } from "types/components";
@@ -6,7 +6,10 @@ import { Colors } from "types/generics";
 
 import classes from "./Typography.module.scss";
 
-interface TypographyProps extends WithChildren, WithClassname {
+interface TypographyProps
+	extends WithChildren,
+		WithClassname,
+		Omit<HTMLAttributes<HTMLElement>, "children"> {
 	color?: Colors;
 	inline?: true;
 	size?: "normal" | "large" | "larger" | "small" | "smaller";

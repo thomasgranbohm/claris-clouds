@@ -23,7 +23,7 @@ body {
 }
 
 .skip-link {
-	position: absolute;
+	position: fixed;
 	top: functions.gutter(-4);
 	z-index: 1000;
 	padding: functions.gutter();

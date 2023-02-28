@@ -2,20 +2,24 @@ import { FC, useEffect, useRef, useState } from "react";
 import { FocusScope } from "react-aria";
 import clsx from "clsx";
 
+import Campaign from "components/Campaign";
 import CookieConsent from "components/CookieConsent";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
+import CampaignSchema from "types/api/campaign";
 import PageInformationSchema from "types/api/page-information";
 import { WithChildren } from "types/components";
 
 import classes from "./Layout.module.scss";
 
 export interface LayoutProps extends WithChildren, PageInformationSchema {
+	campaign: CampaignSchema | null;
 	conformity?: boolean;
 }
 
 const Layout: FC<LayoutProps> = ({
+	campaign,
 	children,
 	conformity = true,
 	cookie_consent_text,
@@ -62,6 +66,7 @@ const Layout: FC<LayoutProps> = ({
 				!conformity && classes["non-conformity"]
 			)}
 		>
+			{campaign && <Campaign campaign={campaign} />}
 			<Header className={classes["header"]} {...props} />
 			<article id="main-content" className={classes["content"]}>
 				{children}

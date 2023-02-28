@@ -19,11 +19,15 @@ export const getServerSideProps = getLayoutDataSSR(async ({ res }) => {
 	};
 });
 
-const ErrorPage: LayoutPage<ErrorPageProps> = ({ layout, statusCode }) => {
+const ErrorPage: LayoutPage<ErrorPageProps> = ({
+	campaign,
+	layout,
+	statusCode,
+}) => {
 	const title = "Something went wrong. Please try again later.";
 
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			<MetaData title={title} noindex />
 			<Row>
 				<Column>

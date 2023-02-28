@@ -11,21 +11,30 @@ import request from "api/index";
 
 import GetGeneralInformation from "queries/GetGeneralInformation.gql";
 
+import CampaignSchema from "types/api/campaign";
 import MetadataSchema from "types/api/metadata";
 import PageInformationSchema from "types/api/page-information";
 import { GraphQL } from "types/api/strapi";
-import { LayoutSchema } from "types/components";
 
 import stripWrapper from "utils/stripWrapper";
 
+type RequestType = {
+	campaign: GraphQL.Data<CampaignSchema>;
+	meta: GraphQL.Data<MetadataSchema>;
+	pageInformation: GraphQL.Data<PageInformationSchema>;
+};
+
+type ReturnType = {
+	campaign: CampaignSchema | null;
+	layout: PageInformationSchema;
+	meta: MetadataSchema;
+};
+
 export function getLayoutDataSSR<T extends { [key: string]: any }>(
 	f?: GetServerSideProps<T>
-): GetServerSideProps<T & LayoutSchema & { meta: MetadataSchema }> {
+): GetServerSideProps<T & ReturnType> {
 	return async (context: GetServerSidePropsContext) => {
-		const { data, error } = await request<{
-			meta: GraphQL.Data<MetadataSchema>;
-			pageInformation: GraphQL.Data<PageInformationSchema>;
-		}>({
+		const { data, error } = await request<RequestType>({
 			query: GetGeneralInformation,
 		});
 
@@ -42,13 +51,17 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 		if (!f) {
 			return {
 				props: {
+					campaign:
+						data.campaign.data !== null
+							? stripWrapper(data.campaign)
+							: null,
 					layout: stripWrapper(data.pageInformation),
 					meta: stripWrapper(data.meta),
-				} as T & LayoutSchema & { meta: MetadataSchema },
+				} as T & ReturnType,
 			};
 		}
 
-		const res: GetServerSidePropsResult<T> = await f(context);
+		const res = await f(context);
 
 		if ("notFound" in res || "redirect" in res) {
 			return res;
@@ -57,22 +70,23 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 		return {
 			props: {
 				...res.props,
+				campaign:
+					data.campaign.data !== null
+						? stripWrapper(data.campaign)
+						: null,
 				layout: stripWrapper(data.pageInformation),
 				meta: stripWrapper(data.meta),
-			} as T & LayoutSchema & { meta: MetadataSchema },
+			} as T & ReturnType,
 		};
 	};
 }
 
 export function getLayoutDataSSG<T extends { [key: string]: any }>(
 	f?: GetStaticProps<T>
-): GetStaticProps<T & LayoutSchema & { meta: MetadataSchema }> {
+): GetStaticProps<T & ReturnType> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
-		const { data, error } = await request<{
-			meta: GraphQL.Data<MetadataSchema>;
-			pageInformation: GraphQL.Data<PageInformationSchema>;
-		}>({
+		const { data, error } = await request<RequestType>({
 			query: GetGeneralInformation,
 		});
 
@@ -86,12 +100,21 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 			}
 		}
 
+		console.log(
+			data.campaign,
+			data.campaign.data !== null ? stripWrapper(data.campaign) : null
+		);
+
 		if (!f) {
 			return {
 				props: {
+					campaign:
+						data.campaign.data !== null
+							? stripWrapper(data.campaign)
+							: null,
 					layout: stripWrapper(data.pageInformation),
 					meta: stripWrapper(data.meta),
-				} as T & LayoutSchema & { meta: MetadataSchema },
+				} as T & ReturnType,
 				revalidate: 60,
 			};
 		}
@@ -107,9 +130,13 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 			...res,
 			props: {
 				...res.props,
+				campaign:
+					data.campaign.data !== null
+						? stripWrapper(data.campaign)
+						: null,
 				layout: stripWrapper(data.pageInformation),
 				meta: stripWrapper(data.meta),
-			} as T & LayoutSchema & { meta: MetadataSchema },
+			},
 		};
 	};
 }

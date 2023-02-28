@@ -47,6 +47,7 @@ interface GalleryPageProps {
 
 const GalleryPage: LayoutPage<GalleryPageProps> = ({
 	artworks: _artworks,
+	campaign,
 	layout,
 	pagination,
 }) => {
@@ -66,7 +67,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 	);
 
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			<MetaData title="Gallery" />
 			{artworks.length > 0 &&
 				artworks.map((artwork) => (

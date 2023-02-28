@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { NextPage } from "next";
 
+import CampaignSchema from "types/api/campaign";
 import PageInformationSchema from "types/api/page-information";
 
 export interface WithClassname {
@@ -12,6 +13,7 @@ export interface WithChildren {
 }
 
 export interface LayoutSchema {
+	campaign: CampaignSchema;
 	layout: PageInformationSchema;
 }
 
