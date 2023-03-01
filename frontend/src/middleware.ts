@@ -1,12 +1,18 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+const ALLOWED_URLS = ["/", "/login"];
+
 export function middleware(request: NextRequest) {
 	if (
 		request.cookies.has("password") &&
 		request.cookies.get("password")?.value === process.env.PASSWORD
 	) {
 		return NextResponse.next();
+	}
+
+	if (!ALLOWED_URLS.includes(request.nextUrl.pathname)) {
+		return NextResponse.redirect(new URL("/", request.url));
 	}
 
 	return NextResponse.rewrite(new URL("/unauth", request.url));
