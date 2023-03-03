@@ -1,32 +1,22 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Item } from "react-stately";
 import { GetStaticPaths } from "next";
-import { useRouter } from "next/router";
 
-import { getArtwork, getArtworkSlugs } from "api/artwork";
+import { getArtworkSlugs } from "api/artwork";
 import requestShopify from "api/shopify";
 
-import ArtworkLink from "components/ArtworkLink";
-import ComponentRenderer from "components/ComponentRenderer";
-import Gallery from "components/Gallery";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
-import Icon from "components/Icon";
-import { NoWhitespaceImage, ShopifyImage } from "components/Image";
-import Labeler from "components/Labeler";
+import HtmlRenderer from "components/HtmlRenderer";
+import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
-import Link, { StyledLink } from "components/Link";
-import MetaData from "components/MetaData";
-import Typography from "components/Typography";
+import OptionSelector from "components/OptionSelector";
 
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
 
-import classes from "styles/pages/ProductPage.module.scss";
-
-import ArtworkSchema, { ArtworkPageSchema } from "types/api/artwork";
 import { Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
-import generateImageBreakpoints from "utils/generateImageBreakpoints";
 import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
@@ -70,17 +60,48 @@ interface ProductPageProps {
 }
 
 const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
-	const { asPath } = useRouter();
-	const { description, featuredImage, title } = product;
+	const {
+		description,
+		descriptionHtml,
+		featuredImage,
+		options: _options,
+		title,
+		variants,
+	} = product;
+
+	const [options, setOptions] = useState<Record<string, string>>({});
+	const [variant, setVariant] = useState<Shopify.Variant | null>(
+		variants.edges[0].node
+	);
+
+	useEffect(() => {
+		const foundVariant = variants.edges.find((_v) => {
+			return (
+				Object.keys(options).length > 0 &&
+				_v.node.selectedOptions.every(
+					({ name, value }) => options[name] === value
+				)
+			);
+		});
+
+		if (foundVariant) {
+			setVariant(foundVariant.node);
+		} else {
+			setVariant(variants.edges[0].node);
+		}
+	}, [variants.edges, options]);
 
 	return (
 		<Layout {...layout}>
 			<Row>
 				<Column md={6}>
 					<ShopifyImage
-						image={featuredImage}
+						image={
+							variant
+								? variant.media.edges[0].node.preview.image
+								: featuredImage
+						}
 						style={{
-							aspectRatio: "1 / 1",
 							height: "auto",
 							maxWidth: "100%",
 							objectFit: "contain",
@@ -89,9 +110,41 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 				</Column>
 				<Column md={6} align="end">
 					<Heading type="h1">{title}</Heading>
-					<Typography>{description}</Typography>
+					{_options.map((option) => (
+						<OptionSelector
+							key={option.name}
+							label={option.name}
+							selectionMode="single"
+							onSelectionChange={(keys) => {
+								const value = Array.from(keys).pop();
+
+								if (!value && options[option.name]) {
+									delete options[option.name];
+								} else if (value) {
+									options[option.name] = value.toString();
+								}
+
+								setOptions((oldSO) => ({
+									...oldSO,
+									...options,
+								}));
+							}}
+						>
+							{option.values.map((value) => (
+								<Item key={value}>{value}</Item>
+							))}
+						</OptionSelector>
+					))}
 				</Column>
 			</Row>
+			{description.length > 0 && (
+				<Row>
+					<Column md={[8, 2]} lg={[6, 3]}>
+						<Heading type="h3">About the artwork</Heading>
+						<HtmlRenderer content={descriptionHtml} />
+					</Column>
+				</Row>
+			)}
 			<pre>
 				<code>{JSON.stringify(product, null, 4)}</code>
 			</pre>

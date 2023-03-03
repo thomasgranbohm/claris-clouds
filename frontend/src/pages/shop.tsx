@@ -4,7 +4,7 @@ import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
-import Link, { StyledLink } from "components/Link";
+import { StyledLink } from "components/Link";
 import Typography from "components/Typography";
 
 import ProductsQuery from "queries/shopify/Products.gql";
@@ -34,11 +34,15 @@ const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
 						<ShopifyImage
 							image={product.featuredImage}
+							width={512}
+							height={512}
 							style={{
+								aspectRatio: "1 / 1",
 								height: "auto",
 								maxWidth: "100%",
-								objectFit: "contain",
+								objectFit: "cover",
 								verticalAlign: "bottom",
+								width: "100%",
 							}}
 						/>
 					</Column>

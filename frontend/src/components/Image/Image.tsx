@@ -1,5 +1,8 @@
 import { FC } from "react";
-import NextImage, { ImageProps as NextImageProps } from "next/image";
+import NextImage, {
+	ImageLoader,
+	ImageProps as NextImageProps,
+} from "next/image";
 
 import { Shopify } from "types/api/shopify";
 import { GraphQL, ImageSchema } from "types/api/strapi";
@@ -20,16 +23,31 @@ interface ShopifyImageProps extends Partial<NextImageProps> {
 	image: Shopify.Image;
 }
 
+const ShopifyImageLoader: ImageLoader = ({ quality, src, width }) => {
+	const url = new URL(src);
+
+	url.searchParams.append("width", width.toString());
+
+	if (quality) {
+		url.searchParams.append("quality", quality.toString());
+	}
+
+	return url.toString();
+};
+
 export const ShopifyImage: FC<ShopifyImageProps> = ({ image, ...props }) => {
 	const { altText, height, url, width } = image;
 
 	return (
 		<NextImage
-			{...props}
-			src={url}
 			width={width}
 			height={height}
+			{...props}
+			loader={ShopifyImageLoader}
+			src={url}
 			alt={altText || ""}
+			placeholder="blur"
+			blurDataURL={ShopifyImageLoader({ src: url, width: 64 })}
 		/>
 	);
 };

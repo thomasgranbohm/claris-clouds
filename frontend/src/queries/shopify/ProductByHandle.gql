@@ -2,6 +2,7 @@ query ProductByHandle($handle: String!) {
 	productByHandle(handle: $handle) {
 		title
 		description
+		descriptionHtml
 		featuredImage {
 			altText
 			height
@@ -29,6 +30,8 @@ query ProductByHandle($handle: String!) {
 									preview {
 										image {
 											url
+											width
+											height
 										}
 									}
 								}

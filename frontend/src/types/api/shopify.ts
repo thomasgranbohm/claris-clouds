@@ -25,11 +25,12 @@ export namespace Shopify {
 		values: string[];
 	}
 	export interface Variant {
-		media: Data<{ alt: string; preview: { image: { url: string } } }>;
+		media: Data<{ alt: string; preview: { image: Shopify.Image } }[]>;
 		selectedOptions: { name: string; value: string }[];
 		sku: string;
 	}
 	export interface Product extends ProductPreview {
+		descriptionHtml: string;
 		options: Option[];
 		variants: Data<Variant[]>;
 	}

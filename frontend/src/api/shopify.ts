@@ -37,9 +37,4 @@ const requestShopify = async <T extends any | null>(
 	}
 };
 
-type Product = {
-	description: string;
-	title: string;
-};
-
 export default requestShopify;
