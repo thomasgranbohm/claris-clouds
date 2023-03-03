@@ -20,7 +20,7 @@ const requestShopify = async <T extends any | null>(
 ): Promise<Shopify.Response<T>> => {
 	try {
 		const { data } = await client.post(
-			serverRuntimeConfig.SHOPIFY_URL,
+			serverRuntimeConfig.SHOPIFY_URL ?? publicRuntimeConfig.SHOPIFY_URL,
 			{ query: print(query), variables },
 			{
 				method: "POST",

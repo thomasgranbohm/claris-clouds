@@ -18,6 +18,7 @@ query ProductByHandle($handle: String!) {
 					sku
 					id
 					currentlyNotInStock
+					quantityAvailable
 					selectedOptions {
 						name
 						value

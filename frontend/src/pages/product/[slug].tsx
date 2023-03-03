@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Item } from "react-stately";
+import { useCartContext } from "contexts/CartContext";
 import { GetStaticPaths } from "next";
 
 import { getArtworkSlugs } from "api/artwork";
 import requestShopify from "api/shopify";
 
+import Button from "components/aria/Button";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
@@ -22,10 +24,8 @@ import { getLayoutDataSSR } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
 export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
-	async ({ locale, locales, params }) => {
+	async ({ params }) => {
 		const slug = params?.["slug"];
-
-		console.log(locale, locales);
 
 		if (!slug) {
 			return {
@@ -33,12 +33,20 @@ export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
 			};
 		}
 
-		const resp = await requestShopify<{
+		const { data, error } = await requestShopify<{
 			product: Shopify.Data<Shopify.Product>;
 		}>(ProductByHandle, { handle: slug });
 
+		if (error) {
+			throw error;
+		}
+
+		if (data.product === null) {
+			throw new Error("Product is null");
+		}
+
 		return {
-			props: { product: resp.data.product },
+			props: { product: data.product },
 		};
 	}
 );
@@ -74,6 +82,8 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	const [options, setOptions] = useState<Record<string, string>>({});
 	const [variant, setVariant] = useState<Shopify.Variant | null>(null);
 
+	const { addToCart, items } = useCartContext();
+
 	useEffect(() => {
 		const foundVariant = variants.edges.find((_v) => {
 			return (
@@ -87,7 +97,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 		if (foundVariant) {
 			setVariant(foundVariant.node);
 		} else {
-			setVariant(variants.edges[0].node);
+			setVariant(null);
 		}
 	}, [variants.edges, options]);
 
@@ -138,6 +148,31 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 							))}
 						</OptionSelector>
 					))}
+					<Button
+						isDisabled={variant === null}
+						onPress={() => {
+							if (!variant) {
+								return null;
+							}
+
+							const existing = items.find(
+								({ merchandiseId }) =>
+									merchandiseId === variant.id
+							);
+
+							if (
+								existing &&
+								existing.quantity + 1 >
+									variant.quantityAvailable
+							) {
+								return null;
+							}
+
+							addToCart(variant.id, 1);
+						}}
+					>
+						<Typography>Add to cart</Typography>
+					</Button>
 				</Column>
 			</Row>
 			{descriptionHtml.length > 0 && (

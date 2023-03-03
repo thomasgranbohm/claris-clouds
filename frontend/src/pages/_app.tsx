@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { SSRProvider } from "react-aria";
+import { CartContextProvider } from "contexts/CartContext";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
 import Head from "next/head";
@@ -46,46 +47,48 @@ function CustomApp({
 
 	return (
 		<SSRProvider>
-			<Head>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1.0"
+			<CartContextProvider>
+				<Head>
+					<meta
+						name="viewport"
+						content="width=device-width, initial-scale=1.0"
+					/>
+				</Head>
+				<DefaultSeo
+					titleTemplate={page_prefix}
+					additionalLinkTags={[
+						{
+							href:
+								favicon &&
+								`/_next/image?url=${getImageLink(
+									stripWrapper(favicon)
+								)}&w=128&q=75`,
+							rel: "icon",
+						},
+					]}
+					additionalMetaTags={
+						metatags
+							? (metatags.map(({ content, name, property }) => ({
+									content,
+									name,
+									property,
+							  })) as MetaTag[])
+							: []
+					}
+					canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
 				/>
-			</Head>
-			<DefaultSeo
-				titleTemplate={page_prefix}
-				additionalLinkTags={[
-					{
-						href:
-							favicon &&
-							`/_next/image?url=${getImageLink(
-								stripWrapper(favicon)
-							)}&w=128&q=75`,
-						rel: "icon",
-					},
-				]}
-				additionalMetaTags={
-					metatags
-						? (metatags.map(({ content, name, property }) => ({
-								content,
-								name,
-								property,
-						  })) as MetaTag[])
-						: []
-				}
-				canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
-			/>
-			<FocusRing>
-				<a href="#main-content" className="skip-link">
-					Skip to main content
-				</a>
-			</FocusRing>
-			<ProgressBar
-				color={variables.color_accent}
-				nonce="claris-clouds-progress-bar"
-				options={{ easing: "ease", showSpinner: false, speed: 500 }}
-			/>
-			<Component {...pageProps} />
+				<FocusRing>
+					<a href="#main-content" className="skip-link">
+						Skip to main content
+					</a>
+				</FocusRing>
+				<ProgressBar
+					color={variables.color_accent}
+					nonce="claris-clouds-progress-bar"
+					options={{ easing: "ease", showSpinner: false, speed: 500 }}
+				/>
+				<Component {...pageProps} />
+			</CartContextProvider>
 		</SSRProvider>
 	);
 }

@@ -1,0 +1,42 @@
+mutation CreateCart($lines: [CartLineInput!]) {
+	cartCreate(input: { lines: $lines }) {
+		cart {
+			id
+			createdAt
+			updatedAt
+			checkoutUrl
+			totalQuantity
+			lines(first: 10) {
+				edges {
+					node {
+						id
+						quantity
+						merchandise {
+							... on ProductVariant {
+								id
+							}
+						}
+					}
+				}
+			}
+			cost {
+				totalAmount {
+					amount
+					currencyCode
+				}
+				subtotalAmount {
+					amount
+					currencyCode
+				}
+				totalTaxAmount {
+					amount
+					currencyCode
+				}
+				totalDutyAmount {
+					amount
+					currencyCode
+				}
+			}
+		}
+	}
+}

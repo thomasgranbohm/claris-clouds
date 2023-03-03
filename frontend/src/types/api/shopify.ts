@@ -19,7 +19,6 @@ export namespace Shopify {
 		id: string;
 		title: string;
 	};
-
 	export interface Option {
 		name: string;
 		values: string[];
@@ -37,6 +36,7 @@ export namespace Shopify {
 		id: string;
 		image: Shopify.Image;
 		price: Shopify.Price;
+		quantityAvailable: number;
 		selectedOptions: Shopify.Option[];
 		sku: string;
 	}
@@ -51,5 +51,26 @@ export namespace Shopify {
 		height: number;
 		url: string;
 		width: number;
+	};
+
+	export type Cart = {
+		checkoutUrl: string;
+		cost: {
+			subtotalAmount: Shopify.Price;
+			totalAmount: Shopify.Price;
+		};
+		createdAt: string;
+		id: string;
+		lines: Shopify.Data<
+			{
+				id: string;
+				merchandise: {
+					id: string;
+				};
+				quantity: number;
+			}[]
+		>;
+		totalQuantity: number;
+		updatedAt: string;
 	};
 }
