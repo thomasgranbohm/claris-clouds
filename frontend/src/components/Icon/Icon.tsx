@@ -11,6 +11,7 @@ import InstagramSVG from "assets/icons/instagram.svg";
 import PaletteSVG from "assets/icons/palette.svg";
 import RedBubbleSVG from "assets/icons/redbubble.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
+import ShoppingCartSVG from "assets/icons/shopping_cart.svg";
 import TikTok from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
 import YouTube from "assets/icons/youtube.svg";
@@ -35,7 +36,8 @@ interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
 		| "tiktok"
 		| "redbubble"
 		| "youtube"
-		| "done";
+		| "done"
+		| "shopping_cart";
 }
 
 const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
@@ -80,6 +82,9 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 			break;
 		case "done":
 			Element = Done;
+			break;
+		case "shopping_cart":
+			Element = ShoppingCartSVG;
 			break;
 		default:
 			return null;

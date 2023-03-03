@@ -25,7 +25,8 @@
 		height: 100%;
 		display: grid;
 		grid-template-rows: 1fr;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr auto auto;
+		grid-template-areas: "home cart hamburger";
 
 		.home-link,
 		.button {
@@ -33,6 +34,7 @@
 		}
 
 		.home-link {
+			grid-area: home;
 			justify-self: flex-start;
 			display: inline-flex;
 			padding: functions.gutter();
@@ -44,6 +46,7 @@
 		}
 
 		.button {
+			grid-area: hamburger;
 			justify-self: flex-end;
 			padding: 1.5rem;
 
@@ -51,6 +54,46 @@
 				height: 2rem;
 				aspect-ratio: 1 / 1;
 				color: colors.get("foreground");
+			}
+		}
+
+		.cart {
+			grid-area: cart;
+			position: relative;
+			padding: functions.gutter(1);
+			transition: color 0.1s;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+
+			.icon {
+				height: auto;
+				width: 2rem;
+				color: colors.get(foreground);
+				transition: color 0.1s;
+			}
+
+			.quantity {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				padding: functions.gutter(0.5);
+				width: functions.gutter(1.5);
+				height: functions.gutter(1.5);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				border-radius: 2rem;
+				background-color: colors.get("accent");
+				@include mixins.text-contrast(colors.get("accent"));
+			}
+
+			@include mixins.has-general-focus {
+				.icon {
+					color: colors.get(accent);
+				}
 			}
 		}
 
@@ -62,10 +105,14 @@
 
 		@include mixins.breakpoint(sm) {
 			grid-template-columns: auto 1fr;
-			grid-template-areas: "home-link navigation";
+			grid-template-areas: "home navigation cart";
 
 			.button {
 				display: none;
+			}
+
+			.cart {
+				margin-right: functions.gutter();
 			}
 		}
 	}
@@ -87,7 +134,7 @@
 			.inner {
 				grid-template-rows: var(--height) 1fr;
 				min-height: 100%;
-				grid-template-areas: "home-link button" "navigation navigation";
+				grid-template-areas: "home cart hamburger" "navigation navigation navigation";
 
 				.navigation {
 					display: grid;

@@ -2,12 +2,14 @@ import { FC } from "react";
 import { FocusScope, usePreventScroll } from "react-aria";
 import { useToggleState } from "react-stately";
 import clsx from "clsx";
+import { useCartContext } from "contexts/CartContext";
 
 import Button from "components/aria/Button";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 import Navigation from "components/Navigation";
+import Typography from "components/Typography";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
@@ -19,11 +21,10 @@ import classes from "./Header.module.scss";
 
 interface HeaderProps
 	extends WithClassname,
-		Pick<PageInformationSchema, "links" | "logo" | "socials"> {
-	// Remove me
-}
+		Pick<PageInformationSchema, "links" | "logo" | "socials"> {}
 
 const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
+	const { totalQuantity } = useCartContext();
 	const { isSelected, toggle } = useToggleState();
 
 	const breakpoint = useBreakpoint();
@@ -69,6 +70,19 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 					links={links}
 					socials={socials}
 				/>
+				<Link href="/cart" className={classes["cart"]}>
+					<Icon variant="shopping_cart" className={classes["icon"]} />
+					{totalQuantity > 0 && (
+						<Typography
+							type="span"
+							weight="semi-bold"
+							size="smaller"
+							className={classes["quantity"]}
+						>
+							{totalQuantity}
+						</Typography>
+					)}
+				</Link>
 			</div>
 		</div>
 	);

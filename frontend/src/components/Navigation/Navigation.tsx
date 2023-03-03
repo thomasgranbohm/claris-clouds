@@ -1,6 +1,5 @@
 import { FC } from "react";
 import clsx from "clsx";
-import { useCartContext } from "contexts/CartContext";
 import { useRouter } from "next/router";
 
 import Icon from "components/Icon";
@@ -57,7 +56,6 @@ interface NavigationProps extends WithClassname {
 
 const Navigation: FC<NavigationProps> = ({ className, links, socials }) => {
 	const router = useRouter();
-	const { totalQuantity } = useCartContext();
 
 	return (
 		<nav className={clsx(classes["container"], className)}>
@@ -79,9 +77,6 @@ const Navigation: FC<NavigationProps> = ({ className, links, socials }) => {
 					))}
 				</ul>
 			)}
-			<Link href="/cart">
-				<p>cart {totalQuantity}</p>
-			</Link>
 		</nav>
 	);
 };
