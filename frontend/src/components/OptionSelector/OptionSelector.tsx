@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { mergeProps, useFocusRing, useListBox, useOption } from "react-aria";
+import { useListBox, useOption } from "react-aria";
 import { ListState, useListState } from "react-stately";
 import type { AriaListBoxProps } from "@react-types/listbox";
 import type { Node } from "@react-types/shared";
 import clsx from "clsx";
 
+import FocusRing from "components/aria/FocusRing";
 import Typography from "components/Typography";
 
 import { WithClassname } from "types/components";
@@ -24,20 +25,20 @@ export const Option = <T extends object>({ item, state }: OptionProps<T>) => {
 		ref
 	);
 
-	const { focusProps, isFocusVisible } = useFocusRing();
-
 	return (
-		<li
-			{...mergeProps(optionProps, focusProps)}
-			ref={ref}
-			className={clsx(
-				classes["item"],
-				isDisabled && classes["disabled"],
-				isSelected && classes["selected"]
-			)}
-		>
-			{item.rendered}
-		</li>
+		<FocusRing>
+			<li
+				{...optionProps}
+				ref={ref}
+				className={clsx(
+					classes["item"],
+					isDisabled && classes["disabled"],
+					isSelected && classes["selected"]
+				)}
+			>
+				{item.rendered}
+			</li>
+		</FocusRing>
 	);
 };
 

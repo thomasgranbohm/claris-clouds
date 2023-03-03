@@ -56,6 +56,8 @@ const nextConfig = {
 		HTTP_AUTH: process.env.HTTP_AUTH,
 		SHOPIFY_URL: process.env.SHOPIFY_URL,
 		SHOPIFY_ACCESS_TOKEN: process.env.SHOPIFY_ACCESS_TOKEN,
+		SHOPIFY_HEADLESS_TOKEN:
+			process.env.SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN,
 	},
 	reactStrictMode: false,
 	swcMinify: true,
@@ -63,6 +65,8 @@ const nextConfig = {
 		API_URL: process.env.INTERNAL_API_URL,
 		SHOPIFY_URL: process.env.SHOPIFY_URL,
 		SHOPIFY_ACCESS_TOKEN: process.env.SHOPIFY_ACCESS_TOKEN,
+		SHOPIFY_HEADLESS_TOKEN:
+			process.env.SHOPIFY_HEADLESS_PRIVATE_ACCESS_TOKEN,
 	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find(

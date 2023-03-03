@@ -24,15 +24,20 @@ export namespace Shopify {
 		name: string;
 		values: string[];
 	}
+	export interface Price {
+		amount: string;
+		currencyCode: string;
+	}
+	export interface Option {
+		name: string;
+		value: string;
+	}
 	export interface Variant {
-		contextualPricing: {
-			price: {
-				amount: string;
-				currencyCode: string;
-			};
-		};
-		media: Data<{ alt: string; preview: { image: Shopify.Image } }[]>;
-		selectedOptions: { name: string; value: string }[];
+		currentlyNotInStock: boolean;
+		id: string;
+		image: Shopify.Image;
+		price: Shopify.Price;
+		selectedOptions: Shopify.Option[];
 		sku: string;
 	}
 	export interface Product extends ProductPreview {

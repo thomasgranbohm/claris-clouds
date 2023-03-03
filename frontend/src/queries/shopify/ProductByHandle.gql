@@ -1,5 +1,5 @@
 query ProductByHandle($handle: String!) {
-	productByHandle(handle: $handle) {
+	product(handle: $handle) {
 		title
 		descriptionHtml
 		featuredImage {
@@ -16,32 +16,20 @@ query ProductByHandle($handle: String!) {
 			edges {
 				node {
 					sku
+					id
+					currentlyNotInStock
 					selectedOptions {
 						name
 						value
 					}
-					contextualPricing(context: { country: DE }) {
-						price {
-							amount
-							currencyCode
-						}
+					price {
+						amount
+						currencyCode
 					}
-					media(first: 10) {
-						edges {
-							node {
-								alt
-								status
-								... on MediaImage {
-									preview {
-										image {
-											url
-											width
-											height
-										}
-									}
-								}
-							}
-						}
+					image {
+						height
+						url
+						width
 					}
 				}
 			}

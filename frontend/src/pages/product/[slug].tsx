@@ -34,11 +34,11 @@ export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
 		}
 
 		const resp = await requestShopify<{
-			productByHandle: Shopify.Data<Shopify.Product>;
+			product: Shopify.Data<Shopify.Product>;
 		}>(ProductByHandle, { handle: slug });
 
 		return {
-			props: { product: resp.data.productByHandle },
+			props: { product: resp.data.product },
 		};
 	}
 );
@@ -96,11 +96,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 			<Row>
 				<Column md={6}>
 					<ShopifyImage
-						image={
-							variant
-								? variant.media.edges[0].node.preview.image
-								: featuredImage
-						}
+						image={variant ? variant.image : featuredImage}
 						style={{
 							height: "auto",
 							maxWidth: "100%",
@@ -113,10 +109,8 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 					{variant && (
 						<Typography>
 							<b>Price:</b>{" "}
-							{Number(
-								variant.contextualPricing.price.amount
-							).toFixed(2)}{" "}
-							{variant.contextualPricing.price.currencyCode}
+							{Number(variant.price.amount).toFixed(2)}{" "}
+							{variant.price.currencyCode}
 						</Typography>
 					)}
 					{_options.map((option) => (

@@ -24,6 +24,10 @@
 				@include mixins.text-contrast(colors.get("accent"));
 				border-color: colors.get("accent");
 			}
+
+			&:focus {
+				outline: none;
+			}
 		}
 	}
 }

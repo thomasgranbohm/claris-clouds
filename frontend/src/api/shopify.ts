@@ -4,12 +4,13 @@ import getConfig from "next/config";
 
 import { Shopify } from "types/api/shopify";
 
-const { serverRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 const client = axios.create({
 	headers: {
 		"Content-Type": "application/json",
-		"X-Shopify-Access-Token": serverRuntimeConfig.SHOPIFY_ACCESS_TOKEN,
+		"X-Shopify-Storefront-Access-Token":
+			publicRuntimeConfig.SHOPIFY_HEADLESS_TOKEN,
 	},
 });
 
