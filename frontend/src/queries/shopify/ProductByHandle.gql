@@ -1,7 +1,6 @@
 query ProductByHandle($handle: String!) {
 	productByHandle(handle: $handle) {
 		title
-		description
 		descriptionHtml
 		featuredImage {
 			altText
@@ -20,6 +19,12 @@ query ProductByHandle($handle: String!) {
 					selectedOptions {
 						name
 						value
+					}
+					contextualPricing(context: { country: DE }) {
+						price {
+							amount
+							currencyCode
+						}
 					}
 					media(first: 10) {
 						edges {

@@ -25,6 +25,12 @@ export namespace Shopify {
 		values: string[];
 	}
 	export interface Variant {
+		contextualPricing: {
+			price: {
+				amount: string;
+				currencyCode: string;
+			};
+		};
 		media: Data<{ alt: string; preview: { image: Shopify.Image } }[]>;
 		selectedOptions: { name: string; value: string }[];
 		sku: string;

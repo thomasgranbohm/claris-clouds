@@ -11,18 +11,21 @@ import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import OptionSelector from "components/OptionSelector";
+import Typography from "components/Typography";
 
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
 
 import { Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
-import { getLayoutDataSSG } from "utils/getLayoutData";
+import { getLayoutDataSSR } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutDataSSG<ProductPageProps>(
-	async ({ params }) => {
+export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
+	async ({ locale, locales, params }) => {
 		const slug = params?.["slug"];
+
+		console.log(locale, locales);
 
 		if (!slug) {
 			return {
@@ -61,7 +64,6 @@ interface ProductPageProps {
 
 const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	const {
-		description,
 		descriptionHtml,
 		featuredImage,
 		options: _options,
@@ -70,9 +72,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	} = product;
 
 	const [options, setOptions] = useState<Record<string, string>>({});
-	const [variant, setVariant] = useState<Shopify.Variant | null>(
-		variants.edges[0].node
-	);
+	const [variant, setVariant] = useState<Shopify.Variant | null>(null);
 
 	useEffect(() => {
 		const foundVariant = variants.edges.find((_v) => {
@@ -110,6 +110,15 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 				</Column>
 				<Column md={6} align="end">
 					<Heading type="h1">{title}</Heading>
+					{variant && (
+						<Typography>
+							<b>Price:</b>{" "}
+							{Number(
+								variant.contextualPricing.price.amount
+							).toFixed(2)}{" "}
+							{variant.contextualPricing.price.currencyCode}
+						</Typography>
+					)}
 					{_options.map((option) => (
 						<OptionSelector
 							key={option.name}
@@ -137,7 +146,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 					))}
 				</Column>
 			</Row>
-			{description.length > 0 && (
+			{descriptionHtml.length > 0 && (
 				<Row>
 					<Column md={[8, 2]} lg={[6, 3]}>
 						<Heading type="h3">About the artwork</Heading>

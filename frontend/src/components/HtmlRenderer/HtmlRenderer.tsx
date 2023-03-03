@@ -23,8 +23,6 @@ const HtmlRenderer: FC<HtmlRendererProps> = ({ content }) => {
 		replace: (domNode) => {
 			const element = domNode as Element;
 
-			console.log(element.name);
-
 			if (element.name === "p") {
 				return (
 					<Typography>
