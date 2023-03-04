@@ -22,7 +22,7 @@ const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
 						<ShopifyImage
 							image={item.merchandise.image}
 							fill
-							width={128}
+							width={192}
 							style={{
 								objectFit: "contain",
 								objectPosition: "top",
@@ -37,7 +37,17 @@ const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
 						>
 							{item.merchandise.product.title}
 						</Typography>
-						<Typography>{item.merchandise.title}</Typography>
+						{item.merchandise.selectedOptions.map(
+							({ name, value }) => (
+								<Typography
+									key={name}
+									color="gray"
+									size="small"
+								>
+									{name}: {value}
+								</Typography>
+							)
+						)}
 					</div>
 
 					<Typography className={classes["quantity"]}>

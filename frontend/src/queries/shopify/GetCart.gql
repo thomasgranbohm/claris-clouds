@@ -24,6 +24,10 @@ query GetCart($id: ID!) {
 							product {
 								title
 							}
+							selectedOptions {
+								name
+								value
+							}
 							image {
 								height
 								url

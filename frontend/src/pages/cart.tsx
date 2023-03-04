@@ -32,6 +32,7 @@ const CartPage: LayoutPage = ({ layout }) => {
 				id: cartId,
 			}).then(({ data }) => {
 				setCart(data.cart);
+				setLoading(false);
 			});
 		}
 	}, [cartId]);
@@ -41,7 +42,9 @@ const CartPage: LayoutPage = ({ layout }) => {
 			<Row>
 				<Column>
 					<Heading type="h1">Cart</Heading>
-					{cart ? (
+					{loading ? (
+						<Typography>Loading...</Typography>
+					) : cart ? (
 						<ProductListing
 							items={cart?.lines.edges.map(({ node }) => node)}
 						/>
@@ -58,6 +61,15 @@ const CartPage: LayoutPage = ({ layout }) => {
 							{Number(cart.cost.subtotalAmount.amount).toFixed(2)}{" "}
 							{cart.cost.subtotalAmount.currencyCode}
 						</Typography>
+						<Typography size="small" color="gray">
+							Tax included and shipping calculated at checkout
+						</Typography>
+					</Column>
+				</Row>
+			)}
+			{cart?.checkoutUrl && (
+				<Row>
+					<Column justify="end" md={[4, 8]}>
 						<StyledLink href={cart.checkoutUrl}>
 							Checkout
 						</StyledLink>

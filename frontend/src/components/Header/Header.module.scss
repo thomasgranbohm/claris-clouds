@@ -92,8 +92,12 @@
 
 			@include mixins.has-general-focus {
 				.icon {
-					color: colors.get(accent);
+					color: colors.get("accent");
 				}
+			}
+
+			&.active .icon {
+				color: colors.get("accent");
 			}
 		}
 

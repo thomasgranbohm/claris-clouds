@@ -171,7 +171,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 							addToCart(variant.id, 1);
 						}}
 					>
-						<Typography>Add to cart</Typography>
+						Add to cart
 					</Button>
 				</Column>
 			</Row>
@@ -183,9 +183,6 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 					</Column>
 				</Row>
 			)}
-			<pre>
-				<code>{JSON.stringify(product, null, 4)}</code>
-			</pre>
 		</Layout>
 	);
 };

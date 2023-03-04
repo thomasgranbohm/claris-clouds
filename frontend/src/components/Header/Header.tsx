@@ -3,6 +3,7 @@ import { FocusScope, usePreventScroll } from "react-aria";
 import { useToggleState } from "react-stately";
 import clsx from "clsx";
 import { useCartContext } from "contexts/CartContext";
+import { useRouter } from "next/router";
 
 import Button from "components/aria/Button";
 import Icon from "components/Icon";
@@ -26,6 +27,7 @@ interface HeaderProps
 const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 	const { totalQuantity } = useCartContext();
 	const { isSelected, toggle } = useToggleState();
+	const router = useRouter();
 
 	const breakpoint = useBreakpoint();
 
@@ -70,7 +72,14 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 					links={links}
 					socials={socials}
 				/>
-				<Link href="/cart" className={classes["cart"]}>
+				{/* TODO: Messy*/}
+				<Link
+					href="/cart"
+					className={clsx(
+						classes["cart"],
+						router.asPath === "/cart" && classes["active"]
+					)}
+				>
 					<Icon variant="shopping_cart" className={classes["icon"]} />
 					{totalQuantity > 0 && (
 						<Typography

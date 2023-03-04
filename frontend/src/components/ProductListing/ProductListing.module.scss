@@ -27,6 +27,11 @@
 				width: 128px;
 				height: 128px;
 			}
+
+			@include mixins.breakpoint("lg") {
+				width: 192px;
+				height: 192px;
+			}
 		}
 
 		.information > :not(.title) {
