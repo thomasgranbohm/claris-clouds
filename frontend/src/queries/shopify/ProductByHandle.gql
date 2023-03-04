@@ -2,6 +2,12 @@ query ProductByHandle($handle: String!) {
 	product(handle: $handle) {
 		title
 		descriptionHtml
+		priceRange {
+			minVariantPrice {
+				amount
+				currencyCode
+			}
+		}
 		featuredImage {
 			altText
 			height

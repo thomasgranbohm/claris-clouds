@@ -6,7 +6,7 @@ import { GetStaticPaths } from "next";
 import { getArtworkSlugs } from "api/artwork";
 import requestShopify from "api/shopify";
 
-import Button from "components/aria/Button";
+import { StyledButton } from "components/Button";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
@@ -75,6 +75,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 		descriptionHtml,
 		featuredImage,
 		options: _options,
+		priceRange,
 		title,
 		variants,
 	} = product;
@@ -83,6 +84,36 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	const [variant, setVariant] = useState<Shopify.Variant | null>(null);
 
 	const { addToCart, items } = useCartContext();
+
+	{
+		/* TODO: Maybe needs some cleanup */
+	}
+
+	const dissallowedCombos = new Map<string, Shopify.Option[]>();
+
+	variants.edges.forEach(({ node }) =>
+		node.selectedOptions.forEach((so, i, arr) => {
+			if (
+				node.quantityAvailable === 0 ||
+				(items.find((i) => i.merchandiseId === node.id)?.quantity ||
+					0) === node.quantityAvailable
+			) {
+				const rest = arr.slice();
+
+				rest.splice(i, 1);
+
+				if (dissallowedCombos.has(so.value)) {
+					const e = dissallowedCombos.get(so.value);
+
+					if (e) {
+						dissallowedCombos.set(so.value, [...e, ...rest]);
+					}
+				} else {
+					dissallowedCombos.set(so.value, rest);
+				}
+			}
+		})
+	);
 
 	useEffect(() => {
 		const foundVariant = variants.edges.find((_v) => {
@@ -106,27 +137,55 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 			<Row>
 				<Column md={6}>
 					<ShopifyImage
-						image={variant ? variant.image : featuredImage}
+						image={
+							variant
+								? variant.image
+								: variants.edges[0].node.image || featuredImage
+						}
 						style={{
+							aspectRatio: "4 / 3",
 							height: "auto",
 							maxWidth: "100%",
-							objectFit: "contain",
+							objectFit: "cover",
+							verticalAlign: "bottom",
 						}}
 					/>
 				</Column>
-				<Column md={6} align="end">
+				<Column md={6} align="start">
 					<Heading type="h1">{title}</Heading>
-					{variant && (
-						<Typography>
-							<b>Price:</b>{" "}
-							{Number(variant.price.amount).toFixed(2)}{" "}
-							{variant.price.currencyCode}
-						</Typography>
-					)}
+
+					<Typography>
+						<b>Price:</b>{" "}
+						{variant ? (
+							<>
+								{Number(variant.price.amount).toFixed(2)}{" "}
+								{variant.price.currencyCode}
+							</>
+						) : (
+							<>
+								from{" "}
+								{Number(
+									priceRange.minVariantPrice.amount
+								).toFixed(2)}{" "}
+								{priceRange.minVariantPrice.currencyCode}
+							</>
+						)}
+					</Typography>
 					{_options.map((option) => (
 						<OptionSelector
 							key={option.name}
 							label={option.name}
+							disabledKeys={Object.values(options).reduce<
+								string[]
+							>((p, v) => {
+								const e = dissallowedCombos.get(v);
+
+								if (e) {
+									return [...p, ...e.map((b) => b.value)];
+								} else {
+									return [...p];
+								}
+							}, [])}
 							selectionMode="single"
 							onSelectionChange={(keys) => {
 								const value = Array.from(keys).pop();
@@ -148,7 +207,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 							))}
 						</OptionSelector>
 					))}
-					<Button
+					<StyledButton
 						isDisabled={variant === null}
 						onPress={() => {
 							if (!variant) {
@@ -172,17 +231,17 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 						}}
 					>
 						Add to cart
-					</Button>
+					</StyledButton>
+					{descriptionHtml.length > 0 && (
+						<Row>
+							<Column>
+								<Heading type="h3">About the artwork</Heading>
+								<HtmlRenderer content={descriptionHtml} />
+							</Column>
+						</Row>
+					)}
 				</Column>
 			</Row>
-			{descriptionHtml.length > 0 && (
-				<Row>
-					<Column md={[8, 2]} lg={[6, 3]}>
-						<Heading type="h3">About the artwork</Heading>
-						<HtmlRenderer content={descriptionHtml} />
-					</Column>
-				</Row>
-			)}
 		</Layout>
 	);
 };

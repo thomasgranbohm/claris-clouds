@@ -20,7 +20,7 @@ export namespace Shopify {
 		title: string;
 	};
 
-	export interface Option {
+	export interface ProductOption {
 		name: string;
 		values: string[];
 	}
@@ -47,7 +47,8 @@ export namespace Shopify {
 
 	export interface Product extends ProductPreview {
 		descriptionHtml: string;
-		options: Option[];
+		options: Shopify.ProductOption[];
+		priceRange: { minVariantPrice: Shopify.Price };
 		variants: Data<Variant[]>;
 	}
 
