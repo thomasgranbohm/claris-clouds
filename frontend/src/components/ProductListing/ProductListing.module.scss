@@ -1,0 +1,36 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	width: 100%;
+
+	.item {
+		margin: functions.gutter() 0;
+		display: grid;
+		grid-template-columns: auto 1fr auto auto;
+		gap: functions.gutter();
+
+		.title,
+		.quantity,
+		.total {
+			margin-top: 0;
+		}
+
+		.image {
+			width: 96px;
+			height: 96px;
+			display: inline-block;
+			position: relative;
+
+			@include mixins.breakpoint("md") {
+				width: 128px;
+				height: 128px;
+			}
+		}
+
+		.information > :not(.title) {
+			margin-top: functions.gutter(0.25);
+		}
+	}
+}

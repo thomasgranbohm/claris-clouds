@@ -19,18 +19,22 @@ export namespace Shopify {
 		id: string;
 		title: string;
 	};
+
 	export interface Option {
 		name: string;
 		values: string[];
 	}
+
 	export interface Price {
 		amount: string;
 		currencyCode: string;
 	}
+
 	export interface Option {
 		name: string;
 		value: string;
 	}
+
 	export interface Variant {
 		currentlyNotInStock: boolean;
 		id: string;
@@ -40,6 +44,7 @@ export namespace Shopify {
 		selectedOptions: Shopify.Option[];
 		sku: string;
 	}
+
 	export interface Product extends ProductPreview {
 		descriptionHtml: string;
 		options: Option[];
@@ -53,7 +58,34 @@ export namespace Shopify {
 		width: number;
 	};
 
-	export type Cart = {
+	export type CartItemPreview = {
+		id: string;
+		merchandise: {
+			id: string;
+		};
+		quantity: number;
+	};
+
+	export type CartPreview = {
+		id: string;
+		lines: Shopify.Data<CartItemPreview[]>;
+		totalQuantity: number;
+	};
+
+	export interface CartItem extends CartItemPreview {
+		merchandise: {
+			id: string;
+			image: Shopify.Image;
+			price: Price;
+			product: {
+				title: string;
+			};
+			selectedOptions: Shopify.Option[];
+			title: string;
+		};
+	}
+
+	export interface Cart extends CartPreview {
 		checkoutUrl: string;
 		cost: {
 			subtotalAmount: Shopify.Price;
@@ -61,16 +93,8 @@ export namespace Shopify {
 		};
 		createdAt: string;
 		id: string;
-		lines: Shopify.Data<
-			{
-				id: string;
-				merchandise: {
-					id: string;
-				};
-				quantity: number;
-			}[]
-		>;
+		lines: Shopify.Data<Shopify.CartItem[]>;
 		totalQuantity: number;
 		updatedAt: string;
-	};
+	}
 }

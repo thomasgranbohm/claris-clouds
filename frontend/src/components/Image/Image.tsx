@@ -35,14 +35,21 @@ const ShopifyImageLoader: ImageLoader = ({ quality, src, width }) => {
 	return url.toString();
 };
 
-export const ShopifyImage: FC<ShopifyImageProps> = ({ image, ...props }) => {
+export const ShopifyImage: FC<ShopifyImageProps> = ({
+	fill,
+	height: _height,
+	image,
+	width: _width,
+	...props
+}) => {
 	const { altText, height, url, width } = image;
 
 	return (
 		<NextImage
-			width={width}
-			height={height}
+			width={!fill ? _width || width : undefined}
+			height={!fill ? _height || height : undefined}
 			{...props}
+			fill={fill}
 			loader={ShopifyImageLoader}
 			src={url}
 			alt={altText || ""}

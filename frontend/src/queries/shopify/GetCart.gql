@@ -1,10 +1,17 @@
 query GetCart($id: ID!) {
 	cart(id: $id) {
 		id
-		createdAt
-		updatedAt
 		checkoutUrl
-		totalQuantity
+		cost {
+			subtotalAmount {
+				amount
+				currencyCode
+			}
+			totalAmount {
+				amount
+				currencyCode
+			}
+		}
 		lines(first: 10) {
 			edges {
 				node {
@@ -13,12 +20,16 @@ query GetCart($id: ID!) {
 					merchandise {
 						... on ProductVariant {
 							id
+							title
 							image {
 								height
 								url
 								width
 							}
-							title
+							price {
+								amount
+								currencyCode
+							}
 						}
 					}
 				}

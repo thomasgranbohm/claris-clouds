@@ -21,10 +21,10 @@ interface ItemSchema {
 	quantity: number; // CartLineId
 }
 
-interface CartContextSchema
-	extends Partial<Pick<Shopify.Cart, "checkoutUrl" | "cost">> {
+interface CartContextSchema {
 	addToCart: (merchandiseId: string, quantity: number) => void;
 	// clearCart: () => void;
+	cartId: string;
 	items: ItemSchema[];
 	totalQuantity: number;
 	// removeFromCart: (merchandiseId: string) => void;
@@ -34,6 +34,7 @@ interface CartContextSchema
 export const CartContext = createContext<CartContextSchema>({
 	addToCart: () => void 0,
 	// clearCart: () => void 0,
+	cartId: "",
 	items: [],
 	totalQuantity: 0,
 	// removeFromCart: () => void 0,
@@ -123,7 +124,9 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 	};
 
 	return (
-		<CartContext.Provider value={{ addToCart, items, totalQuantity }}>
+		<CartContext.Provider
+			value={{ addToCart, cartId, items, totalQuantity }}
+		>
 			{children}
 		</CartContext.Provider>
 	);
