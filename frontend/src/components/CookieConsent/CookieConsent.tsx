@@ -1,8 +1,7 @@
-import { FC, useEffect, useState } from "react";
-import { FocusScope } from "react-aria";
+import { FC } from "react";
 import clsx from "clsx";
 
-import Button from "components/aria/Button";
+import Button from "components/Button";
 import Heading from "components/Heading";
 import Icon from "components/Icon";
 import Markdown from "components/Markdown";

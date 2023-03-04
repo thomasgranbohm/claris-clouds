@@ -9,7 +9,7 @@ import { DefaultSeo } from "next-seo";
 import { MetaTag } from "next-seo/lib/types";
 import ProgressBar from "nextjs-progressbar";
 
-import FocusRing from "components/aria/FocusRing";
+import FocusRing from "components/FocusRing";
 
 import variables from "styles/exports.module.scss";
 

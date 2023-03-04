@@ -5,7 +5,7 @@ import type { AriaListBoxProps } from "@react-types/listbox";
 import type { Node } from "@react-types/shared";
 import clsx from "clsx";
 
-import FocusRing from "components/aria/FocusRing";
+import FocusRing from "components/FocusRing";
 import Typography from "components/Typography";
 
 import { WithClassname } from "types/components";
@@ -30,6 +30,7 @@ export const Option = <T extends object>({ item, state }: OptionProps<T>) => {
 			<li
 				{...optionProps}
 				ref={ref}
+				title={(isDisabled && "Variant is sold out") || ""}
 				className={clsx(
 					classes["item"],
 					isDisabled && classes["disabled"],

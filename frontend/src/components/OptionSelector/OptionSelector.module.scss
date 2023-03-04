@@ -17,12 +17,20 @@
 			margin-right: functions.gutter(0.5);
 
 			border: 2px solid colors.get("gray");
+			border-radius: functions.gutter(0.5);
 			cursor: pointer;
 
 			&.selected {
 				background-color: colors.get("accent");
 				@include mixins.text-contrast(colors.get("accent"));
 				border-color: colors.get("accent");
+			}
+
+			&.disabled {
+				background-color: colors.get("gray");
+				color: colors.get("background");
+				border-color: colors.get("gray");
+				cursor: default;
 			}
 
 			&:focus {

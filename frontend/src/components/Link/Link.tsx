@@ -3,7 +3,7 @@ import { AriaLinkOptions, useLink } from "react-aria";
 import clsx from "clsx";
 import NextLink from "next/link";
 
-import FocusRing from "components/aria/FocusRing";
+import FocusRing from "components/FocusRing";
 import Heading from "components/Heading";
 
 import { WithChildren, WithClassname } from "types/components";

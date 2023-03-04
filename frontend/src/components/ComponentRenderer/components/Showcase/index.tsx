@@ -4,7 +4,7 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
-import Button from "components/aria/Button";
+import Button from "components/Button";
 import { Column, Row } from "components/Grid";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";

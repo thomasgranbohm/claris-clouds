@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useCartContext } from "contexts/CartContext";
 import { useRouter } from "next/router";
 
-import Button from "components/aria/Button";
+import Button from "components/Button";
 import Icon from "components/Icon";
 import { StrapiImage } from "components/Image";
 import Link from "components/Link";

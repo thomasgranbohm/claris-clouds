@@ -1,0 +1,58 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	appearance: none;
+	cursor: pointer;
+	background-color: unset;
+	border: unset;
+	display: inline-flex;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	width: max-content;
+
+	&:focus {
+		outline: none;
+	}
+
+	margin-top: functions.gutter();
+
+	.box {
+		display: block;
+
+		background-color: colors.get(accent);
+
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		padding: functions.gutter(1.25) functions.gutter(4);
+		border-radius: functions.gutter(0.5);
+
+		transition: 0.2s box-shadow;
+
+		.title {
+			margin: 0;
+
+			@include mixins.text-contrast(colors.get(accent));
+		}
+	}
+
+	@include mixins.has-general-focus {
+		.box {
+			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.14),
+				0px 1px 10px 0px rgba(0, 0, 0, 0.12),
+				0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+		}
+	}
+
+	&[disabled] {
+		cursor: default;
+
+		.box {
+			background-color: colors.get("gray");
+		}
+	}
+}
