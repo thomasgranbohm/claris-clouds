@@ -1,4 +1,5 @@
 import {
+	ButtonHTMLAttributes,
 	FC,
 	forwardRef,
 	ForwardRefRenderFunction,
@@ -16,7 +17,10 @@ import { WithClassname } from "types/components";
 
 import classes from "./Button.module.scss";
 
-interface ButtonProps extends WithClassname, AriaButtonProps {
+interface ButtonProps
+	extends WithClassname,
+		AriaButtonProps,
+		Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof AriaButtonProps> {
 	activeClassName?: string;
 }
 
@@ -39,6 +43,7 @@ const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
 	return (
 		<FocusRing>
 			<button
+				{...props}
 				{...buttonProps}
 				ref={ref}
 				className={clsx(

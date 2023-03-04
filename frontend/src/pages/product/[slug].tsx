@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Item } from "react-stately";
 import { useCartContext } from "contexts/CartContext";
 import { GetStaticPaths } from "next";
@@ -85,36 +85,6 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 
 	const { addToCart, items } = useCartContext();
 
-	{
-		/* TODO: Maybe needs some cleanup */
-	}
-
-	const dissallowedCombos = new Map<string, Shopify.Option[]>();
-
-	variants.edges.forEach(({ node }) =>
-		node.selectedOptions.forEach((so, i, arr) => {
-			if (
-				node.quantityAvailable === 0 ||
-				(items.find((i) => i.merchandiseId === node.id)?.quantity ||
-					0) === node.quantityAvailable
-			) {
-				const rest = arr.slice();
-
-				rest.splice(i, 1);
-
-				if (dissallowedCombos.has(so.value)) {
-					const e = dissallowedCombos.get(so.value);
-
-					if (e) {
-						dissallowedCombos.set(so.value, [...e, ...rest]);
-					}
-				} else {
-					dissallowedCombos.set(so.value, rest);
-				}
-			}
-		})
-	);
-
 	useEffect(() => {
 		const foundVariant = variants.edges.find((_v) => {
 			return (
@@ -131,6 +101,14 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 			setVariant(null);
 		}
 	}, [variants.edges, options]);
+
+	const isDisabled = useMemo(
+		() =>
+			variant === null ||
+			(items.find((i) => i.merchandiseId === variant.id)?.quantity ||
+				0) >= variant.quantityAvailable,
+		[variant, items]
+	);
 
 	return (
 		<Layout {...layout}>
@@ -175,17 +153,6 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 						<OptionSelector
 							key={option.name}
 							label={option.name}
-							disabledKeys={Object.values(options).reduce<
-								string[]
-							>((p, v) => {
-								const e = dissallowedCombos.get(v);
-
-								if (e) {
-									return [...p, ...e.map((b) => b.value)];
-								} else {
-									return [...p];
-								}
-							}, [])}
 							selectionMode="single"
 							onSelectionChange={(keys) => {
 								const value = Array.from(keys).pop();
@@ -208,7 +175,8 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 						</OptionSelector>
 					))}
 					<StyledButton
-						isDisabled={variant === null}
+						isDisabled={isDisabled}
+						title={isDisabled ? "Variant is sold out" : ""}
 						onPress={() => {
 							if (!variant) {
 								return null;
