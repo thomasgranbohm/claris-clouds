@@ -34,10 +34,7 @@ const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
 						<ShopifyImage
 							image={product.featuredImage}
-							width={512}
-							height={512}
 							style={{
-								aspectRatio: "1 / 1",
 								height: "auto",
 								maxWidth: "100%",
 								objectFit: "cover",

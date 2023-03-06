@@ -39,6 +39,7 @@ export const ShopifyImage: FC<ShopifyImageProps> = ({
 	fill,
 	height: _height,
 	image,
+	style,
 	width: _width,
 	...props
 }) => {
@@ -49,12 +50,20 @@ export const ShopifyImage: FC<ShopifyImageProps> = ({
 			width={!fill ? _width || width : undefined}
 			height={!fill ? _height || height : undefined}
 			{...props}
+			style={{
+				...style,
+				backgroundImage: `url(${ShopifyImageLoader({
+					src: url,
+					width: 16,
+				})})`,
+				backgroundPosition: "center",
+				backgroundRepeat: "no-repeat",
+				backgroundSize: "100% 100%",
+			}}
 			fill={fill}
 			loader={ShopifyImageLoader}
 			src={url}
 			alt={altText || ""}
-			placeholder="blur"
-			blurDataURL={ShopifyImageLoader({ src: url, width: 64 })}
 		/>
 	);
 };
