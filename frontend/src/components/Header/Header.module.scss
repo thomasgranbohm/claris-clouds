@@ -44,6 +44,7 @@
 		.button {
 			grid-area: toggle;
 			justify-self: flex-end;
+			color: colors.get("accent");
 
 			.icon {
 				height: 2rem;
@@ -61,7 +62,8 @@
 
 	&.open {
 		height: unset;
-		position: fixed;
+		position: fixed !important;
+		top: 0;
 
 		.inner {
 			min-height: 100vh;

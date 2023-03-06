@@ -100,11 +100,6 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 			}
 		}
 
-		console.log(
-			data.campaign,
-			data.campaign.data !== null ? stripWrapper(data.campaign) : null
-		);
-
 		if (!f) {
 			return {
 				props: {
