@@ -13,6 +13,7 @@ mutation UpdateCart($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
 					currencyCode
 				}
 			}
+			totalQuantity
 			lines(first: 10) {
 				edges {
 					node {

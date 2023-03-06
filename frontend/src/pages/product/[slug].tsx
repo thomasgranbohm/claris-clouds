@@ -204,13 +204,13 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 
 							if (
 								existing &&
-								existing.quantity + 1 >
+								existing.quantity + quantity >
 									variant.quantityAvailable
 							) {
 								return null;
 							}
 
-							addToCart(variant.id, 1);
+							addToCart(variant.id, quantity);
 						}}
 					>
 						Add to cart

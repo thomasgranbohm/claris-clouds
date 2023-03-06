@@ -12,6 +12,7 @@ query GetCart($id: ID!) {
 				currencyCode
 			}
 		}
+		totalQuantity
 		lines(first: 10) {
 			edges {
 				node {
