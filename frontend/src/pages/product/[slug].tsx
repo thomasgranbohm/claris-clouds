@@ -3,7 +3,6 @@ import { Item } from "react-stately";
 import { useCartContext } from "contexts/CartContext";
 import { GetStaticPaths } from "next";
 
-import { getArtworkSlugs } from "api/artwork";
 import requestShopify from "api/shopify";
 
 import { StyledButton } from "components/Button";
@@ -17,6 +16,7 @@ import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
+import ProductSlugs from "queries/shopify/ProductSlugs.gql";
 
 import { Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
@@ -56,13 +56,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	if (process.env.NODE_ENV !== "production") {
 		return { fallback: "blocking", paths: [] };
 	}
+	const { data, error } = await requestShopify<{
+		products: Shopify.Data<Pick<Shopify.Product, "handle">[]>;
+	}>(ProductSlugs);
 
-	const { data } = await getArtworkSlugs();
+	if (error) {
+		throw error;
+	}
 
 	return {
 		fallback: "blocking",
-		paths: stripWrapper(data.artworks).map((p) => ({
-			params: { slug: p.slug },
+		paths: data.products.edges.map(({ node }) => ({
+			params: { slug: node.handle },
 		})),
 	};
 };
