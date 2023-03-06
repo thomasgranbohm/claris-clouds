@@ -1,20 +1,23 @@
 import { FC, HTMLAttributes } from "react";
 import clsx from "clsx";
 
-import ArrowBackward from "assets/icons/arrow-backward.svg";
-import ArrowForward from "assets/icons/arrow-forward.svg";
+import AddSVG from "assets/icons/add.svg";
+import ArrowBackwardSVG from "assets/icons/arrow-backward.svg";
+import ArrowForwardSVG from "assets/icons/arrow-forward.svg";
 import BarsSVG from "assets/icons/bars-solid.svg";
 import CalendarRegularSVG from "assets/icons/calendar-regular.svg";
 import ClipboardSVG from "assets/icons/clipboard.svg";
-import Done from "assets/icons/done.svg";
+import DeleteSVG from "assets/icons/delete.svg";
+import DoneSVG from "assets/icons/done.svg";
 import InstagramSVG from "assets/icons/instagram.svg";
 import PaletteSVG from "assets/icons/palette.svg";
 import RedBubbleSVG from "assets/icons/redbubble.svg";
+import RemoveSVG from "assets/icons/remove.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
 import ShoppingCartSVG from "assets/icons/shopping_cart.svg";
-import TikTok from "assets/icons/tiktok.svg";
+import TikTokSVG from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
-import YouTube from "assets/icons/youtube.svg";
+import YouTubeSVG from "assets/icons/youtube.svg";
 
 import { WithClassname } from "types/components";
 import { Colors } from "types/generics";
@@ -37,7 +40,10 @@ interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
 		| "redbubble"
 		| "youtube"
 		| "done"
-		| "shopping_cart";
+		| "shopping_cart"
+		| "add"
+		| "delete"
+		| "remove";
 }
 
 const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
@@ -69,22 +75,31 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 			Element = RedBubbleSVG;
 			break;
 		case "tiktok":
-			Element = TikTok;
+			Element = TikTokSVG;
 			break;
 		case "youtube":
-			Element = YouTube;
+			Element = YouTubeSVG;
 			break;
 		case "backward":
-			Element = ArrowBackward;
+			Element = ArrowBackwardSVG;
 			break;
 		case "forward":
-			Element = ArrowForward;
+			Element = ArrowForwardSVG;
 			break;
 		case "done":
-			Element = Done;
+			Element = DoneSVG;
 			break;
 		case "shopping_cart":
 			Element = ShoppingCartSVG;
+			break;
+		case "add":
+			Element = AddSVG;
+			break;
+		case "remove":
+			Element = RemoveSVG;
+			break;
+		case "delete":
+			Element = DeleteSVG;
 			break;
 		default:
 			return null;

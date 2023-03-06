@@ -22,21 +22,29 @@ interface ButtonProps
 		AriaButtonProps,
 		Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof AriaButtonProps> {
 	activeClassName?: string;
+	disabledClassName?: string;
 }
 
-export const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
+export const StyledButton: FC<ButtonProps> = ({
+	children,
+	className,
+	...props
+}) => {
 	return (
-		<Button {...props}>
-			<div className={classes["box"]}>
-				<Heading className={classes["title"]} type="b">
-					{children}
-				</Heading>
-			</div>
+		<Button {...props} className={clsx(classes["styled"], className)}>
+			<Heading className={classes["title"]} type="b">
+				{children}
+			</Heading>
 		</Button>
 	);
 };
 
-const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
+const Button: FC<ButtonProps> = ({
+	activeClassName,
+	className,
+	disabledClassName,
+	...props
+}) => {
 	const ref = useRef(null);
 	const { buttonProps, isPressed } = useButton(props, ref);
 
@@ -49,6 +57,7 @@ const Button: FC<ButtonProps> = ({ activeClassName, className, ...props }) => {
 				className={clsx(
 					classes["container"],
 					isPressed && activeClassName,
+					buttonProps.disabled && disabledClassName,
 					className
 				)}
 			>

@@ -11,15 +11,12 @@
 	font-family: inherit;
 	font-size: inherit;
 	font-weight: inherit;
-	width: max-content;
 
 	&:focus {
 		outline: none;
 	}
 
-	margin-top: functions.gutter();
-
-	.box {
+	&.styled {
 		display: block;
 
 		background-color: colors.get(accent);
@@ -29,6 +26,7 @@
 		text-transform: uppercase;
 
 		padding: functions.gutter(1.25) functions.gutter(4);
+		margin-top: functions.gutter();
 		border-radius: functions.gutter(0.5);
 
 		transition: 0.2s box-shadow;
@@ -41,19 +39,17 @@
 	}
 
 	@include mixins.has-general-focus {
-		&:not([disabled]) {
-			.box {
-				box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.14),
-					0px 1px 10px 0px rgba(0, 0, 0, 0.12),
-					0px 2px 4px -1px rgba(0, 0, 0, 0.2);
-			}
+		&.styled:not([disabled]) {
+			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.14),
+				0px 1px 10px 0px rgba(0, 0, 0, 0.12),
+				0px 2px 4px -1px rgba(0, 0, 0, 0.2);
 		}
 	}
 
 	&[disabled] {
 		cursor: default;
 
-		.box {
+		&.styled {
 			background-color: colors.get("gray");
 		}
 	}

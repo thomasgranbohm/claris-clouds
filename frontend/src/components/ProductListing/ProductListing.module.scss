@@ -6,10 +6,14 @@
 	width: 100%;
 
 	.item {
-		margin: functions.gutter() 0;
+		margin-top: functions.gutter();
 		display: grid;
-		grid-template-columns: auto 1fr auto auto;
-		gap: functions.gutter();
+		gap: functions.gutter(0.5) functions.gutter();
+		grid-template: "image information total" auto "image quantity quantity" auto / auto 1fr auto;
+
+		@include mixins.breakpoint(md) {
+			grid-template: "image information quantity total" 1fr / auto 1fr auto auto;
+		}
 
 		.title,
 		.quantity,
@@ -18,6 +22,8 @@
 		}
 
 		.image {
+			grid-area: image;
+
 			width: 96px;
 			height: 96px;
 			display: inline-block;
@@ -32,6 +38,19 @@
 				width: 192px;
 				height: 192px;
 			}
+		}
+
+		.information {
+			grid-area: information;
+		}
+
+		.quantity {
+			grid-area: quantity;
+			margin-top: 0;
+		}
+
+		.total {
+			grid-area: total;
 		}
 
 		.information > :not(.title) {

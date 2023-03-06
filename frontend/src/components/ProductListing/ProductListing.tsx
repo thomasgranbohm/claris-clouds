@@ -1,7 +1,9 @@
 import { FC } from "react";
 import clsx from "clsx";
+import { useCartContext } from "contexts/CartContext";
 
 import { ShopifyImage } from "components/Image";
+import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
 import { Shopify } from "types/api/shopify";
@@ -14,6 +16,8 @@ interface ProductListingProps extends WithClassname {
 }
 
 const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
+	const { updateCart } = useCartContext();
+
 	return (
 		<ul className={clsx(classes["container"], className)}>
 			{items.map((item) => (
@@ -50,9 +54,12 @@ const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
 						)}
 					</div>
 
-					<Typography className={classes["quantity"]}>
-						{item.quantity}
-					</Typography>
+					<QuantitySelector
+						className={classes["quantity"]}
+						max={5}
+						value={item.quantity}
+						onChange={(v) => updateCart(item.id, v)}
+					/>
 					<Typography className={classes["total"]}>
 						{(
 							item.quantity *

@@ -49,6 +49,7 @@ export namespace Shopify {
 		descriptionHtml: string;
 		options: Shopify.ProductOption[];
 		priceRange: { minVariantPrice: Shopify.Price };
+		totalInventory: number;
 		variants: Data<Variant[]>;
 	}
 

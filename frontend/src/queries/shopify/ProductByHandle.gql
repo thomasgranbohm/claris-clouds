@@ -18,6 +18,7 @@ query ProductByHandle($handle: String!) {
 			name
 			values
 		}
+		totalInventory
 		variants(first: 10) {
 			edges {
 				node {

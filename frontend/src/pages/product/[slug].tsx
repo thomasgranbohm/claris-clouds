@@ -13,6 +13,7 @@ import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import OptionSelector from "components/OptionSelector";
+import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
@@ -77,11 +78,13 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 		options: _options,
 		priceRange,
 		title,
+		totalInventory,
 		variants,
 	} = product;
 
 	const [options, setOptions] = useState<Record<string, string>>({});
 	const [variant, setVariant] = useState<Shopify.Variant | null>(null);
+	const [quantity, setQuantity] = useState<number>(1);
 
 	const { addToCart, items } = useCartContext();
 
@@ -174,6 +177,12 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 							))}
 						</OptionSelector>
 					))}
+					<QuantitySelector
+						label="Quantity"
+						max={variant?.quantityAvailable || totalInventory}
+						onChange={setQuantity}
+						value={quantity}
+					/>
 					<StyledButton
 						isDisabled={isDisabled}
 						title={isDisabled ? "Variant is sold out" : ""}

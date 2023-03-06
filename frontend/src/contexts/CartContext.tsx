@@ -12,6 +12,7 @@ import requestShopify from "api/shopify";
 import AddToCartQuery from "queries/shopify/AddToCart.gql";
 import CreateCartQuery from "queries/shopify/CreateCart.gql";
 import GetCartPreviewQuery from "queries/shopify/GetCartPreview.gql";
+import UpdateCartQuery from "queries/shopify/UpdateCart.gql";
 
 import { Shopify } from "types/api/shopify";
 
@@ -28,7 +29,7 @@ interface CartContextSchema {
 	items: ItemSchema[];
 	totalQuantity: number;
 	// removeFromCart: (merchandiseId: string) => void;
-	// updateCart: (merchandiseId: string, quantity: number) => void;
+	updateCart: (id: string, quantity: number) => void;
 }
 
 export const CartContext = createContext<CartContextSchema>({
@@ -38,7 +39,7 @@ export const CartContext = createContext<CartContextSchema>({
 	items: [],
 	totalQuantity: 0,
 	// removeFromCart: () => void 0,
-	// updateCart: () => void 0,
+	updateCart: () => void 0,
 });
 
 export const useCartContext = () => useContext(CartContext);
@@ -123,9 +124,44 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		}
 	};
 
+	const updateCart = async (id: string, quantity: number) => {
+		const { data, error } = await requestShopify<{
+			cartLinesUpdate: { cart: Shopify.Cart };
+		}>(UpdateCartQuery, { cartId, lines: [{ id, quantity }] });
+
+		if (error) {
+			console.log(error);
+			throw error;
+		}
+
+		const {
+			checkoutUrl: _checkoutUrl,
+			id: _cartId,
+			lines,
+			totalQuantity: _totalQuantity,
+		} = data.cartLinesUpdate.cart;
+
+		setCartId(_cartId);
+
+		if (checkoutUrl !== _checkoutUrl) {
+			setCheckoutUrl(_checkoutUrl);
+		}
+		setTotalQuantity(_totalQuantity);
+
+		if (lines.edges.length > 0) {
+			setItems(
+				lines.edges.map(({ node }) => ({
+					id: node.id,
+					merchandiseId: node.merchandise.id,
+					quantity: node.quantity,
+				}))
+			);
+		}
+	};
+
 	return (
 		<CartContext.Provider
-			value={{ addToCart, cartId, items, totalQuantity }}
+			value={{ addToCart, cartId, items, totalQuantity, updateCart }}
 		>
 			{children}
 		</CartContext.Provider>
