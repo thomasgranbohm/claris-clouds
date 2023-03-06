@@ -13,7 +13,11 @@ export const getStaticProps = getLayoutDataSSG();
 const Unauthpage = () => {
 	return (
 		<main className={classes["container"]}>
-			<MetaData defaultTitle="Clari's Clouds" />
+			<MetaData
+				defaultTitle="Clari's Clouds"
+				description="Stay tuned..."
+				canonical="/"
+			/>
 			<div className={classes["inner"]}>
 				<LogoSVG
 					className={classes["logo"]}
