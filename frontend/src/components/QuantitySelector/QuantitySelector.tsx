@@ -47,6 +47,7 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 				<Button
 					className={classes["button"]}
 					disabledClassName={classes["disabled"]}
+					activeClassName={classes["active"]}
 					isDisabled={value + 1 > max}
 					onPress={addQuantity}
 				>
