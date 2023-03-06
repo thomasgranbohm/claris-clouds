@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 import LogoSVG from "assets/images/logo.svg";
 
 import Heading from "components/Heading";
@@ -10,13 +12,15 @@ import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG();
 
+const { publicRuntimeConfig } = getConfig();
+
 const Unauthpage = () => {
 	return (
 		<main className={classes["container"]}>
 			<MetaData
 				defaultTitle="Clari's Clouds"
 				description="Stay tuned..."
-				canonical="/"
+				canonical={publicRuntimeConfig.PAGE_URL}
 			/>
 			<div className={classes["inner"]}>
 				<LogoSVG
