@@ -68,7 +68,7 @@ const GalleryPage: LayoutPage<GalleryPageProps> = ({
 
 	return (
 		<Layout campaign={campaign} {...layout}>
-			<MetaData title="Gallery" />
+			<MetaData title="Shop" />
 			{artworks.length > 0 &&
 				artworks.map((artwork) => (
 					<Row key={artwork.name}>

@@ -34,7 +34,7 @@ const LoginPage = () => {
 
 	return (
 		<main className={classes["container"]}>
-			<MetaData title="Login" />
+			<MetaData title="Login" noindex />
 			<div className={classes["form"]}>
 				<input
 					type="password"
