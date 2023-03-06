@@ -11,6 +11,7 @@ import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
+import MetafieldParser from "components/MetafieldParser";
 import OptionSelector from "components/OptionSelector";
 import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
@@ -82,6 +83,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 		featuredImage,
 		options: _options,
 		priceRange,
+		technical_description,
 		title,
 		totalInventory,
 		variants,
@@ -113,7 +115,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	const isDisabled = useMemo(
 		() =>
 			variant === null ||
-			(items.find((i) => i.merchandiseId === variant.id)?.quantity ||
+			(items.find((i) => i.merchandise.id === variant.id)?.quantity ||
 				0) >= variant.quantityAvailable,
 		[variant, items]
 	);
@@ -196,8 +198,8 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 							}
 
 							const existing = items.find(
-								({ merchandiseId }) =>
-									merchandiseId === variant.id
+								({ merchandise }) =>
+									merchandise.id === variant.id
 							);
 
 							if (
@@ -216,8 +218,17 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 					{descriptionHtml.length > 0 && (
 						<Row>
 							<Column>
-								<Heading type="h3">About the artwork</Heading>
 								<HtmlRenderer content={descriptionHtml} />
+							</Column>
+						</Row>
+					)}
+					{technical_description && (
+						<Row>
+							<Column>
+								<Heading type="h3">About the artwork</Heading>
+								<MetafieldParser
+									value={technical_description.value}
+								/>
 							</Column>
 						</Row>
 					)}

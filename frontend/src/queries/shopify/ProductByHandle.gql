@@ -18,6 +18,14 @@ query ProductByHandle($handle: String!) {
 			name
 			values
 		}
+		technical_description: metafield(
+			namespace: "descriptions"
+			key: "technical"
+		) {
+			key
+			namespace
+			value
+		}
 		totalInventory
 		variants(first: 10) {
 			edges {

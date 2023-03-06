@@ -13,10 +13,10 @@ export namespace Shopify {
 	};
 
 	export type ProductPreview = {
-		description: string;
 		featuredImage: Image;
 		handle: string;
 		id: string;
+		short_description: Shopify.MetaField<"descriptions", "short"> | null;
 		title: string;
 	};
 
@@ -45,10 +45,22 @@ export namespace Shopify {
 		sku: string;
 	}
 
+	export interface MetaFieldValue {
+		children?: MetaFieldValue[];
+		type: string;
+	}
+
+	export interface MetaField<Namespace extends string, Key extends string> {
+		key: Key;
+		namespace: Namespace;
+		value: string;
+	}
+
 	export interface Product extends ProductPreview {
 		descriptionHtml: string;
 		options: Shopify.ProductOption[];
 		priceRange: { minVariantPrice: Shopify.Price };
+		technical_description: MetaField<"descriptions", "technical"> | null;
 		totalInventory: number;
 		variants: Data<Variant[]>;
 	}
@@ -149,5 +161,40 @@ export namespace Responses {
 	}
 	export interface GetProductSlugs {
 		products: Shopify.Data<Pick<Shopify.Product, "handle">[]>;
+	}
+}
+
+export namespace Metafields {
+	export type All =
+		| Root
+		| List
+		| List
+		| ListItem
+		| Text
+		| Link
+		| Paragraph
+		| Heading;
+	interface Base<Type extends string> {
+		children: Metafields.All[];
+		type: Type;
+	}
+	export interface Root extends Base<"root"> {}
+	export interface List extends Base<"list"> {
+		listType: "unordered" | "ordered";
+	}
+	export interface ListItem extends Base<"list-item"> {}
+	export interface Text {
+		bold?: true;
+		type: "text";
+		value: string;
+	}
+	export interface Link extends Base<"link"> {
+		target?: "_blank";
+		title?: string;
+		url: string;
+	}
+	export interface Paragraph extends Base<"paragraph"> {}
+	export interface Heading extends Base<"heading"> {
+		level: 1 | 2 | 3 | 4 | 5 | 6;
 	}
 }

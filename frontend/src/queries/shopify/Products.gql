@@ -3,7 +3,14 @@ query Products {
 		edges {
 			node {
 				title
-				description
+				short_description: metafield(
+					namespace: "descriptions"
+					key: "short"
+				) {
+					key
+					namespace
+					value
+				}
 				handle
 				id
 				featuredImage {

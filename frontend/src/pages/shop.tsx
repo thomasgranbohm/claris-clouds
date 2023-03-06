@@ -48,13 +48,11 @@ const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
 					</Column>
 					<Column md={6} lg={[5, i % 2 === 1 ? 1 : 0]} align="center">
 						<Heading type="h2">{product.title}</Heading>
-						<Typography>
-							Lorem ipsum dolor sit amet consectetur, adipisicing
-							elit. Consectetur, recusandae quasi dolores fuga et
-							voluptas obcaecati. Molestiae tempore, dolorum eum
-							adipisci ex, at commodi reprehenderit, ut ratione
-							iste enim repellendus!
-						</Typography>
+						{product.short_description && (
+							<Typography>
+								{product.short_description.value}
+							</Typography>
+						)}
 						<Row>
 							<Column lg={6}>
 								<StyledLink href={`/product/${product.handle}`}>

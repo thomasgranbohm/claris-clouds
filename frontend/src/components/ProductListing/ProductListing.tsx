@@ -6,17 +6,14 @@ import { ShopifyImage } from "components/Image";
 import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
-import { Shopify } from "types/api/shopify";
 import { WithClassname } from "types/components";
 
 import classes from "./ProductListing.module.scss";
 
-interface ProductListingProps extends WithClassname {
-	items: Shopify.CartItem[];
-}
+interface ProductListingProps extends WithClassname {}
 
-const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
-	const { updateCart } = useCartContext();
+const ProductListing: FC<ProductListingProps> = ({ className }) => {
+	const { items, updateCart } = useCartContext();
 
 	return (
 		<ul className={clsx(classes["container"], className)}>

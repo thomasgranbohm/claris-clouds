@@ -46,9 +46,7 @@ const CartPage: LayoutPage = ({ layout }) => {
 					{loading ? (
 						<Typography>Loading...</Typography>
 					) : cart ? (
-						<ProductListing
-							items={cart?.lines.edges.map(({ node }) => node)}
-						/>
+						<ProductListing />
 					) : (
 						<Typography>Your cart is empty</Typography>
 					)}

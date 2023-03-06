@@ -11,10 +11,10 @@ import requestShopify from "api/shopify";
 
 import AddToCartQuery from "queries/shopify/AddToCart.gql";
 import CreateCartQuery from "queries/shopify/CreateCart.gql";
-import GetCartPreviewQuery from "queries/shopify/GetCartPreview.gql";
+import GetCartQuery from "queries/shopify/GetCart.gql";
 import UpdateCartQuery from "queries/shopify/UpdateCart.gql";
 
-import { Requests, Responses } from "types/api/shopify";
+import { Requests, Responses, Shopify } from "types/api/shopify";
 
 interface ItemSchema {
 	id: string; // CartLineId
@@ -26,7 +26,7 @@ interface CartContextSchema {
 	addToCart: (merchandiseId: string, quantity: number) => void;
 	// clearCart: () => void;
 	cartId: string;
-	items: ItemSchema[];
+	items: Shopify.CartItem[];
 	totalQuantity: number;
 	// removeFromCart: (merchandiseId: string) => void;
 	updateCart: (id: string, quantity: number) => void;
@@ -49,7 +49,7 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 }) => {
 	const [cartId, setCartId] = useState<string>("");
 	const [checkoutUrl, setCheckoutUrl] = useState<string>();
-	const [items, setItems] = useState<ItemSchema[]>([]);
+	const [items, setItems] = useState<Shopify.CartItem[]>([]);
 	const [totalQuantity, setTotalQuantity] = useState<number>(0);
 
 	// Save cartId
@@ -61,22 +61,13 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		} else if (!cartId && _cartId) {
 			setCartId(_cartId);
 
-			requestShopify<Responses.GetCartPreview, Requests.GetCartPreview>(
-				GetCartPreviewQuery,
-				{
-					id: _cartId,
-				}
-			).then(({ data }) => {
+			requestShopify<Responses.GetCart, Requests.GetCart>(GetCartQuery, {
+				id: _cartId,
+			}).then(({ data }) => {
 				const { lines, totalQuantity: _totalQuantity } = data.cart;
 
 				setTotalQuantity(_totalQuantity);
-				setItems(
-					lines.edges.map(({ node }) => ({
-						id: node.id,
-						merchandiseId: node.merchandise.id,
-						quantity: node.quantity,
-					}))
-				);
+				setItems(lines.edges.map(({ node }) => node));
 			});
 		}
 	}, [cartId]);
@@ -104,24 +95,19 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 				  }
 		).then(
 			({ data }) =>
-				("cartCreate" in data ? data.cartCreate : data["cartLinesAdd"])
+				("cartCreate" in data ? data.cartCreate : data.cartLinesAdd)
 					.cart
 		);
 
 		setCartId(id);
+		setTotalQuantity(_totalQuantity);
 
 		if (checkoutUrl !== _checkoutUrl) {
 			setCheckoutUrl(_checkoutUrl);
 		}
-		setTotalQuantity(_totalQuantity);
+
 		if (lines.edges.length > 0) {
-			setItems(
-				lines.edges.map(({ node }) => ({
-					id: node.id,
-					merchandiseId: node.merchandise.id,
-					quantity: node.quantity,
-				}))
-			);
+			setItems(lines.edges.map(({ node }) => node));
 		}
 	};
 
@@ -132,7 +118,6 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		>(UpdateCartQuery, { cartId, lines: [{ id, quantity }] });
 
 		if (error) {
-			console.log(error);
 			throw error;
 		}
 
@@ -144,20 +129,14 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		} = data.cartLinesUpdate.cart;
 
 		setCartId(_cartId);
+		setTotalQuantity(_totalQuantity);
 
 		if (checkoutUrl !== _checkoutUrl) {
 			setCheckoutUrl(_checkoutUrl);
 		}
-		setTotalQuantity(_totalQuantity);
 
 		if (lines.edges.length > 0) {
-			setItems(
-				lines.edges.map(({ node }) => ({
-					id: node.id,
-					merchandiseId: node.merchandise.id,
-					quantity: node.quantity,
-				}))
-			);
+			setItems(lines.edges.map(({ node }) => node));
 		}
 	};
 

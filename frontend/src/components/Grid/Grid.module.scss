@@ -76,5 +76,9 @@
 		width: calc(100% + #{functions.gutter()});
 		margin-top: functions.gutter();
 		margin-inline: functions.gutter(-1);
+
+		& + .row {
+			margin-top: 0;
+		}
 	}
 }

@@ -2,9 +2,17 @@ mutation UpdateCart($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
 	cartLinesUpdate(cartId: $cartId, lines: $lines) {
 		cart {
 			id
-			createdAt
-			updatedAt
 			checkoutUrl
+			cost {
+				subtotalAmount {
+					amount
+					currencyCode
+				}
+				totalAmount {
+					amount
+					currencyCode
+				}
+			}
 			lines(first: 10) {
 				edges {
 					node {
@@ -13,27 +21,27 @@ mutation UpdateCart($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
 						merchandise {
 							... on ProductVariant {
 								id
+								title
+								product {
+									title
+								}
+								quantityAvailable
+								selectedOptions {
+									name
+									value
+								}
+								image {
+									height
+									url
+									width
+								}
+								price {
+									amount
+									currencyCode
+								}
 							}
 						}
 					}
-				}
-			}
-			cost {
-				totalAmount {
-					amount
-					currencyCode
-				}
-				subtotalAmount {
-					amount
-					currencyCode
-				}
-				totalTaxAmount {
-					amount
-					currencyCode
-				}
-				totalDutyAmount {
-					amount
-					currencyCode
 				}
 			}
 		}
