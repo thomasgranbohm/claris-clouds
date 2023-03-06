@@ -14,9 +14,12 @@ const client = axios.create({
 	},
 });
 
-const requestShopify = async <T extends any | null>(
+const requestShopify = async <
+	T extends any | null,
+	U extends object | undefined = undefined
+>(
 	query: DocumentNode,
-	variables?: object
+	variables?: U
 ): Promise<Shopify.Response<T>> => {
 	try {
 		const { data } = await client.post(

@@ -9,15 +9,15 @@ import Typography from "components/Typography";
 
 import ProductsQuery from "queries/shopify/Products.gql";
 
-import { Shopify } from "types/api/shopify";
+import { Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
-	const resp = await requestShopify<{
-		products: Shopify.Data<Shopify.ProductPreview[]>;
-	}>(ProductsQuery);
+	const resp = await requestShopify<Responses.GetProductPreviews>(
+		ProductsQuery
+	);
 
 	return { props: resp.data };
 });

@@ -18,11 +18,10 @@ import Typography from "components/Typography";
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
 import ProductSlugs from "queries/shopify/ProductSlugs.gql";
 
-import { Shopify } from "types/api/shopify";
+import { Requests, Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSR } from "utils/getLayoutData";
-import stripWrapper from "utils/stripWrapper";
 
 export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
 	async ({ params }) => {
@@ -34,9 +33,10 @@ export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
 			};
 		}
 
-		const { data, error } = await requestShopify<{
-			product: Shopify.Data<Shopify.Product>;
-		}>(ProductByHandle, { handle: slug });
+		const { data, error } = await requestShopify<
+			Responses.GetProduct,
+			Requests.GetProduct
+		>(ProductByHandle, { handle: slug.toString() });
 
 		if (error) {
 			throw error;
@@ -56,9 +56,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	if (process.env.NODE_ENV !== "production") {
 		return { fallback: "blocking", paths: [] };
 	}
-	const { data, error } = await requestShopify<{
-		products: Shopify.Data<Pick<Shopify.Product, "handle">[]>;
-	}>(ProductSlugs);
+	const { data, error } = await requestShopify<Responses.GetProductSlugs>(
+		ProductSlugs
+	);
 
 	if (error) {
 		throw error;
@@ -139,7 +139,6 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 				</Column>
 				<Column md={6} align="start">
 					<Heading type="h1">{title}</Heading>
-
 					<Typography>
 						<b>Price:</b>{" "}
 						{variant ? (

@@ -14,12 +14,12 @@ import CreateCartQuery from "queries/shopify/CreateCart.gql";
 import GetCartPreviewQuery from "queries/shopify/GetCartPreview.gql";
 import UpdateCartQuery from "queries/shopify/UpdateCart.gql";
 
-import { Shopify } from "types/api/shopify";
+import { Requests, Responses } from "types/api/shopify";
 
 interface ItemSchema {
-	id: string;
+	id: string; // CartLineId
 	merchandiseId: string; // VariantId
-	quantity: number; // CartLineId
+	quantity: number;
 }
 
 interface CartContextSchema {
@@ -61,9 +61,12 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		} else if (!cartId && _cartId) {
 			setCartId(_cartId);
 
-			requestShopify<{ cart: Shopify.Cart }>(GetCartPreviewQuery, {
-				id: _cartId,
-			}).then(({ data }) => {
+			requestShopify<Responses.GetCartPreview, Requests.GetCartPreview>(
+				GetCartPreviewQuery,
+				{
+					id: _cartId,
+				}
+			).then(({ data }) => {
 				const { lines, totalQuantity: _totalQuantity } = data.cart;
 
 				setTotalQuantity(_totalQuantity);
@@ -87,10 +90,8 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 			lines,
 			totalQuantity: _totalQuantity,
 		} = await requestShopify<
-			| {
-					cartLinesAdd: { cart: Shopify.Cart };
-			  }
-			| { cartCreate: { cart: Shopify.Cart } }
+			Responses.AddToCart | Responses.CreateCart,
+			Requests.AddToCart | Requests.CreateCart
 		>(
 			cartId ? AddToCartQuery : CreateCartQuery,
 			cartId
@@ -125,9 +126,10 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 	};
 
 	const updateCart = async (id: string, quantity: number) => {
-		const { data, error } = await requestShopify<{
-			cartLinesUpdate: { cart: Shopify.Cart };
-		}>(UpdateCartQuery, { cartId, lines: [{ id, quantity }] });
+		const { data, error } = await requestShopify<
+			Responses.UpdateCart,
+			Requests.UpdateCart
+		>(UpdateCartQuery, { cartId, lines: [{ id, quantity }] });
 
 		if (error) {
 			console.log(error);

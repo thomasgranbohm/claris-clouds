@@ -53,10 +53,9 @@ const ProductListing: FC<ProductListingProps> = ({ className, items }) => {
 							)
 						)}
 					</div>
-
 					<QuantitySelector
 						className={classes["quantity"]}
-						max={5}
+						max={item.merchandise.quantityAvailable}
 						value={item.quantity}
 						onChange={(v) => updateCart(item.id, v)}
 					/>

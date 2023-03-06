@@ -12,7 +12,7 @@ import Typography from "components/Typography";
 
 import GetCart from "queries/shopify/GetCart.gql";
 
-import { Shopify } from "types/api/shopify";
+import { Requests, Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
@@ -28,7 +28,8 @@ const CartPage: LayoutPage = ({ layout }) => {
 	useEffect(() => {
 		if (cartId) {
 			setLoading(true);
-			requestShopify<{ cart: Shopify.Cart }>(GetCart, {
+
+			requestShopify<Responses.GetCart, Requests.GetCart>(GetCart, {
 				id: cartId,
 			}).then(({ data }) => {
 				setCart(data.cart);
