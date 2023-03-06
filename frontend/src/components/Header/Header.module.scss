@@ -44,7 +44,7 @@
 		.button {
 			grid-area: toggle;
 			justify-self: flex-end;
-			color: colors.get("accent");
+			color: colors.get("foreground");
 
 			.icon {
 				height: 2rem;
