@@ -61,12 +61,17 @@
 	}
 
 	&.open {
-		height: unset;
+		height: 100%;
 		position: fixed !important;
 		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		overflow-y: auto;
 
 		.inner {
-			min-height: 100vh;
+			min-height: 100%;
 
 			.navigation {
 				display: grid;
