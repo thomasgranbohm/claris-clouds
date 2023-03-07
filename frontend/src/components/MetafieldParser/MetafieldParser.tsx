@@ -32,7 +32,7 @@ const MetafieldParser: FC<MetafieldParserProps> = ({
 				);
 			case "list":
 				return (
-					<List variant={field.listType}>
+					<List {...props} variant={field.listType}>
 						{field.children.map(parseMetafield)}
 					</List>
 				);
@@ -50,7 +50,7 @@ const MetafieldParser: FC<MetafieldParserProps> = ({
 				return field.bold ? (
 					<strong {...props}>{field.value}</strong>
 				) : (
-					<Fragment>{field.value}</Fragment>
+					<Fragment {...props}>{field.value}</Fragment>
 				);
 			case "link":
 				return (

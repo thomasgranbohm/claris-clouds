@@ -47,6 +47,11 @@ const nextConfig = {
 				source: "/artwork",
 				permanent: true,
 			},
+			{
+				destination: "/artwork/:name",
+				source: "/product/:name([a-zA-Z\\-\\_]+)",
+				permanent: true,
+			},
 		];
 	},
 	publicRuntimeConfig: {

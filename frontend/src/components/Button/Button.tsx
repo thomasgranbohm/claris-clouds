@@ -28,10 +28,15 @@ const Button: FC<ButtonProps> = ({
 	className,
 	disabledClassName,
 	focusedClassname,
+	isDisabled,
+	onPress,
 	...props
 }) => {
 	const ref = useRef(null);
-	const { buttonProps, isPressed } = useButton(props, ref);
+	const { buttonProps, isPressed } = useButton(
+		{ ...props, isDisabled, onPress },
+		ref
+	);
 	const { focusProps, focusVisibleClass, isFocusVisible, isFocused } =
 		useFocusRing();
 
