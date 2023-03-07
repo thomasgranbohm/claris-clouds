@@ -135,6 +135,10 @@ export namespace Requests {
 	export interface GetProduct {
 		handle: string;
 	}
+	export interface RemoveFromCart {
+		cartId: string;
+		lineIds: string[];
+	}
 }
 
 export namespace Responses {
@@ -161,6 +165,11 @@ export namespace Responses {
 	}
 	export interface GetProductSlugs {
 		products: Shopify.Data<Pick<Shopify.Product, "handle">[]>;
+	}
+	export interface RemoveFromCart {
+		cartLinesRemove: {
+			cart: Shopify.Cart;
+		};
 	}
 }
 

@@ -12,6 +12,7 @@ import requestShopify from "api/shopify";
 import AddToCartQuery from "queries/shopify/AddToCart.gql";
 import CreateCartQuery from "queries/shopify/CreateCart.gql";
 import GetCartQuery from "queries/shopify/GetCart.gql";
+import RemoveFromCartQuery from "queries/shopify/RemoveFromCart.gql";
 import UpdateCartQuery from "queries/shopify/UpdateCart.gql";
 
 import { Requests, Responses, Shopify } from "types/api/shopify";
@@ -27,9 +28,10 @@ interface CartContextSchema {
 	// clearCart: () => void;
 	cartId: string;
 	items: Shopify.CartItem[];
+	removeFromCart: (cartLineId: string) => void;
 	totalQuantity: number;
-	// removeFromCart: (merchandiseId: string) => void;
 	updateCart: (id: string, quantity: number) => void;
+	updating: boolean;
 }
 
 export const CartContext = createContext<CartContextSchema>({
@@ -37,9 +39,10 @@ export const CartContext = createContext<CartContextSchema>({
 	// clearCart: () => void 0,
 	cartId: "",
 	items: [],
+	removeFromCart: () => void 0,
 	totalQuantity: 0,
-	// removeFromCart: () => void 0,
 	updateCart: () => void 0,
+	updating: false,
 });
 
 export const useCartContext = () => useContext(CartContext);
@@ -52,53 +55,14 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 	const [items, setItems] = useState<Shopify.CartItem[]>([]);
 	const [totalQuantity, setTotalQuantity] = useState<number>(0);
 
-	// Save cartId
-	useEffect(() => {
-		const _cartId = window.localStorage.getItem("cart-id");
+	const [updating, setUpdating] = useState<boolean>(false);
 
-		if (cartId && !_cartId) {
-			window.localStorage.setItem("cart-id", cartId);
-		} else if (!cartId && _cartId) {
-			setCartId(_cartId);
-
-			requestShopify<Responses.GetCart, Requests.GetCart>(GetCartQuery, {
-				id: _cartId,
-			}).then(({ data }) => {
-				const { lines, totalQuantity: _totalQuantity } = data.cart;
-
-				setTotalQuantity(_totalQuantity);
-				setItems(lines.edges.map(({ node }) => node));
-			});
-		}
-	}, [cartId]);
-
-	const addToCart = async (variantId: string, quantity: number) => {
-		setTotalQuantity((q) => q + quantity);
-
-		const {
-			checkoutUrl: _checkoutUrl,
-			id,
-			lines,
-			totalQuantity: _totalQuantity,
-		} = await requestShopify<
-			Responses.AddToCart | Responses.CreateCart,
-			Requests.AddToCart | Requests.CreateCart
-		>(
-			cartId ? AddToCartQuery : CreateCartQuery,
-			cartId
-				? {
-						cartId,
-						lines: [{ merchandiseId: variantId, quantity }],
-				  }
-				: {
-						lines: [{ merchandiseId: variantId, quantity }],
-				  }
-		).then(
-			({ data }) =>
-				("cartCreate" in data ? data.cartCreate : data.cartLinesAdd)
-					.cart
-		);
-
+	const updateCartInfo = ({
+		checkoutUrl: _checkoutUrl,
+		id,
+		lines,
+		totalQuantity: _totalQuantity,
+	}: Shopify.Cart) => {
 		setCartId(id);
 		setTotalQuantity(_totalQuantity);
 
@@ -111,7 +75,68 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 		}
 	};
 
+	// Save cartId
+	useEffect(() => {
+		const _cartId = window.localStorage.getItem("cart-id");
+
+		if (cartId && !_cartId) {
+			window.localStorage.setItem("cart-id", cartId);
+		} else if (!cartId && _cartId) {
+			setCartId(_cartId);
+			setUpdating(true);
+
+			requestShopify<Responses.GetCart, Requests.GetCart>(GetCartQuery, {
+				id: _cartId,
+			})
+				.then(({ data }) => {
+					const { lines, totalQuantity: _totalQuantity } = data.cart;
+
+					setTotalQuantity(_totalQuantity);
+					setItems(lines.edges.map(({ node }) => node));
+				})
+				.finally(() => {
+					setUpdating(false);
+				});
+		}
+	}, [cartId]);
+
+	const addToCart = async (merchandiseId: string, quantity: number) => {
+		setUpdating(true);
+		setTotalQuantity((q) => q + quantity);
+
+		const cart = await requestShopify<
+			Responses.AddToCart | Responses.CreateCart,
+			Requests.AddToCart | Requests.CreateCart
+		>(
+			cartId ? AddToCartQuery : CreateCartQuery,
+			cartId
+				? {
+						cartId,
+						lines: [{ merchandiseId, quantity }],
+				  }
+				: {
+						lines: [{ merchandiseId, quantity }],
+				  }
+		).then(
+			({ data }) =>
+				("cartCreate" in data ? data.cartCreate : data.cartLinesAdd)
+					.cart
+		);
+
+		updateCartInfo(cart);
+		setUpdating(false);
+	};
+
 	const updateCart = async (id: string, quantity: number) => {
+		setUpdating(true);
+		const nItems = items.slice();
+
+		const nId = nItems.findIndex((a) => a.id === id);
+
+		nItems[nId].quantity = quantity;
+
+		setItems(nItems);
+
 		const { data, error } = await requestShopify<
 			Responses.UpdateCart,
 			Requests.UpdateCart
@@ -121,28 +146,49 @@ export const CartContextProvider: FC<{ children: ReactNode }> = ({
 			throw error;
 		}
 
-		const {
-			checkoutUrl: _checkoutUrl,
-			id: _cartId,
-			lines,
-			totalQuantity: _totalQuantity,
-		} = data.cartLinesUpdate.cart;
+		updateCartInfo(data.cartLinesUpdate.cart);
 
-		setCartId(_cartId);
-		setTotalQuantity(_totalQuantity);
+		setUpdating(false);
+	};
 
-		if (checkoutUrl !== _checkoutUrl) {
-			setCheckoutUrl(_checkoutUrl);
+	const removeFromCart = async (cartLineId: string) => {
+		setUpdating(true);
+
+		setItems((_items) => {
+			const i = _items.findIndex((item) => item.id === cartLineId);
+
+			if (i === -1) {
+				return _items;
+			}
+
+			return [..._items.slice(0, i), ...items.slice(i + 1)];
+		});
+
+		const { data, error } = await requestShopify<
+			Responses.RemoveFromCart,
+			Requests.RemoveFromCart
+		>(RemoveFromCartQuery, { cartId, lineIds: [cartLineId] });
+
+		if (error) {
+			throw error;
 		}
 
-		if (lines.edges.length > 0) {
-			setItems(lines.edges.map(({ node }) => node));
-		}
+		updateCartInfo(data.cartLinesRemove.cart);
+
+		setUpdating(false);
 	};
 
 	return (
 		<CartContext.Provider
-			value={{ addToCart, cartId, items, totalQuantity, updateCart }}
+			value={{
+				addToCart,
+				cartId,
+				items,
+				removeFromCart,
+				totalQuantity,
+				updateCart,
+				updating,
+			}}
 		>
 			{children}
 		</CartContext.Provider>

@@ -16,11 +16,12 @@ import { Requests, Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
+import parsePrice from "utils/parsePrice";
 
 export const getStaticProps = getLayoutDataSSG();
 
 const CartPage: LayoutPage = ({ layout }) => {
-	const { cartId } = useCartContext();
+	const { cartId, updating } = useCartContext();
 
 	const [cart, setCart] = useState<Shopify.Cart | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -57,8 +58,7 @@ const CartPage: LayoutPage = ({ layout }) => {
 					<Column justify="end" md={[4, 8]}>
 						<Typography>
 							<b>Subtotal:</b>{" "}
-							{Number(cart.cost.subtotalAmount.amount).toFixed(2)}{" "}
-							{cart.cost.subtotalAmount.currencyCode}
+							{parsePrice(cart.cost.subtotalAmount)}
 						</Typography>
 						<Typography size="small" color="gray">
 							Tax included and shipping calculated at checkout
@@ -69,8 +69,11 @@ const CartPage: LayoutPage = ({ layout }) => {
 			{cart?.checkoutUrl && (
 				<Row>
 					<Column justify="end" md={[4, 8]}>
-						<StyledLink href={cart.checkoutUrl}>
-							Checkout
+						<StyledLink
+							href={cart.checkoutUrl}
+							isDisabled={updating}
+						>
+							{updating ? "Loading..." : "Checkout"}
 						</StyledLink>
 					</Column>
 				</Row>
