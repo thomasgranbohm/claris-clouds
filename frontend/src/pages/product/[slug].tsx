@@ -191,7 +191,15 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 					/>
 					<StyledButton
 						isDisabled={isDisabled}
-						title={isDisabled ? "Variant is sold out" : ""}
+						title={
+							variant === null
+								? "Please choose a variant"
+								: (items.find(
+										(i) => i.merchandise.id === variant.id
+								  )?.quantity || 0) >= variant.quantityAvailable
+								? "Variant is sold out"
+								: ""
+						}
 						onPress={() => {
 							if (!variant) {
 								return null;

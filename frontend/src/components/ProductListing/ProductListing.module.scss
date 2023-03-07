@@ -12,7 +12,7 @@
 		grid-template: "image information total" auto "image quantity quantity" auto / auto 1fr auto;
 
 		@include mixins.breakpoint(md) {
-			grid-template: "image information quantity total" 1fr / auto 1fr auto auto;
+			grid-template: "image information quantity total" 1fr / auto 1fr 12rem 8rem;
 		}
 
 		.title,

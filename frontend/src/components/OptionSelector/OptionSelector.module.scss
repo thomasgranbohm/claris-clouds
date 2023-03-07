@@ -3,7 +3,7 @@
 @use "styles/mixins";
 
 .container {
-	margin-top: functions.gutter();
+	margin-top: functions.gutter(0.5);
 
 	.list {
 		list-style-type: none;

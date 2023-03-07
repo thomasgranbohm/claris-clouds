@@ -29,7 +29,7 @@
 		margin-top: functions.gutter();
 		border-radius: functions.gutter(0.5);
 
-		transition: 0.2s box-shadow;
+		transition: 0.2s box-shadow, 0.1s background-color;
 
 		.title {
 			margin: 0;

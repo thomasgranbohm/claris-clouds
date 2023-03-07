@@ -1,17 +1,9 @@
-import {
-	ButtonHTMLAttributes,
-	FC,
-	forwardRef,
-	ForwardRefRenderFunction,
-	MutableRefObject,
-	useRef,
-} from "react";
+import { ButtonHTMLAttributes, FC, useRef } from "react";
 import { AriaButtonProps, useButton } from "react-aria";
 import clsx from "clsx";
 
 import FocusRing from "components/FocusRing";
 import Heading from "components/Heading";
-import Typography from "components/Typography";
 
 import { WithClassname } from "types/components";
 
