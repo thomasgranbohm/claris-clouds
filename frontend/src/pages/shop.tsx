@@ -52,7 +52,7 @@ const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
 						)}
 						<Row>
 							<Column lg={6}>
-								<StyledLink href={`/product/${product.handle}`}>
+								<StyledLink href={`/artwork/${product.handle}`}>
 									Buy a print
 								</StyledLink>
 							</Column>

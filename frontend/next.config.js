@@ -38,12 +38,12 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
-				destination: "/gallery",
+				destination: "/shop",
 				source: "/artworks",
 				permanent: true,
 			},
 			{
-				destination: "/gallery",
+				destination: "/shop",
 				source: "/artwork",
 				permanent: true,
 			},
