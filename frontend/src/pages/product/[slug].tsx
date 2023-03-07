@@ -11,6 +11,7 @@ import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
+import MetaData from "components/MetaData";
 import MetafieldParser from "components/MetafieldParser";
 import OptionSelector from "components/OptionSelector";
 import QuantitySelector from "components/QuantitySelector";
@@ -83,6 +84,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 		featuredImage,
 		options: _options,
 		priceRange,
+		short_description,
 		technical_description,
 		title,
 		totalInventory,
@@ -122,6 +124,15 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 
 	return (
 		<Layout {...layout}>
+			<MetaData
+				title={title}
+				description={
+					short_description !== null
+						? short_description.value
+						: undefined
+				}
+				images={[featuredImage]}
+			/>
 			<Row>
 				<Column md={6}>
 					<ShopifyImage

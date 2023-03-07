@@ -18,6 +18,11 @@ query ProductByHandle($handle: String!) {
 			name
 			values
 		}
+		short_description: metafield(namespace: "descriptions", key: "short") {
+			key
+			namespace
+			value
+		}
 		technical_description: metafield(
 			namespace: "descriptions"
 			key: "technical"
