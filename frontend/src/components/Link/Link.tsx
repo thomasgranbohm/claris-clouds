@@ -3,7 +3,7 @@ import { AriaLinkOptions, useLink } from "react-aria";
 import clsx from "clsx";
 import NextLink from "next/link";
 
-import FocusRing from "components/aria/FocusRing";
+import FocusRing from "components/FocusRing";
 import Heading from "components/Heading";
 
 import { WithChildren, WithClassname } from "types/components";
@@ -15,6 +15,7 @@ export interface LinkProps
 		WithClassname,
 		AriaLinkOptions {
 	asWrapper?: boolean;
+	disabledClassName?: string;
 	href: string;
 	target?: string;
 }
@@ -35,9 +36,15 @@ export const StyledLink: FC<LinkProps> = ({ children, ...props }) => {
 	);
 };
 
-const Link: FC<LinkProps> = ({ asWrapper, className, ...props }) => {
+const Link: FC<LinkProps> = ({
+	asWrapper,
+	className,
+	disabledClassName,
+	isDisabled,
+	...props
+}) => {
 	const ref = useRef<HTMLAnchorElement>(null);
-	const { linkProps } = useLink(props, ref);
+	const { linkProps } = useLink({ ...props, isDisabled }, ref);
 	const { children, href } = props;
 
 	return (
@@ -50,6 +57,7 @@ const Link: FC<LinkProps> = ({ asWrapper, className, ...props }) => {
 				className={clsx(
 					classes["container"],
 					asWrapper && classes["wrapper"],
+					isDisabled && disabledClassName,
 					className
 				)}
 			>

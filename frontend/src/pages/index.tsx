@@ -49,7 +49,7 @@ const StartPage: LayoutPage<StartPageProps> = ({
 			<MetaData
 				defaultTitle={seo?.title || title}
 				description={seo?.description}
-				image={seo?.image}
+				images={[seo?.image]}
 			/>
 			<Cover
 				background={stripWrapper(background)}

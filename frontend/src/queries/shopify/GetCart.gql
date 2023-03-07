@@ -1,0 +1,7 @@
+#import "../fragments/Cart.fragment.gql"
+
+query GetCart($id: ID!) {
+	cart(id: $id) {
+		...CartFragment
+	}
+}

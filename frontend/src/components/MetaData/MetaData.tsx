@@ -3,14 +3,20 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import { NextSeo, NextSeoProps } from "next-seo";
 
-import { GraphQL, ImageFormat, ImageSchema } from "types/api/strapi";
+import { GraphQL, ImageSchema } from "types/api/strapi";
 
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
+interface ImageFormat {
+	height?: number;
+	url: string;
+	width?: number;
+}
+
 interface MetaDataProps extends NextSeoProps {
 	description?: string;
-	image?: ImageSchema | GraphQL.Data<ImageSchema>;
+	images?: Array<ImageFormat | GraphQL.Data<ImageSchema> | undefined>;
 	path?: string;
 	title?: string;
 }
@@ -18,19 +24,13 @@ interface MetaDataProps extends NextSeoProps {
 const MetaData: FC<MetaDataProps> = ({
 	canonical,
 	description,
-	image: _image,
+	images,
 	path,
 	title,
 	...props
 }) => {
 	const router = useRouter();
 	const { publicRuntimeConfig } = getConfig();
-	const image =
-		_image && "data" in _image
-			? _image.data !== null
-				? stripWrapper(_image)
-				: undefined
-			: _image;
 
 	return (
 		<NextSeo
@@ -45,32 +45,29 @@ const MetaData: FC<MetaDataProps> = ({
 				type: "website",
 				...props.openGraph,
 				description,
-				images: image
-					? [
+				images: (images || []).reduce<ImageFormat[]>((p, image) => {
+					if (!image) {
+						return p;
+					}
+
+					if ("data" in image) {
+						const a = stripWrapper(image);
+
+						return [
+							...p,
 							{
-								alt: image.alternativeText,
-								height: image.height,
-								url:
-									publicRuntimeConfig.PAGE_URL +
-									getImageLink(image),
-								width: image.width,
+								...a,
+								url: getImageLink(a),
 							},
-							...Object.entries(image.formats)
-								.reduce<ImageFormat[]>(
-									(p, c) =>
-										c[0] !== "base64" ? [...p, c[1]] : p,
-									[]
-								)
-								.map(({ height, width, ...i }) => ({
-									alt: image.alternativeText,
-									height,
-									url:
-										publicRuntimeConfig.PAGE_URL +
-										getImageLink(i),
-									width,
-								})),
-					  ]
-					: [],
+							...Object.values(a.formats).map((b) => ({
+								...b,
+								url: getImageLink(b),
+							})),
+						];
+					}
+
+					return [...p, image];
+				}, []),
 				title,
 			}}
 		/>

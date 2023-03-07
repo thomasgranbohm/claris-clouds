@@ -1,6 +1,10 @@
 import { FC } from "react";
-import NextImage, { ImageProps as NextImageProps } from "next/image";
+import NextImage, {
+	ImageLoader,
+	ImageProps as NextImageProps,
+} from "next/image";
 
+import { Shopify } from "types/api/shopify";
 import { GraphQL, ImageSchema } from "types/api/strapi";
 
 import getImageLink from "utils/getImageLink";
@@ -12,6 +16,55 @@ export const NoWhitespaceImage: FC<StrapiImageProps> = ({
 }) => {
 	return (
 		<StrapiImage {...props} style={{ ...style, verticalAlign: "bottom" }} />
+	);
+};
+
+interface ShopifyImageProps extends Partial<NextImageProps> {
+	image: Shopify.Image;
+}
+
+const ShopifyImageLoader: ImageLoader = ({ quality, src, width }) => {
+	const url = new URL(src);
+
+	url.searchParams.append("width", width.toString());
+
+	if (quality) {
+		url.searchParams.append("quality", quality.toString());
+	}
+
+	return url.toString();
+};
+
+export const ShopifyImage: FC<ShopifyImageProps> = ({
+	fill,
+	height: _height,
+	image,
+	style,
+	width: _width,
+	...props
+}) => {
+	const { altText, height, url, width } = image;
+
+	return (
+		<NextImage
+			width={!fill ? _width || width : undefined}
+			height={!fill ? _height || height : undefined}
+			{...props}
+			style={{
+				...style,
+				backgroundImage: `url(${ShopifyImageLoader({
+					src: url,
+					width: 16,
+				})})`,
+				backgroundPosition: "center",
+				backgroundRepeat: "no-repeat",
+				backgroundSize: "100% 100%",
+			}}
+			fill={fill}
+			loader={ShopifyImageLoader}
+			src={url}
+			alt={altText || ""}
+		/>
 	);
 };
 
@@ -52,5 +105,3 @@ export const StrapiImage: FC<StrapiImageProps> = ({
 		/>
 	);
 };
-
-export default StrapiImage;

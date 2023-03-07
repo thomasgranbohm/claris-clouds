@@ -1,0 +1,9 @@
+#import "../fragments/Cart.fragment.gql"
+
+mutation RemoveFromCart($cartId: ID!, $lineIds: [ID!]!) {
+	cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+		cart {
+			...CartFragment
+		}
+	}
+}

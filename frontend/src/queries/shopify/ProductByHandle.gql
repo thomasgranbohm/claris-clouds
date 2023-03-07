@@ -1,0 +1,59 @@
+query ProductByHandle($handle: String!) {
+	product(handle: $handle) {
+		title
+		descriptionHtml
+		priceRange {
+			minVariantPrice {
+				amount
+				currencyCode
+			}
+		}
+		featuredImage {
+			altText
+			height
+			url
+			width
+		}
+		options {
+			name
+			values
+		}
+		short_description: metafield(namespace: "descriptions", key: "short") {
+			key
+			namespace
+			value
+		}
+		technical_description: metafield(
+			namespace: "descriptions"
+			key: "technical"
+		) {
+			key
+			namespace
+			value
+		}
+		totalInventory
+		variants(first: 10) {
+			edges {
+				node {
+					sku
+					id
+					currentlyNotInStock
+					quantityAvailable
+					selectedOptions {
+						name
+						value
+					}
+					price {
+						amount
+						currencyCode
+					}
+					image {
+						height
+						url
+						width
+					}
+				}
+			}
+		}
+	}
+}

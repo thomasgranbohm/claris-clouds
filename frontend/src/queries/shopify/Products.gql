@@ -1,0 +1,25 @@
+query Products {
+	products(first: 10) {
+		edges {
+			node {
+				title
+				short_description: metafield(
+					namespace: "descriptions"
+					key: "short"
+				) {
+					key
+					namespace
+					value
+				}
+				handle
+				id
+				featuredImage {
+					altText
+					height
+					url
+					width
+				}
+			}
+		}
+	}
+}

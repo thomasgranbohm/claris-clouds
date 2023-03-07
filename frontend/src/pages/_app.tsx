@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { SSRProvider } from "react-aria";
+import { CartContextProvider } from "contexts/CartContext";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
 import Head from "next/head";
@@ -8,7 +9,7 @@ import { DefaultSeo } from "next-seo";
 import { MetaTag } from "next-seo/lib/types";
 import ProgressBar from "nextjs-progressbar";
 
-import FocusRing from "components/aria/FocusRing";
+import FocusRing from "components/FocusRing";
 
 import variables from "styles/exports.module.scss";
 
@@ -46,36 +47,38 @@ function CustomApp({
 
 	return (
 		<SSRProvider>
-			<Head>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1.0"
+			<CartContextProvider>
+				<Head>
+					<meta
+						name="viewport"
+						content="width=device-width, initial-scale=1.0"
+					/>
+				</Head>
+				<DefaultSeo
+					titleTemplate={page_prefix}
+					canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
+					additionalMetaTags={
+						metatags
+							? (metatags.map(({ content, name, property }) => ({
+									content,
+									name,
+									property,
+							  })) as MetaTag[])
+							: []
+					}
 				/>
-			</Head>
-			<DefaultSeo
-				titleTemplate={page_prefix}
-				additionalMetaTags={
-					metatags
-						? (metatags.map(({ content, name, property }) => ({
-								content,
-								name,
-								property,
-						  })) as MetaTag[])
-						: []
-				}
-				canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
-			/>
-			<FocusRing>
-				<a href="#main-content" className="skip-link">
-					Skip to main content
-				</a>
-			</FocusRing>
-			<ProgressBar
-				color={variables.color_accent}
-				nonce="claris-clouds-progress-bar"
-				options={{ easing: "ease", showSpinner: false, speed: 500 }}
-			/>
-			<Component {...pageProps} />
+				<FocusRing>
+					<a href="#main-content" className="skip-link">
+						Skip to main content
+					</a>
+				</FocusRing>
+				<ProgressBar
+					color={variables.color_accent}
+					nonce="claris-clouds-progress-bar"
+					options={{ easing: "ease", showSpinner: false, speed: 500 }}
+				/>
+				<Component {...pageProps} />
+			</CartContextProvider>
 		</SSRProvider>
 	);
 }

@@ -20,8 +20,8 @@
 	.inner {
 		display: grid;
 		grid-template-rows: auto 1fr;
-		grid-template-columns: auto auto;
-		grid-template-areas: "home toggle" "navigation navigation";
+		grid-template-columns: 1fr auto auto;
+		grid-template-areas: "home cart hamburger" "navigation navigation navigation";
 
 		.home-link,
 		.button {
@@ -42,13 +42,57 @@
 		}
 
 		.button {
-			grid-area: toggle;
+			grid-area: hamburger;
 			justify-self: flex-end;
 			color: colors.get("foreground");
 
 			.icon {
 				height: 2rem;
 				width: 2rem;
+			}
+		}
+
+		.cart {
+			grid-area: cart;
+			position: relative;
+			padding: functions.gutter(1);
+			transition: color 0.1s;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+
+			.icon {
+				height: auto;
+				width: 2rem;
+				color: colors.get(foreground);
+				transition: color 0.1s;
+			}
+
+			.quantity {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				padding: functions.gutter(0.5);
+				width: functions.gutter(1.5);
+				height: functions.gutter(1.5);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				border-radius: 2rem;
+				background-color: colors.get("accent");
+				@include mixins.text-contrast(colors.get("accent"));
+			}
+
+			@include mixins.has-general-focus {
+				.icon {
+					color: colors.get("accent");
+				}
+			}
+
+			&.active .icon {
+				color: colors.get("accent");
 			}
 		}
 
@@ -83,7 +127,7 @@
 		.inner {
 			grid-template-rows: 1fr;
 			grid-template-columns: auto 1fr;
-			grid-template-areas: "home navigation";
+			grid-template-areas: "home navigation cart";
 
 			.button {
 				display: none;
@@ -92,8 +136,9 @@
 			.navigation {
 				display: flex;
 				padding: unset;
-				padding-right: functions.gutter();
 			}
+
+			padding-right: functions.gutter();
 		}
 	}
 }

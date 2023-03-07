@@ -73,7 +73,7 @@ const GenericPage: LayoutPage<GenericPageProps> = ({
 			<MetaData
 				title={seo?.title || title}
 				description={seo?.description}
-				image={seo?.image}
+				images={[seo?.image]}
 			/>
 			<Row>
 				<Column md={[8, 2]} lg={[6, 3]}>

@@ -64,6 +64,7 @@ export const Column: FC<ColumnProps> = ({
 interface RowProps extends WithChildren, WithClassname {
 	"column-gap"?: GAP_VALUES;
 	gap?: GAP_VALUES;
+	reverse?: boolean;
 	"row-gap"?: GAP_VALUES;
 }
 
@@ -72,6 +73,7 @@ export const Row: FC<RowProps> = ({
 	className,
 	"column-gap": columnGap,
 	gap = "single",
+	reverse,
 	"row-gap": rowGap,
 }) => {
 	return (
@@ -80,6 +82,7 @@ export const Row: FC<RowProps> = ({
 				classes["row"],
 				classes[`column-gap--${columnGap || gap}`],
 				classes[`row-gap--${rowGap || gap}`],
+				reverse && classes["reverse"],
 				className
 			)}
 		>

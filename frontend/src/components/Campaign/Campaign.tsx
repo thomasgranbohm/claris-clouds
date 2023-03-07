@@ -1,7 +1,7 @@
 import { FC, useEffect, useId, useState } from "react";
 import clsx from "clsx";
 
-import Button from "components/aria/Button";
+import Button from "components/Button";
 import Icon from "components/Icon";
 import Link from "components/Link";
 import Typography from "components/Typography";

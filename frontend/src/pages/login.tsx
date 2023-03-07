@@ -1,9 +1,7 @@
 import { useId, useRef } from "react";
 import { useButton } from "react-aria";
-import { PressEvent } from "@react-types/shared";
 import { useRouter } from "next/router";
 
-import Button from "components/aria/Button";
 import Heading from "components/Heading";
 import MetaData from "components/MetaData";
 

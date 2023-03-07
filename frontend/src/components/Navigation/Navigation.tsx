@@ -64,7 +64,7 @@ const Navigation: FC<NavigationProps> = ({ className, links, socials }) => {
 					{links.map((props, i) => (
 						<NavigationLink
 							{...props}
-							active={router.pathname === props.path}
+							active={router.asPath === props.path}
 							key={i}
 						/>
 					))}

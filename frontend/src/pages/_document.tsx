@@ -99,16 +99,17 @@ const CustomDocument = () => {
 				/>
 				<meta name="theme-color" content="#ffffff" />
 				{/* Google Tag Manager */}
-				<Script id="google-tagmananger" strategy="afterInteractive">
-					{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${publicRuntimeConfig.GTM_ID}');`}
-				</Script>
+				{publicRuntimeConfig.GTM_ID && (
+					<Script id="google-tagmananger" strategy="afterInteractive">
+						{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${publicRuntimeConfig.GTM_ID}');`}
+					</Script>
+				)}
 				{/* MailChimp */}
-				<script
-					id="mcjs"
-					dangerouslySetInnerHTML={{
-						__html: '!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/4fc70238f00a96645f92bbf56/0d57517a5b6a1ce7894d92fdd.js");',
-					}}
-				></script>
+				<Script id="mcjs" strategy="afterInteractive">
+					{
+						'!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/4fc70238f00a96645f92bbf56/0d57517a5b6a1ce7894d92fdd.js");'
+					}
+				</Script>
 			</Head>
 			<body>
 				<Main />

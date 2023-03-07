@@ -1,105 +1,71 @@
-import { useState } from "react";
-
-import { getArtworks } from "api/artwork";
+import requestShopify from "api/shopify";
 
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
-import { NoWhitespaceImage } from "components/Image";
+import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
-import MetaData from "components/MetaData";
 import Typography from "components/Typography";
 
-import { useObserver } from "hooks/useObserver";
+import ProductsQuery from "queries/shopify/Products.gql";
 
-import ArtworkSchema from "types/api/artwork";
-import { PaginationSchema } from "types/api/strapi";
+import { Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
-import stripWrapper from "utils/stripWrapper";
 
-export const getStaticProps = getLayoutDataSSG<GalleryPageProps>(async () => {
-	const { data, error } = await getArtworks();
-
-	if (error) {
-		if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
-			return {
-				notFound: true,
-			};
-		} else {
-			throw error;
-		}
-	}
-
-	return {
-		props: {
-			artworks: stripWrapper(data.artworks),
-			pagination: data.artworks.meta.pagination,
-		},
-	};
-});
-
-interface GalleryPageProps {
-	artworks: ArtworkSchema[];
-	pagination: PaginationSchema;
-}
-
-const GalleryPage: LayoutPage<GalleryPageProps> = ({
-	artworks: _artworks,
-	campaign,
-	layout,
-	pagination,
-}) => {
-	const [artworks, setArtworks] = useState<ArtworkSchema[]>(_artworks);
-
-	const { ref } = useObserver(
-		async () => {
-			const newArtworks = await getArtworks(artworks.length);
-			setArtworks([
-				...artworks,
-				...stripWrapper(newArtworks.data.artworks),
-			]);
-		},
-		{
-			stoppingCondition: pagination.total <= artworks.length,
-		}
+export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
+	const resp = await requestShopify<Responses.GetProductPreviews>(
+		ProductsQuery
 	);
 
+	return { props: resp.data };
+});
+
+interface ShopPageProps {
+	products: Shopify.Data<Shopify.ProductPreview[]>;
+}
+
+const ShopPage: LayoutPage<ShopPageProps> = ({
+	campaign,
+	layout,
+	products,
+}) => {
 	return (
 		<Layout campaign={campaign} {...layout}>
-			<MetaData title="Shop" />
-			{artworks.length > 0 &&
-				artworks.map((artwork) => (
-					<Row key={artwork.name}>
-						<Column md={6} lg={[4, 2]} align="center">
-							<NoWhitespaceImage
-								image={artwork.image}
-								style={{
-									aspectRatio: "1 / 1",
-									height: "auto",
-									objectFit: "cover",
-									objectPosition: "center",
-									width: "100%",
-								}}
-							/>
-						</Column>
-						<Column md={6} lg={4} align="center">
-							<Heading type="h2">{artwork.name}</Heading>
-							<Typography>{artwork.description}</Typography>
-							<Row>
-								<Column md={8}>
-									<StyledLink href={artwork.external_link}>
-										Buy a print
-									</StyledLink>
-								</Column>
-							</Row>
-						</Column>
-					</Row>
-				))}
-			<div ref={ref} aria-hidden />
+			{products.edges.map(({ node: product }, i) => (
+				<Row key={product.id} reverse={i % 2 === 1}>
+					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
+						<ShopifyImage
+							image={product.featuredImage}
+							style={{
+								height: "auto",
+								maxWidth: "100%",
+								objectFit: "cover",
+								verticalAlign: "bottom",
+								width: "100%",
+							}}
+						/>
+					</Column>
+					<Column md={6} lg={[5, i % 2 === 1 ? 1 : 0]} align="center">
+						<Heading type="h2">{product.title}</Heading>
+						{product.short_description && (
+							<Typography>
+								{product.short_description.value}
+							</Typography>
+						)}
+						<Row>
+							<Column lg={6}>
+								<StyledLink href={`/artwork/${product.handle}`}>
+									Buy a print
+								</StyledLink>
+							</Column>
+						</Row>
+					</Column>
+				</Row>
+			))}
 		</Layout>
 	);
 };
 
-export default GalleryPage;
+export default ShopPage;

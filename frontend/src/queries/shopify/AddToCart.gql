@@ -1,0 +1,9 @@
+#import "../fragments/Cart.fragment.gql"
+
+mutation AddToCart($cartId: ID!, $lines: [CartLineInput!]!) {
+	cartLinesAdd(cartId: $cartId, lines: $lines) {
+		cart {
+			...CartFragment
+		}
+	}
+}

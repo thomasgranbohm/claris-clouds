@@ -2,13 +2,16 @@ import { FC } from "react";
 import { FocusScope, usePreventScroll } from "react-aria";
 import { useToggleState } from "react-stately";
 import clsx from "clsx";
+import { useCartContext } from "contexts/CartContext";
+import { useRouter } from "next/router";
 
 import LogoSVG from "assets/images/logo.svg";
 
-import Button from "components/aria/Button";
+import Button from "components/Button";
 import Icon from "components/Icon";
 import Link from "components/Link";
 import Navigation from "components/Navigation";
+import Typography from "components/Typography";
 
 import useBreakpoint from "hooks/useBreakpoint";
 
@@ -23,7 +26,9 @@ interface HeaderProps
 		Pick<PageInformationSchema, "links" | "socials"> {}
 
 const Header: FC<HeaderProps> = ({ className, links, socials }) => {
+	const { totalQuantity } = useCartContext();
 	const { isSelected, toggle } = useToggleState();
+	const router = useRouter();
 
 	const breakpoint = useBreakpoint();
 
@@ -62,6 +67,26 @@ const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 					links={links}
 					socials={socials}
 				/>
+				{/* TODO: Messy*/}
+				<Link
+					href="/cart"
+					className={clsx(
+						classes["cart"],
+						router.asPath === "/cart" && classes["active"]
+					)}
+				>
+					<Icon variant="shopping_cart" className={classes["icon"]} />
+					{totalQuantity > 0 && (
+						<Typography
+							type="span"
+							weight="semi-bold"
+							size="smaller"
+							className={classes["quantity"]}
+						>
+							{totalQuantity}
+						</Typography>
+					)}
+				</Link>
 			</div>
 		</div>
 	);

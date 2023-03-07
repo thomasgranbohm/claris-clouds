@@ -1,0 +1,89 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	width: 100%;
+
+	.item {
+		margin-top: functions.gutter();
+		display: grid;
+		gap: functions.gutter(0.5) functions.gutter();
+		grid-template: "image information total" auto "image quantity quantity" auto / auto 1fr auto;
+
+		@include mixins.breakpoint(md) {
+			grid-template: "image information quantity total" 1fr / min-content 3fr 2fr 8rem;
+		}
+
+		.title,
+		.quantity,
+		.total {
+			margin-top: 0;
+		}
+
+		.image {
+			grid-area: image;
+
+			width: 96px;
+			height: 96px;
+			display: inline-block;
+			position: relative;
+
+			@include mixins.breakpoint("md") {
+				width: 128px;
+				height: 128px;
+			}
+
+			@include mixins.breakpoint("lg") {
+				width: 192px;
+				height: 192px;
+			}
+		}
+
+		.information {
+			grid-area: information;
+		}
+
+		.quantity {
+			grid-area: quantity;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			gap: functions.gutter();
+			height: min-content;
+
+			.selector {
+				margin-top: 0;
+			}
+
+			.delete {
+				.icon {
+					width: 2rem;
+					height: 2rem;
+
+					transition: 0.1s color;
+				}
+
+				&:hover,
+				&:focus-visible {
+					.icon {
+						color: colors.get("accent");
+					}
+				}
+			}
+		}
+
+		.total {
+			grid-area: total;
+
+			@include mixins.breakpoint("md") {
+				line-height: 3rem;
+			}
+		}
+
+		.information > :not(.title) {
+			margin-top: functions.gutter(0.25);
+		}
+	}
+}

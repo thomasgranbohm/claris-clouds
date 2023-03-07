@@ -1,0 +1,9 @@
+#import "../fragments/Cart.fragment.gql"
+
+mutation CreateCart($lines: [CartLineInput!]) {
+	cartCreate(input: { lines: $lines }) {
+		cart {
+			...CartFragment
+		}
+	}
+}

@@ -1,0 +1,41 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	margin-top: functions.gutter(0.5);
+
+	.list {
+		list-style-type: none;
+		margin-top: functions.gutter(0.5);
+
+		.item {
+			display: inline-block;
+
+			padding: functions.gutter(0.5) functions.gutter();
+			margin-bottom: functions.gutter(0.5);
+			margin-right: functions.gutter(0.5);
+
+			border: 2px solid colors.get("gray");
+			border-radius: functions.gutter(0.5);
+			cursor: pointer;
+
+			&.selected {
+				background-color: colors.get("accent");
+				@include mixins.text-contrast(colors.get("accent"));
+				border-color: colors.get("accent");
+			}
+
+			&.disabled {
+				background-color: colors.get("gray");
+				color: colors.get("background");
+				border-color: colors.get("gray");
+				cursor: default;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
