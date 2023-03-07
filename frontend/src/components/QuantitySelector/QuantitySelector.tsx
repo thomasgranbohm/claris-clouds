@@ -45,9 +45,10 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 			)}
 			<div className={classes["controls"]}>
 				<Button
+					activeClassName={classes["active"]}
 					className={classes["button"]}
 					disabledClassName={classes["disabled"]}
-					activeClassName={classes["active"]}
+					focusedClassname={classes["focused"]}
 					isDisabled={value + 1 > max}
 					onPress={addQuantity}
 				>
@@ -55,8 +56,10 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 				</Button>
 				<Typography type="span">{value}</Typography>
 				<Button
+					activeClassName={classes["active"]}
 					className={classes["button"]}
 					disabledClassName={classes["disabled"]}
+					focusedClassname={classes["focused"]}
 					isDisabled={value - 1 < min}
 					onPress={removeQuantity}
 				>

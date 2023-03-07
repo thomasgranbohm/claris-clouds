@@ -45,7 +45,8 @@
 			background-color: rgb(235, 235, 235);
 			color: colors.get("foreground");
 
-			&:hover {
+			&:hover,
+			&.focused {
 				background-color: colors.get("accent");
 				@include mixins.text-contrast(colors.get("accent"));
 				border-color: colors.get("accent");

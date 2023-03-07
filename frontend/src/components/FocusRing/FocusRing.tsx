@@ -1,14 +1,21 @@
-import { FC } from "react";
-import { FocusRing as AriaFocusRing, FocusRingProps } from "react-aria";
+import { FC, ReactElement } from "react";
+import { FocusRing, useFocusRing as useAriaFocusRing } from "react-aria";
 
 import classes from "./FocusRing.module.scss";
 
-const FocusRing: FC<FocusRingProps> = ({ children }) => {
-	return (
-		<AriaFocusRing focusRingClass={classes["active"]}>
-			{children}
-		</AriaFocusRing>
-	);
+export const useFocusRing = () => {
+	const { focusProps, isFocusVisible, isFocused } = useAriaFocusRing();
+
+	return {
+		focusProps,
+		focusVisibleClass: isFocusVisible && classes["active"],
+		isFocusVisible,
+		isFocused,
+	};
 };
 
-export default FocusRing;
+const HocusFocus: FC<{ children: ReactElement }> = ({ children }) => (
+	<FocusRing focusRingClass={classes["active"]}>{children}</FocusRing>
+);
+
+export default HocusFocus;
