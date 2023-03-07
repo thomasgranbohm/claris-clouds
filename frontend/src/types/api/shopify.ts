@@ -80,13 +80,12 @@ export namespace Shopify {
 		quantity: number;
 	};
 
-	export type CartPreview = {
-		id: string;
-		lines: Shopify.Data<CartItemPreview[]>;
-		totalQuantity: number;
-	};
-
 	export interface CartItem extends CartItemPreview {
+		cost: {
+			amountPerQuantity: Shopify.Price;
+			subtotalAmount: Shopify.Price;
+			totalAmount: Shopify.Price;
+		};
 		merchandise: {
 			id: string;
 			image: Shopify.Image;
@@ -100,17 +99,19 @@ export namespace Shopify {
 		};
 	}
 
+	export type CartPreview = {
+		id: string;
+		lines: Shopify.Data<CartItemPreview[]>;
+		totalQuantity: number;
+	};
+
 	export interface Cart extends CartPreview {
 		checkoutUrl: string;
 		cost: {
 			subtotalAmount: Shopify.Price;
 			totalAmount: Shopify.Price;
 		};
-		createdAt: string;
-		id: string;
 		lines: Shopify.Data<Shopify.CartItem[]>;
-		totalQuantity: number;
-		updatedAt: string;
 	}
 }
 

@@ -74,7 +74,7 @@ const ProductListing: FC<ProductListingProps> = ({ className }) => {
 						</Button>
 					</div>
 					<Typography className={classes["total"]}>
-						{parsePrice(item.merchandise.price)}
+						{parsePrice(item.cost.subtotalAmount)}
 					</Typography>
 				</li>
 			))}
