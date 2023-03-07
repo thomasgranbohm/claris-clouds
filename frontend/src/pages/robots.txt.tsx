@@ -7,7 +7,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 	const robots = `User-agent: *
 Allow: /
 
-Sitemap: https://${publicRuntimeConfig.PAGE_URL}/sitemap.xml`;
+Sitemap: ${publicRuntimeConfig.PAGE_URL}/sitemap.xml`;
 
 	res.setHeader("Content-Type", "text/plain");
 	res.write(robots);

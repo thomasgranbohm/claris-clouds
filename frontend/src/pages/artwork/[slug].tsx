@@ -78,7 +78,11 @@ interface ProductPageProps {
 	product: Shopify.Product;
 }
 
-const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
+const ArtworkPage: LayoutPage<ProductPageProps> = ({
+	campaign,
+	layout,
+	product,
+}) => {
 	const {
 		descriptionHtml,
 		featuredImage,
@@ -123,7 +127,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({ layout, product }) => {
 	);
 
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			<MetaData
 				title={title}
 				description={

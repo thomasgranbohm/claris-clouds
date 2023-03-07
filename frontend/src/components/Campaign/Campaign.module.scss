@@ -1,0 +1,50 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+@use "styles/variables";
+
+.container {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	z-index: map-get(variables.$stacking, "campaign");
+	background-color: colors.get("accent");
+
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: flex-start;
+
+	box-shadow: 0 0 6px 3px rgba(0 0 0 / 10%);
+
+	.link,
+	.button {
+		@include mixins.text-contrast(colors.get("accent"));
+		padding: functions.gutter();
+	}
+
+	.link {
+		width: 100%;
+		display: block;
+		padding-right: functions.gutter(0.5);
+
+		.text {
+			@include mixins.keep-within-width;
+			margin: 0 auto;
+			text-align: center;
+			text-decoration: none;
+		}
+	}
+
+	@include mixins.breakpoint("sm") {
+		display: block;
+
+		.button {
+			position: absolute;
+			right: 0;
+			bottom: 50%;
+			transform: translateY(50%);
+		}
+	}
+}

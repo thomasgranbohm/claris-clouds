@@ -25,6 +25,11 @@ const defaults = {
 	},
 } as ApolloClientOptions<NormalizedCacheObject>;
 
+export const internalAPI = new ApolloClient({
+	...defaults,
+	uri: serverRuntimeConfig.API_URL + "/graphql",
+});
+
 export const externalAPI = new ApolloClient({
 	...defaults,
 	...(publicRuntimeConfig.HTTP_AUTH
@@ -37,22 +42,13 @@ export const externalAPI = new ApolloClient({
 	uri: publicRuntimeConfig.API_URL + "/graphql",
 });
 
-export const internalAPI = new ApolloClient({
-	...defaults,
-	...(serverRuntimeConfig.HTTP_AUTH
-		? {
-				headers: {
-					Authorization: serverRuntimeConfig.HTTP_AUTH,
-				},
-		  }
-		: {}),
-	uri: serverRuntimeConfig.API_URL + "/graphql",
-});
-
 const request = async <ReturnType, TVariables = Record<string, any>>(
 	options: QueryOptions<TVariables>
 ): Promise<GraphQL.Wrapper<ReturnType>> => {
-	const resolver = serverRuntimeConfig.API_URL ? internalAPI : externalAPI;
+	const resolver =
+		process.env.NODE_ENV !== "production" && serverRuntimeConfig.API_URL
+			? internalAPI
+			: externalAPI;
 
 	try {
 		const { data, error, errors } = await resolver.query<

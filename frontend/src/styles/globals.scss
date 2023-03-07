@@ -1,5 +1,6 @@
 @use "styles/colors";
 @use "styles/functions";
+@use "styles/variables";
 
 body {
 	height: 100%;
@@ -23,9 +24,9 @@ body {
 }
 
 .skip-link {
-	position: absolute;
+	position: fixed;
 	top: functions.gutter(-4);
-	z-index: 1000;
+	z-index: map-get(variables.$stacking, "skip-link");
 	padding: functions.gutter();
 	background: #fff;
 }

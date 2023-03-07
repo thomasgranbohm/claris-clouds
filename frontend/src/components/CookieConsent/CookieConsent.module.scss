@@ -9,7 +9,7 @@
 	left: functions.gutter();
 	right: functions.gutter();
 	min-height: 16rem;
-	z-index: 999;
+	z-index: map-get(variables.$stacking, "cookie-consent");
 	display: flex;
 	justify-content: center;
 

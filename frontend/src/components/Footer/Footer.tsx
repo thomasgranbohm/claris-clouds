@@ -16,7 +16,7 @@ const LinkSection: FC<{ links: Components.Link[]; title: string }> = ({
 	title,
 }) => {
 	return (
-		<Column className={classes["section"]} md={3} sm={4} xs={6}>
+		<Column className={classes["section"]} lg={2} md={3} sm={4} xs={6}>
 			<Heading type="b">{title}</Heading>
 			<ul className={classes["links"]}>
 				{links.map(({ label, path }, i) => (

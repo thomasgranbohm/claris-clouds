@@ -1,0 +1,50 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+	@include mixins.keep-within-width;
+
+	.inner {
+		padding: 0 functions.gutter();
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+
+		margin-top: 5vh;
+		@include mixins.breakpoint("md") {
+			margin-top: 10vh;
+		}
+		@include mixins.breakpoint("xl") {
+			margin-top: 25vh;
+		}
+
+		.logo {
+			width: 192px;
+			height: 192px;
+
+			@include mixins.breakpoint("sm") {
+				width: 384px;
+				height: 384px;
+			}
+		}
+
+		.title {
+			margin-top: 0;
+		}
+
+		.description {
+			margin-top: functions.gutter(0.5);
+			max-width: 32ch;
+			width: 100%;
+		}
+
+		.title,
+		.description {
+			text-align: center;
+		}
+	}
+}

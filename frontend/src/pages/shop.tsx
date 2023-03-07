@@ -26,9 +26,13 @@ interface ShopPageProps {
 	products: Shopify.Data<Shopify.ProductPreview[]>;
 }
 
-const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
+const ShopPage: LayoutPage<ShopPageProps> = ({
+	campaign,
+	layout,
+	products,
+}) => {
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			{products.edges.map(({ node: product }, i) => (
 				<Row key={product.id} reverse={i % 2 === 1}>
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
@@ -64,4 +68,4 @@ const Shop: LayoutPage<ShopPageProps> = ({ layout, products }) => {
 	);
 };
 
-export default Shop;
+export default ShopPage;

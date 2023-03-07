@@ -7,47 +7,61 @@ import {
 	GetStaticPropsResult,
 } from "next";
 
-import { getMetadata } from "api/metadata";
-import { getPageInformation } from "api/page-information";
+import request from "api/index";
 
+import GetGeneralInformation from "queries/GetGeneralInformation.gql";
+
+import CampaignSchema from "types/api/campaign";
 import MetadataSchema from "types/api/metadata";
-import { LayoutSchema } from "types/components";
+import PageInformationSchema from "types/api/page-information";
+import { GraphQL } from "types/api/strapi";
 
 import stripWrapper from "utils/stripWrapper";
 
+type RequestType = {
+	campaign: GraphQL.Data<CampaignSchema>;
+	meta: GraphQL.Data<MetadataSchema>;
+	pageInformation: GraphQL.Data<PageInformationSchema>;
+};
+
+type ReturnType = {
+	campaign: CampaignSchema | null;
+	layout: PageInformationSchema;
+	meta: MetadataSchema;
+};
+
 export function getLayoutDataSSR<T extends { [key: string]: any }>(
 	f?: GetServerSideProps<T>
-): GetServerSideProps<T & LayoutSchema & { meta: MetadataSchema }> {
+): GetServerSideProps<T & ReturnType> {
 	return async (context: GetServerSidePropsContext) => {
-		const [
-			{ data: dataPI, error: errorPI },
-			{ data: dataMD, error: errorMD },
-		] = await Promise.all([getPageInformation(), getMetadata()]);
+		const { data, error } = await request<RequestType>({
+			query: GetGeneralInformation,
+		});
 
-		if (errorPI || errorMD) {
-			const error = errorPI || errorMD;
-
-			if (error) {
-				if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
-					return {
-						notFound: true,
-					};
-				} else {
-					throw error;
-				}
+		if (error) {
+			if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
+				return {
+					notFound: true,
+				};
+			} else {
+				throw error;
 			}
 		}
 
 		if (!f) {
 			return {
 				props: {
-					layout: stripWrapper(dataPI.pageInformation),
-					meta: stripWrapper(dataMD.meta),
-				} as T & LayoutSchema & { meta: MetadataSchema },
+					campaign:
+						data.campaign.data !== null
+							? stripWrapper(data.campaign)
+							: null,
+					layout: stripWrapper(data.pageInformation),
+					meta: stripWrapper(data.meta),
+				} as T & ReturnType,
 			};
 		}
 
-		const res: GetServerSidePropsResult<T> = await f(context);
+		const res = await f(context);
 
 		if ("notFound" in res || "redirect" in res) {
 			return res;
@@ -56,43 +70,46 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 		return {
 			props: {
 				...res.props,
-				layout: stripWrapper(dataPI.pageInformation),
-				meta: stripWrapper(dataMD.meta),
-			} as T & LayoutSchema & { meta: MetadataSchema },
+				campaign:
+					data.campaign.data !== null
+						? stripWrapper(data.campaign)
+						: null,
+				layout: stripWrapper(data.pageInformation),
+				meta: stripWrapper(data.meta),
+			} as T & ReturnType,
 		};
 	};
 }
 
 export function getLayoutDataSSG<T extends { [key: string]: any }>(
 	f?: GetStaticProps<T>
-): GetStaticProps<T & LayoutSchema & { meta: MetadataSchema }> {
+): GetStaticProps<T & ReturnType> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
-		const [
-			{ data: dataPI, error: errorPI },
-			{ data: dataMD, error: errorMD },
-		] = await Promise.all([getPageInformation(), getMetadata()]);
+		const { data, error } = await request<RequestType>({
+			query: GetGeneralInformation,
+		});
 
-		if (errorPI || errorMD) {
-			const error = errorPI || errorMD;
-
-			if (error) {
-				if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
-					return {
-						notFound: true,
-					};
-				} else {
-					throw error;
-				}
+		if (error) {
+			if (error.extensions.code === "STRAPI_NOT_FOUND_ERROR") {
+				return {
+					notFound: true,
+				};
+			} else {
+				throw error;
 			}
 		}
 
 		if (!f) {
 			return {
 				props: {
-					layout: stripWrapper(dataPI.pageInformation),
-					meta: stripWrapper(dataMD.meta),
-				} as T & LayoutSchema & { meta: MetadataSchema },
+					campaign:
+						data.campaign.data !== null
+							? stripWrapper(data.campaign)
+							: null,
+					layout: stripWrapper(data.pageInformation),
+					meta: stripWrapper(data.meta),
+				} as T & ReturnType,
 				revalidate: 60,
 			};
 		}
@@ -108,9 +125,13 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 			...res,
 			props: {
 				...res.props,
-				layout: stripWrapper(dataPI.pageInformation),
-				meta: stripWrapper(dataMD.meta),
-			} as T & LayoutSchema & { meta: MetadataSchema },
+				campaign:
+					data.campaign.data !== null
+						? stripWrapper(data.campaign)
+						: null,
+				layout: stripWrapper(data.pageInformation),
+				meta: stripWrapper(data.meta),
+			},
 		};
 	};
 }

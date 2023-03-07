@@ -9,9 +9,9 @@ import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG();
 
-const ErrorPage: LayoutPage = ({ layout }) => {
+const ErrorPage: LayoutPage = ({ campaign, layout }) => {
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			<MetaData title="Page not found" noindex />
 			<Row>
 				<Column>

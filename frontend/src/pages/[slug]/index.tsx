@@ -61,11 +61,15 @@ interface GenericPageProps {
 	page: PageSchema;
 }
 
-const GenericPage: LayoutPage<GenericPageProps> = ({ layout, page }) => {
+const GenericPage: LayoutPage<GenericPageProps> = ({
+	campaign,
+	layout,
+	page,
+}) => {
 	const { sections, seo, title } = page;
 
 	return (
-		<Layout {...layout}>
+		<Layout {...layout} campaign={campaign}>
 			<MetaData
 				title={seo?.title || title}
 				description={seo?.description}

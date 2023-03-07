@@ -37,7 +37,11 @@ interface StartPageProps {
 	startPage: StartPage;
 }
 
-const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
+const StartPage: LayoutPage<StartPageProps> = ({
+	campaign,
+	layout,
+	startPage,
+}) => {
 	const { background, foreground, sections, seo, title } = startPage;
 
 	return (
@@ -52,7 +56,7 @@ const StartPage: LayoutPage<StartPageProps> = ({ layout, startPage }) => {
 				foreground={stripWrapper(foreground)}
 				title={title}
 			/>
-			<Layout {...layout} conformity={false}>
+			<Layout {...layout} campaign={campaign} conformity={false}>
 				<ComponentRenderer components={sections} />
 			</Layout>
 		</Fragment>

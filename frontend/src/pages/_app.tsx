@@ -29,7 +29,7 @@ function CustomApp({
 }: AppProps<{ layout: PageInformationSchema; meta: MetadataSchema }>) {
 	const router = useRouter();
 	const { meta } = pageProps;
-	const { favicon, metatags, page_prefix } = meta;
+	const { metatags, page_prefix } = meta;
 
 	// Install service-worker
 	useEffect(() => {
@@ -56,16 +56,7 @@ function CustomApp({
 				</Head>
 				<DefaultSeo
 					titleTemplate={page_prefix}
-					additionalLinkTags={[
-						{
-							href:
-								favicon &&
-								`/_next/image?url=${getImageLink(
-									stripWrapper(favicon)
-								)}&w=128&q=75`,
-							rel: "icon",
-						},
-					]}
+					canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
 					additionalMetaTags={
 						metatags
 							? (metatags.map(({ content, name, property }) => ({
@@ -75,7 +66,6 @@ function CustomApp({
 							  })) as MetaTag[])
 							: []
 					}
-					canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
 				/>
 				<FocusRing>
 					<a href="#main-content" className="skip-link">

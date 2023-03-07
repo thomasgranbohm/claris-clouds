@@ -20,7 +20,7 @@ import parsePrice from "utils/parsePrice";
 
 export const getStaticProps = getLayoutDataSSG();
 
-const CartPage: LayoutPage = ({ layout }) => {
+const CartPage: LayoutPage = ({ campaign, layout }) => {
 	const { cartId, updating } = useCartContext();
 
 	const [cart, setCart] = useState<Shopify.Cart | null>(null);
@@ -40,7 +40,7 @@ const CartPage: LayoutPage = ({ layout }) => {
 	}, [cartId]);
 
 	return (
-		<Layout {...layout}>
+		<Layout campaign={campaign} {...layout}>
 			<Row>
 				<Column>
 					<Heading type="h1">Cart</Heading>

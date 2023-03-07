@@ -5,9 +5,10 @@ import clsx from "clsx";
 import { useCartContext } from "contexts/CartContext";
 import { useRouter } from "next/router";
 
+import LogoSVG from "assets/images/logo.svg";
+
 import Button from "components/Button";
 import Icon from "components/Icon";
-import { StrapiImage } from "components/Image";
 import Link from "components/Link";
 import Navigation from "components/Navigation";
 import Typography from "components/Typography";
@@ -22,9 +23,9 @@ import classes from "./Header.module.scss";
 
 interface HeaderProps
 	extends WithClassname,
-		Pick<PageInformationSchema, "links" | "logo" | "socials"> {}
+		Pick<PageInformationSchema, "links" | "socials"> {}
 
-const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
+const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 	const { totalQuantity } = useCartContext();
 	const { isSelected, toggle } = useToggleState();
 	const router = useRouter();
@@ -49,13 +50,7 @@ const Header: FC<HeaderProps> = ({ className, links, logo, socials }) => {
 					href="/"
 					aria-label="Home"
 				>
-					<StrapiImage
-						image={logo}
-						className={classes["icon"]}
-						priority
-						blur={false}
-						sizes="64px"
-					/>
+					<LogoSVG className={classes["icon"]} />
 				</Link>
 				<Button
 					className={classes["button"]}
