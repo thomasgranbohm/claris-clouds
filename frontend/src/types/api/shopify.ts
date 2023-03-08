@@ -105,12 +105,14 @@ export namespace Shopify {
 		totalQuantity: number;
 	};
 
+	export interface CartCost {
+		subtotalAmount: Shopify.Price;
+		totalAmount: Shopify.Price;
+	}
+
 	export interface Cart extends CartPreview {
 		checkoutUrl: string;
-		cost: {
-			subtotalAmount: Shopify.Price;
-			totalAmount: Shopify.Price;
-		};
+		cost: Shopify.CartCost;
 		lines: Shopify.Data<Shopify.CartItem[]>;
 	}
 }

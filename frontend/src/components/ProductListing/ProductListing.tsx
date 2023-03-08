@@ -5,6 +5,7 @@ import { useCartContext } from "contexts/CartContext";
 import Button from "components/Button";
 import Icon from "components/Icon";
 import { ShopifyImage } from "components/Image";
+import Link from "components/Link";
 import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
@@ -17,9 +18,10 @@ import classes from "./ProductListing.module.scss";
 interface ProductListingProps extends WithClassname {}
 
 const ProductListing: FC<ProductListingProps> = ({ className }) => {
-	const { items, removeFromCart, updateCart } = useCartContext();
+	const { items, removeFromCart, totalQuantity, updateCart } =
+		useCartContext();
 
-	return (
+	return totalQuantity > 0 ? (
 		<ul className={clsx(classes["container"], className)}>
 			{items.map((item) => (
 				<li key={item.id} className={classes["item"]}>
@@ -79,6 +81,10 @@ const ProductListing: FC<ProductListingProps> = ({ className }) => {
 				</li>
 			))}
 		</ul>
+	) : (
+		<Typography>
+			Your cart is empty. <Link href="/shop">Go to the shop!</Link>
+		</Typography>
 	);
 };
 

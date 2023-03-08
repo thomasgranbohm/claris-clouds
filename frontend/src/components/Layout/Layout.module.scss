@@ -5,8 +5,8 @@
 .container {
 	display: grid;
 	min-height: 100vh;
-	grid-template-areas: "content" "footer";
-	grid-template-rows: 1fr auto;
+	grid-template-areas: "header" "content" "footer";
+	grid-template-rows: auto 1fr auto;
 	position: relative;
 
 	.content {

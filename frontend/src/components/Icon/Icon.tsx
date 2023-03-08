@@ -15,6 +15,7 @@ import RedBubbleSVG from "assets/icons/redbubble.svg";
 import RemoveSVG from "assets/icons/remove.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
 import ShoppingCartSVG from "assets/icons/shopping_cart.svg";
+import SpinnerAnimatedSVG from "assets/icons/spinner-animated.svg";
 import TikTokSVG from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
 import YouTubeSVG from "assets/icons/youtube.svg";
@@ -43,7 +44,8 @@ interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
 		| "shopping_cart"
 		| "add"
 		| "delete"
-		| "remove";
+		| "remove"
+		| "spinner-animated";
 }
 
 const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
@@ -100,6 +102,9 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 			break;
 		case "delete":
 			Element = DeleteSVG;
+			break;
+		case "spinner-animated":
+			Element = SpinnerAnimatedSVG;
 			break;
 		default:
 			return null;

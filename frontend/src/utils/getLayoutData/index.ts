@@ -1,7 +1,6 @@
 import {
 	GetServerSideProps,
 	GetServerSidePropsContext,
-	GetServerSidePropsResult,
 	GetStaticProps,
 	GetStaticPropsContext,
 	GetStaticPropsResult,

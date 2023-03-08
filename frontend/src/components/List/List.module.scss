@@ -2,7 +2,7 @@
 @use "styles/functions";
 
 .container {
-	margin-inline-start: functions.gutter(2);
+	margin-inline-start: 24px;
 
 	.item {
 		margin-block: functions.gutter();

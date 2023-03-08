@@ -5,8 +5,9 @@ const ALLOWED_URLS = ["/", "/login"];
 
 export function middleware(request: NextRequest) {
 	if (
-		request.cookies.has("password") &&
-		request.cookies.get("password")?.value === process.env.PASSWORD
+		!process.env.PASSWORD ||
+		(request.cookies.has("password") &&
+			request.cookies.get("password")?.value === process.env.PASSWORD)
 	) {
 		return NextResponse.next();
 	}

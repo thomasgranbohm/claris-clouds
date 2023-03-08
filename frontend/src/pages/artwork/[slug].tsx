@@ -95,11 +95,15 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 		variants,
 	} = product;
 
+	const { addToCart, cart } = useCartContext();
+	const items = useMemo(
+		() => (cart ? cart?.lines.edges.map(({ node }) => node) : []),
+		[cart]
+	);
+
 	const [options, setOptions] = useState<Record<string, string>>({});
 	const [variant, setVariant] = useState<Shopify.Variant | null>(null);
 	const [quantity, setQuantity] = useState<number>(1);
-
-	const { addToCart, items } = useCartContext();
 
 	useEffect(() => {
 		const foundVariant = variants.edges.find((_v) => {
