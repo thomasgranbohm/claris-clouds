@@ -270,7 +270,11 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 								key={p.handle}
 								className={classes["latest-artwork"]}
 							>
-								<Link href={`/artwork/${p.handle}`} asWrapper>
+								<Link
+									className={classes["link"]}
+									href={`/artwork/${p.handle}`}
+									asWrapper
+								>
 									{p.featuredImage && (
 										<div
 											className={

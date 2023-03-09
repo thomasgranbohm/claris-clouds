@@ -35,7 +35,8 @@
 		margin-top: functions.gutter(0.25) !important;
 	}
 
-	&:hover {
+	&:hover,
+	.link:focus-visible {
 		.image {
 			scale: 1.02;
 		}
