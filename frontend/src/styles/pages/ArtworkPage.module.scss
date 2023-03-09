@@ -1,44 +1,47 @@
 @use "styles/functions";
 @use "styles/mixins";
 
-.title {
-	@include mixins.breakpoint("lg", true) {
-		margin-top: functions.gutter();
+.column {
+	@include mixins.breakpoint("md") {
+		position: sticky;
+		top: functions.gutter(6);
 	}
 }
 
-.purchase-actions {
-	display: grid;
-	gap: functions.gutter();
-
-	margin-top: functions.gutter();
-
-	@include mixins.breakpoint(sm) {
-		grid-template-columns: repeat(2, 1fr);
-		align-items: center;
-	}
-
-	@include mixins.breakpoint(md) {
-		grid-template-columns: unset;
-		align-items: unset;
-	}
-
-	@include mixins.breakpoint(lg) {
-		grid-template-columns: repeat(2, 1fr);
-		align-items: center;
-	}
+.add-to-cart {
+	margin-top: 0 !important;
+	width: 100%;
+	padding: functions.gutter();
 }
 
-.specifications {
-	display: flex;
-	flex-direction: column;
+.latest-artwork {
+	cursor: pointer;
 
-	@include mixins.breakpoint(md) {
-		flex-direction: row;
-		justify-content: space-evenly;
+	.image-container,
+	.image {
+		aspect-ratio: 1 / 1;
+		height: auto;
+		object-fit: cover;
+		object-position: center;
+		width: 100%;
+		transition: 0.1s scale;
 	}
-}
 
-.gallery {
-	margin-top: functions.gutter();
+	.image-container {
+		overflow: hidden;
+	}
+
+	.pricing {
+		margin-top: functions.gutter(0.25) !important;
+	}
+
+	&:hover {
+		.image {
+			scale: 1.02;
+		}
+
+		.title {
+			text-decoration: underline;
+		}
+	}
 }

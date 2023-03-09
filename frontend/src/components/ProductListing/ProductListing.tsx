@@ -9,6 +9,7 @@ import { CartLine } from "@shopify/hydrogen-react/storefront-api-types";
 import clsx from "clsx";
 
 import CartLineQuantitySelector from "components/CartLineQuantitySelector";
+import Link from "components/Link";
 import Typography from "components/Typography";
 
 import { WithClassname } from "types/components";
@@ -34,13 +35,20 @@ const LineItem = (item: CartLine) => (
 				</div>
 			)}
 			<div className={classes["information"]}>
-				<Typography
-					size="large"
-					weight="bold"
-					className={classes["title"]}
+				<Link
+					className={classes["link"]}
+					href={`/artwork/${item.merchandise.product.handle}`}
+					asWrapper
 				>
-					{item.merchandise.product?.title}
-				</Typography>
+					<Typography
+						size="large"
+						weight="bold"
+						color="foreground"
+						className={classes["title"]}
+					>
+						{item.merchandise.product?.title}
+					</Typography>
+				</Link>
 				{item.merchandise.selectedOptions?.reduce<ReactNode[]>(
 					(p, c) =>
 						c

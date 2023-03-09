@@ -7,6 +7,7 @@ import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
+import HtmlRenderer from "components/HtmlRenderer";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
 import Typography from "components/Typography";
@@ -43,7 +44,7 @@ export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
 });
 
 interface ShopPageProps {
-	products: Shopify.Data<(Shopify.ProductPreview & Product)[]>;
+	products: Shopify.Data<Product[]>;
 }
 
 const ShopPage: LayoutPage<ShopPageProps> = ({
@@ -72,10 +73,8 @@ const ShopPage: LayoutPage<ShopPageProps> = ({
 					</Column>
 					<Column md={6} lg={[5, i % 2 === 1 ? 1 : 0]} align="center">
 						<Heading type="h2">{product.title}</Heading>
-						{product.short_description && (
-							<Typography>
-								{product.short_description.value}
-							</Typography>
+						{product.descriptionHtml && (
+							<HtmlRenderer content={product.descriptionHtml} />
 						)}
 						<Row>
 							<Column lg={6}>

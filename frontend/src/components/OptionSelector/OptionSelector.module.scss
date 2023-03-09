@@ -3,17 +3,16 @@
 @use "styles/mixins";
 
 .container {
-	margin-top: functions.gutter(0.5);
+	margin-top: functions.gutter();
 
 	.list {
 		list-style-type: none;
-		margin-top: functions.gutter(0.5);
 
 		.item {
 			display: inline-block;
 
 			padding: functions.gutter(0.5) functions.gutter();
-			margin-bottom: functions.gutter(0.5);
+			margin-top: functions.gutter(0.5);
 			margin-right: functions.gutter(0.5);
 
 			border: 2px solid colors.get("gray");

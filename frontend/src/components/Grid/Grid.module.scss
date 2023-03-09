@@ -20,7 +20,7 @@
 
 .column {
 	width: 100%;
-	height: auto;
+	height: min-content;
 	margin-top: functions.gutter();
 	padding-left: functions.gutter();
 

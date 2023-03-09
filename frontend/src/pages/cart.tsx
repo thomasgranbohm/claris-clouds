@@ -25,19 +25,17 @@ const CartPage: LayoutPage = ({ campaign, layout }) => {
 			<Row>
 				<Column>
 					<Heading type="h1">Cart</Heading>
-					{status === "uninitialized" ? (
+					{status === "uninitialized" || totalQuantity === 0 ? (
 						<Typography>
 							Your cart is empty.{" "}
 							<Link href="/shop">Go to the shop!</Link>
 						</Typography>
-					) : status !== "idle" ? (
-						<Typography>Loading...</Typography>
 					) : (
 						<ProductListing />
 					)}
 				</Column>
 			</Row>
-			{cost?.subtotalAmount && (
+			{totalQuantity > 0 && cost?.subtotalAmount && (
 				<Row>
 					<Column justify="end" md={[6, 6]} lg={[4, 8]}>
 						<Typography>
@@ -50,7 +48,7 @@ const CartPage: LayoutPage = ({ campaign, layout }) => {
 					</Column>
 				</Row>
 			)}
-			{checkoutUrl && (
+			{totalQuantity > 0 && checkoutUrl && (
 				<Row>
 					<Column justify="end" md={[6, 6]} lg={[4, 8]}>
 						<StyledLink

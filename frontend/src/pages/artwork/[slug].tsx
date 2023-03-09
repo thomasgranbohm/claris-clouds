@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Item } from "react-stately";
 import {
+	AddToCartButton,
+	flattenConnection,
 	Image,
 	Money,
 	ProductProvider,
-	useCart,
 } from "@shopify/hydrogen-react";
 import {
 	Product,
@@ -21,6 +22,7 @@ import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import Layout from "components/Layout";
+import Link from "components/Link";
 import MetaData from "components/MetaData";
 import MetafieldParser from "components/MetafieldParser";
 import OptionSelector from "components/OptionSelector";
@@ -30,12 +32,14 @@ import Typography from "components/Typography";
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
 import ProductSlugs from "queries/shopify/ProductSlugs.gql";
 
+import classes from "styles/pages/ArtworkPage.module.scss";
+
 import { Requests, Responses, Shopify } from "types/api/shopify";
 import { LayoutPage } from "types/components";
 
-import { getLayoutDataSSR } from "utils/getLayoutData";
+import { getLayoutDataSSG } from "utils/getLayoutData";
 
-export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
+export const getStaticProps = getLayoutDataSSG<ProductPageProps>(
 	async ({ params }) => {
 		const slug = params?.["slug"];
 
@@ -63,7 +67,7 @@ export const getStaticProps = getLayoutDataSSR<ProductPageProps>(
 			);
 
 			return {
-				props: { product: data.data.product },
+				props: data.data,
 			};
 		} catch (error) {
 			throw error;
@@ -76,53 +80,49 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		return { fallback: "blocking", paths: [] };
 	}
 
-	try {
-		const { data } = await axios.post<{
-			data: Responses.GetProductSlugs;
-		}>(
-			getStorefrontApiUrl(),
-			{
-				query: print(ProductSlugs),
-			},
-			{
-				headers: getPrivateTokenHeaders({
-					contentType: "json",
-				}),
-			}
-		);
+	const { data } = await axios.post<{
+		data: Responses.GetProductSlugs;
+	}>(
+		getStorefrontApiUrl(),
+		{
+			query: print(ProductSlugs),
+		},
+		{
+			headers: getPrivateTokenHeaders({
+				contentType: "json",
+			}),
+		}
+	);
 
-		return {
-			fallback: "blocking",
-			paths: data.data.products.edges.map(({ node }) => ({
-				params: { slug: node.handle },
-			})),
-		};
-	} catch (error) {
-		throw error;
-	}
+	return {
+		fallback: "blocking",
+		paths: data.data.products.edges.map(({ node }) => ({
+			params: { slug: node.handle },
+		})),
+	};
 };
 
 interface ProductPageProps {
+	latest_products: Shopify.Data<Product[]>;
 	product: Shopify.Product & Product;
 }
 
 const ArtworkPage: LayoutPage<ProductPageProps> = ({
 	campaign,
+	latest_products,
 	layout,
 	product,
 }) => {
 	const {
+		description,
 		descriptionHtml,
 		featuredImage,
 		options,
 		priceRange,
-		short_description,
 		technical_description,
 		title,
 		variants,
 	} = product;
-
-	const { lines, linesAdd } = useCart();
 
 	const [quantity, setQuantity] = useState<number>(1);
 	const [variant, setVariant] =
@@ -154,26 +154,27 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 			<Layout campaign={campaign} {...layout}>
 				<MetaData
 					title={title}
-					description={
-						short_description !== null
-							? short_description.value
-							: undefined
-					}
+					description={description}
+					images={featuredImage ? [featuredImage] : undefined}
 				/>
 				<Row>
-					<Column md={6}>
+					<Column md={6} className={classes["column"]}>
 						{featuredImage && (
 							//  eslint-disable-next-line jsx-a11y/alt-text
 							<Image
 								data={variant?.image || featuredImage}
-								style={{ height: "auto", width: "100%" }}
+								style={{
+									height: "auto",
+									verticalAlign: "bottom",
+									width: "100%",
+								}}
 								loaderOptions={{
 									scale: variant ? 2 : undefined,
 								}}
 							/>
 						)}
 					</Column>
-					<Column md={6}>
+					<Column md={6} className={classes["column"]}>
 						<Heading type="h1">{title}</Heading>
 						<Typography>
 							<b>Price:</b>{" "}
@@ -216,30 +217,23 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 						))}
 						<QuantitySelector
 							label="Quantity"
-							max={Number(variant?.quantityAvailable) || 5}
+							max={Number(variant?.quantityAvailable) ?? 5}
 							onChange={setQuantity}
 							value={quantity}
 						/>
-
-						<StyledButton
-							isDisabled={
-								Number(variant?.quantityAvailable) <
-								quantity +
-									Number(
-										lines?.find(
-											(line) => line?.id === variant?.id
-										)?.quantity || 0
-									)
-							}
-							onPress={() =>
-								variant &&
-								linesAdd([
-									{ merchandiseId: variant.id, quantity },
-								])
-							}
-						>
-							Add to cart
-						</StyledButton>
+						<Row>
+							<Column lg={6} md={12} sm={6}>
+								<AddToCartButton
+									as={StyledButton}
+									className={classes["add-to-cart"]}
+									isDisabled={!variant}
+									variantId={variant?.id}
+									quantity={quantity}
+								>
+									Add to cart
+								</AddToCartButton>
+							</Column>
+						</Row>
 						{descriptionHtml && (
 							<Row>
 								<Column>
@@ -250,7 +244,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 						{technical_description && (
 							<Row>
 								<Column>
-									<Heading type="h3">
+									<Heading type="h2" look="h3">
 										About this artwork
 									</Heading>
 									<MetafieldParser
@@ -260,6 +254,56 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 							</Row>
 						)}
 					</Column>
+				</Row>
+				<Row>
+					<Column>
+						<Heading type="h2" look="h3">
+							Latest artworks
+						</Heading>
+					</Column>
+					{latest_products.edges
+						.map(({ node }) => node)
+						.map((p) => (
+							<Column
+								xs={6}
+								lg={3}
+								key={p.handle}
+								className={classes["latest-artwork"]}
+							>
+								<Link href={`/artwork/${p.handle}`} asWrapper>
+									{p.featuredImage && (
+										<div
+											className={
+												classes["image-container"]
+											}
+										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
+											<Image
+												data={p.featuredImage}
+												className={classes["image"]}
+											/>
+										</div>
+									)}
+									<Heading
+										className={classes["title"]}
+										type="b"
+									>
+										{p.title}
+									</Heading>
+									<Typography
+										className={classes["pricing"]}
+										size="small"
+										color="foreground"
+									>
+										From{" "}
+										<Money
+											as="span"
+											data={p.priceRange.minVariantPrice}
+										/>
+									</Typography>
+								</Link>
+							</Column>
+						))}
 				</Row>
 			</Layout>
 		</ProductProvider>

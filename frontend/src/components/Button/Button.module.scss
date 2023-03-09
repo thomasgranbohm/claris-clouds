@@ -45,7 +45,7 @@
 	}
 
 	&[disabled] {
-		cursor: default;
+		cursor: not-allowed;
 
 		&.styled {
 			background-color: colors.get("gray");

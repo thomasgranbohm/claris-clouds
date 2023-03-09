@@ -51,11 +51,7 @@ export namespace Shopify {
 		value: string;
 	}
 
-	export interface ProductPreview {
-		short_description: Shopify.MetaField<"descriptions", "short"> | null;
-	}
-
-	export interface Product extends ProductPreview {
+	export interface Product {
 		technical_description: MetaField<"descriptions", "technical"> | null;
 	}
 
@@ -155,9 +151,10 @@ export namespace Responses {
 		cartCreate: { cart: Shopify.Cart };
 	}
 	export interface GetProductPreviews {
-		products: Shopify.Data<(Shopify.ProductPreview & Product)[]>;
+		products: Shopify.Data<Product[]>;
 	}
 	export interface GetProduct {
+		latest_products: Shopify.Data<Product[]>;
 		product: Product & Shopify.Product;
 	}
 	export interface GetProductSlugs {

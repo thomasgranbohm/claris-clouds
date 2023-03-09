@@ -2,17 +2,11 @@ query Products {
 	products(first: 10) {
 		edges {
 			node {
-				title
-				short_description: metafield(
-					namespace: "descriptions"
-					key: "short"
-				) {
-					key
-					namespace
-					value
-				}
-				handle
 				id
+				title
+				handle
+				description
+				descriptionHtml
 				featuredImage {
 					altText
 					height

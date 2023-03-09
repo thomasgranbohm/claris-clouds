@@ -2,6 +2,15 @@ query ProductByHandle($handle: String!) {
 	product(handle: $handle) {
 		title
 		descriptionHtml
+		description
+		technical_description: metafield(
+			namespace: "descriptions"
+			key: "technical"
+		) {
+			key
+			namespace
+			value
+		}
 		priceRange {
 			minVariantPrice {
 				amount
@@ -21,19 +30,6 @@ query ProductByHandle($handle: String!) {
 		options {
 			name
 			values
-		}
-		short_description: metafield(namespace: "descriptions", key: "short") {
-			key
-			namespace
-			value
-		}
-		technical_description: metafield(
-			namespace: "descriptions"
-			key: "technical"
-		) {
-			key
-			namespace
-			value
 		}
 		totalInventory
 		variants(first: 10) {
@@ -55,6 +51,26 @@ query ProductByHandle($handle: String!) {
 						height
 						url
 						width
+					}
+				}
+			}
+		}
+	}
+	latest_products: products(first: 4, reverse: true, sortKey: CREATED_AT) {
+		edges {
+			node {
+				title
+				handle
+				featuredImage {
+					altText
+					height
+					url
+					width
+				}
+				priceRange {
+					minVariantPrice {
+						amount
+						currencyCode
 					}
 				}
 			}

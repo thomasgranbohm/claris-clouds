@@ -40,6 +40,7 @@ const HtmlRenderer: FC<HtmlRendererProps> = ({ content }) => {
 					</List>
 				);
 			}
+
 			return domNode;
 		},
 	};

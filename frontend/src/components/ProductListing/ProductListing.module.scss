@@ -46,6 +46,15 @@
 
 		.information {
 			grid-area: information;
+
+			.link {
+				text-decoration: none;
+				color: colors.get("foreground");
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
 		}
 
 		.quantity {
@@ -87,7 +96,7 @@
 			}
 		}
 
-		.information > :not(.title) {
+		.information > :not(.title, :first-child) {
 			margin-top: functions.gutter(0.25);
 		}
 	}

@@ -3,7 +3,7 @@
 @use "styles/mixins";
 
 .container {
-	margin-top: functions.gutter(0.5);
+	margin-top: functions.gutter();
 
 	.label {
 		margin-bottom: functions.gutter(0.5);
@@ -57,6 +57,7 @@
 				background-color: colors.get("gray");
 				color: white;
 				border-color: colors.get("gray");
+				cursor: not-allowed;
 			}
 		}
 	}

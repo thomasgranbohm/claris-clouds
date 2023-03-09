@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Image } from "@shopify/hydrogen-react/storefront-api-types";
 import getConfig from "next/config";
 import { useRouter } from "next/router";
 import { NextSeo, NextSeoProps } from "next-seo";
@@ -8,15 +9,9 @@ import { GraphQL, ImageSchema } from "types/api/strapi";
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
-interface ImageFormat {
-	height?: number;
-	url: string;
-	width?: number;
-}
-
 interface MetaDataProps extends NextSeoProps {
 	description?: string;
-	images?: Array<ImageFormat | GraphQL.Data<ImageSchema> | undefined>;
+	images?: Array<Image | GraphQL.Data<ImageSchema> | undefined>;
 	path?: string;
 	title?: string;
 }
