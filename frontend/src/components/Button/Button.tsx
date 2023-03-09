@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, FC, useRef } from "react";
+import { MouseEvent } from "react";
 import { AriaButtonProps, useButton } from "react-aria";
 import clsx from "clsx";
 
@@ -26,19 +27,32 @@ export const StyledButton: FC<ButtonProps> = ({
 const Button: FC<ButtonProps> = ({
 	activeClassName,
 	className,
-	disabledClassName,
 	focusedClassname,
 	isDisabled,
+	onClick,
 	onPress,
 	...props
 }) => {
 	const ref = useRef(null);
 	const { buttonProps, isPressed } = useButton(
-		{ ...props, isDisabled, onPress },
+		{
+			...props,
+			isDisabled,
+			onPress: (e) =>
+				onPress
+					? onPress(e)
+					: onClick
+					? onClick(
+							e as unknown as MouseEvent<
+								HTMLButtonElement,
+								globalThis.MouseEvent
+							>
+					  )
+					: null,
+		},
 		ref
 	);
-	const { focusProps, focusVisibleClass, isFocusVisible, isFocused } =
-		useFocusRing();
+	const { focusProps, focusVisibleClass, isFocusVisible } = useFocusRing();
 
 	return (
 		<button
@@ -49,7 +63,6 @@ const Button: FC<ButtonProps> = ({
 			className={clsx(
 				classes["container"],
 				isPressed && activeClassName,
-				buttonProps.disabled && disabledClassName,
 				isFocusVisible && focusedClassname,
 				className,
 				focusVisibleClass
@@ -65,7 +78,6 @@ interface ButtonProps
 		AriaButtonProps,
 		Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof AriaButtonProps> {
 	activeClassName?: string;
-	disabledClassName?: string;
 	focusedClassname?: string;
 }
 

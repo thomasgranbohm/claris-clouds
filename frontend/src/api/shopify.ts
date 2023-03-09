@@ -1,44 +1,15 @@
-import axios from "axios";
-import { DocumentNode, print } from "graphql";
+import { createStorefrontClient } from "@shopify/hydrogen-react";
 import getConfig from "next/config";
-
-import { Shopify } from "types/api/shopify";
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
-const client = axios.create({
-	headers: {
-		"Content-Type": "application/json",
-		"X-Shopify-Storefront-Access-Token":
-			publicRuntimeConfig.SHOPIFY_HEADLESS_TOKEN,
-	},
+const client = createStorefrontClient({
+	privateStorefrontToken: serverRuntimeConfig.SHOPIFY_STOREFRONT_TOKEN,
+	publicStorefrontToken: publicRuntimeConfig.SHOPIFY_STOREFRONT_TOKEN,
+	storeDomain: serverRuntimeConfig.SHOPIFY_STORE_DOMAIN,
+	storefrontApiVersion: serverRuntimeConfig.SHOPIFY_API_VERSION,
 });
 
-const requestShopify = async <
-	T extends any | null,
-	U extends object | undefined = undefined
->(
-	query: DocumentNode,
-	variables?: U
-): Promise<Shopify.Response<T>> => {
-	try {
-		const { data } = await client.post(
-			serverRuntimeConfig.SHOPIFY_URL ?? publicRuntimeConfig.SHOPIFY_URL,
-			{ query: print(query), variables },
-			{
-				method: "POST",
-			}
-		);
-
-		return data;
-	} catch (error) {
-		console.error("Error:", error);
-
-		return {
-			data: null as any,
-			error: error,
-		};
-	}
-};
-
-export default requestShopify;
+export const getStorefrontApiUrl = client.getStorefrontApiUrl;
+export const getPrivateTokenHeaders = client.getPrivateTokenHeaders;
+export const getPublicTokenHeaders = client.getPublicTokenHeaders;

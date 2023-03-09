@@ -15,6 +15,10 @@
 			grid-template: "image information quantity total" 1fr / min-content 3fr 2fr 8rem;
 		}
 
+		@include mixins.breakpoint(lg) {
+			grid-template: "image information quantity total" 1fr / min-content 5fr 2fr 4rem;
+		}
+
 		.title,
 		.quantity,
 		.total {
@@ -76,6 +80,7 @@
 
 		.total {
 			grid-area: total;
+			text-align: end;
 
 			@include mixins.breakpoint("md") {
 				line-height: 3rem;

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { FocusScope, usePreventScroll } from "react-aria";
 import { useToggleState } from "react-stately";
+import { useCart } from "@shopify/hydrogen-react";
 import clsx from "clsx";
-import { useCartContext } from "contexts/CartContext";
 import { useRouter } from "next/router";
 
 import LogoSVG from "assets/images/logo.svg";
@@ -26,7 +26,7 @@ interface HeaderProps
 		Pick<PageInformationSchema, "links" | "socials"> {}
 
 const Header: FC<HeaderProps> = ({ className, links, socials }) => {
-	const { totalQuantity } = useCartContext();
+	const { totalQuantity } = useCart();
 	const { isSelected, toggle } = useToggleState();
 	const router = useRouter();
 

@@ -43,8 +43,8 @@ interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
 		| "done"
 		| "shopping_cart"
 		| "add"
-		| "delete"
 		| "remove"
+		| "decrease"
 		| "spinner-animated";
 }
 
@@ -97,10 +97,10 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 		case "add":
 			Element = AddSVG;
 			break;
-		case "remove":
+		case "decrease":
 			Element = RemoveSVG;
 			break;
-		case "delete":
+		case "remove":
 			Element = DeleteSVG;
 			break;
 		case "spinner-animated":

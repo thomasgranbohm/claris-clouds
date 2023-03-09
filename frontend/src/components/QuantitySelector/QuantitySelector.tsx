@@ -25,14 +25,12 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 	onChange,
 	value,
 }) => {
-	const addQuantity = () => value < max && onChange(value + 1);
-	const removeQuantity = () => value > min && onChange(value - 1);
+	const increaseQuantity = () => value < max && onChange(value + 1);
+	const decreaseQuantity = () => value > min && onChange(value - 1);
 
 	useEffect(() => {
 		if (value > max) {
 			onChange(max);
-		} else if (min > value) {
-			onChange(min);
 		}
 	}, [min, max, value, onChange]);
 
@@ -43,27 +41,23 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 					{label}
 				</Typography>
 			)}
-			<div className={classes["controls"]}>
+			<div className={classes["quantity"]}>
 				<Button
-					activeClassName={classes["active"]}
-					className={classes["button"]}
-					disabledClassName={classes["disabled"]}
-					focusedClassname={classes["focused"]}
+					className={clsx(classes["button"], classes["increase"])}
 					isDisabled={value + 1 > max}
-					onPress={addQuantity}
+					onPress={increaseQuantity}
 				>
 					<Icon variant="add" />
 				</Button>
-				<Typography type="span">{value}</Typography>
+				<Typography className={classes["value"]} type="span">
+					{value}
+				</Typography>
 				<Button
-					activeClassName={classes["active"]}
-					className={classes["button"]}
-					disabledClassName={classes["disabled"]}
-					focusedClassname={classes["focused"]}
+					className={clsx(classes["button"], classes["decrease"])}
 					isDisabled={value - 1 < min}
-					onPress={removeQuantity}
+					onPress={decreaseQuantity}
 				>
-					<Icon variant="remove" />
+					<Icon variant="decrease" />
 				</Button>
 			</div>
 		</div>

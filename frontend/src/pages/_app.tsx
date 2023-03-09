@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { SSRProvider } from "react-aria";
-import { CartContextProvider } from "contexts/CartContext";
+import { CartProvider, ShopifyProvider } from "@shopify/hydrogen-react";
+import { print } from "graphql";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
 import Head from "next/head";
@@ -11,13 +12,12 @@ import ProgressBar from "nextjs-progressbar";
 
 import FocusRing from "components/FocusRing";
 
+import CartFragment from "queries/fragments/Cart.fragment.gql";
+
 import variables from "styles/exports.module.scss";
 
 import MetadataSchema from "types/api/metadata";
 import PageInformationSchema from "types/api/page-information";
-
-import getImageLink from "utils/getImageLink";
-import stripWrapper from "utils/stripWrapper";
 
 import "../styles/globals.scss";
 
@@ -47,38 +47,52 @@ function CustomApp({
 
 	return (
 		<SSRProvider>
-			<CartContextProvider>
-				<Head>
-					<meta
-						name="viewport"
-						content="width=device-width, initial-scale=1.0"
+			<ShopifyProvider
+				storeDomain={publicRuntimeConfig.SHOPIFY_STORE_DOMAIN}
+				countryIsoCode="DE"
+				languageIsoCode="EN"
+				storefrontApiVersion={publicRuntimeConfig.SHOPIFY_API_VERSION}
+				storefrontToken={publicRuntimeConfig.SHOPIFY_STOREFRONT_TOKEN}
+			>
+				<CartProvider cartFragment={print(CartFragment)}>
+					<Head>
+						<meta
+							name="viewport"
+							content="width=device-width, initial-scale=1.0"
+						/>
+					</Head>
+					<DefaultSeo
+						titleTemplate={page_prefix}
+						canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
+						additionalMetaTags={
+							metatags
+								? (metatags.map(
+										({ content, name, property }) => ({
+											content,
+											name,
+											property,
+										})
+								  ) as MetaTag[])
+								: []
+						}
 					/>
-				</Head>
-				<DefaultSeo
-					titleTemplate={page_prefix}
-					canonical={publicRuntimeConfig.PAGE_URL + router.asPath}
-					additionalMetaTags={
-						metatags
-							? (metatags.map(({ content, name, property }) => ({
-									content,
-									name,
-									property,
-							  })) as MetaTag[])
-							: []
-					}
-				/>
-				<FocusRing>
-					<a href="#main-content" className="skip-link">
-						Skip to main content
-					</a>
-				</FocusRing>
-				<ProgressBar
-					color={variables.color_accent}
-					nonce="claris-clouds-progress-bar"
-					options={{ easing: "ease", showSpinner: false, speed: 500 }}
-				/>
-				<Component {...pageProps} />
-			</CartContextProvider>
+					<FocusRing>
+						<a href="#main-content" className="skip-link">
+							Skip to main content
+						</a>
+					</FocusRing>
+					<ProgressBar
+						color={variables.color_accent}
+						nonce="claris-clouds-progress-bar"
+						options={{
+							easing: "ease",
+							showSpinner: false,
+							speed: 500,
+						}}
+					/>
+					<Component {...pageProps} />
+				</CartProvider>
+			</ShopifyProvider>
 		</SSRProvider>
 	);
 }

@@ -1,8 +1,12 @@
-import requestShopify from "api/shopify";
+import { Image } from "@shopify/hydrogen-react";
+import { Product } from "@shopify/hydrogen-react/storefront-api-types";
+import axios from "axios";
+import { print } from "graphql";
+
+import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
-import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
 import Typography from "components/Typography";
@@ -15,15 +19,31 @@ import { LayoutPage } from "types/components";
 import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
-	const resp = await requestShopify<Responses.GetProductPreviews>(
-		ProductsQuery
-	);
+	try {
+		const { data } = await axios.post<{
+			data: Responses.GetProductPreviews;
+		}>(
+			getStorefrontApiUrl(),
+			{
+				query: print(ProductsQuery),
+			},
+			{
+				headers: getPrivateTokenHeaders({
+					contentType: "json",
+				}),
+			}
+		);
 
-	return { props: resp.data };
+		return {
+			props: { products: data.data.products },
+		};
+	} catch (error) {
+		throw error;
+	}
 });
 
 interface ShopPageProps {
-	products: Shopify.Data<Shopify.ProductPreview[]>;
+	products: Shopify.Data<(Shopify.ProductPreview & Product)[]>;
 }
 
 const ShopPage: LayoutPage<ShopPageProps> = ({
@@ -36,16 +56,19 @@ const ShopPage: LayoutPage<ShopPageProps> = ({
 			{products.edges.map(({ node: product }, i) => (
 				<Row key={product.id} reverse={i % 2 === 1}>
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
-						<ShopifyImage
-							image={product.featuredImage}
-							style={{
-								height: "auto",
-								maxWidth: "100%",
-								objectFit: "cover",
-								verticalAlign: "bottom",
-								width: "100%",
-							}}
-						/>
+						{product.featuredImage && (
+							// eslint-disable-next-line jsx-a11y/alt-text
+							<Image
+								data={product.featuredImage}
+								style={{
+									height: "auto",
+									maxWidth: "100%",
+									objectFit: "cover",
+									verticalAlign: "bottom",
+									width: "100%",
+								}}
+							/>
+						)}
 					</Column>
 					<Column md={6} lg={[5, i % 2 === 1 ? 1 : 0]} align="center">
 						<Heading type="h2">{product.title}</Heading>

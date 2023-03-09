@@ -1,3 +1,6 @@
+import { Cart } from "@shopify/hydrogen-react";
+import { Product } from "@shopify/hydrogen-react/storefront-api-types";
+
 export namespace Shopify {
 	export type Data<ResponseData> = ResponseData extends Array<unknown>
 		? {
@@ -10,14 +13,6 @@ export namespace Shopify {
 	export type Response<ResponseData> = {
 		data: ResponseData;
 		error: any;
-	};
-
-	export type ProductPreview = {
-		featuredImage: Image;
-		handle: string;
-		id: string;
-		short_description: Shopify.MetaField<"descriptions", "short"> | null;
-		title: string;
 	};
 
 	export interface ProductOption {
@@ -56,13 +51,12 @@ export namespace Shopify {
 		value: string;
 	}
 
+	export interface ProductPreview {
+		short_description: Shopify.MetaField<"descriptions", "short"> | null;
+	}
+
 	export interface Product extends ProductPreview {
-		descriptionHtml: string;
-		options: Shopify.ProductOption[];
-		priceRange: { minVariantPrice: Shopify.Price };
 		technical_description: MetaField<"descriptions", "technical"> | null;
-		totalInventory: number;
-		variants: Data<Variant[]>;
 	}
 
 	export type Image = {
@@ -146,7 +140,7 @@ export namespace Requests {
 
 export namespace Responses {
 	export interface GetCart {
-		cart: Shopify.Cart;
+		cart: Cart;
 	}
 	export interface GetCartPreview {
 		cart: Shopify.CartPreview;
@@ -161,13 +155,13 @@ export namespace Responses {
 		cartCreate: { cart: Shopify.Cart };
 	}
 	export interface GetProductPreviews {
-		products: Shopify.Data<Shopify.ProductPreview[]>;
+		products: Shopify.Data<(Shopify.ProductPreview & Product)[]>;
 	}
 	export interface GetProduct {
-		product: Shopify.Data<Shopify.Product>;
+		product: Product & Shopify.Product;
 	}
 	export interface GetProductSlugs {
-		products: Shopify.Data<Pick<Shopify.Product, "handle">[]>;
+		products: Shopify.Data<Pick<Product, "handle">[]>;
 	}
 	export interface RemoveFromCart {
 		cartLinesRemove: {

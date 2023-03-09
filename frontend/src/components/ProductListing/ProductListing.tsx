@@ -1,90 +1,96 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
+import {
+	CartLineProvider,
+	Image,
+	Money,
+	useCart,
+} from "@shopify/hydrogen-react";
+import { CartLine } from "@shopify/hydrogen-react/storefront-api-types";
 import clsx from "clsx";
-import { useCartContext } from "contexts/CartContext";
 
-import Button from "components/Button";
-import Icon from "components/Icon";
-import { ShopifyImage } from "components/Image";
-import Link from "components/Link";
-import QuantitySelector from "components/QuantitySelector";
+import CartLineQuantitySelector from "components/CartLineQuantitySelector";
 import Typography from "components/Typography";
 
 import { WithClassname } from "types/components";
 
-import parsePrice from "utils/parsePrice";
-
 import classes from "./ProductListing.module.scss";
+
+const LineItem = (item: CartLine) => (
+	<CartLineProvider line={item}>
+		<li className={classes["item"]}>
+			{item.merchandise.image && (
+				<div className={classes["image"]}>
+					{/* eslint-disable-next-line jsx-a11y/alt-text */}
+					<Image
+						data={item.merchandise.image}
+						widths={[96, 128, 192]}
+						style={{
+							height: "auto",
+							objectFit: "contain",
+							objectPosition: "top",
+							width: "100%",
+						}}
+					/>
+				</div>
+			)}
+			<div className={classes["information"]}>
+				<Typography
+					size="large"
+					weight="bold"
+					className={classes["title"]}
+				>
+					{item.merchandise.product?.title}
+				</Typography>
+				{item.merchandise.selectedOptions?.reduce<ReactNode[]>(
+					(p, c) =>
+						c
+							? [
+									...p,
+									<Typography
+										key={c.name}
+										color="gray"
+										size="small"
+									>
+										{c.name}: {c.value}
+									</Typography>,
+							  ]
+							: p,
+					[]
+				)}
+			</div>
+			<CartLineQuantitySelector className={classes["quantity"]} />
+			{item.cost && (
+				<Typography className={classes["total"]}>
+					<Money data={item.cost.totalAmount} as="span" />
+				</Typography>
+			)}
+		</li>
+	</CartLineProvider>
+);
 
 interface ProductListingProps extends WithClassname {}
 
 const ProductListing: FC<ProductListingProps> = ({ className }) => {
-	const { items, removeFromCart, totalQuantity, updateCart } =
-		useCartContext();
+	const { lines } = useCart();
 
-	return totalQuantity > 0 ? (
+	return (
 		<ul className={clsx(classes["container"], className)}>
-			{items.map((item) => (
-				<li key={item.id} className={classes["item"]}>
-					<div className={classes["image"]}>
-						<ShopifyImage
-							image={item.merchandise.image}
-							fill
-							width={192}
-							style={{
-								objectFit: "contain",
-								objectPosition: "top",
-							}}
-						/>
-					</div>
-					<div className={classes["information"]}>
-						<Typography
-							size="large"
-							weight="bold"
-							className={classes["title"]}
-						>
-							{item.merchandise.product.title}
-						</Typography>
-						{item.merchandise.selectedOptions.map(
-							({ name, value }) => (
-								<Typography
-									key={name}
-									color="gray"
-									size="small"
-								>
-									{name}: {value}
-								</Typography>
-							)
-						)}
-					</div>
-					<div className={classes["quantity"]}>
-						<QuantitySelector
-							className={classes["selector"]}
-							max={item.merchandise.quantityAvailable}
-							value={item.quantity}
-							onChange={(v) => updateCart(item.id, v)}
-						/>
-						<Button
-							className={classes["delete"]}
-							activeClassName={classes["active"]}
-							title="Remove from cart"
-							onPress={() => removeFromCart(item.id)}
-						>
-							<Icon
-								className={classes["icon"]}
-								variant="delete"
-							/>
-						</Button>
-					</div>
-					<Typography className={classes["total"]}>
-						{parsePrice(item.cost.subtotalAmount)}
-					</Typography>
-				</li>
-			))}
+			{lines &&
+				lines.length > 0 &&
+				lines.reduce<ReactNode[]>(
+					(arr, item) =>
+						item && item.merchandise
+							? [
+									...arr,
+									<LineItem
+										key={item.id}
+										{...(item as CartLine)}
+									/>,
+							  ]
+							: arr,
+					[]
+				)}
 		</ul>
-	) : (
-		<Typography>
-			Your cart is empty. <Link href="/shop">Go to the shop!</Link>
-		</Typography>
 	);
 };
 

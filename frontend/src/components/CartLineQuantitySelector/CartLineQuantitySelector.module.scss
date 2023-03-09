@@ -3,12 +3,6 @@
 @use "styles/mixins";
 
 .container {
-	margin-top: functions.gutter(0.5);
-
-	.label {
-		margin-bottom: functions.gutter(0.5);
-	}
-
 	.button,
 	.value {
 		width: 3rem;
