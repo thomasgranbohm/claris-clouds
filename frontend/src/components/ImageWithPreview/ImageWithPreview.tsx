@@ -1,12 +1,11 @@
-import { FC, useRef } from "react";
-import { useDialog, useOverlayTrigger } from "react-aria";
+import { FC } from "react";
+import { useOverlayTrigger } from "react-aria";
 import { OverlayTriggerProps, useOverlayTriggerState } from "react-stately";
 import { Image } from "@shopify/hydrogen-react";
 import { Image as ShopifyImageType } from "@shopify/hydrogen-react/storefront-api-types";
 import clsx from "clsx";
 
 import Button from "components/Button";
-import Dialog from "components/Dialog";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 
