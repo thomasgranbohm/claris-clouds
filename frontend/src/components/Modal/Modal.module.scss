@@ -1,0 +1,23 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/variables";
+
+.underlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: map-get(variables.$stacking, "modal");
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: change-color(colors.get("background"), $alpha: 0.8);
+}
+
+.modal {
+	overflow-y: auto;
+	width: 100%;
+}

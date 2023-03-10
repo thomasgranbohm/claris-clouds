@@ -1,0 +1,41 @@
+@use "styles/functions";
+@use "styles/mixins";
+
+.open {
+	&:not([disabled]) {
+		cursor: zoom-in;
+	}
+	&[disabled] {
+		cursor: default;
+	}
+}
+
+.dialog {
+	position: relative;
+	height: 100vh;
+	padding: functions.gutter();
+	@include mixins.keep-within-width;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+
+	@include mixins.breakpoint(sm) {
+		display: block;
+	}
+
+	.dismiss {
+		position: fixed;
+		right: functions.gutter();
+		top: functions.gutter();
+
+		.icon {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+
+	.preview {
+		width: 100%;
+		height: auto;
+	}
+}

@@ -21,6 +21,7 @@ import { StyledButton } from "components/Button";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
+import ImageWithPreview from "components/ImageWithPreview";
 import Layout from "components/Layout";
 import Link from "components/Link";
 import { ShopifyMetadata } from "components/MetaData";
@@ -160,18 +161,23 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 				<Row>
 					<Column md={6} className={classes["column"]}>
 						{featuredImage && (
-							//  eslint-disable-next-line jsx-a11y/alt-text
-							<Image
-								data={variant?.image || featuredImage}
-								style={{
-									height: "auto",
-									verticalAlign: "bottom",
-									width: "100%",
-								}}
-								loaderOptions={{
-									scale: variant ? 2 : undefined,
-								}}
-							/>
+							<ImageWithPreview
+								image={variant?.image || featuredImage}
+								disabled={Boolean(variant?.image)}
+							>
+								{/*  eslint-disable-next-line jsx-a11y/alt-text */}
+								<Image
+									data={variant?.image || featuredImage}
+									style={{
+										height: "auto",
+										verticalAlign: "bottom",
+										width: "100%",
+									}}
+									loaderOptions={{
+										scale: variant ? 2 : undefined,
+									}}
+								/>
+							</ImageWithPreview>
 						)}
 					</Column>
 					<Column md={6} className={classes["column"]}>
