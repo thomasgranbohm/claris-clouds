@@ -6,6 +6,7 @@ import { Image as ShopifyImageType } from "@shopify/hydrogen-react/storefront-ap
 import clsx from "clsx";
 
 import Button from "components/Button";
+import Dialog from "components/Dialog";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 
@@ -45,10 +46,10 @@ const ImageWithPreview: FC<ImageWithPreviewProps> = ({
 				{children}
 			</Button>
 			{state.isOpen && (
-				<Modal {...props} state={state}>
-					<div
-						className={clsx(classes["dialog"], className)}
+				<Modal {...props} isDismissable state={state}>
+					<Dialog
 						{...overlayProps}
+						className={clsx(classes["dialog"], className)}
 						role="dialog"
 					>
 						<Button
@@ -66,7 +67,7 @@ const ImageWithPreview: FC<ImageWithPreviewProps> = ({
 							loaderOptions={{ scale: 3 }}
 							data={image}
 						/>
-					</div>
+					</Dialog>
 				</Modal>
 			)}
 		</>

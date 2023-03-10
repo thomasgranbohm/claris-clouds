@@ -1,5 +1,4 @@
 @use "styles/functions";
-@use "styles/mixins";
 
 .open {
 	&:not([disabled]) {
@@ -12,16 +11,8 @@
 
 .dialog {
 	position: relative;
-	height: 100vh;
-	padding: functions.gutter();
-	@include mixins.keep-within-width;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
 
-	@include mixins.breakpoint(sm) {
-		display: block;
-	}
+	display: block;
 
 	.dismiss {
 		position: fixed;

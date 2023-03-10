@@ -1,5 +1,6 @@
 @use "styles/colors";
 @use "styles/functions";
+@use "styles/mixins";
 @use "styles/variables";
 
 .underlay {
@@ -15,9 +16,27 @@
 	justify-content: center;
 
 	background-color: change-color(colors.get("background"), $alpha: 0.8);
-}
 
-.modal {
 	overflow-y: auto;
-	width: 100%;
+
+	@include mixins.breakpoint(sm) {
+		display: unset;
+	}
+
+	.modal {
+		@include mixins.keep-within-width;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: min-content;
+
+		margin: 0 auto;
+		padding: functions.gutter();
+
+		@include mixins.breakpoint(sm) {
+			align-items: flex-start;
+			min-height: 100vh;
+		}
+	}
 }
