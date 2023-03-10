@@ -6,7 +6,7 @@ import ComponentRenderer from "components/ComponentRenderer";
 import { Column, Row } from "components/Grid";
 import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
-import MetaData from "components/MetaData";
+import { StrapiMetadata } from "components/MetaData";
 
 import { PageSchema } from "types/api/page";
 import { LayoutPage } from "types/components";
@@ -70,10 +70,10 @@ const GenericPage: LayoutPage<GenericPageProps> = ({
 
 	return (
 		<Layout {...layout} campaign={campaign}>
-			<MetaData
+			<StrapiMetadata
 				title={seo?.title || title}
 				description={seo?.description}
-				images={[seo?.image]}
+				image={seo?.image}
 			/>
 			<Row>
 				<Column md={[8, 2]} lg={[6, 3]}>

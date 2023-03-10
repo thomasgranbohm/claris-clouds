@@ -69,7 +69,7 @@ const LineItem = (item: CartLine) => (
 			<CartLineQuantitySelector className={classes["quantity"]} />
 			{item.cost && (
 				<Typography className={classes["total"]}>
-					<Money data={item.cost.totalAmount} as="span" />
+					<Money data={item.cost.subtotalAmount} as="span" />
 				</Typography>
 			)}
 		</li>

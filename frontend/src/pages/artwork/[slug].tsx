@@ -23,7 +23,7 @@ import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import Layout from "components/Layout";
 import Link from "components/Link";
-import MetaData from "components/MetaData";
+import { ShopifyMetadata } from "components/MetaData";
 import MetafieldParser from "components/MetafieldParser";
 import OptionSelector from "components/OptionSelector";
 import QuantitySelector from "components/QuantitySelector";
@@ -152,10 +152,10 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 	return (
 		<ProductProvider data={product}>
 			<Layout campaign={campaign} {...layout}>
-				<MetaData
+				<ShopifyMetadata
 					title={title}
 					description={description}
-					images={featuredImage ? [featuredImage] : undefined}
+					image={featuredImage || undefined}
 				/>
 				<Row>
 					<Column md={6} className={classes["column"]}>
@@ -185,6 +185,13 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 								}
 							/>
 						</Typography>
+						{descriptionHtml && (
+							<Row>
+								<Column>
+									<HtmlRenderer content={descriptionHtml} />
+								</Column>
+							</Row>
+						)}
 						{options.map((option) => (
 							<OptionSelector
 								key={option.name}
@@ -234,13 +241,6 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 								</AddToCartButton>
 							</Column>
 						</Row>
-						{descriptionHtml && (
-							<Row>
-								<Column>
-									<HtmlRenderer content={descriptionHtml} />
-								</Column>
-							</Row>
-						)}
 						{technical_description && (
 							<Row>
 								<Column>

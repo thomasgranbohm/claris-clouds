@@ -5,7 +5,7 @@ import { getStartPage } from "api/start-page";
 import ComponentRenderer from "components/ComponentRenderer";
 import Cover from "components/Cover";
 import Layout from "components/Layout";
-import MetaData from "components/MetaData";
+import { StrapiMetadata } from "components/MetaData";
 
 import { StartPage } from "types/api/start-page";
 import { LayoutPage } from "types/components";
@@ -46,10 +46,10 @@ const StartPage: LayoutPage<StartPageProps> = ({
 
 	return (
 		<Fragment>
-			<MetaData
+			<StrapiMetadata
 				defaultTitle={seo?.title || title}
 				description={seo?.description}
-				images={[seo?.image]}
+				image={seo?.image}
 			/>
 			<Cover
 				background={stripWrapper(background)}
