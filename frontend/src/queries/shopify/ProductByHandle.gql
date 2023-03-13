@@ -1,3 +1,5 @@
+#import "../fragments/ImageWithPreview.fragment.gql"
+
 query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 @inContext(country: $country_code) {
 	product(handle: $handle) {
@@ -23,10 +25,7 @@ query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 			}
 		}
 		featuredImage {
-			altText
-			height
-			url
-			width
+			...ImageWithPreview
 		}
 		options {
 			name
@@ -49,9 +48,7 @@ query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 						currencyCode
 					}
 					image {
-						height
-						url
-						width
+						...ImageWithPreview
 					}
 				}
 			}
@@ -63,10 +60,7 @@ query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 				title
 				handle
 				featuredImage {
-					altText
-					height
-					url
-					width
+					...ImageWithPreview
 				}
 				priceRange {
 					minVariantPrice {

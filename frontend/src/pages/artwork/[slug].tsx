@@ -20,7 +20,8 @@ import { StyledButton } from "components/Button";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
-import ImageWithPreview from "components/ImageWithPreview";
+import { ShopifyImage } from "components/Image";
+import ImageWithZoom from "components/ImageWithZoom";
 import Layout from "components/Layout";
 import Link from "components/Link";
 import { ShopifyMetadata } from "components/MetaData";
@@ -130,23 +131,20 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 				<Row>
 					<Column md={6} className={classes["column"]}>
 						{featuredImage && (
-							<ImageWithPreview
+							<ImageWithZoom
 								image={variant?.image || featuredImage}
 								disabled={Boolean(variant?.image)}
 							>
 								{/*  eslint-disable-next-line jsx-a11y/alt-text */}
-								<Image
-									data={variant?.image || featuredImage}
+								<ShopifyImage
+									image={variant?.image || featuredImage}
 									style={{
 										height: "auto",
 										verticalAlign: "bottom",
 										width: "100%",
 									}}
-									loaderOptions={{
-										scale: variant ? 2 : undefined,
-									}}
 								/>
-							</ImageWithPreview>
+							</ImageWithZoom>
 						)}
 					</Column>
 					<Column md={6} className={classes["column"]}>

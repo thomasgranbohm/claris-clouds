@@ -1,0 +1,7 @@
+fragment ImageWithPreview on Image {
+	altText
+	height
+	preview_url: url(transform: { maxWidth: 16 })
+	url
+	width
+}

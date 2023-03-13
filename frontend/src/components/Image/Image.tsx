@@ -23,18 +23,6 @@ interface ShopifyImageProps extends Partial<NextImageProps> {
 	image: Shopify.Image;
 }
 
-const ShopifyImageLoader: ImageLoader = ({ quality, src, width }) => {
-	const url = new URL(src);
-
-	url.searchParams.append("width", width.toString());
-
-	if (quality) {
-		url.searchParams.append("quality", quality.toString());
-	}
-
-	return url.toString();
-};
-
 export const ShopifyImage: FC<ShopifyImageProps> = ({
 	fill,
 	height: _height,
@@ -42,19 +30,18 @@ export const ShopifyImage: FC<ShopifyImageProps> = ({
 	width: _width,
 	...props
 }) => {
-	const { altText, height, url, width } = image;
+	const { altText, height, preview_url, url, width } = image;
 
 	return (
 		<NextImage
-			width={!fill ? _width || width : undefined}
-			height={!fill ? _height || height : undefined}
+			width={width || 1}
+			height={height || 1}
 			{...props}
 			src={url}
 			alt={altText || ""}
 			fill={fill}
-			loader={ShopifyImageLoader}
 			placeholder="blur"
-			blurDataURL={ShopifyImageLoader({ src: url, width: 16 })}
+			blurDataURL={`/_next/image?url=${preview_url}&w=16&q=1`}
 		/>
 	);
 };

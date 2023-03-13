@@ -1,3 +1,5 @@
+#import "../fragments/ImageWithPreview.fragment.gql"
+
 query Products {
 	products(first: 10) {
 		edges {
@@ -8,10 +10,7 @@ query Products {
 				description
 				descriptionHtml
 				featuredImage {
-					altText
-					height
-					url
-					width
+					...ImageWithPreview
 				}
 			}
 		}

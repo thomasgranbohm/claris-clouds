@@ -56,10 +56,11 @@ export namespace Shopify {
 	}
 
 	export type Image = {
-		altText?: string;
-		height: number;
+		altText?: string | null;
+		height?: number | null;
+		preview_url?: string | null;
 		url: string;
-		width: number;
+		width?: number | null;
 	};
 
 	export type CartItemPreview = {

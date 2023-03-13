@@ -1,4 +1,3 @@
-import { Image } from "@shopify/hydrogen-react";
 import { Product } from "@shopify/hydrogen-react/storefront-api-types";
 import axios from "axios";
 import { print } from "graphql";
@@ -9,6 +8,7 @@ import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
+import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
 
@@ -54,8 +54,8 @@ const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
 						{product.featuredImage && (
 							// eslint-disable-next-line jsx-a11y/alt-text
-							<Image
-								data={product.featuredImage}
+							<ShopifyImage
+								image={product.featuredImage}
 								style={{
 									height: "auto",
 									maxWidth: "100%",

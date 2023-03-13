@@ -1,20 +1,20 @@
 import { FC } from "react";
 import { useOverlayTrigger } from "react-aria";
 import { OverlayTriggerProps, useOverlayTriggerState } from "react-stately";
-import { Image } from "@shopify/hydrogen-react";
 import { Image as ShopifyImageType } from "@shopify/hydrogen-react/storefront-api-types";
 import clsx from "clsx";
 
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import Icon from "components/Icon";
+import { ShopifyImage } from "components/Image/Image";
 import Modal from "components/Modal";
 
 import { WithChildren, WithClassname } from "types/components";
 
-import classes from "./ImageWithPreview.module.scss";
+import classes from "./ImageWithZoom.module.scss";
 
-interface ImageWithPreviewProps
+interface ImageWithZoomProps
 	extends WithClassname,
 		WithChildren,
 		OverlayTriggerProps {
@@ -22,7 +22,7 @@ interface ImageWithPreviewProps
 	image: ShopifyImageType;
 }
 
-const ImageWithPreview: FC<ImageWithPreviewProps> = ({
+const ImageWithZoom: FC<ImageWithZoomProps> = ({
 	children,
 	className,
 	disabled,
@@ -62,10 +62,9 @@ const ImageWithPreview: FC<ImageWithPreviewProps> = ({
 							/>
 						</Button>
 						{/* eslint-disable-next-line jsx-a11y/alt-text */}
-						<Image
+						<ShopifyImage
 							className={classes["preview"]}
-							loaderOptions={{ scale: 3 }}
-							data={image}
+							image={image}
 						/>
 					</Dialog>
 				</Modal>
@@ -74,4 +73,4 @@ const ImageWithPreview: FC<ImageWithPreviewProps> = ({
 	);
 };
 
-export default ImageWithPreview;
+export default ImageWithZoom;
