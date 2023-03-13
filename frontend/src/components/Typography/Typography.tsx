@@ -25,10 +25,12 @@ const Typography: FC<TypographyProps> = ({
 	size,
 	type = "p",
 	weight,
+	...props
 }) => {
 	return createElement(
 		type,
 		{
+			...props,
 			className: clsx(
 				classes["container"],
 				classes[`color--${color}`],

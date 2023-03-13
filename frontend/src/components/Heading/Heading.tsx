@@ -1,10 +1,17 @@
 import { createElement, FC } from "react";
 import clsx from "clsx";
+import { Poppins } from "next/font/google";
 
 import { WithChildren, WithClassname } from "types/components";
 import { Colors, Headings } from "types/generics";
 
 import classes from "./Heading.module.scss";
+
+const poppins = Poppins({
+	style: ["normal", "italic"],
+	subsets: ["latin"],
+	weight: ["400", "500", "600", "700", "800"],
+});
 
 export const PageTitle: FC<Omit<HeadingProps, "type">> = ({
 	children,
@@ -38,6 +45,7 @@ const Heading: FC<HeadingProps> = ({
 		{
 			className: clsx(
 				classes["container"],
+				poppins.className,
 				classes[`color--${color}`],
 				classes[`look--${look || type}`],
 				className

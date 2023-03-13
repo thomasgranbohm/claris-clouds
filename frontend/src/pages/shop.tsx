@@ -50,13 +50,14 @@ const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 	return (
 		<Layout>
 			{products.edges.map(({ node: product }, i) => (
-				<Row key={product.id} reverse={i % 2 === 1}>
-					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">
+				<Row key={product.id}>
+					<Column md={6} lg={[4, 2]} align="center">
 						{product.featuredImage && (
 							// eslint-disable-next-line jsx-a11y/alt-text
 							<ShopifyImage
 								image={product.featuredImage}
 								style={{
+									aspectRatio: "1 / 1",
 									height: "auto",
 									maxWidth: "100%",
 									objectFit: "cover",
@@ -66,13 +67,13 @@ const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 							/>
 						)}
 					</Column>
-					<Column md={6} lg={[5, i % 2 === 1 ? 1 : 0]} align="center">
+					<Column md={6} lg={4} align="center">
 						<Heading type="h2">{product.title}</Heading>
 						{product.descriptionHtml && (
 							<HtmlRenderer content={product.descriptionHtml} />
 						)}
 						<Row>
-							<Column lg={6}>
+							<Column lg={8}>
 								<StyledLink href={`/artwork/${product.handle}`}>
 									Buy a print
 								</StyledLink>

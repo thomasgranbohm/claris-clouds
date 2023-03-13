@@ -4,6 +4,7 @@ import { CartProvider, ShopifyProvider } from "@shopify/hydrogen-react";
 import { print } from "graphql";
 import type { AppProps } from "next/app";
 import getConfig from "next/config";
+import { Nunito } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
@@ -21,6 +22,12 @@ import variables from "styles/exports.module.scss";
 import "../styles/globals.scss";
 
 const { publicRuntimeConfig } = getConfig();
+
+const nunito = Nunito({
+	style: ["normal", "italic"],
+	subsets: ["latin"],
+	weight: ["400", "700"],
+});
 
 function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 	const router = useRouter();
@@ -80,25 +87,27 @@ function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 								: []
 						}
 					/>
-					<FocusRing>
-						<a href="#main-content" className="skip-link">
-							Skip to main content
-						</a>
-					</FocusRing>
-					<ProgressBar
-						color={variables.color_accent}
-						nonce="claris-clouds-progress-bar"
-						options={{
-							easing: "ease",
-							showSpinner: false,
-							speed: 500,
-						}}
-					/>
-					<LayoutContext.Provider
-						value={{ campaign, country, layout, meta }}
-					>
-						<Component {...pageProps} />
-					</LayoutContext.Provider>
+					<div className={nunito.className}>
+						<FocusRing>
+							<a href="#main-content" className="skip-link">
+								Skip to main content
+							</a>
+						</FocusRing>
+						<ProgressBar
+							color={variables.color_accent}
+							nonce="claris-clouds-progress-bar"
+							options={{
+								easing: "ease",
+								showSpinner: false,
+								speed: 500,
+							}}
+						/>
+						<LayoutContext.Provider
+							value={{ campaign, country, layout, meta }}
+						>
+							<Component {...pageProps} />
+						</LayoutContext.Provider>
+					</div>
 				</CartProvider>
 			</ShopifyProvider>
 		</SSRProvider>
