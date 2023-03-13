@@ -32,8 +32,6 @@ function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 
 	const { metatags, page_prefix } = meta;
 
-	console.log("Country: %s", country);
-
 	// Install service-worker
 	useEffect(() => {
 		if (

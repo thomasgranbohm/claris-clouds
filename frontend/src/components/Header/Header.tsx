@@ -50,7 +50,10 @@ const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 					href="/"
 					aria-label="Home"
 				>
-					<LogoSVG className={classes["icon"]} />
+					<LogoSVG
+						aria-label="Website logo"
+						className={classes["icon"]}
+					/>
 				</Link>
 				<Button
 					className={classes["button"]}
@@ -74,16 +77,16 @@ const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 						classes["cart"],
 						router.asPath === "/cart" && classes["active"]
 					)}
+					aria-label="Cart"
 				>
 					<Icon variant="shopping_cart" className={classes["icon"]} />
 					{totalQuantity > 0 && (
 						<Typography
 							type="span"
-							weight="semi-bold"
 							size="smaller"
 							className={classes["quantity"]}
 						>
-							{totalQuantity}
+							<b>{totalQuantity}</b>
 						</Typography>
 					)}
 				</Link>

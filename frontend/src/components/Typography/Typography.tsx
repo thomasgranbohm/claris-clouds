@@ -22,9 +22,9 @@ const Typography: FC<TypographyProps> = ({
 	className,
 	color,
 	inline,
-	size = "normal",
+	size,
 	type = "p",
-	weight = "normal",
+	weight,
 }) => {
 	return createElement(
 		type,

@@ -39,7 +39,6 @@ import { getLayoutDataSSR } from "utils/getLayoutData";
 
 export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 	async ({ params, req }) => {
-		console.log(req.headers);
 		const country_code = req.headers["cf-ipcountry"];
 		const slug = params?.["slug"];
 

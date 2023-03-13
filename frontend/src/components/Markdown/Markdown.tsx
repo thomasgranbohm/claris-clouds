@@ -15,6 +15,8 @@ const Markdown: FC<MarkdownProps> = ({ text }) => {
 		<ReactMarkdown
 			// eslint-disable-next-line react/no-children-prop
 			children={text}
+			rawSourcePos={false}
+			sourcePos={false}
 			components={{
 				a({ children, node }) {
 					const { properties } = node;

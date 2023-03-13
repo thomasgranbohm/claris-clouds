@@ -42,11 +42,10 @@ const LineItem = (item: CartLine) => (
 				>
 					<Typography
 						size="large"
-						weight="bold"
 						color="foreground"
 						className={classes["title"]}
 					>
-						{item.merchandise.product?.title}
+						<b>{item.merchandise.product.title}</b>
 					</Typography>
 				</Link>
 				{item.merchandise.selectedOptions?.reduce<ReactNode[]>(

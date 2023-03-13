@@ -37,8 +37,8 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 	return (
 		<div className={clsx(classes["container"], className)}>
 			{label && (
-				<Typography className={classes["label"]} weight="bold">
-					{label}
+				<Typography className={classes["label"]}>
+					<b>{label}</b>
 				</Typography>
 			)}
 			<div className={classes["quantity"]}>

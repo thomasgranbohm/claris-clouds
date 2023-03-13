@@ -64,7 +64,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 					</Swiper>
 					<div className={classes["buttons"]}>
 						<Button
-							aria-label="Previous slide"
+							aria-label="Previous image"
 							className={clsx(
 								classes["button"],
 								classes["backward"]
@@ -74,7 +74,7 @@ const Showcase: FC<ShowcaseSchema> = ({ images }) => {
 							<Icon variant="backward" />
 						</Button>
 						<Button
-							aria-label="Next slide"
+							aria-label="Next image"
 							className={clsx(
 								classes["button"],
 								classes["forward"]

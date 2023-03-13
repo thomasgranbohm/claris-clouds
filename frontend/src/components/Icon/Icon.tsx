@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from "react";
+import { FC, SVGAttributes } from "react";
 import clsx from "clsx";
 
 import AddSVG from "assets/icons/add.svg";
@@ -25,7 +25,7 @@ import { Colors } from "types/generics";
 
 import classes from "./Icon.module.scss";
 
-interface IconProps extends WithClassname, HTMLAttributes<HTMLElement> {
+interface IconProps extends WithClassname, SVGAttributes<SVGElement> {
 	fill?: Colors;
 	variant:
 		| "calendar"
@@ -112,6 +112,7 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 
 	return (
 		<Element
+			aria-label={`${variant} icon`}
 			{...props}
 			className={clsx(
 				classes["container"],
