@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Item } from "react-stately";
 import {
 	AddToCartButton,
-	flattenConnection,
 	Image,
 	Money,
 	ProductProvider,
@@ -13,7 +12,7 @@ import {
 } from "@shopify/hydrogen-react/storefront-api-types";
 import axios from "axios";
 import { print } from "graphql";
-import { GetStaticPaths } from "next";
+import { NextPage } from "next";
 
 import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 
@@ -31,17 +30,17 @@ import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
 import ProductByHandle from "queries/shopify/ProductByHandle.gql";
-import ProductSlugs from "queries/shopify/ProductSlugs.gql";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
 
 import { Requests, Responses, Shopify } from "types/api/shopify";
-import { LayoutPage } from "types/components";
 
-import { getLayoutDataSSG } from "utils/getLayoutData";
+import { getLayoutDataSSR } from "utils/getLayoutData";
 
-export const getStaticProps = getLayoutDataSSG<ProductPageProps>(
-	async ({ params }) => {
+export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
+	async ({ params, req }) => {
+		console.log(req.headers);
+		const country_code = req.headers["cf-ipcountry"];
 		const slug = params?.["slug"];
 
 		if (!slug) {
@@ -58,7 +57,7 @@ export const getStaticProps = getLayoutDataSSG<ProductPageProps>(
 				getStorefrontApiUrl(),
 				{
 					query: print(ProductByHandle),
-					variables: { handle: slug },
+					variables: { country_code, handle: slug },
 				},
 				{
 					headers: getPrivateTokenHeaders({
@@ -76,42 +75,13 @@ export const getStaticProps = getLayoutDataSSG<ProductPageProps>(
 	}
 );
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	if (process.env.NODE_ENV !== "production") {
-		return { fallback: "blocking", paths: [] };
-	}
-
-	const { data } = await axios.post<{
-		data: Responses.GetProductSlugs;
-	}>(
-		getStorefrontApiUrl(),
-		{
-			query: print(ProductSlugs),
-		},
-		{
-			headers: getPrivateTokenHeaders({
-				contentType: "json",
-			}),
-		}
-	);
-
-	return {
-		fallback: "blocking",
-		paths: data.data.products.edges.map(({ node }) => ({
-			params: { slug: node.handle },
-		})),
-	};
-};
-
 interface ProductPageProps {
 	latest_products: Shopify.Data<Product[]>;
 	product: Shopify.Product & Product;
 }
 
-const ArtworkPage: LayoutPage<ProductPageProps> = ({
-	campaign,
+const ArtworkPage: NextPage<ProductPageProps> = ({
 	latest_products,
-	layout,
 	product,
 }) => {
 	const {
@@ -152,7 +122,7 @@ const ArtworkPage: LayoutPage<ProductPageProps> = ({
 
 	return (
 		<ProductProvider data={product}>
-			<Layout campaign={campaign} {...layout}>
+			<Layout>
 				<ShopifyMetadata
 					title={title}
 					description={description}

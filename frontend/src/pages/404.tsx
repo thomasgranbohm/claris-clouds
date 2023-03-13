@@ -1,17 +1,17 @@
+import { NextPage } from "next";
+
 import { Column, Row } from "components/Grid";
 import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
 
-import { LayoutPage } from "types/components";
-
 import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG();
 
-const ErrorPage: LayoutPage = ({ campaign, layout }) => {
+const ErrorPage: NextPage = () => {
 	return (
-		<Layout campaign={campaign} {...layout}>
+		<Layout>
 			<MetaData title="Page not found" noindex />
 			<Row>
 				<Column>

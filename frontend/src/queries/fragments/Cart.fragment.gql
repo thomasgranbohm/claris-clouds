@@ -24,7 +24,7 @@ fragment CartFragment on Cart {
 					value
 				}
 				cost {
-					totalAmount {
+					subtotalAmount {
 						amount
 						currencyCode
 					}

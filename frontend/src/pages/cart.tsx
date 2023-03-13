@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Money, useCart } from "@shopify/hydrogen-react";
+import { NextPage } from "next";
 
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
@@ -10,17 +11,15 @@ import MetaData from "components/MetaData";
 import ProductListing from "components/ProductListing";
 import Typography from "components/Typography";
 
-import { LayoutPage } from "types/components";
-
 import { getLayoutDataSSR } from "utils/getLayoutData";
 
 export const getServerSideProps = getLayoutDataSSR();
 
-const CartPage: LayoutPage = ({ campaign, layout }) => {
+const CartPage: NextPage = () => {
 	const { checkoutUrl, cost, status, totalQuantity } = useCart();
 
 	return (
-		<Layout campaign={campaign} {...layout}>
+		<Layout>
 			<MetaData noindex title="Cart" />
 			<Row>
 				<Column>

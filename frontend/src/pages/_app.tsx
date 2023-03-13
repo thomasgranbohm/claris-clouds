@@ -12,24 +12,27 @@ import ProgressBar from "nextjs-progressbar";
 
 import FocusRing from "components/FocusRing";
 
+import LayoutContext, { LayoutContextSchema } from "contexts/LayoutContext";
+
 import CartFragment from "queries/fragments/Cart.fragment.gql";
 
 import variables from "styles/exports.module.scss";
-
-import MetadataSchema from "types/api/metadata";
-import PageInformationSchema from "types/api/page-information";
 
 import "../styles/globals.scss";
 
 const { publicRuntimeConfig } = getConfig();
 
-function CustomApp({
-	Component,
-	pageProps,
-}: AppProps<{ layout: PageInformationSchema; meta: MetadataSchema }>) {
+function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 	const router = useRouter();
-	const { meta } = pageProps;
+	const { campaign, country, layout, meta } = pageProps;
+
+	if (meta === null || layout === null) {
+		throw new Error("Missing needed layout data data");
+	}
+
 	const { metatags, page_prefix } = meta;
+
+	console.log("Country: %s", country);
 
 	// Install service-worker
 	useEffect(() => {
@@ -49,12 +52,15 @@ function CustomApp({
 		<SSRProvider>
 			<ShopifyProvider
 				storeDomain={publicRuntimeConfig.SHOPIFY_STORE_DOMAIN}
-				countryIsoCode="DE"
+				countryIsoCode={country || "FR"}
 				languageIsoCode="EN"
 				storefrontApiVersion={publicRuntimeConfig.SHOPIFY_API_VERSION}
 				storefrontToken={publicRuntimeConfig.SHOPIFY_STOREFRONT_TOKEN}
 			>
-				<CartProvider cartFragment={print(CartFragment)}>
+				<CartProvider
+					cartFragment={print(CartFragment)}
+					countryCode={country || "FR"}
+				>
 					<Head>
 						<meta
 							name="viewport"
@@ -90,7 +96,11 @@ function CustomApp({
 							speed: 500,
 						}}
 					/>
-					<Component {...pageProps} />
+					<LayoutContext.Provider
+						value={{ campaign, country, layout, meta }}
+					>
+						<Component {...pageProps} />
+					</LayoutContext.Provider>
 				</CartProvider>
 			</ShopifyProvider>
 		</SSRProvider>

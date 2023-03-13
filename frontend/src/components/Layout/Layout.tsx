@@ -7,24 +7,25 @@ import CookieConsent from "components/CookieConsent";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
-import CampaignSchema from "types/api/campaign";
-import PageInformationSchema from "types/api/page-information";
+import { useLayoutContext } from "contexts/LayoutContext";
+
 import { WithChildren } from "types/components";
 
 import classes from "./Layout.module.scss";
 
-export interface LayoutProps extends WithChildren, PageInformationSchema {
-	campaign: CampaignSchema | null;
+export interface LayoutProps extends WithChildren {
 	conformity?: boolean;
 }
 
-const Layout: FC<LayoutProps> = ({
-	campaign,
-	children,
-	conformity = true,
-	cookie_consent_text,
-	...props
-}) => {
+const Layout: FC<LayoutProps> = ({ children, conformity = true }) => {
+	const { campaign, layout, meta } = useLayoutContext();
+
+	if (layout === null || meta === null) {
+		throw new Error("Missing needed layout data data");
+	}
+
+	const { cookie_consent_text, ...props } = layout;
+
 	const [showCookieConsent, setShowCookieConsent] = useState<boolean>(false);
 	const sentinel = useRef(null);
 

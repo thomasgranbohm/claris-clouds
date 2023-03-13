@@ -8,6 +8,8 @@ import {
 
 import request from "api/index";
 
+import { LayoutContextSchema } from "contexts/LayoutContext";
+
 import GetGeneralInformation from "queries/GetGeneralInformation.gql";
 
 import CampaignSchema from "types/api/campaign";
@@ -23,15 +25,9 @@ type RequestType = {
 	pageInformation: GraphQL.Data<PageInformationSchema>;
 };
 
-type ReturnType = {
-	campaign: CampaignSchema | null;
-	layout: PageInformationSchema;
-	meta: MetadataSchema;
-};
-
 export function getLayoutDataSSR<T extends { [key: string]: any }>(
 	f?: GetServerSideProps<T>
-): GetServerSideProps<T & ReturnType> {
+): GetServerSideProps<T & LayoutContextSchema> {
 	return async (context: GetServerSidePropsContext) => {
 		const { data, error } = await request<RequestType>({
 			query: GetGeneralInformation,
@@ -47,6 +43,8 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 			}
 		}
 
+		const country = context.req.headers["cf-ipcountry"];
+
 		if (!f) {
 			return {
 				props: {
@@ -54,9 +52,10 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 						data.campaign.data !== null
 							? stripWrapper(data.campaign)
 							: null,
+					country: !!country ? country.toString() : null,
 					layout: stripWrapper(data.pageInformation),
 					meta: stripWrapper(data.meta),
-				} as T & ReturnType,
+				} as T & LayoutContextSchema,
 			};
 		}
 
@@ -73,16 +72,17 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 					data.campaign.data !== null
 						? stripWrapper(data.campaign)
 						: null,
+				country: !!country ? country.toString() : null,
 				layout: stripWrapper(data.pageInformation),
 				meta: stripWrapper(data.meta),
-			} as T & ReturnType,
+			} as T & LayoutContextSchema,
 		};
 	};
 }
 
 export function getLayoutDataSSG<T extends { [key: string]: any }>(
 	f?: GetStaticProps<T>
-): GetStaticProps<T & ReturnType> {
+): GetStaticProps<T & LayoutContextSchema> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
 		const { data, error } = await request<RequestType>({
@@ -106,9 +106,10 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 						data.campaign.data !== null
 							? stripWrapper(data.campaign)
 							: null,
+					country: null,
 					layout: stripWrapper(data.pageInformation),
 					meta: stripWrapper(data.meta),
-				} as T & ReturnType,
+				} as T & LayoutContextSchema,
 				revalidate: 60,
 			};
 		}
@@ -128,6 +129,7 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 					data.campaign.data !== null
 						? stripWrapper(data.campaign)
 						: null,
+				country: null,
 				layout: stripWrapper(data.pageInformation),
 				meta: stripWrapper(data.meta),
 			},

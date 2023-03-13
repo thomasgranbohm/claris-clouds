@@ -2,6 +2,7 @@ import { Image } from "@shopify/hydrogen-react";
 import { Product } from "@shopify/hydrogen-react/storefront-api-types";
 import axios from "axios";
 import { print } from "graphql";
+import { NextPage } from "next";
 
 import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 
@@ -10,12 +11,10 @@ import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
-import Typography from "components/Typography";
 
 import ProductsQuery from "queries/shopify/Products.gql";
 
 import { Responses, Shopify } from "types/api/shopify";
-import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
 
@@ -47,13 +46,9 @@ interface ShopPageProps {
 	products: Shopify.Data<Product[]>;
 }
 
-const ShopPage: LayoutPage<ShopPageProps> = ({
-	campaign,
-	layout,
-	products,
-}) => {
+const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 	return (
-		<Layout campaign={campaign} {...layout}>
+		<Layout>
 			{products.edges.map(({ node: product }, i) => (
 				<Row key={product.id} reverse={i % 2 === 1}>
 					<Column md={6} lg={[5, i % 2 === 0 ? 1 : 0]} align="center">

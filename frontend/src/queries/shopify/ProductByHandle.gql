@@ -1,4 +1,5 @@
-query ProductByHandle($handle: String!) {
+query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
+@inContext(country: $country_code) {
 	product(handle: $handle) {
 		title
 		descriptionHtml

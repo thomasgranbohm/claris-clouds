@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { NextPage } from "next";
 
 import { getStartPage } from "api/start-page";
 
@@ -8,7 +9,6 @@ import Layout from "components/Layout";
 import { StrapiMetadata } from "components/MetaData";
 
 import { StartPage } from "types/api/start-page";
-import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
@@ -37,11 +37,7 @@ interface StartPageProps {
 	startPage: StartPage;
 }
 
-const StartPage: LayoutPage<StartPageProps> = ({
-	campaign,
-	layout,
-	startPage,
-}) => {
+const StartPage: NextPage<StartPageProps> = ({ startPage }) => {
 	const { background, foreground, sections, seo, title } = startPage;
 
 	return (
@@ -56,7 +52,7 @@ const StartPage: LayoutPage<StartPageProps> = ({
 				foreground={stripWrapper(foreground)}
 				title={title}
 			/>
-			<Layout {...layout} campaign={campaign} conformity={false}>
+			<Layout conformity={false}>
 				<ComponentRenderer components={sections} />
 			</Layout>
 		</Fragment>

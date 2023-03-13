@@ -1,9 +1,9 @@
+import { NextPage } from "next";
+
 import { Column, Row } from "components/Grid";
 import { PageTitle } from "components/Heading";
 import Layout from "components/Layout";
 import MetaData from "components/MetaData";
-
-import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSR } from "utils/getLayoutData";
 
@@ -19,15 +19,11 @@ export const getServerSideProps = getLayoutDataSSR(async ({ res }) => {
 	};
 });
 
-const ErrorPage: LayoutPage<ErrorPageProps> = ({
-	campaign,
-	layout,
-	statusCode,
-}) => {
+const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
 	const title = "Something went wrong. Please try again later.";
 
 	return (
-		<Layout campaign={campaign} {...layout}>
+		<Layout>
 			<MetaData title={title} noindex />
 			<Row>
 				<Column>

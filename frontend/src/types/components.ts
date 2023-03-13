@@ -16,5 +16,3 @@ export interface LayoutSchema {
 	campaign: CampaignSchema;
 	layout: PageInformationSchema;
 }
-
-export type LayoutPage<T = unknown> = NextPage<T & LayoutSchema>;

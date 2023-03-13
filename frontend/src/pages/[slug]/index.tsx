@@ -1,4 +1,4 @@
-import { GetStaticPaths } from "next";
+import { GetStaticPaths, NextPage } from "next";
 
 import { getPage, getPageSlugs } from "api/page";
 
@@ -9,7 +9,6 @@ import Layout from "components/Layout";
 import { StrapiMetadata } from "components/MetaData";
 
 import { PageSchema } from "types/api/page";
-import { LayoutPage } from "types/components";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
 import stripWrapper from "utils/stripWrapper";
@@ -61,15 +60,11 @@ interface GenericPageProps {
 	page: PageSchema;
 }
 
-const GenericPage: LayoutPage<GenericPageProps> = ({
-	campaign,
-	layout,
-	page,
-}) => {
+const GenericPage: NextPage<GenericPageProps> = ({ page }) => {
 	const { sections, seo, title } = page;
 
 	return (
-		<Layout {...layout} campaign={campaign}>
+		<Layout>
 			<StrapiMetadata
 				title={seo?.title || title}
 				description={seo?.description}
