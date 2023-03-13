@@ -27,6 +27,10 @@
 	}
 
 	&.type--sticky-image {
+		.column {
+			height: unset;
+		}
+
 		.image,
 		.text {
 			position: sticky;
