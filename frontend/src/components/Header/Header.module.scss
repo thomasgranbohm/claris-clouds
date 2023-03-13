@@ -112,6 +112,8 @@
 		right: 0;
 		bottom: 0;
 
+		z-index: map-get(variables.$stacking, "header-open");
+
 		overflow-y: auto;
 
 		.inner {
