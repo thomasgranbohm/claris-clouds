@@ -13,9 +13,12 @@ import stripWrapper from "utils/stripWrapper";
 const { publicRuntimeConfig } = getConfig();
 
 export const StrapiMetadata: FC<
-	{ image?: GraphQL.Data<ImageSchema> | undefined } & MetaDataProps
+	{ image?: GraphQL.Data<ImageSchema> | null } & MetaDataProps
 > = ({ image: _image, openGraph, ...props }) => {
-	const image = _image ? stripWrapper(_image) : undefined;
+	const image =
+		_image !== undefined && _image !== null
+			? stripWrapper(_image)
+			: undefined;
 
 	return (
 		<MetaData
