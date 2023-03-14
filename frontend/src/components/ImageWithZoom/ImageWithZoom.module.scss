@@ -1,3 +1,4 @@
+@use "styles/colors";
 @use "styles/functions";
 
 .open {
@@ -22,6 +23,8 @@
 		.icon {
 			width: 2rem;
 			height: 2rem;
+
+			color: colors.get("foreground");
 		}
 	}
 
