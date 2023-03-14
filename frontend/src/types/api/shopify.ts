@@ -1,5 +1,8 @@
 import { Cart } from "@shopify/hydrogen-react";
-import { Product } from "@shopify/hydrogen-react/storefront-api-types";
+import {
+	Product,
+	ProductConnection,
+} from "@shopify/hydrogen-react/storefront-api-types";
 
 export namespace Shopify {
 	export type Data<ResponseData> = ResponseData extends Array<unknown>
@@ -155,7 +158,7 @@ export namespace Responses {
 		products: Shopify.Data<Product[]>;
 	}
 	export interface GetProduct {
-		latest_products: Shopify.Data<Product[]>;
+		latest_products: ProductConnection;
 		product: Product & Shopify.Product;
 	}
 	export interface GetProductSlugs {

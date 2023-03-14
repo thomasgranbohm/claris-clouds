@@ -4,6 +4,7 @@ query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 @inContext(country: $country_code) {
 	product(handle: $handle) {
 		title
+		handle
 		descriptionHtml
 		description
 		technical_description: metafield(
@@ -54,7 +55,7 @@ query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
 			}
 		}
 	}
-	latest_products: products(first: 4, reverse: true, sortKey: CREATED_AT) {
+	latest_products: products(first: 5, reverse: true, sortKey: CREATED_AT) {
 		edges {
 			node {
 				title

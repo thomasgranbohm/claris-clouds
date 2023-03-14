@@ -9,6 +9,7 @@ import {
 } from "@shopify/hydrogen-react";
 import {
 	Product,
+	ProductConnection,
 	ProductVariant,
 } from "@shopify/hydrogen-react/storefront-api-types";
 import axios from "axios";
@@ -77,7 +78,7 @@ export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 );
 
 interface ProductPageProps {
-	latest_products: Shopify.Data<Product[]>;
+	latest_products: ProductConnection;
 	product: Shopify.Product & Product;
 }
 
@@ -268,21 +269,22 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 							Latest artworks
 						</Heading>
 					</Column>
-					{latest_products.edges
-						.map(({ node }) => node)
-						.map((p) => (
+					{flattenConnection(latest_products)
+						.filter((node) => node.handle !== product.handle)
+						.slice(0, 4)
+						.map((node) => (
 							<Column
 								xs={6}
 								lg={3}
-								key={p.handle}
+								key={node.handle}
 								className={classes["latest-artwork"]}
 							>
 								<Link
 									className={classes["link"]}
-									href={`/artwork/${p.handle}`}
+									href={`/artwork/${node.handle}`}
 									asWrapper
 								>
-									{p.featuredImage && (
+									{node.featuredImage && (
 										<div
 											className={
 												classes["image-container"]
@@ -290,7 +292,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<Image
-												data={p.featuredImage}
+												data={node.featuredImage}
 												className={classes["image"]}
 											/>
 										</div>
@@ -299,7 +301,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 										className={classes["title"]}
 										type="b"
 									>
-										{p.title}
+										{node.title}
 									</Heading>
 									<Typography
 										className={classes["pricing"]}
@@ -309,7 +311,9 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 										From{" "}
 										<Money
 											as="span"
-											data={p.priceRange.minVariantPrice}
+											data={
+												node.priceRange.minVariantPrice
+											}
 										/>
 									</Typography>
 								</Link>
