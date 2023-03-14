@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Item } from "react-stately";
 import {
 	AddToCartButton,
+	flattenConnection,
 	Image,
 	Money,
 	ProductProvider,
@@ -92,6 +93,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 		priceRange,
 		technical_description,
 		title,
+		totalInventory,
 		variants,
 	} = product;
 
@@ -123,6 +125,38 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 	return (
 		<ProductProvider data={product}>
 			<Layout>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify({
+							"@context": "https://schema.org/",
+							"@type": "Product",
+							brand: {
+								"@type": "Brand",
+								name: "Clari's Clouds",
+							},
+							description,
+							image: featuredImage?.url,
+							name: title,
+							offers: flattenConnection(variants).map(
+								(variant) => ({
+									"@type": "Offer",
+									availability: variant.currentlyNotInStock
+										? "OutOfStock"
+										: "InStock",
+									price: variant.price.amount,
+									priceCurrency: variant.price.currencyCode,
+									seller: {
+										"@type": "Organization",
+										id: "https://www.clarisclouds.com",
+										name: "Clari's Clouds",
+									},
+									sku: variant.sku,
+								})
+							),
+						}),
+					}}
+				/>
 				<ShopifyMetadata
 					title={title}
 					description={description}
