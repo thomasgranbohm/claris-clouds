@@ -80,14 +80,18 @@
 				padding: functions.gutter();
 
 				.icon {
-					height: 2rem;
-					width: 2rem;
+					height: functions.gutter(2);
+					width: functions.gutter(2);
 					color: colors.get(foreground);
 					transition: color 0.1s;
+				}
 
-					@include mixins.breakpoint(sm) {
-						height: 1.5rem;
-						width: 1.5rem;
+				@include mixins.breakpoint(sm) {
+					padding: functions.gutter(1.25);
+
+					.icon {
+						height: functions.gutter(1.5);
+						width: functions.gutter(1.5);
 					}
 				}
 

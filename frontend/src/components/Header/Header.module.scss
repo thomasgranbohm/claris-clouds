@@ -12,11 +12,6 @@
 
 	background-color: colors.get("background");
 
-	@include mixins.breakpoint("sm") {
-		background-color: change-color(colors.get("background"), $alpha: 0.8);
-		backdrop-filter: saturate(180%) blur(8px);
-	}
-
 	.inner {
 		display: grid;
 		grid-template-rows: auto 1fr;
@@ -24,7 +19,8 @@
 		grid-template-areas: "home cart hamburger" "navigation navigation navigation";
 
 		.home-link,
-		.button {
+		.button,
+		.cart {
 			padding: functions.gutter();
 			align-self: center;
 		}
@@ -46,25 +42,27 @@
 			justify-self: flex-end;
 			color: colors.get("foreground");
 
+			@include mixins.has-general-focus {
+				color: colors.get("accent");
+			}
+
 			.icon {
-				height: 2rem;
-				width: 2rem;
+				height: functions.gutter(2);
+				width: functions.gutter(2);
 			}
 		}
 
 		.cart {
 			grid-area: cart;
 			position: relative;
-			padding: functions.gutter(1);
 			transition: color 0.1s;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			height: 100%;
 
 			.icon {
-				height: auto;
-				width: 2rem;
+				height: functions.gutter(2);
+				width: functions.gutter(2);
 				color: colors.get(foreground);
 				transition: color 0.1s;
 			}
@@ -140,6 +138,9 @@
 	}
 
 	@include mixins.breakpoint("sm") {
+		background-color: change-color(colors.get("background"), $alpha: 0.8);
+		backdrop-filter: saturate(180%) blur(8px);
+
 		.inner {
 			grid-template-rows: 1fr;
 			grid-template-columns: auto 1fr;
@@ -153,8 +154,6 @@
 				display: flex;
 				padding: unset;
 			}
-
-			padding-right: functions.gutter();
 		}
 	}
 }

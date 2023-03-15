@@ -13,7 +13,7 @@ import InstagramSVG from "assets/icons/instagram.svg";
 import PaletteSVG from "assets/icons/palette.svg";
 import RemoveSVG from "assets/icons/remove.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
-import ShoppingCartSVG from "assets/icons/shopping_cart.svg";
+import ShoppingCartSVG from "assets/icons/shopping-cart.svg";
 import SpinnerAnimatedSVG from "assets/icons/spinner-animated.svg";
 import TikTokSVG from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
