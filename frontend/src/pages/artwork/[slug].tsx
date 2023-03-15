@@ -173,6 +173,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 								{/*  eslint-disable-next-line jsx-a11y/alt-text */}
 								<ShopifyImage
 									image={variant?.image || featuredImage}
+									priority
 									style={{
 										height: "auto",
 										verticalAlign: "bottom",
