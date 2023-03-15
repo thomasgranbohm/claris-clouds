@@ -20,6 +20,7 @@ interface HtmlRendererProps extends WithClassname {
 
 const HtmlRenderer: FC<HtmlRendererProps> = ({ content }) => {
 	const options: HTMLReactParserOptions = {
+		htmlparser2: {},
 		replace: (domNode) => {
 			const element = domNode as Element;
 
@@ -43,9 +44,20 @@ const HtmlRenderer: FC<HtmlRendererProps> = ({ content }) => {
 
 			return domNode;
 		},
+		trim: true,
 	};
 
-	return <Fragment>{parse(DOMPurify.sanitize(content), options)}</Fragment>;
+	return (
+		<Fragment>
+			{parse(
+				DOMPurify.sanitize(content.trim(), {
+					FORBID_TAGS: ["script"],
+					USE_PROFILES: { html: true },
+				}),
+				options
+			)}
+		</Fragment>
+	);
 };
 
 export default HtmlRenderer;
