@@ -2,6 +2,8 @@
 @use "styles/functions";
 
 .open {
+	vertical-align: bottom;
+
 	&:not([disabled]) {
 		cursor: zoom-in;
 	}

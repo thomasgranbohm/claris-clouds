@@ -174,6 +174,9 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 								<ShopifyImage
 									image={variant?.image || featuredImage}
 									priority
+									sizes={
+										"(min-width: 1470px) 750px, (min-width: 960px) 640px, (min-width: 768px) 750px, (min-width: 480px) 640px, 640px"
+									}
 									style={{
 										height: "auto",
 										verticalAlign: "bottom",
@@ -276,7 +279,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 						.map((node) => (
 							<Column
 								xs={6}
-								lg={3}
+								md={3}
 								key={node.handle}
 								className={classes["latest-artwork"]}
 							>
@@ -292,8 +295,10 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 											}
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
-											<Image
-												data={node.featuredImage}
+											<ShopifyImage
+												image={node.featuredImage}
+												aspectRatio={[1, 1]}
+												sizes="(min-width: 1470px) 384px, (min-width: 960px) 256px, (min-width: 768px) 384px, (min-width: 480px) 256px"
 												className={classes["image"]}
 											/>
 										</div>

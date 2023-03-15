@@ -98,7 +98,7 @@ const CustomDocument = () => {
 
 				{/* MailChimp */}
 				{process.env.NODE_ENV === "production" && (
-					<Script id="mcjs" strategy="afterInteractive">
+					<Script id="mcjs" strategy="lazyOnload">
 						{
 							'!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/4fc70238f00a96645f92bbf56/0d57517a5b6a1ce7894d92fdd.js");'
 						}
