@@ -44,32 +44,10 @@ export default {
 
 		extensionService.use(({ strapi }) => ({
 			typeDefs: `type Query {
-				artwork(slug: String!): ArtworkEntityResponse
 				page(slug: String!): PageEntityResponse
 			}`,
 			resolvers: {
 				Query: {
-					artwork: {
-						resolve: async (_, args, __) => {
-							const { toEntityResponse } = strapi.service(
-								"plugin::graphql.format"
-							).returnTypes;
-
-							const data = await strapi.services[
-								"api::artwork.artwork"
-							].find({
-								filters: { slug: args.slug },
-							});
-
-							if (data.results.length === 0) {
-								throw createError(404);
-							}
-
-							const response = toEntityResponse(data.results[0]);
-
-							return response;
-						},
-					},
 					page: {
 						resolve: async (_, args, __) => {
 							const { toEntityResponse } = strapi.service(

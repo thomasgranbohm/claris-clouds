@@ -31,7 +31,6 @@
     "sections": {
       "type": "dynamiczone",
       "components": [
-        "sections.artwork-display",
         "sections.rich-text",
         "sections.call-to-action",
         "sections.showcase"

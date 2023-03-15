@@ -1,16 +1,4 @@
 query GeneralInformation {
-	meta {
-		data {
-			attributes {
-				page_prefix
-				metatags {
-					content
-					name
-					property
-				}
-			}
-		}
-	}
 	pageInformation {
 		data {
 			attributes {
@@ -26,6 +14,12 @@ query GeneralInformation {
 				socials {
 					link
 					type
+				}
+				page_prefix
+				metatags {
+					content
+					name
+					property
 				}
 			}
 		}

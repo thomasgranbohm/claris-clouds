@@ -13,7 +13,6 @@ import { LayoutContextSchema } from "contexts/LayoutContext";
 import GetGeneralInformation from "queries/GetGeneralInformation.gql";
 
 import CampaignSchema from "types/api/campaign";
-import MetadataSchema from "types/api/metadata";
 import PageInformationSchema from "types/api/page-information";
 import { GraphQL } from "types/api/strapi";
 
@@ -21,7 +20,6 @@ import stripWrapper from "utils/stripWrapper";
 
 type RequestType = {
 	campaign: GraphQL.Data<CampaignSchema>;
-	meta: GraphQL.Data<MetadataSchema>;
 	pageInformation: GraphQL.Data<PageInformationSchema>;
 };
 
@@ -54,7 +52,6 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 							: null,
 					country: !!country ? country.toString() : null,
 					layout: stripWrapper(data.pageInformation),
-					meta: stripWrapper(data.meta),
 				} as T & LayoutContextSchema,
 			};
 		}
@@ -74,7 +71,6 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 						: null,
 				country: !!country ? country.toString() : null,
 				layout: stripWrapper(data.pageInformation),
-				meta: stripWrapper(data.meta),
 			} as T & LayoutContextSchema,
 		};
 	};
@@ -108,7 +104,6 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 							: null,
 					country: null,
 					layout: stripWrapper(data.pageInformation),
-					meta: stripWrapper(data.meta),
 				} as T & LayoutContextSchema,
 				revalidate: 60,
 			};
@@ -131,7 +126,6 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 						: null,
 				country: null,
 				layout: stripWrapper(data.pageInformation),
-				meta: stripWrapper(data.meta),
 			},
 		};
 	};

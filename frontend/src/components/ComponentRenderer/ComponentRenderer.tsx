@@ -1,7 +1,6 @@
 import { FC, Fragment, FunctionComponent } from "react";
 
 import {
-	ArtworkDisplay,
 	CallToAction,
 	RichText,
 	Showcase,
@@ -18,9 +17,6 @@ const ComponentRenderer: FC<ComponentRendererProps> = ({ components }) => {
 		let Element = null;
 
 		switch (section.__typename) {
-			case "ComponentSectionsArtworkDisplay":
-				Element = ArtworkDisplay;
-				break;
 			case "ComponentSectionsCallToAction":
 				Element = CallToAction;
 				break;

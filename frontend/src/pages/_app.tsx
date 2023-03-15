@@ -31,13 +31,13 @@ const nunito = Nunito({
 
 function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 	const router = useRouter();
-	const { campaign, country, layout, meta } = pageProps;
+	const { campaign, country, layout } = pageProps;
 
-	if (meta === null || layout === null) {
+	if (layout === null) {
 		throw new Error("Missing needed layout data data");
 	}
 
-	const { metatags, page_prefix } = meta;
+	const { metatags, page_prefix } = layout;
 
 	// Install service-worker
 	useEffect(() => {
@@ -103,7 +103,7 @@ function CustomApp({ Component, pageProps }: AppProps<LayoutContextSchema>) {
 							}}
 						/>
 						<LayoutContext.Provider
-							value={{ campaign, country, layout, meta }}
+							value={{ campaign, country, layout }}
 						>
 							<Component {...pageProps} />
 						</LayoutContext.Provider>

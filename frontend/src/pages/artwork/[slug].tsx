@@ -32,7 +32,7 @@ import OptionSelector from "components/OptionSelector";
 import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
 
-import ProductByHandle from "queries/shopify/ProductByHandle.gql";
+import GetProductByHandle from "queries/shopify/GetProductByHandle.gql";
 
 import classes from "styles/pages/ArtworkPage.module.scss";
 
@@ -58,7 +58,7 @@ export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 			>(
 				getStorefrontApiUrl(),
 				{
-					query: print(ProductByHandle),
+					query: print(GetProductByHandle),
 					variables: { country_code, handle: slug },
 				},
 				{

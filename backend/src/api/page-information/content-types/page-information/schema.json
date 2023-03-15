@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "page_prefix": {
+      "type": "string",
+      "required": true
+    },
     "links": {
       "type": "component",
       "repeatable": true,
@@ -30,6 +34,12 @@
       "type": "component",
       "repeatable": true,
       "component": "navigation.link"
+    },
+    "metatags": {
+      "displayName": "metatag",
+      "type": "component",
+      "repeatable": true,
+      "component": "seo.metatag"
     }
   }
 }

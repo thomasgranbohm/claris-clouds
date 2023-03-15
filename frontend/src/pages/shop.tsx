@@ -12,7 +12,7 @@ import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
 
-import ProductsQuery from "queries/shopify/Products.gql";
+import GetProductsQuery from "queries/shopify/GetProducts.gql";
 
 import { Responses, Shopify } from "types/api/shopify";
 
@@ -25,7 +25,7 @@ export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
 		}>(
 			getStorefrontApiUrl(),
 			{
-				query: print(ProductsQuery),
+				query: print(GetProductsQuery),
 			},
 			{
 				headers: getPrivateTokenHeaders({

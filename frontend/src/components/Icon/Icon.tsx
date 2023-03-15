@@ -11,7 +11,6 @@ import DeleteSVG from "assets/icons/delete.svg";
 import DoneSVG from "assets/icons/done.svg";
 import InstagramSVG from "assets/icons/instagram.svg";
 import PaletteSVG from "assets/icons/palette.svg";
-import RedBubbleSVG from "assets/icons/redbubble.svg";
 import RemoveSVG from "assets/icons/remove.svg";
 import RulerCombinedSVG from "assets/icons/ruler-combined.svg";
 import ShoppingCartSVG from "assets/icons/shopping_cart.svg";
@@ -38,7 +37,6 @@ interface IconProps extends WithClassname, SVGAttributes<SVGElement> {
 		| "x-mark"
 		| "instagram"
 		| "tiktok"
-		| "redbubble"
 		| "youtube"
 		| "done"
 		| "shopping_cart"
@@ -72,9 +70,6 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 			break;
 		case "instagram":
 			Element = InstagramSVG;
-			break;
-		case "redbubble":
-			Element = RedBubbleSVG;
 			break;
 		case "tiktok":
 			Element = TikTokSVG;

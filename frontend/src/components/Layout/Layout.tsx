@@ -18,9 +18,9 @@ export interface LayoutProps extends WithChildren {
 }
 
 const Layout: FC<LayoutProps> = ({ children, conformity = true }) => {
-	const { campaign, layout, meta } = useLayoutContext();
+	const { campaign, layout } = useLayoutContext();
 
-	if (layout === null || meta === null) {
+	if (layout === null) {
 		throw new Error("Missing needed layout data data");
 	}
 

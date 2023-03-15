@@ -1,6 +1,6 @@
 #import "../fragments/ImageWithPreview.fragment.gql"
 
-query ProductByHandle($country_code: CountryCode = FR, $handle: String!)
+query GetProductByHandle($country_code: CountryCode = FR, $handle: String!)
 @inContext(country: $country_code) {
 	product(handle: $handle) {
 		title
