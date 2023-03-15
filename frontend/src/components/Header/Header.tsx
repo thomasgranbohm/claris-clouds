@@ -36,69 +36,68 @@ const Header: FC<HeaderProps> = ({ className, links, socials }) => {
 		isDisabled: Number(breakpoint) > Breakpoint.sm || !isSelected,
 	});
 
-	const HeaderInner = () => (
-		<div
+	const CartLink: FC<WithClassname> = ({ className }) => (
+		<Link
+			href="/cart"
 			className={clsx(
-				classes["container"],
-				isSelected && classes["open"],
+				classes["cart"],
+				router.asPath === "/cart" && classes["active"],
 				className
 			)}
+			aria-label="Cart"
 		>
-			<div className={classes["inner"]}>
-				<Link
-					className={classes["home-link"]}
-					href="/"
-					aria-label="Home"
+			<Icon variant="shopping_cart" className={classes["icon"]} />
+			{totalQuantity > 0 && (
+				<Typography
+					type="span"
+					size="smaller"
+					className={classes["quantity"]}
 				>
-					<LogoSVG
-						aria-label="Website logo"
-						className={classes["icon"]}
-					/>
-				</Link>
-				<Button
-					className={classes["button"]}
-					onPress={toggle}
-					aria-label={isSelected ? "Close menu" : "Open menu"}
-				>
-					<Icon
-						className={classes["icon"]}
-						variant={isSelected ? "x-mark" : "bars"}
-					/>
-				</Button>
-				<Navigation
-					className={classes["navigation"]}
-					links={links}
-					socials={socials}
-				/>
-				{/* TODO: Messy*/}
-				<Link
-					href="/cart"
-					className={clsx(
-						classes["cart"],
-						router.asPath === "/cart" && classes["active"]
-					)}
-					aria-label="Cart"
-				>
-					<Icon variant="shopping_cart" className={classes["icon"]} />
-					{totalQuantity > 0 && (
-						<Typography
-							type="span"
-							size="smaller"
-							className={classes["quantity"]}
-						>
-							<b>{totalQuantity}</b>
-						</Typography>
-					)}
-				</Link>
-			</div>
-		</div>
+					<b>{totalQuantity}</b>
+				</Typography>
+			)}
+		</Link>
 	);
 
-	return Number(breakpoint) > Breakpoint.sm ? (
-		<HeaderInner />
-	) : (
-		<FocusScope contain={isSelected}>
-			<HeaderInner />
+	return (
+		<FocusScope contain={Number(breakpoint) <= Breakpoint.sm && isSelected}>
+			<div
+				className={clsx(
+					classes["container"],
+					isSelected && classes["open"],
+					className
+				)}
+			>
+				<div className={classes["inner"]}>
+					<Link
+						className={classes["home-link"]}
+						href="/"
+						aria-label="Home"
+					>
+						<LogoSVG
+							aria-label="Website logo"
+							className={classes["icon"]}
+						/>
+					</Link>
+					<CartLink className={classes["mobile"]} />
+					<Button
+						className={classes["button"]}
+						onPress={toggle}
+						aria-label={isSelected ? "Close menu" : "Open menu"}
+					>
+						<Icon
+							className={classes["icon"]}
+							variant={isSelected ? "x-mark" : "bars"}
+						/>
+					</Button>
+					<Navigation
+						className={classes["navigation"]}
+						links={links}
+						socials={socials}
+					/>
+					<CartLink className={classes["desktop"]} />
+				</div>
+			</div>
 		</FocusScope>
 	);
 };

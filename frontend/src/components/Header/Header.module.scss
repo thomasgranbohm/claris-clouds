@@ -94,6 +94,20 @@
 			&.active .icon {
 				color: colors.get("accent");
 			}
+
+			&.desktop {
+				display: none;
+			}
+
+			@include mixins.breakpoint("sm") {
+				&.mobile {
+					display: none;
+				}
+
+				&.desktop {
+					display: flex;
+				}
+			}
 		}
 
 		.navigation {
