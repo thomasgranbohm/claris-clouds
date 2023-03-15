@@ -56,6 +56,8 @@ const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 							// eslint-disable-next-line jsx-a11y/alt-text
 							<ShopifyImage
 								image={product.featuredImage}
+								aspectRatio={[1, 1]}
+								sizes="(min-width: 960px) 640px, (min-width: 768px) 750px, (min-width: 480px) 640px"
 								style={{
 									aspectRatio: "1 / 1",
 									height: "auto",
