@@ -11,6 +11,7 @@ import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
 import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
+import MetaData from "components/MetaData";
 
 import GetProductsQuery from "queries/shopify/GetProducts.gql";
 
@@ -49,6 +50,10 @@ interface ShopPageProps {
 const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 	return (
 		<Layout>
+			<MetaData
+				title="Shop"
+				description="This is the shop page where you can by my artworks."
+			/>
 			{products.edges.map(({ node: product }, i) => (
 				<Row key={product.id}>
 					<Column md={6} lg={[4, 2]} align="center">

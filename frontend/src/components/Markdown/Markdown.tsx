@@ -13,8 +13,6 @@ interface MarkdownProps {
 const Markdown: FC<MarkdownProps> = ({ text }) => {
 	return (
 		<ReactMarkdown
-			// eslint-disable-next-line react/no-children-prop
-			children={text}
 			rawSourcePos={false}
 			sourcePos={false}
 			components={{
@@ -65,7 +63,9 @@ const Markdown: FC<MarkdownProps> = ({ text }) => {
 					return <List variant="unordered">{children}</List>;
 				},
 			}}
-		/>
+		>
+			{text}
+		</ReactMarkdown>
 	);
 };
 
