@@ -39,8 +39,9 @@ const ImageWithZoom: FC<ImageWithZoomProps> = ({
 		<>
 			<Button
 				{...triggerProps}
-				isDisabled={disabled}
 				className={classes["open"]}
+				isDisabled={disabled}
+				aria-label="Open zoomed in image"
 			>
 				{/* eslint-disable-next-line jsx-a11y/alt-text */}
 				{children}

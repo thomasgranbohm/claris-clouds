@@ -10,6 +10,8 @@ import { GraphQL, ImageSchema } from "types/api/strapi";
 import getImageLink from "utils/getImageLink";
 import stripWrapper from "utils/stripWrapper";
 
+import classes from "./Image.module.scss";
+
 export const NoWhitespaceImage: FC<StrapiImageProps> = ({
 	style,
 	...props
@@ -51,18 +53,24 @@ export const ShopifyImage: FC<ShopifyImageProps> = ({
 		return url.toString();
 	};
 
+	const blurProps: Pick<NextImageProps, "placeholder" | "blurDataURL"> = {
+		blurDataURL: preview_url ?? undefined,
+		placeholder: preview_url ? "blur" : "empty",
+	};
+
 	return (
-		<NextImage
-			width={width || 1}
-			height={height || 1}
-			{...props}
-			loader={ShopifyImageLoader}
-			src={url}
-			alt={altText || ""}
-			fill={fill}
-			placeholder="blur"
-			blurDataURL={`/_next/image?url=${preview_url}&w=16&q=1`}
-		/>
+		<div className={classes["shopify"]}>
+			<NextImage
+				width={width || 1}
+				height={height || 1}
+				{...props}
+				{...blurProps}
+				loader={ShopifyImageLoader}
+				src={url}
+				alt={altText || ""}
+				fill={fill}
+			/>
+		</div>
 	);
 };
 
