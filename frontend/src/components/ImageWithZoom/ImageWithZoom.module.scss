@@ -1,5 +1,6 @@
 @use "styles/colors";
 @use "styles/functions";
+@use "styles/variables";
 
 .open {
 	vertical-align: bottom;
@@ -21,6 +22,8 @@
 		position: fixed;
 		right: functions.gutter();
 		top: functions.gutter();
+
+		z-index: map-get(variables.$stacking, "close-modal");
 
 		.icon {
 			width: 2rem;
