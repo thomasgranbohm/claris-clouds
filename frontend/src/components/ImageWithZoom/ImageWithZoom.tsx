@@ -53,6 +53,11 @@ const ImageWithZoom: FC<ImageWithZoomProps> = ({
 						className={clsx(classes["dialog"], className)}
 						role="dialog"
 					>
+						{/* eslint-disable-next-line jsx-a11y/alt-text */}
+						<ShopifyImage
+							className={classes["preview"]}
+							image={image}
+						/>
 						<Button
 							className={classes["dismiss"]}
 							onPress={state.close}
@@ -62,11 +67,6 @@ const ImageWithZoom: FC<ImageWithZoomProps> = ({
 								className={classes["icon"]}
 							/>
 						</Button>
-						{/* eslint-disable-next-line jsx-a11y/alt-text */}
-						<ShopifyImage
-							className={classes["preview"]}
-							image={image}
-						/>
 					</Dialog>
 				</Modal>
 			)}
