@@ -8,7 +8,7 @@ export interface CallToActionSchema {
 	image_alignment: "Left" | "Right";
 	link?: Components.Link;
 	text: string;
-	type: "Sticky Image" | "Centered" | "Gravity";
+	type?: "Sticky Image" | "Centered" | "Gravity";
 }
 
 export interface RichTextSchema {

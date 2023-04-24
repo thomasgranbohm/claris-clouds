@@ -27,7 +27,8 @@ const CallToAction: FC<CallToActionSchema> = ({
 				classes["container"],
 				classes["call-to-action"],
 				classes[`align--${image_alignment.toLowerCase()}`],
-				classes[`type--${type.toLowerCase().replaceAll("_", "-")}`]
+				type &&
+					classes[`type--${type.toLowerCase().replaceAll("_", "-")}`]
 			)}
 		>
 			<Column
