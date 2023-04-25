@@ -56,6 +56,8 @@ const nextConfig = {
 	},
 	publicRuntimeConfig: {
 		API_URL: process.env.EXTERNAL_API_URL,
+		GTM_AUTH: process.env.GTM_AUTH,
+		GTM_ENV: process.env.GTM_ENV,
 		GTM_ID: process.env.GTM_ID,
 		PAGE_URL: process.env.PAGE_URL,
 		HTTP_AUTH: process.env.HTTP_AUTH,

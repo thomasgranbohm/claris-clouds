@@ -78,23 +78,19 @@ const CustomDocument = () => {
 					href="/favicon-16x16.png"
 				/>
 				<link rel="manifest" href="/manifest.json" />
-				<meta name="msapplication-TileColor" content="#ffffff" />
+				<meta name="msapplication-TileColor" content="#7f2fff" />
 				<meta
 					name="msapplication-TileImage"
 					content="/ms-icon-144x144.png"
 				/>
-				<meta name="theme-color" content="#ffffff" />
+				<meta name="theme-color" content="#7f2fff" />
 
 				{/* Google Tag Manager */}
-				{process.env.NODE_ENV === "production" &&
-					publicRuntimeConfig.GTM_ID && (
-						<Script
-							id="google-tagmananger"
-							strategy="afterInteractive"
-						>
-							{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${publicRuntimeConfig.GTM_ID}');`}
-						</Script>
-					)}
+				{publicRuntimeConfig.GTM_ID && (
+					<Script id="google-tagmananger" strategy="afterInteractive">
+						{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=${publicRuntimeConfig.GTM_AUTH}&gtm_preview=${publicRuntimeConfig.GTM_ENV}&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${publicRuntimeConfig.GTM_ID}');`}
+					</Script>
+				)}
 
 				{/* MailChimp */}
 				{process.env.NODE_ENV === "production" && (
@@ -108,6 +104,16 @@ const CustomDocument = () => {
 			<body>
 				<Main />
 				<NextScript />
+				{publicRuntimeConfig.GTM_ID && (
+					<noscript>
+						<iframe
+							src={`https://www.googletagmanager.com/ns.html?id=${publicRuntimeConfig.GTM_ID}&gtm_auth=${publicRuntimeConfig.GTM_AUTH}&gtm_preview=${publicRuntimeConfig.GTM_ENV}&gtm_cookies_win=x`}
+							height={0}
+							width={0}
+							style={{ display: "none", visibility: "hidden" }}
+						/>
+					</noscript>
+				)}
 			</body>
 		</Html>
 	);

@@ -41,10 +41,11 @@ const Link: FC<LinkProps> = ({
 	className,
 	disabledClassName,
 	isDisabled,
+	onPress,
 	...props
 }) => {
 	const ref = useRef<HTMLAnchorElement>(null);
-	const { linkProps } = useLink({ ...props, isDisabled }, ref);
+	const { linkProps } = useLink({ ...props, isDisabled, onPress }, ref);
 	const { children, href } = props;
 
 	return (

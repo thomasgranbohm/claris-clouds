@@ -21,15 +21,16 @@
 		.home-link,
 		.button,
 		.cart {
-			padding: functions.gutter();
+			padding: functions.gutter(1.25);
 			align-self: center;
 		}
 
 		.home-link {
 			grid-area: home;
 			justify-self: flex-start;
-			height: functions.gutter(5);
-			width: functions.gutter(5);
+			padding: functions.gutter(0.75);
+			height: functions.gutter(4.5);
+			width: functions.gutter(4.5);
 
 			.icon {
 				width: 100%;

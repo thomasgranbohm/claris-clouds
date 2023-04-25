@@ -38,6 +38,7 @@ query GetProductByHandle($country_code: CountryCode = FR, $handle: String!)
 				node {
 					sku
 					id
+					title
 					currentlyNotInStock
 					quantityAvailable
 					selectedOptions {

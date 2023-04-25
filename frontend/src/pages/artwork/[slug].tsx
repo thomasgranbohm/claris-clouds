@@ -3,9 +3,9 @@ import { Item } from "react-stately";
 import {
 	AddToCartButton,
 	flattenConnection,
-	Image,
 	Money,
 	ProductProvider,
+	useCart,
 } from "@shopify/hydrogen-react";
 import {
 	Product,
@@ -31,6 +31,8 @@ import MetafieldParser from "components/MetafieldParser";
 import OptionSelector from "components/OptionSelector";
 import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
+
+import triggerEcommerceEvent from "hooks/triggerEcommerceEvent";
 
 import GetProductByHandle from "queries/shopify/GetProductByHandle.gql";
 
@@ -94,7 +96,6 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 		priceRange,
 		technical_description,
 		title,
-		totalInventory,
 		variants,
 	} = product;
 
@@ -104,6 +105,20 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 	const [chosenOptions, setChosenOptions] = useState<Map<string, string>>(
 		new Map()
 	);
+
+	useEffect(() => {
+		if (variants && flattenConnection(variants).length > 0) {
+			triggerEcommerceEvent("view_item", {
+				currency: priceRange.minVariantPrice.currencyCode,
+				items: flattenConnection(variants).map((variant) => ({
+					item_id: variant.sku,
+					item_name: `${title} (${variant.title})`,
+					price: variant.price.amount,
+				})),
+				value: priceRange.minVariantPrice.amount,
+			});
+		}
+	}, [variants, priceRange, title]);
 
 	useEffect(() => {
 		if (chosenOptions.size > 0) {
@@ -248,6 +263,34 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 									isDisabled={!variant}
 									variantId={variant?.id}
 									quantity={quantity}
+									onClick={() => {
+										if (variant) {
+											triggerEcommerceEvent(
+												"add_to_cart",
+												{
+													currency:
+														variant.price
+															.currencyCode,
+													items: [
+														{
+															item_id:
+																variant.sku,
+															item_name:
+																variant.title ||
+																title,
+															price: variant.price
+																.amount,
+															quantity: quantity,
+														},
+													],
+													value:
+														parseFloat(
+															variant.price.amount
+														) * quantity,
+												}
+											);
+										}
+									}}
 								>
 									Add to cart
 								</AddToCartButton>
