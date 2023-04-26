@@ -5,14 +5,13 @@ import {
 	flattenConnection,
 	Money,
 	ProductProvider,
-	useCart,
 } from "@shopify/hydrogen-react";
 import {
 	Product,
 	ProductConnection,
 	ProductVariant,
 } from "@shopify/hydrogen-react/storefront-api-types";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { print } from "graphql";
 import { NextPage } from "next";
 
@@ -54,9 +53,9 @@ export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 		}
 
 		try {
-			const { data } = await axios.post<
+			const { data, status } = await axios.post<
 				Requests.GetProduct,
-				{ data: { data: Responses.GetProduct } }
+				AxiosResponse<{ data: Responses.GetProduct }>
 			>(
 				getStorefrontApiUrl(),
 				{
@@ -70,10 +69,22 @@ export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 				}
 			);
 
+			if (status === 404 || data.data.product === null) {
+				return {
+					notFound: true,
+				};
+			}
+
 			return {
 				props: data.data,
 			};
 		} catch (error) {
+			if (error instanceof AxiosError && error.status === 404) {
+				return {
+					notFound: true,
+				};
+			}
+
 			throw error;
 		}
 	}
