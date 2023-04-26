@@ -49,6 +49,10 @@
 
 		&.styled {
 			background-color: colors.get("gray");
+
+			.title {
+				color: change-color(white, $alpha: 0.85);
+			}
 		}
 	}
 }

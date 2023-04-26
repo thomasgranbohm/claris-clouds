@@ -251,16 +251,30 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 						))}
 						<QuantitySelector
 							label="Quantity"
-							max={Number(variant?.quantityAvailable) ?? 5}
+							max={
+								Number(variant?.quantityAvailable) > 0
+									? Number(variant?.quantityAvailable)
+									: 5
+							}
 							onChange={setQuantity}
 							value={quantity}
+							min={0}
 						/>
+						{variant && variant.quantityAvailable === 0 && (
+							<Typography size="small" color="red">
+								Variant is sold out.
+							</Typography>
+						)}
 						<Row>
 							<Column lg={6} md={12} sm={6}>
 								<AddToCartButton
 									as={StyledButton}
 									className={classes["add-to-cart"]}
-									isDisabled={!variant}
+									isDisabled={
+										!variant ||
+										variant.quantityAvailable === 0 ||
+										quantity === 0
+									}
 									variantId={variant?.id}
 									quantity={quantity}
 									onClick={() => {
