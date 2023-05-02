@@ -1,5 +1,6 @@
 import { requestShopify } from "api/index";
 
+import GetProductByHandleQuery from "queries/shopify/GetProductByHandle.gql";
 import GetProductHandlesQuery from "queries/shopify/GetProductHandles.gql";
 import GetProductPreviewsQuery from "queries/shopify/GetProductPreviews.gql";
 
@@ -23,7 +24,7 @@ export const getProductByHandle = async (
 	country_code?: string
 ) => {
 	return requestShopify<Responses.GetProduct, Requests.GetProduct>(
-		GetProductPreviewsQuery,
+		GetProductByHandleQuery,
 		{ country_code, handle }
 	);
 };
