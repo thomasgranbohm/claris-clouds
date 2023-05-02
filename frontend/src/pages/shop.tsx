@@ -1,9 +1,7 @@
 import { Product } from "@shopify/hydrogen-react/storefront-api-types";
-import axios from "axios";
-import { print } from "graphql";
 import { NextPage } from "next";
 
-import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
+import { getProductPreviews } from "api/product";
 
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
@@ -13,27 +11,13 @@ import Layout from "components/Layout";
 import { StyledLink } from "components/Link";
 import MetaData from "components/MetaData";
 
-import GetProductsQuery from "queries/shopify/GetProducts.gql";
-
-import { Responses, Shopify } from "types/api/shopify";
+import { Shopify } from "types/api/shopify";
 
 import { getLayoutDataSSG } from "utils/getLayoutData";
 
 export const getStaticProps = getLayoutDataSSG<ShopPageProps>(async () => {
 	try {
-		const { data } = await axios.post<{
-			data: Responses.GetProductPreviews;
-		}>(
-			getStorefrontApiUrl(),
-			{
-				query: print(GetProductsQuery),
-			},
-			{
-				headers: getPrivateTokenHeaders({
-					contentType: "json",
-				}),
-			}
-		);
+		const { data } = await getProductPreviews();
 
 		return {
 			props: { products: data.data.products },

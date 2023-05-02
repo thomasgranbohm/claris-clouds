@@ -11,11 +11,10 @@ import {
 	ProductConnection,
 	ProductVariant,
 } from "@shopify/hydrogen-react/storefront-api-types";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { print } from "graphql";
+import { AxiosError } from "axios";
 import { NextPage } from "next";
 
-import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
+import { getProductByHandle } from "api/product";
 
 import { StyledButton } from "components/Button";
 import { Column, Row } from "components/Grid";
@@ -33,11 +32,9 @@ import Typography from "components/Typography";
 
 import triggerEcommerceEvent from "hooks/triggerEcommerceEvent";
 
-import GetProductByHandle from "queries/shopify/GetProductByHandle.gql";
-
 import classes from "styles/pages/ArtworkPage.module.scss";
 
-import { Requests, Responses, Shopify } from "types/api/shopify";
+import { Shopify } from "types/api/shopify";
 
 import { getLayoutDataSSR } from "utils/getLayoutData";
 
@@ -53,20 +50,9 @@ export const getServerSideProps = getLayoutDataSSR<ProductPageProps>(
 		}
 
 		try {
-			const { data, status } = await axios.post<
-				Requests.GetProduct,
-				AxiosResponse<{ data: Responses.GetProduct }>
-			>(
-				getStorefrontApiUrl(),
-				{
-					query: print(GetProductByHandle),
-					variables: { country_code, handle: slug },
-				},
-				{
-					headers: getPrivateTokenHeaders({
-						contentType: "json",
-					}),
-				}
+			const { data, status } = await getProductByHandle(
+				slug.toString(),
+				country_code?.toString()
 			);
 
 			if (status === 404 || data.data.product === null) {
@@ -111,8 +97,9 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 	} = product;
 
 	const [quantity, setQuantity] = useState<number>(1);
-	const [variant, setVariant] =
-		useState<ProductVariant | undefined>(undefined);
+	const [variant, setVariant] = useState<ProductVariant | undefined>(
+		undefined
+	);
 	const [chosenOptions, setChosenOptions] = useState<Map<string, string>>(
 		new Map()
 	);

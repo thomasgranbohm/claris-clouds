@@ -161,8 +161,10 @@ export namespace Responses {
 		latest_products: ProductConnection;
 		product: Product & Shopify.Product;
 	}
-	export interface GetProductSlugs {
-		products: Shopify.Data<Pick<Product, "handle">[]>;
+	export interface GetProductHandles {
+		products: Shopify.Data<
+			Pick<Product, "handle" | "updatedAt" | "publishedAt">[]
+		>;
 	}
 	export interface RemoveFromCart {
 		cartLinesRemove: {

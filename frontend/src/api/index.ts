@@ -5,7 +5,11 @@ import {
 	NormalizedCacheObject,
 	QueryOptions,
 } from "@apollo/client";
+import axios, { AxiosResponse } from "axios";
+import { ASTNode, print } from "graphql";
 import getConfig from "next/config";
+
+import { getPrivateTokenHeaders, getStorefrontApiUrl } from "api/shopify";
 
 import { GraphQL } from "types/api/strapi";
 
@@ -42,7 +46,10 @@ export const externalAPI = new ApolloClient({
 	uri: publicRuntimeConfig.API_URL + "/graphql",
 });
 
-const request = async <ReturnType, TVariables = Record<string, any>>(
+export const requestStrapi = async <
+	ReturnType,
+	TVariables = Record<string, any>
+>(
 	options: QueryOptions<TVariables>
 ): Promise<GraphQL.Wrapper<ReturnType>> => {
 	const resolver =
@@ -83,4 +90,25 @@ const request = async <ReturnType, TVariables = Record<string, any>>(
 	}
 };
 
-export default request;
+export const requestShopify = async <Response, Request = Record<string, any>>(
+	query: ASTNode,
+	variables?: Request & { country_code?: string }
+): Promise<AxiosResponse<{ data: Response }>> => {
+	const resp = await axios.post<
+		Request & { country_code?: string },
+		AxiosResponse<{ data: Response }>
+	>(
+		getStorefrontApiUrl(),
+		{
+			query: print(query),
+			variables,
+		},
+		{
+			headers: getPrivateTokenHeaders({
+				contentType: "json",
+			}),
+		}
+	);
+
+	return resp;
+};

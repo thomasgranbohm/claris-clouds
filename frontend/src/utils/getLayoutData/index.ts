@@ -6,7 +6,7 @@ import {
 	GetStaticPropsResult,
 } from "next";
 
-import request from "api/index";
+import { requestStrapi } from "api/index";
 
 import { LayoutContextSchema } from "contexts/LayoutContext";
 
@@ -27,7 +27,7 @@ export function getLayoutDataSSR<T extends { [key: string]: any }>(
 	f?: GetServerSideProps<T>
 ): GetServerSideProps<T & LayoutContextSchema> {
 	return async (context: GetServerSidePropsContext) => {
-		const { data, error } = await request<RequestType>({
+		const { data, error } = await requestStrapi<RequestType>({
 			query: GetGeneralInformation,
 		});
 
@@ -81,7 +81,7 @@ export function getLayoutDataSSG<T extends { [key: string]: any }>(
 ): GetStaticProps<T & LayoutContextSchema> {
 	// TODO: needs some cleanup
 	return async (context: GetStaticPropsContext) => {
-		const { data, error } = await request<RequestType>({
+		const { data, error } = await requestStrapi<RequestType>({
 			query: GetGeneralInformation,
 		});
 
