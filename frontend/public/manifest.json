@@ -1,5 +1,26 @@
 {
+	"id": "/",
 	"name": "Clari's Clouds",
+	"short_name": "Clari's Clouds",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#7f2fff",
+	"background_color": "#ffffff",
+	"orientation": "portrait-primary",
+	"shortcuts": [
+		{
+			"name": "Open Shop",
+			"short_name": "Shop",
+			"url": "/shop",
+			"icons": [
+				{ "src": "/shop_icon_x48.png", "sizes": "48x48" },
+				{ "src": "/shop_icon_x72.png", "sizes": "72x72" },
+				{ "src": "/shop_icon_x96.png", "sizes": "96x96" },
+				{ "src": "/shop_icon_x128.png", "sizes": "128x128" },
+				{ "src": "/shop_icon_x192.png", "sizes": "192x192" }
+			]
+		}
+	],
 	"icons": [
 		{
 			"src": "/android-icon-36x36.png",
