@@ -111,9 +111,9 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 				items: flattenConnection(variants).map((variant) => ({
 					item_id: variant.sku,
 					item_name: `${title} (${variant.title})`,
-					price: variant.price.amount,
+					price: parseFloat(variant.price.amount),
 				})),
-				value: priceRange.minVariantPrice.amount,
+				value: parseFloat(priceRange.minVariantPrice.amount),
 			});
 		}
 	}, [variants, priceRange, title]);
@@ -290,8 +290,10 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 															item_name:
 																variant.title ||
 																title,
-															price: variant.price
-																.amount,
+															price: parseFloat(
+																variant.price
+																	.amount
+															),
 															quantity: quantity,
 														},
 													],
