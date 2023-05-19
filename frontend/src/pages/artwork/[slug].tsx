@@ -101,7 +101,11 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 		undefined
 	);
 	const [chosenOptions, setChosenOptions] = useState<Map<string, string>>(
-		new Map()
+		new Map(
+			options
+				.filter((option) => option.values.length === 1)
+				.map((option) => [option.name, option.values[0]])
+		)
 	);
 
 	useEffect(() => {
@@ -135,6 +139,10 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 
 		setVariant(undefined);
 	}, [chosenOptions, variants]);
+
+	const hasOnlyOneOption = options.every(
+		(option) => option.values.length === 1
+	);
 
 	return (
 		<ProductProvider data={product}>
@@ -217,36 +225,44 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 								</Column>
 							</Row>
 						)}
-						{options.map((option) => (
-							<OptionSelector
-								key={option.name}
-								label={option.name}
-								selectionMode="single"
-								onSelectionChange={(keys) => {
-									const selectedKey = Array.from(keys).pop();
+						{options &&
+							options.length > 0 &&
+							!hasOnlyOneOption &&
+							options
+								.filter((option) => option.values.length > 1)
+								.map((option) => (
+									<OptionSelector
+										key={option.name}
+										label={option.name}
+										selectionMode="single"
+										onSelectionChange={(keys) => {
+											const selectedKey =
+												Array.from(keys).pop();
 
-									setChosenOptions((_options) => {
-										if (
-											!selectedKey &&
-											_options.has(option.name)
-										) {
-											_options.delete(option.name);
-										} else if (selectedKey) {
-											_options.set(
-												option.name,
-												selectedKey.toString()
-											);
-										}
+											setChosenOptions((_options) => {
+												if (
+													!selectedKey &&
+													_options.has(option.name)
+												) {
+													_options.delete(
+														option.name
+													);
+												} else if (selectedKey) {
+													_options.set(
+														option.name,
+														selectedKey.toString()
+													);
+												}
 
-										return new Map(_options);
-									});
-								}}
-							>
-								{option.values.map((value) => (
-									<Item key={value}>{value}</Item>
+												return new Map(_options);
+											});
+										}}
+									>
+										{option.values.map((value) => (
+											<Item key={value}>{value}</Item>
+										))}
+									</OptionSelector>
 								))}
-							</OptionSelector>
-						))}
 						<QuantitySelector
 							label="Quantity"
 							max={

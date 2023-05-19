@@ -1,7 +1,6 @@
 #import "../fragments/ImageWithPreview.fragment.gql"
-
 query Products {
-	products(first: 10) {
+	products(first: 250, sortKey: UPDATED_AT, reverse: true) {
 		edges {
 			node {
 				id
@@ -9,6 +8,7 @@ query Products {
 				handle
 				description
 				descriptionHtml
+				productType
 				featuredImage {
 					...ImageWithPreview
 				}
