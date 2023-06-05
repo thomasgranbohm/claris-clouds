@@ -1,0 +1,45 @@
+@use "styles/colors";
+@use "styles/mixins";
+@use "styles/functions";
+
+.header {
+	display: flex;
+	align-items: center;
+	gap: functions.gutter(0.5);
+
+	.tab {
+		padding: functions.gutter();
+		position: relative;
+
+		cursor: pointer;
+
+		&::after {
+			position: absolute;
+			height: 2px;
+			border-radius: 2px;
+			top: 75%;
+			width: 100%;
+			background-color: colors.get(accent);
+			content: "";
+			opacity: 0%;
+			transition: opacity 0.1s;
+			left: 0;
+
+			@include mixins.breakpoint(sm) {
+				width: calc(100% - #{functions.gutter(2)});
+				left: functions.gutter();
+			}
+		}
+
+		@include mixins.has-general-focus {
+			&::after {
+				opacity: 100%;
+			}
+		}
+
+		&:active,
+		&.selected::after {
+			opacity: 100%;
+		}
+	}
+}
