@@ -4,6 +4,7 @@ import { TabListProps, TabListState, useTabListState } from "react-stately";
 import { Node } from "@react-types/shared";
 import clsx from "clsx";
 
+import HocusFocus from "components/FocusRing";
 import { Column, Row } from "components/Grid";
 
 import { WithClassname } from "types/components";
@@ -43,13 +44,18 @@ const Tab: FC<{ item: Node<object>; state: TabListState<object> }> = ({
 	const { isSelected, tabProps } = useTab({ key }, state, ref);
 
 	return (
-		<div
-			{...tabProps}
-			ref={ref}
-			className={clsx(classes["tab"], isSelected && classes["selected"])}
-		>
-			{rendered}
-		</div>
+		<HocusFocus>
+			<div
+				{...tabProps}
+				ref={ref}
+				className={clsx(
+					classes["tab"],
+					isSelected && classes["selected"]
+				)}
+			>
+				{rendered}
+			</div>
+		</HocusFocus>
 	);
 };
 

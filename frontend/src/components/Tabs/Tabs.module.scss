@@ -13,6 +13,10 @@
 
 		cursor: pointer;
 
+		&:focus {
+			outline: none;
+		}
+
 		&::after {
 			position: absolute;
 			height: 2px;
