@@ -1,0 +1,85 @@
+@use "styles/colors";
+@use "styles/functions";
+@use "styles/mixins";
+@use "styles/variables";
+
+.container {
+	overflow: hidden;
+
+	.swiper {
+		overflow: visible;
+
+		.slide {
+			/*
+				Welcome back!
+				The solution you want is for the largest image to scale to 100% width and then have auto height
+				and every other picture should follow that height and contain the ratio
+			*/
+			aspect-ratio: 1 / 1;
+			background-color: colors.get("accent");
+		}
+	}
+
+	.buttons {
+		display: none;
+
+		@include mixins.breakpoint(md) {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+
+		.button {
+			padding: functions.gutter(0.5);
+			display: inline-flex;
+			cursor: pointer;
+
+			// @include mixins.has-general-focus {
+			// 	&:not(:disabled) {
+			// 		color: colors.get(accent);
+			// 	}
+			// }
+
+			&:disabled {
+				color: colors.get("gray");
+			}
+
+			&.fullscreen {
+				margin-left: auto;
+				align-self: flex-end;
+			}
+
+			.icon {
+				height: 2rem;
+				width: 2rem;
+			}
+		}
+	}
+}
+
+.dialog {
+	position: relative;
+
+	display: block;
+
+	.dismiss {
+		position: fixed;
+		right: functions.gutter();
+		top: functions.gutter();
+
+		z-index: map-get(variables.$stacking, "close-modal");
+
+		.icon {
+			width: 2rem;
+			height: 2rem;
+
+			color: colors.get("foreground");
+		}
+	}
+
+	.preview {
+		width: 100%;
+		height: auto;
+		vertical-align: bottom;
+	}
+}

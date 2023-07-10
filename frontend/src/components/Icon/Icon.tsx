@@ -18,6 +18,7 @@ import SpinnerAnimatedSVG from "assets/icons/spinner-animated.svg";
 import TikTokSVG from "assets/icons/tiktok.svg";
 import XMarkSVG from "assets/icons/xmark-solid.svg";
 import YouTubeSVG from "assets/icons/youtube.svg";
+import ZoomInSVG from "assets/icons/zoom-in.svg";
 
 import { WithClassname } from "types/components";
 import { Colors } from "types/generics";
@@ -43,7 +44,8 @@ interface IconProps extends WithClassname, SVGAttributes<SVGElement> {
 		| "add"
 		| "remove"
 		| "decrease"
-		| "spinner-animated";
+		| "spinner-animated"
+		| "zoom-in";
 }
 
 const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
@@ -85,6 +87,9 @@ const Icon: FC<IconProps> = ({ className, fill, variant, ...props }) => {
 			break;
 		case "done":
 			Element = DoneSVG;
+			break;
+		case "zoom-in":
+			Element = ZoomInSVG;
 			break;
 		case "shopping_cart":
 			Element = ShoppingCartSVG;

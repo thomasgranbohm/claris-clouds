@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import { Item } from "react-stately";
-import {
-	AddToCartButton,
-	flattenConnection,
-	Money,
-	ProductProvider,
-} from "@shopify/hydrogen-react";
+import { flattenConnection, Money } from "@shopify/hydrogen-react";
 import {
 	Product,
 	ProductConnection,
@@ -16,19 +10,20 @@ import { NextPage } from "next";
 
 import { getProductByHandle } from "api/product";
 
-import { StyledButton } from "components/Button";
+import ArtworkImageSwiper from "components/ArtworkImageSwiper";
+import ArtworkPrice from "components/ArtworkPrice";
 import { Column, Row } from "components/Grid";
 import Heading from "components/Heading";
 import HtmlRenderer from "components/HtmlRenderer";
 import { ShopifyImage } from "components/Image";
-import ImageWithZoom from "components/ImageWithZoom";
 import Layout from "components/Layout";
 import Link from "components/Link";
 import { ShopifyMetadata } from "components/MetaData";
 import MetafieldParser from "components/MetafieldParser";
-import OptionSelector from "components/OptionSelector";
-import QuantitySelector from "components/QuantitySelector";
 import Typography from "components/Typography";
+import VariantSelector from "components/VariantSelector";
+
+import { ArtworkProvider } from "contexts/ArtworkContext";
 
 import triggerEcommerceEvent from "hooks/triggerEcommerceEvent";
 
@@ -89,24 +84,12 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 		description,
 		descriptionHtml,
 		featuredImage,
-		options,
+		images,
 		priceRange,
 		technical_description,
 		title,
 		variants,
 	} = product;
-
-	const [quantity, setQuantity] = useState<number>(1);
-	const [variant, setVariant] = useState<ProductVariant | undefined>(
-		undefined
-	);
-	const [chosenOptions, setChosenOptions] = useState<Map<string, string>>(
-		new Map(
-			options
-				.filter((option) => option.values.length === 1)
-				.map((option) => [option.name, option.values[0]])
-		)
-	);
 
 	useEffect(() => {
 		if (variants && flattenConnection(variants).length > 0) {
@@ -122,30 +105,8 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 		}
 	}, [variants, priceRange, title]);
 
-	useEffect(() => {
-		if (chosenOptions.size > 0) {
-			const values = Array.from(chosenOptions.values());
-
-			const variant = variants.edges
-				.map(({ node }) => node)
-				.find((variant) =>
-					variant.selectedOptions.every(({ value }) =>
-						values.includes(value)
-					)
-				);
-
-			return setVariant(variant);
-		}
-
-		setVariant(undefined);
-	}, [chosenOptions, variants]);
-
-	const hasOnlyOneOption = options.every(
-		(option) => option.values.length === 1
-	);
-
 	return (
-		<ProductProvider data={product}>
+		<ArtworkProvider product={product}>
 			<Layout>
 				<script
 					type="application/ld+json"
@@ -186,38 +147,13 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 				/>
 				<Row>
 					<Column md={6} className={classes["column"]}>
-						{featuredImage && (
-							<ImageWithZoom
-								image={variant?.image || featuredImage}
-								disabled={Boolean(variant?.image)}
-							>
-								{/*  eslint-disable-next-line jsx-a11y/alt-text */}
-								<ShopifyImage
-									image={variant?.image || featuredImage}
-									priority
-									sizes={
-										"(min-width: 1470px) 750px, (min-width: 960px) 640px, (min-width: 768px) 750px, (min-width: 480px) 640px, 640px"
-									}
-									style={{
-										height: "auto",
-										verticalAlign: "bottom",
-										width: "100%",
-									}}
-								/>
-							</ImageWithZoom>
-						)}
+						<ArtworkImageSwiper
+							images={flattenConnection(images)}
+						/>
 					</Column>
 					<Column md={6} className={classes["column"]}>
 						<Heading type="h1">{title}</Heading>
-						<Typography>
-							<b>Price:</b>{" "}
-							<Money
-								as="span"
-								data={
-									variant?.price || priceRange.minVariantPrice
-								}
-							/>
-						</Typography>
+						<ArtworkPrice />
 						{descriptionHtml && (
 							<Row>
 								<Column>
@@ -225,107 +161,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 								</Column>
 							</Row>
 						)}
-						{options &&
-							options.length > 0 &&
-							!hasOnlyOneOption &&
-							options
-								.filter((option) => option.values.length > 1)
-								.map((option) => (
-									<OptionSelector
-										key={option.name}
-										label={option.name}
-										selectionMode="single"
-										onSelectionChange={(keys) => {
-											const selectedKey =
-												Array.from(keys).pop();
-
-											setChosenOptions((_options) => {
-												if (
-													!selectedKey &&
-													_options.has(option.name)
-												) {
-													_options.delete(
-														option.name
-													);
-												} else if (selectedKey) {
-													_options.set(
-														option.name,
-														selectedKey.toString()
-													);
-												}
-
-												return new Map(_options);
-											});
-										}}
-									>
-										{option.values.map((value) => (
-											<Item key={value}>{value}</Item>
-										))}
-									</OptionSelector>
-								))}
-						<QuantitySelector
-							label="Quantity"
-							max={
-								Number(variant?.quantityAvailable) > 0
-									? Number(variant?.quantityAvailable)
-									: 5
-							}
-							onChange={setQuantity}
-							value={quantity}
-							min={0}
-						/>
-						{variant && variant.quantityAvailable === 0 && (
-							<Typography size="small" color="red">
-								Variant is sold out.
-							</Typography>
-						)}
-						<Row>
-							<Column lg={6} md={12} sm={6}>
-								<AddToCartButton
-									as={StyledButton}
-									className={classes["add-to-cart"]}
-									isDisabled={
-										!variant ||
-										variant.quantityAvailable === 0 ||
-										quantity === 0
-									}
-									variantId={variant?.id}
-									quantity={quantity}
-									onClick={() => {
-										if (variant) {
-											triggerEcommerceEvent(
-												"add_to_cart",
-												{
-													currency:
-														variant.price
-															.currencyCode,
-													items: [
-														{
-															item_id:
-																variant.sku,
-															item_name:
-																variant.title ||
-																title,
-															price: parseFloat(
-																variant.price
-																	.amount
-															),
-															quantity: quantity,
-														},
-													],
-													value:
-														parseFloat(
-															variant.price.amount
-														) * quantity,
-												}
-											);
-										}
-									}}
-								>
-									Add to cart
-								</AddToCartButton>
-							</Column>
-						</Row>
+						<VariantSelector />
 						{technical_description && (
 							<Row>
 								<Column>
@@ -400,7 +236,7 @@ const ArtworkPage: NextPage<ProductPageProps> = ({
 						))}
 				</Row>
 			</Layout>
-		</ProductProvider>
+		</ArtworkProvider>
 	);
 };
 

@@ -28,6 +28,14 @@ query GetProductByHandle($country_code: CountryCode = FR, $handle: String!)
 		featuredImage {
 			...ImageWithPreview
 		}
+		images(first: 100) {
+			edges {
+				node {
+					...ImageWithPreview
+					id
+				}
+			}
+		}
 		options {
 			name
 			values
