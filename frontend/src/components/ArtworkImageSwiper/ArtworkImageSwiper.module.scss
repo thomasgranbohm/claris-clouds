@@ -34,14 +34,15 @@
 			display: inline-flex;
 			cursor: pointer;
 
-			// @include mixins.has-general-focus {
-			// 	&:not(:disabled) {
-			// 		color: colors.get(accent);
-			// 	}
-			// }
+			@include mixins.has-general-focus {
+				&:not(:disabled) {
+					color: colors.get(accent);
+				}
+			}
 
 			&:disabled {
 				color: colors.get("gray");
+				cursor: not-allowed;
 			}
 
 			&.fullscreen {

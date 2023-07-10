@@ -84,6 +84,10 @@ const ArtworkImageSwiper: FC<ArtworkImageSwiperProps> = ({
 				grabCursor
 				modules={[Navigation]}
 				onSwiper={(swiper) => setSwiper(swiper)}
+				onSlideChange={(_swiper) =>
+					_swiper.activeIndex !== index &&
+					setIndex(_swiper.activeIndex)
+				}
 			>
 				{selectedImages.map((image, i) => (
 					<SwiperSlide className={classes["slide"]} key={i}>
