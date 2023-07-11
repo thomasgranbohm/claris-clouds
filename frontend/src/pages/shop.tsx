@@ -98,13 +98,7 @@ const ShopPage: NextPage<ShopPageProps> = ({ products }) => {
 											<StyledLink
 												href={`/artwork/${product.handle}`}
 											>
-												Buy{" "}
-												{/^[aoiuye]/i.test(
-													product.productType
-												)
-													? "an"
-													: "a"}{" "}
-												{product.productType}
+												Purchase
 											</StyledLink>
 										</Column>
 									</Row>
