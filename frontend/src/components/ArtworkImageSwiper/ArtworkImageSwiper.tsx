@@ -7,11 +7,11 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
-import Button from "components/Button/Button";
-import Dialog from "components/Dialog/Dialog";
-import Icon from "components/Icon/Icon";
+import Button from "components/Button";
+import Dialog from "components/Dialog";
+import Icon from "components/Icon";
 import { ShopifyImage } from "components/Image";
-import Modal from "components/Modal/Modal";
+import Modal from "components/Modal";
 
 import { useArtworkContext } from "contexts/ArtworkContext";
 
@@ -30,7 +30,7 @@ const ArtworkImageSwiper: FC<ArtworkImageSwiperProps> = ({
 	images,
 	...props
 }) => {
-	const { selectedVariant, variants } = useArtworkContext();
+	const { hasMultipleVariants, selectedVariant } = useArtworkContext();
 
 	const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 	const [index, setIndex] = useState<number>(0);
@@ -41,9 +41,6 @@ const ArtworkImageSwiper: FC<ArtworkImageSwiperProps> = ({
 		{ type: "dialog" },
 		state
 	);
-
-	const hasMultipleVariants =
-		variants && Array.isArray(variants) && variants.length > 1;
 
 	const selectedImages = useMemo(
 		() =>
