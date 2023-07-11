@@ -53,6 +53,17 @@ fragment CartFragment on Cart {
 							handle
 							title
 							id
+							productType
+							options(first: 1000) {
+								id
+							}
+							variants(first: 100) {
+								edges {
+									node {
+										id
+									}
+								}
+							}
 						}
 						selectedOptions {
 							name

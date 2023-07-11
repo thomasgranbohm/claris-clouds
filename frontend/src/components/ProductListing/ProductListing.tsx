@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import {
 	CartLineProvider,
+	flattenConnection,
 	Image,
 	Money,
 	useCart,
@@ -16,64 +17,72 @@ import { WithClassname } from "types/components";
 
 import classes from "./ProductListing.module.scss";
 
-const LineItem = (item: CartLine) => (
-	<CartLineProvider line={item}>
-		<li className={classes["item"]}>
-			{item.merchandise.image && (
-				<div className={classes["image"]}>
-					{/* eslint-disable-next-line jsx-a11y/alt-text */}
-					<Image
-						data={item.merchandise.image}
-						widths={[96, 128, 192]}
-						style={{
-							height: "auto",
-							objectFit: "contain",
-							objectPosition: "top",
-							width: "100%",
-						}}
-					/>
-				</div>
-			)}
-			<div className={classes["information"]}>
-				<Link
-					className={classes["link"]}
-					href={`/artwork/${item.merchandise.product.handle}`}
-					asWrapper
-				>
-					<Typography
-						size="large"
-						color="foreground"
-						className={classes["title"]}
-					>
-						<b>{item.merchandise.product.title}</b>
-					</Typography>
-				</Link>
-				{item.merchandise.selectedOptions?.reduce<ReactNode[]>(
-					(p, c) =>
-						c
-							? [
-									...p,
-									<Typography
-										key={c.name}
-										color="gray"
-										size="small"
-									>
-										{c.name}: {c.value}
-									</Typography>,
-							  ]
-							: p,
-					[]
+const LineItem = (item: CartLine) => {
+	return (
+		<CartLineProvider line={item}>
+			<li className={classes["item"]}>
+				{item.merchandise.image && (
+					<div className={classes["image"]}>
+						{/* eslint-disable-next-line jsx-a11y/alt-text */}
+						<Image
+							data={item.merchandise.image}
+							widths={[96, 128, 192]}
+							style={{
+								height: "auto",
+								objectFit: "contain",
+								objectPosition: "top",
+								width: "100%",
+							}}
+						/>
+					</div>
 				)}
-			</div>
-			<CartLineQuantitySelector className={classes["quantity"]} />
-			{item.cost && (
-				<Typography className={classes["total"]}>
-					<Money data={item.cost.subtotalAmount} as="span" />
-				</Typography>
-			)}
-		</li>
-	</CartLineProvider>
-);
+				<div className={classes["information"]}>
+					<Link
+						className={classes["link"]}
+						href={`/artwork/${item.merchandise.product.handle}`}
+						asWrapper
+					>
+						<Typography
+							size="large"
+							color="foreground"
+							className={classes["title"]}
+						>
+							<b>{item.merchandise.product.title}</b>
+						</Typography>
+					</Link>
+					<Typography color="gray" size="small">
+						Type: {item.merchandise.product.productType}
+					</Typography>
+					{flattenConnection(item.merchandise.product.variants)
+						.length > 1 &&
+						item.merchandise.product.options.length > 0 &&
+						item.merchandise.selectedOptions?.reduce<ReactNode[]>(
+							(p, c) =>
+								c
+									? [
+											...p,
+											<Typography
+												key={c.name}
+												color="gray"
+												size="small"
+											>
+												{c.name}: {c.value}
+											</Typography>,
+									  ]
+									: p,
+							[]
+						)}
+				</div>
+				<CartLineQuantitySelector className={classes["quantity"]} />
+				{item.cost && (
+					<Typography className={classes["total"]}>
+						<Money data={item.cost.subtotalAmount} as="span" />
+					</Typography>
+				)}
+			</li>
+		</CartLineProvider>
+	);
+};
 
 interface ProductListingProps extends WithClassname {}
 

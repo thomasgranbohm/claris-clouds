@@ -26,64 +26,66 @@ const CartLineQuantitySelector: FC<CartLineQuantitySelectorProps> = ({
 
 	return (
 		<div className={clsx(classes["container"], className)}>
-			<div className={classes["quantity"]}>
-				<CartLineQuantityAdjustButton<typeof Button>
-					as={Button}
-					adjust="increase"
-					className={clsx(classes["button"], classes["increase"])}
-					isDisabled={
-						Number(quantity || 0) + 1 >
-						Number(merchandise?.quantityAvailable || 0)
-					}
-					onClick={() => {
-						if (merchandise && cost && quantity) {
-							triggerEcommerceEvent("add_to_cart", {
-								currency: cost.subtotalAmount?.currencyCode,
-								items: [
-									{
-										item_id: merchandise.sku,
-										item_name: merchandise.title,
-										price: Number(
-											merchandise.price?.amount
-										),
-										quantity: 1,
-									},
-								],
-								value: Number(merchandise.price?.amount),
-							});
+			{Number(merchandise?.quantityAvailable) > 1 && (
+				<div className={classes["quantity"]}>
+					<CartLineQuantityAdjustButton<typeof Button>
+						as={Button}
+						adjust="increase"
+						className={clsx(classes["button"], classes["increase"])}
+						isDisabled={
+							Number(quantity || 0) + 1 >
+							Number(merchandise?.quantityAvailable || 0)
 						}
-					}}
-				>
-					<Icon variant="add" />
-				</CartLineQuantityAdjustButton>
-				<CartLineQuantity className={classes["value"]} />
-				<CartLineQuantityAdjustButton<typeof Button>
-					as={Button}
-					adjust="decrease"
-					className={clsx(classes["button"], classes["decrease"])}
-					isDisabled={Number(quantity || 0) - 1 < 1}
-					onClick={() => {
-						if (merchandise && cost && quantity) {
-							triggerEcommerceEvent("remove_from_cart", {
-								currency: cost.subtotalAmount?.currencyCode,
-								items: [
-									{
-										item_id: merchandise.sku,
-										item_name: merchandise.title,
-										price: Number(
-											merchandise.price?.amount
-										),
-										quantity: 1,
-									},
-								],
-								value: Number(merchandise.price?.amount),
-							});
-						}
-					}}
-				>
-					<Icon variant="decrease" />
-				</CartLineQuantityAdjustButton>
-			</div>
+						onClick={() => {
+							if (merchandise && cost && quantity) {
+								triggerEcommerceEvent("add_to_cart", {
+									currency: cost.subtotalAmount?.currencyCode,
+									items: [
+										{
+											item_id: merchandise.sku,
+											item_name: merchandise.title,
+											price: Number(
+												merchandise.price?.amount
+											),
+											quantity: 1,
+										},
+									],
+									value: Number(merchandise.price?.amount),
+								});
+							}
+						}}
+					>
+						<Icon variant="add" />
+					</CartLineQuantityAdjustButton>
+					<CartLineQuantity className={classes["value"]} />
+					<CartLineQuantityAdjustButton<typeof Button>
+						as={Button}
+						adjust="decrease"
+						className={clsx(classes["button"], classes["decrease"])}
+						isDisabled={Number(quantity || 0) - 1 < 1}
+						onClick={() => {
+							if (merchandise && cost && quantity) {
+								triggerEcommerceEvent("remove_from_cart", {
+									currency: cost.subtotalAmount?.currencyCode,
+									items: [
+										{
+											item_id: merchandise.sku,
+											item_name: merchandise.title,
+											price: Number(
+												merchandise.price?.amount
+											),
+											quantity: 1,
+										},
+									],
+									value: Number(merchandise.price?.amount),
+								});
+							}
+						}}
+					>
+						<Icon variant="decrease" />
+					</CartLineQuantityAdjustButton>
+				</div>
+			)}
 			<CartLineQuantityAdjustButton<typeof Button>
 				adjust="remove"
 				className={clsx(classes["button"], classes["remove"])}
