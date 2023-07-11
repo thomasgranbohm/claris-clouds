@@ -43,7 +43,7 @@ const ArtworkImageSwiper: FC<ArtworkImageSwiperProps> = ({
 	);
 
 	const hasMultipleVariants =
-		variants && Array.isArray(variants) && variants.length > 0;
+		variants && Array.isArray(variants) && variants.length > 1;
 
 	const selectedImages = useMemo(
 		() =>
@@ -109,7 +109,7 @@ const ArtworkImageSwiper: FC<ArtworkImageSwiperProps> = ({
 				))}
 			</Swiper>
 			<div className={classes["buttons"]}>
-				{hasMultipleVariants && (
+				{selectedImages.length && (
 					<Fragment>
 						<Button
 							aria-label="Previous image"
