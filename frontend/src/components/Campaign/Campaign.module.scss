@@ -12,39 +12,40 @@
 	z-index: map-get(variables.$stacking, "campaign");
 	background-color: colors.get("accent");
 
-	display: grid;
-	grid-template-columns: 1fr auto;
-	align-items: flex-start;
+	display: block;
 
 	box-shadow: 0 0 6px 3px rgba(0 0 0 / 10%);
 
 	.link,
 	.button {
-		@include mixins.text-contrast(colors.get("accent"));
+		position: absolute;
+		bottom: 100%;
+
 		padding: functions.gutter();
+
+		@include mixins.text-contrast(colors.get("accent"));
 	}
 
 	.link {
-		width: 100%;
 		display: block;
-		padding-right: functions.gutter(0.5);
+
+		left: 0%;
+		right: 0%;
+
+		padding: functions.gutter() functions.gutter(2);
+
+		background-color: colors.get("accent");
 
 		.text {
 			@include mixins.keep-within-width;
+
 			margin: 0 auto;
 			text-align: center;
 			text-decoration: none;
 		}
 	}
 
-	@include mixins.breakpoint("sm") {
-		display: block;
-
-		.button {
-			position: absolute;
-			right: 0;
-			bottom: 50%;
-			transform: translateY(50%);
-		}
+	.button {
+		right: 0;
 	}
 }
